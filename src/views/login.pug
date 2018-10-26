@@ -1,0 +1,200 @@
+extends layout
+
+block content
+    script.
+        var registerUrls = {
+            "999Dice":"https://www.999dice.com/?224280708", 
+            "Bitsler":"https://www.bitsler.com/?ref=mydicebot", 
+            "BitVest":"https://bitvest.io?r=108792", 
+            "Crypto-Games":"https://www.crypto-games.net?i=CpQP3V8Up2", 
+            "DuckDice":"https://duckdice.com/ab61534783", 
+            "Freebitco.in":"https://freebitco.in/?r=16392656", 
+            "KingDice":"https://kingdice.com/#/welcome?aff=18072", 
+            "MegaDice":"https://www.megadice.com/?a=326492144", 
+            "NitroDice":"https://www.nitrodice.com?ref=0N2pG8rkL7UR6oMzZWEj", 
+            "NitrogenSports":"https://nitrogensports.eu/r/4998127", 
+            "PrimeDice":"https://primedice.com/?c=mydicebot", 
+            "SafeDice":"https://safedice.com/?r=100309", 
+            "Stake":"https://stake.com/?code=mydicebot", 
+            "YoloDice":"https://yolodice.com/r?6fAf-wVz" 
+        };
+
+        webix.ui({
+            view: "form", id: "form1", elements: [{
+                rows: [
+                    {
+                        options: [
+                           {id:"999Dice",value:"999Dice"},
+                           {id:"Bitsler",value:"Bitsler (Coming Soon)"},
+                           {id:"BitVest",value:"BitVest (Coming Soon)"},
+                           {id:"Crypto-Games",value:"Crypto-Games (Coming Soon)"},
+                           {id:"DuckDice",value:"DuckDice (Coming Soon)"},
+                           {id:"Freebitco.in",value:"Freebitco.in (Coming Soon)"},
+                           {id:"KingDice",value:"KingDice (Coming Soon)"},
+                           {id:"MegaDice",value:"MegaDice (Coming Soon)"},
+                           {id:"NitroDice",value:"NitroDice (Coming Soon)"},
+                           {id:"NitrogenSports",value:"NitrogenSports (Coming Soon)"},
+                           {id:"PrimeDice",value:"PrimeDice (Coming Soon)"},
+                           {id:"SafeDice",value:"SafeDice (Coming Soon)"},
+                           {id:"Stakei",value:"Stake (Coming Soon)"},
+                           {id:"YoloDice",value:"YoloDice (Coming Soon)"}
+                        ],
+                        view: "richselect",
+                        left: 70,
+                        top: 70,
+                        width: 400,
+                        value: "999Dice",
+                        label: "SITE",
+                        labelWidth: 120,
+                        placeholder: "999Dice",
+                        id: "site",
+                        name: "site"
+                    },
+                    {
+                        view: "text",
+                        left: 70,
+                        top: 130,
+                        width: 400,
+                        label: "USERNAME",
+                        labelWidth: 120,
+                        name: "username"
+                    },
+                    {
+                        view: "text",
+                        type: "password",
+                        left: 70,
+                        top: 190,
+                        width: 400,
+                        label: "PASSWORD",
+                        labelWidth: 120,
+                        name: "password"
+                    },
+                    {
+                        view: "text",
+                        left: 60,
+                        top: 250,
+                        width: 400,
+                        label: "2FA (Optional)",
+                        labelWidth: 120,
+                        name: "twofa"
+                    },
+                    {
+                        view: "text",
+                        left: 70,
+                        top: 310,
+                        width: 400,
+                        labelWidth: 120,
+                        label: "API Key",
+                        name: "apikey"
+                    },
+                    {
+                        label: "LOGIN",
+                        view: "button",
+                        type: "form",
+                        left: 60,
+                        top: 400,
+                        width: 400,
+                        name: "login_button",
+                        click: login
+                    },
+                    {
+                        label: "REGISTER",
+                        view: "button",
+                        left: 310,
+                        top: 400,
+                        width: 400,
+                        name: "register_button",
+                        click: register
+                    },
+                    {
+                        view: "label",
+                        label: "Supporting Dice Sites (alphabet sequence)"
+                    },
+                    { 
+                        view: "label", 
+                        label: "<a target='_blank' href='https://www.999dice.com/?224280708'>999Dice</a>", 
+                    },
+                    { 
+                        view: "label", 
+                        label: "<a target='_blank' href='https://www.bitsler.com/?ref=mydicebot'>Bitsler (Coming Soon)</a>", 
+                    },
+                    { 
+                        view: "label", 
+                        label: "<a target='_blank' href='https://bitvest.io/?r=108792'>BitVest (Coming Soon)</a>", 
+                    },
+                    { 
+                        view: "label", 
+                        label: "<a target='_blank' href='https://www.crypto-games.net/?i=CpQP3V8Up2'>Crypto-Games (Coming Soon)</a>", 
+                    },
+                    { 
+                        view: "label", 
+                        label: "<a target='_blank' href='https://duckdice.com/ab61534783'>DuckDice (Coming Soon)</a>", 
+                    },
+                    { 
+                        view: "label", 
+                        label: "<a target='_blank' href='https://freebitco.in/?r=16392656'>Freebitco.in (Coming Soon)</a>", 
+                    },
+                    { 
+                        view: "label", 
+                        label: "<a target='_blank' href='https://kingdice.com/#/welcome?aff=180722'>KingDice (Coming Soon)</a>", 
+                    },
+                    { 
+                        view: "label", 
+                        label: "<a target='_blank' href='https://www.megadice.com/?a=326492144'>MegaDice (Coming Soon)</a>", 
+                    },
+                    { 
+                        view: "label", 
+                        label: "<a target='_blank' href='https://www.nitrodice.com/?ref=0N2pG8rkL7UR6oMzZWEj'>NitroDice (Coming Soon)</a>", 
+                    },
+                    { 
+                        view: "label", 
+                        label: "<a target='_blank' href='https://nitrogensports.eu/r/4998127'>NitrogenSports (Coming Soon)</a>", 
+                    },
+                    { 
+                        view: "label", 
+                        label: "<a target='_blank' href='https://primedice.com/?c=mydicebot'>PrimeDice (Coming Soon)</a>", 
+                    },
+                    { 
+                        view: "label", 
+                        label: "<a target='_blank' href='https://safedice.com/?r=100309'>SafeDice (Coming Soon)</a>", 
+                    },
+                    { 
+                        view: "label", 
+                        label: "<a target='_blank' href='https://stake.com/?code=mydicebot'>Stake (Coming Soon)</a>", 
+                    },
+                    { 
+                        view: "label", 
+                        label: "<a target='_blank' href='https://yolodice.com/r?6fAf-wVz'>YoloDice (Coming Soon)</a>", 
+                    },
+                ]
+            }],
+            rules: {
+                "username": webix.rules.isNotEmpty,
+                "password": webix.rules.isNotEmpty
+            }
+        });
+        webix.extend($$("form1"), webix.ProgressBar);
+        function register() {
+
+            let site = $$("site").getValue();
+            window.open(registerUrls[site],'_blank');
+        }
+        function login() {
+            if($$("form1").validate()){
+                $$("form1").showProgress({
+                    type: "icon",
+                    delay: 5000,
+                    hide: true
+                });
+                webix.send("login", $$("form1").getValues());
+            } else {
+                webix.message({type: 'error', text: 'Please enter the correct parameters'});
+            }
+        }
+        webix.ready(function () {
+            let mess = "#{message}"
+            if(mess != '') {
+                webix.message({type: 'error', text: mess });
+            }
+        });
+
