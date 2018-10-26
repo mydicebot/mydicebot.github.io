@@ -1,0 +1,428 @@
+extends layout
+
+block content
+    script(type="application/lua").
+        print("hello bot!")
+    script.
+        var bet_total_stats = {
+            id: "bet_total_stats",
+            view: "property",
+            height: 200,
+            //width: 0,
+            elements: [
+                {label: "TOTAL STATS", type: "label"},
+                {label: "BALANCE", id: "bet_total_stats_balance", value:"0", type: "text"},
+                {label: "WIN", type: "text", id: "bet_total_stats_win", value:"0"},
+                {label: "LOSS", type: "text", id: "bet_total_stats_loss", value:"0"},
+                {label: "BET", type: "text", id: "bet_total_stats_bet", value:"0"},
+                {label: "PROFIT", type: "text", id: "bet_total_stats_profit", value:"0"},
+                {label: "WAGERED", type: "text", id: "bet_total_stats_wagered", value:"0"},
+            ]
+        };
+
+
+            var bet_current_stats = {
+                id: "bet_current_stats",
+                view: "property",
+                height: 200,
+                //width: 0,
+                elements: [
+                    {label: "CURRENT STATS", type: "label"},
+                    {label: "BALANCE", type: "text", id: "bet_current_stats_balance", value:"0"},
+                    {label: "WIN", type: "text", id: "bet_current_stats_win", value:"0"},
+                    {label: "LOSS", type: "text", id: "bet_current_stats_loss", value:"0"},
+                    {label: "BET", type: "text", id: "bet_current_stats_bet", value:"0"},
+                    {label: "PROFIT", type: "text", id: "bet_current_stats_profit", value:"0"},
+                    {label: "WAGERED", type: "text", id: "bet_current_stats_wagered", value:"0"},
+                ]
+            };
+
+            var bet_currency_selection = {
+                id: "bet_currency_selection",
+                options: [
+                    {id:1,value:"BTC"},
+                    {id:2,value:"Doge"},
+                    {id:3,value:"LTC"},
+                    {id:4,value:"ETH"}
+                ],
+                view: "richselect",
+                left: 70,
+                top: 70,
+                width: 400,
+                value: 1,
+                label: "CURRENCY",
+                labelWidth: 100,
+                placeholder: "BTC",
+                name: "currency"
+            };
+
+            var reset_session_button = {
+                id: "reset_session_button",
+                view: "button",
+                label: "RESET SESSION",
+            // height: 0,
+                width: 400
+            };
+
+            var switch_site_button = {
+                id: "switch_site_button",
+                view: "button",
+                type: "danger",
+                label: "LOGOUT/SWITCH SITE",
+                width: 400
+            };
+
+            var bet_chart = {
+                id: "bet_chart",
+                view: "chart",
+                height: 0,
+                width: 0,
+                type: "spline",
+                value: "#yValue#",
+                //cellWidth: 10,
+                //dynamic: true,
+                label: function (obj) {
+                    return parseInt(obj.yValue, 10);
+                },
+                item: {
+                    borderColor: "#1293f8",
+                    color: "#ffffff"
+                },
+                line: {
+                    color: "#1293f8",
+                    width: 3
+                },
+                xAxis: {
+                    template: "#xValue#"
+                },
+                yAxis: {},
+                series: [
+                    {
+                        value: "#yValue#",
+                        item: {
+                            borderColor: "#1293f8",
+                            color: "#ffffff"
+                        },
+                        line: {
+                            color: "#1293f8",
+                            width: 2
+                        },
+                        tooltip: {
+                            template: "#yValue#"
+                        }
+                    }
+                ]
+            };
+
+            var bet_datatable = {
+                id: "bet_datatable",
+                view: "datatable",
+                columns: [
+                    {id: "bet_datatable_id", header: "ID", fillspace:true},
+                    {id: "bet_datatable_bet_chance", header: "CHANCE", fillspace:true},
+                    {id: "bet_datatable_actual_chance", header: "ROLL", fillspace:true},
+                    {id: "bet_datatable_amount", header: "AMOUNT", fillspace:true},
+                    {id: "bet_datatable_payout", header: "PAYOUT", fillspace:true},
+                    {id: "bet_datatable_profit", header: "PROFIT", fillspace:true}
+                ]
+            };
+
+            var bet_config_tabview = {
+                id: "bet_config_tabview",
+                view: "tabview",
+                minHeight: 500,
+                width: 400,
+                cells: [
+                    {
+                        header: "MANUAL",
+                        body: {
+                            id: "manual_bet_form",
+                            view: "form",
+                            minHeight: 500,
+                            width: 0,
+                            elements: [
+                                //- {
+                                //-     id: "manual_bet_seed_info", 
+                                //-     view: "text", 
+                                //-     value: "",
+                                //-     label: "SEED"
+                                //- },
+                                //- {
+                                //-     id: "manual_bet_reset_seed_button",
+                                //-     view: "button",
+                                //-     type: "danger",
+                                //-     label: "RESET SEED",
+                                //- },
+                                {
+                                    id: "manual_bet_amount",
+                                    view: "text",
+                                    label: "BET AMOUNT",
+                                    value: "0.00000001",
+                                    labelWidth: 200,
+                                    name: "manual_bet_amount"
+                                },
+                                {
+                                    cols: [
+                                        {
+                                            id: "manual_bet_amount_min_button",
+                                            view: "button",
+                                            label: "MIN",
+                                        },
+                                        {
+                                            id: "manual_bet_amount_max_button",
+                                            view: "button",
+                                            label: "MAX",
+                                        },
+                                        {
+                                            id: "manual_bet_amount_half_button",
+                                            view: "button",
+                                            label: "1/2",
+                                        },
+                                        {
+                                            id: "manual_bet_amount_double_button",
+                                            view: "button",
+                                            label: "2x",
+                                        },
+                                    ]
+                                },
+                                {
+                                    id: "manual_bet_chance",
+                                    view: "text",
+                                    label: "BET CHANCE",
+                                    value: "49.95",
+                                    labelWidth: 200,
+                                    name: "manual_bet_chance"
+                                },
+                                {
+                                    id: "manual_bet_low_button",
+                                    view: "button",
+                                    type: "form",
+                                    label: "BET LOW",
+                                },
+                                {
+                                    id: "manual_bet_high_button",
+                                    view: "button",
+                                    type: "form",
+                                    label: "BET HIGH",
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        header: "AUTO",
+                        body: {
+                            rows: [
+                            {
+                            id: "auto_bet_form",
+                            view: "form",
+                            height: 0,
+                            width: 0,
+                            scroll:true,
+                            elements: [
+                                {
+                                    id: "auto_bet_number_of_bets",
+                                    view: "text",
+                                    label: "NUM OF BETS(0:UNLIMITED)",
+                                    labelWidth: 250,
+                                    value: "0"
+                                },
+                                {
+                                    id: "auto_bet_start_low_high",
+                                    view: "richselect",
+                                    label: "START(LOW/HIGH)",
+                                    labelWidth: 250,
+                                    value: "LOW",
+                                    options: ["LOW", "HIGH"]
+                                },
+                                {
+                                    id: "auto_bet_base_amount",
+                                    view: "text",
+                                    label: "BET BASE AMOUNT",
+                                    value: "0.00000001",
+                                    labelWidth: 248,
+                                    name: "auto_bet_base_amount"
+                                },
+                                {
+                                    cols:[
+                                        {
+                                            id: "auto_bet_amount_radio_on_loss",
+                                            label: "ON LOSS",
+                                            view: "radio",
+                                            value: "RESET TO BASE AMOUNT",
+                                            options: [
+                                                {value: "RESET TO BASE AMOUNT"}, 
+                                                {value: "MULTIPLIER", newline:true}
+                                            ]
+                                        },
+                                        {
+                                            rows:[
+                                                {view: "label"},
+                                                {
+                                                    id: "auto_bet_amount_radio_on_loss_multiplier",
+                                                    view: "text",
+                                                    width: 60,
+                                                    value: "2"
+                                                }
+
+                                            ]
+                                        }
+                                    ]
+
+                                },
+                                {
+                                    cols:[
+                                        {
+                                            id: "auto_bet_amount_radio_on_win",
+                                            label: "ON WIN",
+                                            view: "radio",
+                                            value: "RESET TO BASE AMOUNT",
+                                            options: [
+                                                {value:"RESET TO BASE AMOUNT"}, 
+                                                {value:"MULTIPLIER", newline:true}
+                                            ]
+                                        },
+                                        {
+                                            rows: [
+                                                {view: "label"},
+                                                {
+                                                    id: "auto_bet_amount_radio_on_win_multiplier",
+                                                    view: "text",
+                                                    width: 60,
+                                                    value: "2"
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                },
+                                {
+                                    id: "auto_bet_base_chance",
+                                    view: "text",
+                                    label: "BET BASE CHANCE",
+                                    value: "49.95",
+                                    labelWidth: 248,
+                                    name: "auto_bet_base_chance"
+                                },
+                                {
+                                    id: "auto_bet_stop_on_profit",
+                                    view: "text",
+                                    label: "STOP ON PROFIT(0:NON-STOP)",
+                                    labelWidth: 248,
+                                    value: "0.00000000",
+                                    name: "auto_bet_stop_on_profit"
+                                },
+                                {
+                                    id: "auto_bet_stop_on_win",
+                                    view: "text",
+                                    label: "STOP ON WIN(0:NON-STOP)",
+                                    labelWidth: 248,
+                                    value: "0",
+                                    name: "auto_bet_stop_on_win"
+                                },
+                                {
+                                    id: "auto_bet_stop_on_loss",
+                                    view: "text",
+                                    label: "STOP ON LOSS(0:NON-STOP)",
+                                    labelWidth: 248,
+                                    value: "0",
+                                    name: "auto_bet_stop_on_loss"
+                                },
+                            ]
+                        },
+                        {
+                            id: "auto_bet_form_start_stop_buttons",
+                            view: "form",
+                            height: 0,
+                            width: 0,
+                            elements: [
+                                {
+                                    id: "auto_bet_start_stop_button",
+                                    view: "button",
+                                    type: "form",
+                                    label: "START",
+                                    value: "START"
+                                },
+                                {
+                                    id: "auto_bet_stop_on_next_win_button",
+                                    view: "button",
+                                    type: "form",
+                                    label: "STOP ON NEXT WIN"
+                                },
+                                {
+                                    id: "auto_bet_stop_on_next_loss_button",
+                                    view: "button",
+                                    type: "form",
+                                    label: "STOP ON NEXT LOSS"
+                                },
+                            ]}
+                        ]} 
+                    },
+                    {
+                        header: "SCRIPT",
+                        body: {
+                            id: "script_bet_form",
+                            view: "form",
+                            height: 0,
+                            width: 0,
+                            elements: [
+                                {
+                                    id: "script_bet_coding_board",
+                                    view: "textarea",
+                                    minHeight: 300
+                                },
+                                {
+                                    id: "script_bet_start_stop_button",
+                                    view: "button",
+                                    type: "form",
+                                    label: "START",
+                                    value: "START"
+                                },
+                                {
+                                    id: "script_bet_stop_on_next_win_button",
+                                    view: "button",
+                                    type: "form",
+                                    label: "STOP ON NEXT WIN"
+                                },
+                                {
+                                    id: "script_bet_stop_on_next_loss_button",
+                                    view: "button",
+                                    type: "form",
+                                    label: "STOP ON NEXT LOSS"
+                                },
+
+                            ]
+                        }
+                    }
+                ]
+            };
+
+            var resizer = {view:"resizer"};
+
+            webix.ui({
+                id: "bet_layout",
+                rows: [
+                    {
+                        cols: [
+                            bet_total_stats,
+                            resizer,
+                            bet_current_stats,
+                            resizer,
+                            {
+                                rows: [
+                                    bet_currency_selection, 
+                                    reset_session_button,
+                                    switch_site_button
+                                ]
+                            }
+                        ]
+                    },
+                    {view: "resizer"},
+                    {
+                        cols: [
+                            {rows: [bet_chart, {view: "resizer"}, bet_datatable]},
+                            resizer,
+                            bet_config_tabview
+                        ]
+                    },
+                ]
+            });
+    script(src=site)
