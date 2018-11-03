@@ -110,6 +110,7 @@ export class NineDice extends BaseDice {
     }
 
     async clear(req) {
+        console.log('enter clear');
         let info = req.session.info;
         let bs =JSON.parse(JSON.stringify(info.Balances));
         info.CurrentBalances = bs;
