@@ -189,7 +189,7 @@ block content
                                     id: "manual_bet_chance",
                                     view: "text",
                                     label: "BET CHANCE",
-                                    value: "49.95",
+                                    value: "49.50",
                                     labelWidth: 200,
                                     name: "manual_bet_chance"
                                 },
@@ -298,7 +298,7 @@ block content
                                     id: "auto_bet_base_chance",
                                     view: "text",
                                     label: "BET BASE CHANCE",
-                                    value: "49.95",
+                                    value: "49.50",
                                     labelWidth: 248,
                                     name: "auto_bet_base_chance"
                                 },
@@ -425,4 +425,366 @@ block content
                     },
                 ]
             });
+            webix.extend($$("bet_chart"), webix.ProgressBar);
+            let isLoop = false;
+            let stopOnWin = false;
+            let stopOnLoss = false;
+            $$("script_bet_start_stop_button").attachEvent("onItemClick", function(){
+                let status = $$("script_bet_start_stop_button").getValue();
+                if(status == 'STOP') {
+                    isLoop = false;
+                    $$("script_bet_start_stop_button").setValue('START');
+                } else {
+                    let currencyValue = $$("bet_currency_selection").getValue() -1;
+                    initScriptBalance(currencyValue, function(){
+                        let code = $$("script_bet_coding_board").getValue();
+                        try {
+                            code = code.replace(/!=/g,"~=");
+                            code = code.replace(/!/g,"not ");
+                            code = code.replace(/base/g,'basebet');
+                            code = code.replace(/basebetbet/g,'basebet');
+                            code = code.replace(/([a-zA-Z]*[0-9]*\s*)\+\=(\s*[a-zA-Z]*[0-9]*)/g, '$1=$1+$2 ');
+                            code = code.replace(/([a-zA-Z]*[0-9]*\s*)\-\=(\s*[a-zA-Z]*[0-9]*)/g, '$1=$1-$2 ');
+                            code = code.replace(/([a-zA-Z]*[0-9]*\s*)\*\=(\s*[a-zA-Z]*[0-9]*)/g, '$1=$1*$2 ');
+                            code = code.replace(/([a-zA-Z]*[0-9]*\s*)\/\=(\s*[a-zA-Z]*[0-9]*)/g, '$1=$1/$2 ');
+                            fengari.load(code)();
+                        } catch(err){
+                            webix.message({type: 'error', text: err.message});
+                            return false;
+                        }
+                        isLoop = true;
+                        $$("script_bet_start_stop_button").setValue('STOP');
+                        scriptBet(true);
+                    });
+                }
+            });
+            $$("auto_bet_start_stop_button").attachEvent("onItemClick", function(){
+                let status = $$("auto_bet_start_stop_button").getValue();
+                if(status == 'STOP') {
+                    isLoop = false;
+                    $$("auto_bet_start_stop_button").setValue('START');
+                } else {
+                    $$("auto_bet_start_stop_button").setValue('STOP');
+                    autoBet();
+                    isLoop = true;
+                    stopOnWin = false;
+                    stopOnLoss = false;
+                }
+            });
+            $$("manual_bet_amount_min_button").attachEvent("onItemClick", function(){
+                $$("manual_bet_amount").setValue("0.00000001");
+            });
+            $$("manual_bet_amount_max_button").attachEvent("onItemClick", function(){
+                getInfo(function(userinfo){
+                    let balance = getBalance(userinfo);
+                    $$("manual_bet_amount").setValue(balance);
+                });
+            });
+            $$("manual_bet_amount_half_button").attachEvent("onItemClick", function(){
+                let betAmount = $$("manual_bet_amount").getValue()/2;
+                $$("manual_bet_amount").setValue(Math.max(0.00000001, betAmount).toFixed(8));
+            });
+            $$("manual_bet_amount_double_button").attachEvent("onItemClick", function(){
+                getInfo(function(userinfo){
+                    let balance = getBalance(userinfo);
+                    let currencyValue = $$("bet_currency_selection").getValue() -1;
+                    let betAmount = $$("manual_bet_amount").getValue()*2;
+                    $$("manual_bet_amount").setValue(Math.min(balance, betAmount).toFixed(8));
+                });
+            });
+            $$("auto_bet_stop_on_next_win_button").attachEvent("onItemClick", function(){
+                stopOnWin = true;
+            });
+            $$("auto_bet_stop_on_next_loss_button").attachEvent("onItemClick", function(){
+                stopOnLoss = true;
+            });
+            $$("script_bet_stop_on_next_win_button").attachEvent("onItemClick", function(){
+                stopOnWin = true;
+            });
+            $$("script_bet_stop_on_next_loss_button").attachEvent("onItemClick", function(){
+                stopOnLoss = true;
+            });
+            $$("switch_site_button").attachEvent("onItemClick", function(id, e){
+                let box = webix.confirm({
+                    title:"CONFIRMATION",
+                    ok:"Yes",
+                    cancel:"No",
+                    text:"Logout/Switch Site will reset current session. Sure?",
+                    callback:function(result){
+                        if(result) {
+                            let domain = document.domain;
+                            console.log(domain);
+                            window.location.href = '../login';
+                        }
+                    }
+                });
+            });
+            $$("manual_bet_low_button").attachEvent("onItemClick", function(){
+                var currency = $$("bet_currency_selection").getText().toLowerCase();
+                var payIn = $$("manual_bet_amount").getValue();
+                var chance = $$("manual_bet_chance").getValue();
+                bet(currency, 0, parseInt(payIn*100000000), chance);
+            });
+            $$("manual_bet_high_button").attachEvent("onItemClick", function(){
+                var currency = $$("bet_currency_selection").getText().toLowerCase();
+                var payIn = $$("manual_bet_amount").getValue();
+                var chance = $$("manual_bet_chance").getValue();
+                bet(currency, 1, parseInt(payIn*100000000), chance);
+            });
+            $$("bet_currency_selection").attachEvent("onChange", function(newId, oldId){
+                refresh(newId);
+            });
+            $$("reset_session_button").attachEvent("onItemClick", function(){
+                webix.confirm({
+                    title:"CONFIRMATION",
+                    ok:"Yes",
+                    cancel:"No",
+                    text:"Reset current session. Sure?",
+                    callback:function(result){
+                        if(result){
+                            let currencyValue = $$("bet_currency_selection").getValue();
+                            refresh(currencyValue);
+                        }
+                    }
+                });
+            });
+            webix.ready(function(){
+                init();
+                refresh(1);
+            });
+            function autoBet(iswin, previousbet){
+                let nums =  $$("auto_bet_number_of_bets").getValue();
+                let currency = $$("bet_currency_selection").getText().toLowerCase();
+                let base = $$("auto_bet_base_amount").getValue();
+                let chance = $$("auto_bet_base_chance").getValue();
+                let lowHigh = $$("auto_bet_start_low_high").getValue() == 'LOW' ?0:1;
+                let autoLossRadio = $$("auto_bet_amount_radio_on_loss").getValue();
+                let autoWinRadio = $$("auto_bet_amount_radio_on_win").getValue();
+                if(iswin == true && autoWinRadio == 'MULTIPLIER'){
+                    let multiWin = $$("auto_bet_amount_radio_on_win_multiplier").getValue();
+                    base = previousbet * multiWin;
+                    console.log('win'+multiWin);
+                } else if(iswin == false && autoLossRadio == 'MULTIPLIER') {
+                    let multiLoss = $$("auto_bet_amount_radio_on_loss_multiplier").getValue();
+                    base = previousbet * multiLoss;
+                    console.log('loss'+multiLoss);
+                }
+                console.log(lowHigh,base,nums,currency,chance);
+                bet(currency, lowHigh, Math.round(parseFloat(base*100000000)), chance);
+            }
+            function scriptBet(init){
+                try{
+                    let nextbet = fengari.load('return nextbet')();
+                    let previousbet = fengari.load('return previousbet')();
+                    let chance = fengari.load('return chance')();
+                    let currency = $$("bet_currency_selection").getText().toLowerCase();
+                    let lowHigh = fengari.load('return bethigh')() == false ?0:1;
+                    if(init){
+                        fengari.load('nextbet=basebet')();
+                        nextbet = fengari.load('return basebet')();
+                        fengari.load('previousbet=basebet\ncurrentprofit=0\ncurrentstreak=0\nwins=0\nlosses=0\nbets=0\nisloop=true\nprofit=0\n')();
+                        fengari.load('function stop()\nisloop = false \n print(isloop)\nend')();
+                    } else {
+                        fengari.load('dobet()')();
+                        nextbet = fengari.load('return nextbet')();
+                        chance = fengari.load('return chance')();
+                        lowHigh = fengari.load('return bethigh')() == false ?0:1;
+                    }
+                    fengari.load('previousbet=nextbet')();
+                    fengari.load('print(basebet,nextbet,previousbet,chance,win,currentprofit,currentstreak,wins,losses,bets,bethigh,isloop,profit)')();
+                    betScript(currency, lowHigh, Math.round(parseFloat(nextbet*100000000)), chance);
+                }catch(err){
+                    $$("script_bet_start_stop_button").setValue('START');
+                    webix.message({type: 'error', text: err.message});
+                }
+            }
+            function action(c,h,p,ch,cv,cb){
+                webix.ajax().post('bet', { Currency:c, PayIn:p, High:h, Chance:ch, CurrencyValue: cv }).then(function (result) {
+                    let ret = result.json();
+                    cb(ret);
+                }).fail(function (xhr) {
+                    var response = JSON.parse(xhr.response);
+                    $$("auto_bet_start_stop_button").setValue('START');
+                    webix.message({type: 'error', text: response.error.message});
+                });
+            }
+            
+            function bet(c,h,p,ch) {
+                console.log('aaaaa',c,h,p,ch);
+                if(!checkParams(p,ch)) {
+                    $$("auto_bet_start_stop_button").setValue('START');
+                    webix.message({type: 'error', text: 'Please enter the correct parameters'});
+                    return false;
+                }
+                let iswin = false;
+                $$("bet_chart").showProgress({
+                    type:"icon",
+                    delay:3000
+                });
+                let currencyValue = $$("bet_currency_selection").getValue() -1;
+                action(c,h,p,ch,currencyValue,function(ret) {
+                    console.log(ret);
+                    try{
+                    if(isError(ret)) {
+                            iswin = getWinStatus(ret);
+                            setChart(ret, count, currencyValue);
+                            setDatatable(ret, iswin);
+                            setStats(ret.info, currencyValue);
+                            count++
+                    } else {
+                        isLoop = outError(ret);
+                    }
+                    $$("bet_chart").hideProgress();
+                    console.log(isLoop, stopOnWin, stopOnLoss, iswin);
+                    if (stopOnWin == true && iswin) {
+                        console.log("stop on win");
+                        isLoop = false;
+                    }
+                    if (stopOnLoss == true && !iswin) {
+                        console.log("stop on loss");
+                        isLoop = false;
+                    }
+                    if (isLoop) {
+                        let actProfit = getActProfit(ret.info, currencyValue);
+                        let stopProfit = $$("auto_bet_stop_on_profit").getValue()*100000000;
+                        if(stopProfit != 0) {
+                            if(actProfit>=stopProfit && stopProfit>0){
+                                    isLoop = false;
+                            }
+                            console.log(actProfit,stopProfit);
+                            if(actProfit<=stopProfit && stopProfit<0){
+                                console.log("act profit stop");
+                                    isLoop = false;
+                            }
+                        }
+                        let nums =  $$("auto_bet_number_of_bets").getValue();
+                        if(nums>0){
+                            $$("auto_bet_number_of_bets").setValue(nums-1);
+                            if(nums == 1) {
+                                isLoop = false;
+                            }
+                        }
+                        let lossNums =  $$("auto_bet_stop_on_loss").getValue();
+                        if(lossNums>0 && !iswin){
+                            $$("auto_bet_stop_on_loss").setValue(lossNums-1);
+                            if(lossNums == 1) {
+                                isLoop = false;
+                            }
+                        }
+                        let winNums =  $$("auto_bet_stop_on_win").getValue();
+                        if(winNums>0 && iswin){
+                            $$("auto_bet_stop_on_win").setValue(winNums-1);
+                            if(winNums == 1) {
+                                isLoop = false;
+                            }
+                        }
+                        if(isLoop){
+                            autoBet(iswin,(p/100000000).toFixed(8));
+                        } else {
+                            $$("auto_bet_start_stop_button").setValue('START');
+                        }
+                    } else {
+                        $$("auto_bet_start_stop_button").setValue('START');
+                    }
+                    } catch(err){
+                        $$("auto_bet_start_stop_button").setValue('START');
+                        webix.message({type: 'error', text: err.message});
+                    }
+                });
+            }
+            let count = 1;
+            function betScript(c,h,p,ch) {
+                if(!checkParams(p,ch)) {
+                    $$("script_bet_start_stop_button").setValue('START');
+                    webix.message({type: 'error', text: 'Please enter the correct parameters'});
+                    return false;
+                }
+                let iswin = false;
+                if(isLoop){
+                    isLoop = fengari.load('return isloop')();
+                    if(!isLoop){
+                        $$("script_bet_start_stop_button").setValue('START');
+                        return false;
+                    }
+                }
+                $$("bet_chart").showProgress({
+                    type:"icon",
+                    delay:3000
+                });
+                let currencyValue = $$("bet_currency_selection").getValue() -1;
+                action(c,h,p,ch,currencyValue,function(ret) {
+                    if(isError(ret)) {
+                        try {
+                            iswin = getWinStatus(ret);
+                            setBetToLua(ret, currencyValue);
+                            setChart(ret, count, currencyValue);
+                            setDatatable(ret, iswin);
+                            setStats(ret.info, currencyValue);
+                        } catch(err){
+                            webix.message({type: 'error', text: err.message});
+                        }
+                        count++;
+                    } else {
+                        isLoop = outError(ret);
+                    }
+                    $$("bet_chart").hideProgress();
+                    console.log(isLoop, stopOnWin, stopOnLoss, iswin);
+                    if (stopOnWin == true && iswin) {
+                        console.log("stop on win");
+                        isLoop = false;
+                    }
+                    if (stopOnLoss == true && !iswin) {
+                        console.log("stop on loss");
+                        isLoop = false;
+                    }
+                    if (isLoop) {
+                        scriptBet(false);
+                    } else {
+                        $$("script_bet_start_stop_button").setValue('START');
+                    }
+                });
+            }
+            function clearSession(){
+                $$('bet_datatable').clearAll();
+                $$("bet_chart").clearAll();
+                stopOnWin = false;
+                stopOnLoss = false;
+            }
+            function refresh(newId) {
+                clear(function(userinfo){
+                    setStats(userinfo, newId-1);
+                    $$('bet_datatable').clearAll();
+                    $$("bet_chart").clearAll();
+                    clearSession();
+                });
+            }
+            function clear(cb){
+                $$("bet_chart").showProgress({
+                    type:"icon",
+                    delay:3000
+                });
+                webix.ajax().get('clear?currency='+$$("bet_currency_selection").getText().toLowerCase()).then(function (result) {
+                    let ret = result.json();
+                    $$("bet_chart").hideProgress();
+                    cb(ret);
+                });
+            }
+            function getInfo(cb){
+                $$("bet_chart").showProgress({
+                    type:"icon",
+                    delay:3000
+                });
+                webix.ajax().get('refresh?currency='+$$("bet_currency_selection").getText().toLowerCase()).then(function (result) {
+                    let ret = result.json();
+                    $$("bet_chart").hideProgress();
+                    cb(ret);
+                });
+            }
+            function setStreak(win){
+                if(win){
+                    fengari.load('wins=wins+1\nif currentstreak>=0 then \n currentstreak=currentstreak+1\n else \n currentstreak=1\n end')()
+                } else {
+                    fengari.load('losses=losses+1\nif currentstreak<=0 then \n currentstreak=currentstreak-1\n else \n currentstreak=-1\n end')()
+                }
+            }
     script(src=site)

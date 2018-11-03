@@ -1,6 +1,6 @@
 ![](screenshot/bot-logo.png)
 # MyDiceBot
-* https://mydicebot.github.io
+* [https://mydicebot.github.io](https://mydicebot.github.io)
 * [MyDiceBot](https://mydicebot.github.io) is a cross-platform automated dicing bot for cryptocurrency dice-sites.
 * Similar to the bot pioneer [Seuntjies DiceBot](https://bot.seuntjie.com).
 * Multiple platforms are supported, including __Windows, Mac, Linux,__ and __Web__.
@@ -35,6 +35,7 @@
 
 # Supporting Dice Sites (alphabet sequence)
 * [999Dice](https://www.999dice.com/?224280708)
+* [BitDice (coming soon)](https://www.bitdice.me/?r=90479)
 * [Bitsler (coming soon)](https://www.bitsler.com/?ref=mydicebot)
 * [BitVest (coming soon)](https://bitvest.io?r=108792)
 * [Crypto-Games (coming soon)](https://www.crypto-games.net?i=CpQP3V8Up2)
@@ -47,7 +48,8 @@
 * [PrimeDice (coming soon)](https://primedice.com/?c=mydicebot)
 * [SafeDice (coming soon)](https://safedice.com/?r=100309)
 * [Stake (coming soon)](https://stake.com/?code=mydicebot)
-* [YoloDice (coming soon)](https://yolodice.com/r?6fAf-wVz)
+* [YoloDice](https://yolodice.com/r?6fAf-wVz)
+* (More will be coming soon)
 
 # Quick Start
 * Download MyDiceBot Binaries here: [MyDiceBot Releases](https://github.com/mydicebot/mydicebot.github.io/releases).
@@ -89,7 +91,7 @@
     ```
 
 # Features
-* Supported platforms: __Windows, Mac, Linux, Web__, Mobile (coming soon)
+* Supported platforms: __Windows, Mac, Linux, Web__
 * Supported programming languages: __Lua__, JavaScript, Python (coming soon)
 * Supported multiple dice-sites
 * Supported multiple strategies
@@ -199,8 +201,11 @@ end
 # Contact
 * github: [https://github.com/mydicebot/mydicebot.github.io/issues](https://github.com/mydicebot/mydicebot.github.io/issues)
 * steemit: [https://steemit.com/@mydicebot](https://steemit.com/@mydicebot)
-* bitcointalk: PM mydicebot
+* bitcointalk: [MyDiceBot - Cross-Platform | Multi-Script-Language | Multi-Site | Multi-Strategy](https://bitcointalk.org/index.php?topic=5057661)
 
 # Donation
-* bitcoin: 19Yw3Hs8zAidGEUNeEUM2r4tXLnrJDy7kN
+* BTC: 19Yw3Hs8zAidGEUNeEUM2r4tXLnrJDy7kN
+* ETH: 0x3d652737ad9906344C0fb9C693bD3917FDaa37dC
+* BCH: qpwukqk0a557yytlg9x9tl77qjh8lje03gyd73qgm6
+* DOGE: D8KxQv3sRBhZ7CW5ApazgXBCnCaSjY2Lqz
 * steemit: [@mydicebot](https://steemit.com/@mydicebot)

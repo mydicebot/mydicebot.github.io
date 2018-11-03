@@ -71,6 +71,3 @@ exports.clear = async function(req, res) {
         res.render('error',{err: err.toString()});
     }
 };
-
-
-
