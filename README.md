@@ -35,6 +35,7 @@
 
 # Supporting Dice Sites (alphabet sequence)
 * [999Dice](https://www.999dice.com/?224280708)
+* [BetKing](https://betking.io)
 * [BitDice (coming soon)](https://www.bitdice.me/?r=90479)
 * [Bitsler (coming soon)](https://www.bitsler.com/?ref=mydicebot)
 * [BitVest (coming soon)](https://bitvest.io?r=108792)
