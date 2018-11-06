@@ -40,7 +40,7 @@
 * [Bitsler (coming soon)](https://www.bitsler.com/?ref=mydicebot)
 * [BitVest (coming soon)](https://bitvest.io?r=108792)
 * [Crypto-Games (coming soon)](https://www.crypto-games.net?i=CpQP3V8Up2)
-* [Dice-Bet](https://dice-bet.com/?ref=u:mydicebot)
+* [Dice-Bet (coming soon)](https://dice-bet.com/?ref=u:mydicebot)
 * [DuckDice (coming soon)](https://duckdice.com/ab61534783)
 * [Freebitco.in (coming soon)](https://freebitco.in/?r=16392656)
 * [KingDice (coming soon)](https://kingdice.com/#/welcome?aff=180722)
