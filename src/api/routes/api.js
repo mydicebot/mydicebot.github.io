@@ -1,7 +1,9 @@
 'use strict';
 
 import api from '../controllers/apiController';
+import {BitslerDice} from '../models/bitsler'
 import {NineDice} from '../models/nine'
+import {YoloDice} from '../models/yolo'
 import {Factory} from '../models/factory'
 
 module.exports = function(app) {
@@ -17,7 +19,9 @@ module.exports = function(app) {
 };
 
 function createDice (req, res, next) {
+    Factory.register('Bitsler', new BitslerDice());
     Factory.register('999Dice', new NineDice());
+    Factory.register('YoloDice', new YoloDice());
     next();
 }
 function userMiddleware (req, res, next) {

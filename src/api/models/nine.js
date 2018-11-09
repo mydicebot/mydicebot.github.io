@@ -72,11 +72,11 @@ export class NineDice extends BaseDice {
         formData.append('ProtocolVersion', 2);
         let betRoll = 0;
         if(req.body.High == 1){
-            betRoll = 999999-Math.floor((req.body.Chance*10000-1));
+            betRoll = 999999-Math.floor((req.body.Chance*10000));
             formData.append('Low', betRoll);
             formData.append('High', 999999);
         } else {
-            betRoll = Math.floor((req.body.Chance*10000-1));
+            betRoll = Math.floor((req.body.Chance*10000));
             formData.append('Low', 0);
             formData.append('High', betRoll);
         }

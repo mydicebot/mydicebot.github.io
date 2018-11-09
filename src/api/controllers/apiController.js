@@ -46,7 +46,7 @@ exports.bet = async function(req, res) {
         return res.status(200).json(ret);
     } catch(err) {
         console.log(err);
-        res.render('error',{err: err.toString()});
+        return res.status(200).json({err: err.toString()});
     }
 };
 
