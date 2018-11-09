@@ -4,13 +4,14 @@
 * [MyDiceBot](https://mydicebot.github.io) is a cross-platform automated dicing bot for cryptocurrency dice-sites.
 * Similar to the bot pioneer [Seuntjies DiceBot](https://bot.seuntjie.com).
 * Multiple platforms are supported, including __Windows, Mac, Linux,__ and __Web__.
-* Multiple programming languages are supported such as  __Lua__. JavaScript and Python are coming soon.
+* Multiple programming languages are supported such as  __Lua__.
 
 ![](screenshot/mydicebot-1000-win.png)
 
 # Table Of Content
-   * [Supporting Dice Sites (alphabet sequence)](#supporting-dice-sites-alphabet-sequence)
    * [Download](#download)
+   * [Supporting Dice Sites (alphabet sequence)](#supporting-dice-sites-alphabet-sequence)
+   * [TODO](#todo)
    * [Quick Start](#quick-start)
    * [Startup Options](#startup-options)
    * [Features](#features)
@@ -35,9 +36,12 @@
 
 # Supporting Dice Sites (alphabet sequence)
 * [999Dice](https://www.999dice.com/?224280708)
+* [Bitsler](https://www.bitsler.com/?ref=mydicebot)
+* [YoloDice](https://yolodice.com/r?6fAf-wVz)
+
+# TODO
 * [BetKing (coming soon)](https://betking.io)
 * [BitDice (coming soon)](https://www.bitdice.me/?r=90479)
-* [Bitsler (coming soon)](https://www.bitsler.com/?ref=mydicebot)
 * [BitVest (coming soon)](https://bitvest.io?r=108792)
 * [Crypto-Games (coming soon)](https://www.crypto-games.net?i=CpQP3V8Up2)
 * [Dice-Bet (coming soon)](https://dice-bet.com/?ref=u:mydicebot)
@@ -50,7 +54,6 @@
 * [PrimeDice (coming soon)](https://primedice.com/?c=mydicebot)
 * [SafeDice (coming soon)](https://safedice.com/?r=100309)
 * [Stake (coming soon)](https://stake.com/?code=mydicebot)
-* [YoloDice](https://yolodice.com/r?6fAf-wVz)
 * (More will be coming soon)
 
 # Quick Start
@@ -94,7 +97,7 @@
 
 # Features
 * Supported platforms: __Windows, Mac, Linux, Web__
-* Supported programming languages: __Lua__, JavaScript, Python (coming soon)
+* Supported programming languages: __Lua__
 * Supported multiple dice-sites
 * Supported multiple strategies
 * New account registration
@@ -162,6 +165,7 @@
 chance = 49.5
 multiplier = 2
 basebet = 0.00000010
+bethigh = false
 
 function dobet()
     if profit >= 0.1 then

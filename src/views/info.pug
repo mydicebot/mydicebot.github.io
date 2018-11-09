@@ -119,7 +119,7 @@ block content
                 view: "datatable",
                 columns: [
                     {id: "bet_datatable_id", header: "ID", fillspace:true},
-                    {id: "bet_datatable_bet_chance", header: "CHANCE", fillspace:true},
+                    {id: "bet_datatable_bet_chance", header: "GAME", fillspace:true},
                     {id: "bet_datatable_actual_chance", header: "ROLL", fillspace:true},
                     {id: "bet_datatable_amount", header: "AMOUNT", fillspace:true},
                     {id: "bet_datatable_payout", header: "PAYOUT", fillspace:true},
@@ -436,6 +436,7 @@ block content
                     $$("script_bet_start_stop_button").setValue('START');
                 } else {
                     let currencyValue = $$("bet_currency_selection").getValue() -1;
+                    fengari.load('bethigh= false')();
                     initScriptBalance(currencyValue, function(){
                         let code = $$("script_bet_coding_board").getValue();
                         try {
@@ -765,6 +766,7 @@ block content
                 });
                 webix.ajax().get('clear?currency='+$$("bet_currency_selection").getText().toLowerCase()).then(function (result) {
                     let ret = result.json();
+                    console.log(ret);
                     $$("bet_chart").hideProgress();
                     cb(ret);
                 });
