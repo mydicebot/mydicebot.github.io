@@ -4,6 +4,7 @@ import api from '../controllers/apiController';
 import {BitslerDice} from '../models/bitsler'
 import {NineDice} from '../models/nine'
 import {YoloDice} from '../models/yolo'
+import {PrimeDice} from '../models/prime'
 import {Factory} from '../models/factory'
 
 module.exports = function(app) {
@@ -22,6 +23,7 @@ function createDice (req, res, next) {
     Factory.register('Bitsler', new BitslerDice());
     Factory.register('999Dice', new NineDice());
     Factory.register('YoloDice', new YoloDice());
+    Factory.register('PrimeDice', new PrimeDice());
     next();
 }
 function userMiddleware (req, res, next) {

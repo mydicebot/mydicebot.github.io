@@ -59,6 +59,7 @@ function getWinStatus(ret){
 
 function getActProfit(userinfo,currencyValue){
     let actProfit = userinfo.CurrentBalances[currencyValue].TotalPayIn+userinfo.CurrentBalances[currencyValue].TotalPayOut;
+    console.log('actprofit:'+actProfit);
     return actProfit;
 }
 

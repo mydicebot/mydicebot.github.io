@@ -21,6 +21,7 @@
        * [Internal Variables](#internal-variables)
        * [Internal Functions](#internal-functions)
        * [Sample Code](#sample-code)
+       * [Script Gist](#script-gist)
    * [Report Issue](#report-issue)
    * [License](#license)
    * [Thanks](#thanks)
@@ -37,10 +38,11 @@
 # Supporting Dice Sites (alphabet sequence)
 * [999Dice](https://www.999dice.com/?224280708)
 * [Bitsler](https://www.bitsler.com/?ref=mydicebot)
+* [PrimeDice](https://primedice.com/?c=mydicebot)
 * [YoloDice](https://yolodice.com/r?6fAf-wVz)
 
 # TODO
-* [BetKing (coming soon)](https://betking.io)
+* [BetKing (coming soon)](https://betking.io/?ref=u:mydicebot)
 * [BitDice (coming soon)](https://www.bitdice.me/?r=90479)
 * [BitVest (coming soon)](https://bitvest.io?r=108792)
 * [Crypto-Games (coming soon)](https://www.crypto-games.net?i=CpQP3V8Up2)
@@ -51,7 +53,6 @@
 * [MegaDice (coming soon)](https://www.megadice.com/?a=326492144)
 * [NitroDice (coming soon)](https://www.nitrodice.com?ref=0N2pG8rkL7UR6oMzZWEj)
 * [NitrogenSports (coming soon)](https://nitrogensports.eu/r/4998127)
-* [PrimeDice (coming soon)](https://primedice.com/?c=mydicebot)
 * [SafeDice (coming soon)](https://safedice.com/?r=100309)
 * [Stake (coming soon)](https://stake.com/?code=mydicebot)
 * (More will be coming soon)
@@ -179,6 +180,10 @@ function dobet()
     end
 end
 ```
+## Script Gist
+* [Basic Martingale](https://gist.github.com/mydicebot/155ca3c1ff54c6b6707d2dc869154da0)
+* [High Chance Regression/Martingale Variation](https://gist.github.com/mydicebot/741035c7ed474037cc4dff26a300aef1)
+
 # Report Issue
 * [https://github.com/mydicebot/mydicebot.github.io/issues](https://github.com/mydicebot/mydicebot.github.io/issues)
 

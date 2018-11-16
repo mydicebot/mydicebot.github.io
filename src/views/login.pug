@@ -4,7 +4,7 @@ block content
     script.
         var registerUrls = {
             "999Dice":"https://www.999dice.com/?224280708", 
-            "BetKing":"https://betking.io",
+            "BetKing":"https://betking.io/?ref=u:mydicebot",
             "BitDice":"https://www.bitdice.me/?r=90479",
             "Bitsler":"https://www.bitsler.com/?ref=mydicebot", 
             "BitVest":"https://bitvest.io?r=108792", 
@@ -29,6 +29,7 @@ block content
                         options: [
                            {id:"999Dice",value:"999Dice"},
                            {id:"Bitsler",value:"Bitsler"},
+                           {id:"PrimeDice",value:"PrimeDice"},
                            {id:"YoloDice",value:"YoloDice"},
                            {id:"BetKing",value:"BetKing (coming soon)"},
                            {id:"BitDice",value:"BitDice (coming soon)"},
@@ -40,8 +41,7 @@ block content
                            {id:"KingDice",value:"KingDice (Coming Soon)"},
                            {id:"MegaDice",value:"MegaDice (Coming Soon)"},
                            {id:"NitroDice",value:"NitroDice (Coming Soon)"},
-                           {id:"NitrogenSports",value:"NitrogenSports (Coming Soon)"},
-                           {id:"PrimeDice",value:"PrimeDice (Coming Soon)"},
+                           {id:"NitrogenSports",value:"NitrogenSports (Coming Soon)"},                       
                            {id:"SafeDice",value:"SafeDice (Coming Soon)"},
                            {id:"Stake",value:"Stake (Coming Soon)"}
                         ],
@@ -63,7 +63,9 @@ block content
                         width: 400,
                         label: "USERNAME",
                         labelWidth: 120,
-                        name: "username"
+                        name: "username",
+                        invalidMessage:"username can not be empty",
+                        validate:webix.rules.isNotEmpty
                     },
                     {
                         view: "text",
@@ -73,7 +75,9 @@ block content
                         width: 400,
                         label: "PASSWORD",
                         labelWidth: 120,
-                        name: "password"
+                        name: "password",
+                        invalidMessage:"password can not be empty",
+                        validate:webix.rules.isNotEmpty
                     },
                     {
                         view: "text",
@@ -92,7 +96,9 @@ block content
                         width: 400,
                         labelWidth: 120,
                         label: "API Key",
-                        name: "apikey"
+                        name: "apikey",
+                        invalidMessage:"apikey can not be empty",
+                        validate:webix.rules.isNotEmpty
                     },
                     {
                         label: "LOGIN",
@@ -102,7 +108,7 @@ block content
                         top: 400,
                         width: 400,
                         name: "login_button",
-                        click: login
+                        click: "login"
                     },
                     {
                         label: "REGISTER",
@@ -127,6 +133,10 @@ block content
                     },
                     { 
                         view: "label", 
+                        label: "<a target='_blank' href='https://primedice.com/?c=mydicebot'>PrimeDice</a>", 
+                    },
+                    { 
+                        view: "label", 
                         label: "<a target='_blank' href='https://yolodice.com/r?6fAf-wVz'>YoloDice</a>", 
                     },
                     {
@@ -135,7 +145,7 @@ block content
                     },
                     { 
                         view: "label", 
-                        label: "<a target='_blank' href='https://betking.io/?'>BetKing (coming soon)</a>", 
+                        label: "<a target='_blank' href='https://betking.io/?ref=u:mydicebot'>BetKing (coming soon)</a>", 
                     },
                     { 
                         view: "label", 
@@ -179,10 +189,6 @@ block content
                     },
                     { 
                         view: "label", 
-                        label: "<a target='_blank' href='https://primedice.com/?c=mydicebot'>PrimeDice (coming soon)</a>", 
-                    },
-                    { 
-                        view: "label", 
                         label: "<a target='_blank' href='https://safedice.com/?r=100309'>SafeDice (coming soon)</a>", 
                     },
                     { 
@@ -191,18 +197,14 @@ block content
                     },                  
                 ]
             }],
-            rules: {
-                "username": webix.rules.isNotEmpty,
-                "password": webix.rules.isNotEmpty
-            }
         });
         webix.extend($$("form1"), webix.ProgressBar);
         function register() {
-
             let site = $$("site").getValue();
             window.open(registerUrls[site],'_blank');
         }
-        function login() {
+        login = function() {
+            console.log($$("form1"));
             if($$("form1").validate()){
                 $$("form1").showProgress({
                     type: "icon",
@@ -218,6 +220,42 @@ block content
             let mess = "#{message}"
             if(mess != '') {
                 webix.message({type: 'error', text: mess });
+            }
+            console.log($$("form1"));
+            $$("form1").elements.apikey.hide(); 
+        });
+        $$("site").attachEvent("onChange", function(newId, oldId){
+            var needUserSites = ['test','999Dice'];
+            var needTokenSites = ['test','PrimeDice'];
+            var needApiKeySites = ['test','Bitsler'];
+            var needOnlyApiKeySites = ['test','YoloDice']
+            if(needUserSites.indexOf(newId)>0){
+                console.log("need user");
+                $$("form1").elements.apikey.hide(); 
+                $$("form1").elements.username.show(); 
+                $$("form1").elements.password.show(); 
+                //$$("form1").refresh();
+            } else if(needTokenSites.indexOf(newId)>0) {
+                console.log("need token");
+                $$("form1").elements.username.hide(); 
+                $$("form1").elements.password.hide(); 
+                $$("form1").elements.apikey.show(); 
+                $$("form1").elements.apikey.define("label", "Token");
+                $$("form1").elements.apikey.refresh();
+            } else if (needApiKeySites.indexOf(newId)>0) {
+                console.log("need apikey");
+                $$("form1").elements.username.show(); 
+                $$("form1").elements.password.show(); 
+                $$("form1").elements.apikey.show(); 
+                $$("form1").elements.apikey.define("label", "Api Key");
+                $$("form1").elements.apikey.refresh();
+            } else if(needOnlyApiKeySites.indexOf(newId)>0) {
+                console.log("need only apikey");
+                $$("form1").elements.username.hide(); 
+                $$("form1").elements.password.hide(); 
+                $$("form1").elements.apikey.show(); 
+                $$("form1").elements.apikey.define("label", "Api Key");
+                $$("form1").elements.apikey.refresh();
             }
         });
 
