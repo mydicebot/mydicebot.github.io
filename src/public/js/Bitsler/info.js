@@ -28,7 +28,7 @@ function checkParams(p,ch){
     if(p < 0.000000001 || p > 1000000000) {
         return false
     }
-    if(ch>98 || ch<0.001) {
+    if(ch>98 || ch<0.01) {
         return false
     }
     return true;
@@ -59,6 +59,7 @@ function getBalance(userinfo){
 
 function getActProfit(userinfo){
     let actProfit = userinfo.currentInfo.profit;
+    console.log('actprofit:'+actProfit);
     return actProfit;
 }
 
