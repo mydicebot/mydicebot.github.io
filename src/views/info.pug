@@ -450,7 +450,7 @@ block content
                             code = code.replace(/([a-zA-Z]*[0-9]*\s*)\/\=(\s*[a-zA-Z]*[0-9]*)/g, '$1=$1/$2 ');
                             fengari.load(code)();
                         } catch(err){
-                            webix.message({type: 'error', text: err.message});
+                            webix.message({type: 'error', text: "load error:"+err.message});
                             return false;
                         }
                         isLoop = true;
@@ -592,11 +592,12 @@ block content
                         lowHigh = fengari.load('return bethigh')() == false ?0:1;
                     }
                     fengari.load('previousbet=nextbet')();
-                    fengari.load('print(basebet,nextbet,previousbet,chance,win,currentprofit,currentstreak,wins,losses,bets,bethigh,isloop,profit)')();
+                    fengari.load('print("script",basebet,nextbet,previousbet,chance,win,currentprofit,currentstreak,wins,losses,bets,bethigh,isloop,profit)')();
                     betScript(currency, lowHigh, Math.round(parseFloat(nextbet*100000000)), chance);
                 }catch(err){
+                    console.log(err)
                     $$("script_bet_start_stop_button").setValue('START');
-                    webix.message({type: 'error', text: err.message});
+                    webix.message({type: 'error', text:"script error:"+ err});
                 }
             }
             function action(c,h,p,ch,cv,cb){

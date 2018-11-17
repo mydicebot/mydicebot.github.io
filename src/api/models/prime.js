@@ -17,7 +17,7 @@ export class PrimeDice extends BaseDice {
         let data = "query{user {activeServerSeed { seedHash seed nonce} activeClientSeed{seed} id balances{available{currency amount}} statistic {game bets wins losses amount profit currency}}}";
         let ret = await this._send('', 'POST', data, apiKey);
         req.session.accessToken = apiKey;
-        req.session.username = userName;
+        req.session.username = apiKey;
         return true;
     }
 
