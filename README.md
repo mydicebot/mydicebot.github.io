@@ -39,6 +39,7 @@
 * [999Dice](https://www.999dice.com/?224280708)
 * [Bitsler](https://www.bitsler.com/?ref=mydicebot)
 * [PrimeDice](https://primedice.com/?c=mydicebot)
+* [Stake](https://stake.com/?code=mydicebot)
 * [YoloDice](https://yolodice.com/r?6fAf-wVz)
 
 # TODO
@@ -54,7 +55,6 @@
 * [NitroDice (coming soon)](https://www.nitrodice.com?ref=0N2pG8rkL7UR6oMzZWEj)
 * [NitrogenSports (coming soon)](https://nitrogensports.eu/r/4998127)
 * [SafeDice (coming soon)](https://safedice.com/?r=100309)
-* [Stake (coming soon)](https://stake.com/?code=mydicebot)
 * (More will be coming soon)
 
 # Quick Start
