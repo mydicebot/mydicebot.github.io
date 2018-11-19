@@ -30,7 +30,8 @@ block content
                            {id:"999Dice",value:"999Dice"},
                            {id:"Bitsler",value:"Bitsler"},
                            {id:"PrimeDice",value:"PrimeDice"},
-                           {id:"YoloDice",value:"YoloDice"},
+                           {id:"Stake",value:"Stake"},
+                           {id:"YoloDice",value:"YoloDice"},              
                            {id:"BetKing",value:"BetKing (coming soon)"},
                            {id:"BitDice",value:"BitDice (coming soon)"},
                            {id:"BitVest",value:"BitVest (Coming Soon)"},
@@ -42,8 +43,7 @@ block content
                            {id:"MegaDice",value:"MegaDice (Coming Soon)"},
                            {id:"NitroDice",value:"NitroDice (Coming Soon)"},
                            {id:"NitrogenSports",value:"NitrogenSports (Coming Soon)"},                       
-                           {id:"SafeDice",value:"SafeDice (Coming Soon)"},
-                           {id:"Stake",value:"Stake (Coming Soon)"}
+                           {id:"SafeDice",value:"SafeDice (Coming Soon)"}
                         ],
                         view: "richselect",
                         left: 70,
@@ -133,6 +133,10 @@ block content
                     },
                     { 
                         view: "label", 
+                        label: "<a target='_blank' href='https://stake.com/?code=mydicebot'>Stake</a>", 
+                    },  
+                    { 
+                        view: "label", 
                         label: "<a target='_blank' href='https://primedice.com/?c=mydicebot'>PrimeDice</a>", 
                     },
                     { 
@@ -191,10 +195,7 @@ block content
                         view: "label", 
                         label: "<a target='_blank' href='https://safedice.com/?r=100309'>SafeDice (coming soon)</a>", 
                     },
-                    { 
-                        view: "label", 
-                        label: "<a target='_blank' href='https://stake.com/?code=mydicebot'>Stake (coming soon)</a>", 
-                    },                  
+                                    
                 ]
             }],
         });
@@ -226,7 +227,7 @@ block content
         });
         $$("site").attachEvent("onChange", function(newId, oldId){
             var needUserSites = ['test','999Dice'];
-            var needTokenSites = ['test','PrimeDice'];
+            var needTokenSites = ['test','PrimeDice','Stake'];
             var needApiKeySites = ['test','Bitsler'];
             var needOnlyApiKeySites = ['test','YoloDice']
             if(needUserSites.indexOf(newId)>0){
