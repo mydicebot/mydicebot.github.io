@@ -1,5 +1,5 @@
 function init() {
-    console.log('hello Bitsler');
+    console.log('hello Prime Dice');
     $$("bet_currency_selection").define("options", [
         {id:1,value:"BTC"},
         {id:2,value:"DOGE"},
@@ -92,7 +92,7 @@ function setDatatable(ret){
         profitStr = '<font size="3" color="green">' + ret.betInfo.profit + '</font>';
     }
     $$('bet_datatable').add({
-        bet_datatable_id:ret.betInfo.id,
+        bet_datatable_id:ret.betInfo.iid,
         bet_datatable_amount:ret.betInfo.amount,
         bet_datatable_low_high:ret.betInfo.condition,
         bet_datatable_payout:ret.betInfo.payout,
