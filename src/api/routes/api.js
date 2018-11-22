@@ -6,6 +6,7 @@ import {NineDice} from '../models/nine'
 import {YoloDice} from '../models/yolo'
 import {PrimeDice} from '../models/prime'
 import {StakeDice} from '../models/stake'
+//import {CryptoDice} from '../models/crypto'
 import {Factory} from '../models/factory'
 
 module.exports = function(app) {
@@ -25,7 +26,8 @@ function createDice (req, res, next) {
     Factory.register('999Dice', new NineDice());
     Factory.register('YoloDice', new YoloDice());
     Factory.register('PrimeDice', new PrimeDice());
-    Factory.register('StakeDice', new StakeDice());
+    Factory.register('Stake', new StakeDice());
+//    Factory.register('Crypto-Games', new CryptoDice());
     next();
 }
 function userMiddleware (req, res, next) {
