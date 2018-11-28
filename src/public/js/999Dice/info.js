@@ -63,6 +63,18 @@ function getActProfit(userinfo,currencyValue){
     return actProfit;
 }
 
+function getCurrentBetId(ret){
+    let betId = ret.betInfo.id;
+    console.log('currentBetId:'+betId);
+    return betId;
+}
+
+function getCurrentRoll(ret){
+    let roll = ret.Secret/10000;
+    console.log('currentRoll:'+roll);
+    return roll;
+}
+
 function setBetToLua(ret, currencyValue){
     fengari.load('win='+ret.Win +'\nbets=bets+1\ncurrentprofit='+((ret.PayOut-ret.PayIn)/100000000).toFixed(8)+'\n')()
     setStreak(ret.Win);

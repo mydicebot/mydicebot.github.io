@@ -303,6 +303,35 @@ block content
                                     name: "auto_bet_base_chance"
                                 },
                                 {
+                                    cols:[
+                                        {
+                                            id: "auto_bet_stop_on_roll",
+                                            label: "STOP ON ROLL",
+                                            view: "label",
+                                            labelWidth: 150,
+                                            name: "auto_bet_stop_on_roll"
+                                        },
+                                        {
+                                            id: "auto_bet_roll_min",
+                                            label: "MIN",
+                                            view: "text",
+                                            labelWidth: 40,
+                                            width: 100,
+                                            value: "0.00",
+                                            name: "auto_bet_roll_min"
+                                        },
+                                        {
+                                            id: "auto_bet_roll_max",
+                                            label: " -- MAX",
+                                            view: "text",
+                                            labelWidth: 60,
+                                            width: 120,
+                                            value: "0.00",
+                                            name: "auto_bet_roll_max"
+                                        }
+                                    ]
+                                },
+                                {
                                     id: "auto_bet_stop_on_profit",
                                     view: "text",
                                     label: "STOP ON PROFIT(0:NON-STOP)",
@@ -647,6 +676,13 @@ block content
                         isLoop = false;
                     }
                     if (isLoop) {
+                        let currentRoll = getCurrentRoll(ret);
+                        let rollMin = $$("auto_bet_roll_min").getValue();
+                        let rollMax = $$("auto_bet_roll_max").getValue();
+                        if(currentRoll <= rollMax && currentRoll >= rollMin){
+                            console.log("currentRoll stop");
+                            isLoop = false;
+                        }
                         let actProfit = getActProfit(ret.info, currencyValue);
                         let stopProfit = $$("auto_bet_stop_on_profit").getValue()*100000000;
                         if(stopProfit != 0) {

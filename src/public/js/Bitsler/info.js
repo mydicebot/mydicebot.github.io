@@ -63,6 +63,18 @@ function getActProfit(userinfo){
     return actProfit;
 }
 
+function getCurrentBetId(ret){
+    let betId = ret.betInfo.id;
+    console.log('currentBetId:'+betId);
+    return betId;
+}
+
+function getCurrentRoll(ret){
+    let roll = ret.betInfo.roll_number;
+    console.log('currentRoll:'+roll);
+    return roll;
+}
+
 function outError(ret, isLoop){
     let mess = ret.err;
     if(mess != '' && mess != undefined) {
