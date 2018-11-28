@@ -218,5 +218,5 @@ end
 * BTC: 19Yw3Hs8zAidGEUNeEUM2r4tXLnrJDy7kN
 * ETH: 0x3d652737ad9906344C0fb9C693bD3917FDaa37dC
 * BCH: qpwukqk0a557yytlg9x9tl77qjh8lje03gyd73qgm6
-* DOGE: D8KxQv3sRBhZ7CW5ApazgXBCnCaSjY2Lqz
+* DOGE: D9wMjdtGqsDZvjxWMjt66JLjE9E9nMAKb7
 * steemit: [@mydicebot](https://steemit.com/@mydicebot)
