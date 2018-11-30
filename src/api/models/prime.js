@@ -133,8 +133,8 @@ export class PrimeDice extends BaseDice {
         info.info.bets++;
         info.currentInfo.bets++;
         info.info.profit = (parseFloat(info.info.profit) + parseFloat(betInfo.profit)).toFixed(8);
-        info.info.wagered = (parseFloat(info.info.wagered) + parseFloat(betInfo.profit)).toFixed(8);
-        info.currentInfo.wagered = (parseFloat(info.currentInfo.wagered) + parseFloat(betInfo.profit)).toFixed(8);
+        info.info.wagered = (parseFloat(info.info.wagered) + parseFloat(amount)).toFixed(8);
+        info.currentInfo.wagered = (parseFloat(info.currentInfo.wagered) + parseFloat(amount)).toFixed(8);
         info.currentInfo.profit = (parseFloat(info.currentInfo.profit) + parseFloat(betInfo.profit)).toFixed(8);
         if(betInfo.profit>0){
             betInfo.win = true;

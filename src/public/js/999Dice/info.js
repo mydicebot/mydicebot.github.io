@@ -3,7 +3,7 @@ function init(){
 }
 
 function checkParams(p,ch){
-    console.log(p,ch);
+    //console.log(p,ch);
     if(p < 0.000000001 || p > 1000000000) {
         return false
     }
@@ -76,15 +76,20 @@ function getCurrentRoll(ret){
 }
 
 function setBetToLua(ret, currencyValue){
+    let currentStreak = $$('bet_current_stats2').getValues().bet_current_stats_current_streak;
+    if(ret.Win){
+        fengari.load('wins=wins+1\ncurrentstreak='+currentStreak+'\n')()
+    } else {
+        fengari.load('losses=losses+1\ncurrentstreak='+currentStreak+'\n')()
+    }
     fengari.load('win='+ret.Win +'\nbets=bets+1\ncurrentprofit='+((ret.PayOut-ret.PayIn)/100000000).toFixed(8)+'\n')()
-    setStreak(ret.Win);
     let profit = ((ret.info.CurrentBalances[currencyValue].TotalPayIn+ret.info.CurrentBalances[currencyValue].TotalPayOut)/100000000).toFixed(8);
     fengari.load('profit='+profit +'\nbalance='+parseFloat(ret.info.Balances[currencyValue].Balance/100000000).toFixed(8))()
 }
 
 function setChart(ret, count, currencyValue){
     let profit = ((ret.info.CurrentBalances[currencyValue].TotalPayIn+ret.info.CurrentBalances[currencyValue].TotalPayOut)/100000000).toFixed(8);
-    console.log(profit);
+    //console.log(profit);
     $$("bet_chart").add({xValue: count, yValue: profit});
 }
 
