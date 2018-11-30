@@ -11,7 +11,7 @@ function init() {
 }
 
 function checkParams(p,ch){
-    console.log(p,ch);
+    //console.log(p,ch);
     if(p < 0.000000001 || p > 1000000000) {
         return false
     }
@@ -83,8 +83,13 @@ function getWinStatus(ret){
 }
 
 function setBetToLua(ret){
+    let currentStreak = $$('bet_current_stats2').getValues().bet_current_stats_current_streak;
+    if(ret.betInfo.win){
+        fengari.load('wins=wins+1\ncurrentstreak='+currentStreak+'\n')()
+    } else {
+        fengari.load('losses=losses+1\ncurrentstreak='+currentStreak+'\n')()
+    }
     fengari.load('win='+ret.betInfo.win +'\nbets=bets+1\ncurrentprofit='+ret.betInfo.profit+'\n')()
-    setStreak(ret.betInfo.win);
     let profit = ret.info.currentInfo.profit;
     fengari.load('profit='+profit +'\nbalance='+ret.info.currentInfo.balance)()
 }

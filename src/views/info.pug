@@ -27,13 +27,26 @@ block content
                 height: 200,
                 //width: 0,
                 elements: [
-                    {label: "CURRENT STATS", type: "label"},
+                    {label: "CURRENT STATS 1", type: "label"},
                     {label: "BALANCE", type: "text", id: "bet_current_stats_balance", value:"0"},
                     {label: "WIN", type: "text", id: "bet_current_stats_win", value:"0"},
                     {label: "LOSS", type: "text", id: "bet_current_stats_loss", value:"0"},
                     {label: "BET", type: "text", id: "bet_current_stats_bet", value:"0"},
                     {label: "PROFIT", type: "text", id: "bet_current_stats_profit", value:"0"},
                     {label: "WAGERED", type: "text", id: "bet_current_stats_wagered", value:"0"},
+                ]
+            };
+
+            var bet_current_stats2 = {
+                id: "bet_current_stats2",
+                view: "property",
+                height: 200,
+                //width: 0,
+                elements: [
+                    {label: "CURRENT STATS 2", type: "label"},
+                    {label: "currentstreak", type: "text", id: "bet_current_stats_current_streak", value:"0", labelWidth: 120},
+                    {label: "maxwinstreak", type: "text", id: "bet_current_stats_max_win_streak", value:"0", labelWidth: 120},
+                    {label: "maxlosstreak", type: "text", id: "bet_current_stats_max_loss_streak", value:"0", labelWidth: 120},
                 ]
             };
 
@@ -435,6 +448,8 @@ block content
                             resizer,
                             bet_current_stats,
                             resizer,
+                            bet_current_stats2,
+                            resizer,
                             {
                                 rows: [
                                     bet_currency_selection, 
@@ -543,7 +558,6 @@ block content
                     callback:function(result){
                         if(result) {
                             let domain = document.domain;
-                            console.log(domain);
                             window.location.href = '../login';
                         }
                     }
@@ -593,13 +607,13 @@ block content
                 if(iswin == true && autoWinRadio == 'MULTIPLIER'){
                     let multiWin = $$("auto_bet_amount_radio_on_win_multiplier").getValue();
                     base = previousbet * multiWin;
-                    console.log('win'+multiWin);
+                    //console.log('win'+multiWin);
                 } else if(iswin == false && autoLossRadio == 'MULTIPLIER') {
                     let multiLoss = $$("auto_bet_amount_radio_on_loss_multiplier").getValue();
                     base = previousbet * multiLoss;
-                    console.log('loss'+multiLoss);
+                    //console.log('loss'+multiLoss);
                 }
-                console.log(lowHigh,base,nums,currency,chance);
+                //console.log(lowHigh,base,nums,currency,chance);
                 bet(currency, lowHigh, Math.round(parseFloat(base*100000000)), chance);
             }
             function scriptBet(init){
@@ -641,7 +655,6 @@ block content
             }
             
             function bet(c,h,p,ch) {
-                console.log('aaaaa',c,h,p,ch);
                 if(!checkParams(p,ch)) {
                     $$("auto_bet_start_stop_button").setValue('START');
                     webix.message({type: 'error', text: 'Please enter the correct parameters'});
@@ -654,10 +667,11 @@ block content
                 });
                 let currencyValue = $$("bet_currency_selection").getValue() -1;
                 action(c,h,p,ch,currencyValue,function(ret) {
-                    console.log(ret);
+                    //console.log(ret);
                     try{
                     if(isError(ret)) {
                             iswin = getWinStatus(ret);
+                            setStreak(iswin);
                             setChart(ret, count, currencyValue);
                             setDatatable(ret, iswin);
                             setStats(ret.info, currencyValue);
@@ -666,13 +680,13 @@ block content
                         isLoop = outError(ret);
                     }
                     $$("bet_chart").hideProgress();
-                    console.log(isLoop, stopOnWin, stopOnLoss, iswin);
+                    //console.log(isLoop, stopOnWin, stopOnLoss, iswin);
                     if (stopOnWin == true && iswin) {
-                        console.log("stop on win");
+                        //console.log("stop on win");
                         isLoop = false;
                     }
                     if (stopOnLoss == true && !iswin) {
-                        console.log("stop on loss");
+                        //console.log("stop on loss");
                         isLoop = false;
                     }
                     if (isLoop) {
@@ -680,7 +694,7 @@ block content
                         let rollMin = $$("auto_bet_roll_min").getValue();
                         let rollMax = $$("auto_bet_roll_max").getValue();
                         if(currentRoll <= rollMax && currentRoll >= rollMin){
-                            console.log("currentRoll stop");
+                            //console.log("currentRoll stop");
                             isLoop = false;
                         }
                         let actProfit = getActProfit(ret.info, currencyValue);
@@ -689,9 +703,9 @@ block content
                             if(actProfit>=stopProfit && stopProfit>0){
                                     isLoop = false;
                             }
-                            console.log(actProfit,stopProfit);
+                            //console.log(actProfit,stopProfit);
                             if(actProfit<=stopProfit && stopProfit<0){
-                                console.log("act profit stop");
+                                //console.log("act profit stop");
                                     isLoop = false;
                             }
                         }
@@ -754,11 +768,13 @@ block content
                     if(isError(ret)) {
                         try {
                             iswin = getWinStatus(ret);
+                            setStreak(iswin);
                             setBetToLua(ret, currencyValue);
                             setChart(ret, count, currencyValue);
                             setDatatable(ret, iswin);
                             setStats(ret.info, currencyValue);
                         } catch(err){
+                            console.log(err);
                             webix.message({type: 'error', text: err.message});
                         }
                         count++;
@@ -766,13 +782,13 @@ block content
                         isLoop = outError(ret);
                     }
                     $$("bet_chart").hideProgress();
-                    console.log(isLoop, stopOnWin, stopOnLoss, iswin);
+                    //console.log(isLoop, stopOnWin, stopOnLoss, iswin);
                     if (stopOnWin == true && iswin) {
-                        console.log("stop on win");
+                        //console.log("stop on win");
                         isLoop = false;
                     }
                     if (stopOnLoss == true && !iswin) {
-                        console.log("stop on loss");
+                        //console.log("stop on loss");
                         isLoop = false;
                     }
                     if (isLoop) {
@@ -803,7 +819,7 @@ block content
                 });
                 webix.ajax().get('clear?currency='+$$("bet_currency_selection").getText().toLowerCase()).then(function (result) {
                     let ret = result.json();
-                    console.log(ret);
+                    //console.log(ret);
                     $$("bet_chart").hideProgress();
                     cb(ret);
                 });
@@ -820,10 +836,32 @@ block content
                 });
             }
             function setStreak(win){
+                let currentStreak = $$('bet_current_stats2').getValues().bet_current_stats_current_streak;
+                let maxWinStreak = $$('bet_current_stats2').getValues().bet_current_stats_max_win_streak;
+                let maxLossStreak = $$('bet_current_stats2').getValues().bet_current_stats_max_loss_streak;
                 if(win){
-                    fengari.load('wins=wins+1\nif currentstreak>=0 then \n currentstreak=currentstreak+1\n else \n currentstreak=1\n end')()
+                    if(currentStreak>=0) {
+                        currentStreak++;
+                    } else {
+                        currentStreak = 1;
+                    } 
+                    if(maxWinStreak<currentStreak){
+                        maxWinStreak = currentStreak;
+                    }
                 } else {
-                    fengari.load('losses=losses+1\nif currentstreak<=0 then \n currentstreak=currentstreak-1\n else \n currentstreak=-1\n end')()
+                    if(currentStreak<0) {
+                        currentStreak--;
+                    } else {
+                        currentStreak = -1;
+                    } 
+                    if(maxLossStreak>currentStreak){
+                        maxLossStreak = currentStreak;
+                    }
                 }
+                $$('bet_current_stats2').setValues({
+                    bet_current_stats_current_streak:currentStreak,
+                    bet_current_stats_max_win_streak:maxWinStreak,
+                    bet_current_stats_max_loss_streak:maxLossStreak,
+                });
             }
     script(src=site)

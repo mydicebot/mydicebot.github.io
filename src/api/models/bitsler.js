@@ -115,8 +115,8 @@ export class BitslerDice extends BaseDice {
         info.info.profit = parseFloat(info.info.profit) + parseFloat(betInfo.amount_return);
         info.info.balance = betInfo.new_balance;
         info.currentInfo.balance = betInfo.new_balance;
-        info.info.wagered = parseFloat(info.info.wagered) + parseFloat(betInfo.amount_return);
-        info.currentInfo.wagered = parseFloat(info.currentInfo.wagered) + parseFloat(betInfo.amount_return);
+        info.info.wagered = parseFloat(info.info.wagered) + parseFloat(amount);
+        info.currentInfo.wagered = parseFloat(info.currentInfo.wagered) + parseFloat(amount);
         info.currentInfo.profit = parseFloat(info.currentInfo.profit) + parseFloat(betInfo.amount_return);
         if(betInfo.amount_return>0){
             betInfo.win = true;
