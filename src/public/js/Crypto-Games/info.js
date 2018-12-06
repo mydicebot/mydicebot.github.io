@@ -56,6 +56,12 @@ function getActProfit(userinfo){
     return actProfit;
 }
 
+function getCurrProfit(ret){
+    let currProfit = ret.betInfo.profit
+    console.log('currprofit:'+currProfit);
+    return currProfit;
+}
+
 function getCurrentBetId(ret){
     let betId = ret.betInfo.id;
     console.log('currentBetId:'+betId);
@@ -87,23 +93,6 @@ function isError(ret){
 
 function getWinStatus(ret){
     return ret.betInfo.win;
-}
-
-function setBetToLua(ret){
-    let currentStreak = $$('bet_current_stats2').getValues().bet_current_stats_current_streak;
-    if(ret.betInfo.win){
-        fengari.load('wins=wins+1\ncurrentstreak='+currentStreak+'\n')()
-    } else {
-        fengari.load('losses=losses+1\ncurrentstreak='+currentStreak+'\n')()
-    }
-    fengari.load('win='+ret.betInfo.win +'\nbets=bets+1\ncurrentprofit='+ret.betInfo.profit+'\n')()
-    let profit = ret.info.currentInfo.profit;
-    fengari.load('profit='+profit +'\nbalance='+ret.info.currentInfo.balance)()
-}
-
-function setChart(ret, count, cv){
-    let profit = ret.info.currentInfo.profit;
-    $$("bet_chart").add({xValue: count, yValue: profit});
 }
 
 function setDatatable(ret){
