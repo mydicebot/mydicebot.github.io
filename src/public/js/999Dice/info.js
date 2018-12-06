@@ -63,6 +63,12 @@ function getActProfit(userinfo,currencyValue){
     return actProfit;
 }
 
+function getCurrProfit(ret){
+    let currProfit = ((ret.PayOut-ret.PayIn)/100000000).toFixed(8)
+    console.log('currprofit:'+currProfit);
+    return currProfit;
+}
+
 function getCurrentBetId(ret){
     let betId = ret.betInfo.id;
     console.log('currentBetId:'+betId);
@@ -75,23 +81,6 @@ function getCurrentRoll(ret){
     return roll;
 }
 
-function setBetToLua(ret, currencyValue){
-    let currentStreak = $$('bet_current_stats2').getValues().bet_current_stats_current_streak;
-    if(ret.Win){
-        fengari.load('wins=wins+1\ncurrentstreak='+currentStreak+'\n')()
-    } else {
-        fengari.load('losses=losses+1\ncurrentstreak='+currentStreak+'\n')()
-    }
-    fengari.load('win='+ret.Win +'\nbets=bets+1\ncurrentprofit='+((ret.PayOut-ret.PayIn)/100000000).toFixed(8)+'\n')()
-    let profit = ((ret.info.CurrentBalances[currencyValue].TotalPayIn+ret.info.CurrentBalances[currencyValue].TotalPayOut)/100000000).toFixed(8);
-    fengari.load('profit='+profit +'\nbalance='+parseFloat(ret.info.Balances[currencyValue].Balance/100000000).toFixed(8))()
-}
-
-function setChart(ret, count, currencyValue){
-    let profit = ((ret.info.CurrentBalances[currencyValue].TotalPayIn+ret.info.CurrentBalances[currencyValue].TotalPayOut)/100000000).toFixed(8);
-    //console.log(profit);
-    $$("bet_chart").add({xValue: count, yValue: profit});
-}
 
 function setDatatable(ret, iswin){
     let chanceStr = '<font size="3" color="red">'+ ret.High + ' '+ ret.BetRoll/10000 +'</font>';

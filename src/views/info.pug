@@ -626,7 +626,7 @@ block content
                     if(init){
                         fengari.load('nextbet=basebet')();
                         nextbet = fengari.load('return basebet')();
-                        fengari.load('previousbet=basebet\ncurrentprofit=0\ncurrentstreak=0\nwins=0\nlosses=0\nbets=0\nisloop=true\nprofit=0\n')();
+                        fengari.load('previousbet=basebet\ncurrentprofit=0\ncurrentstreak=0\nwins=0\nlosses=0\nbets=0\nisloop=true\nprofit=0\ncurrentroll=0\n')();
                         fengari.load('function stop()\nisloop = false \n print(isloop)\nend')();
                     } else {
                         fengari.load('dobet()')();
@@ -635,7 +635,7 @@ block content
                         lowHigh = fengari.load('return bethigh')() == false ?0:1;
                     }
                     fengari.load('previousbet=nextbet')();
-                    fengari.load('print("script",basebet,nextbet,previousbet,chance,win,currentprofit,currentstreak,wins,losses,bets,bethigh,isloop,profit)')();
+                    fengari.load('print("script",basebet,nextbet,previousbet,chance,win,currentprofit,currentstreak,wins,losses,bets,bethigh,isloop,profit,currentroll)')();
                     betScript(currency, lowHigh, Math.round(parseFloat(nextbet*100000000)), chance);
                 }catch(err){
                     console.log(err)
@@ -799,6 +799,11 @@ block content
                 });
             }
             function clearSession(){
+                $$('bet_current_stats2').setValues({
+                    bet_current_stats_current_streak:0,
+                    bet_current_stats_max_win_streak:0,
+                    bet_current_stats_max_loss_streak:0,
+                });
                 $$('bet_datatable').clearAll();
                 $$("bet_chart").clearAll();
                 stopOnWin = false;
@@ -863,5 +868,21 @@ block content
                     bet_current_stats_max_win_streak:maxWinStreak,
                     bet_current_stats_max_loss_streak:maxLossStreak,
                 });
+            }
+            function setBetToLua(ret, currencyValue){
+                let currentStreak = $$('bet_current_stats2').getValues().bet_current_stats_current_streak;
+                let profit = (getActProfit(ret.info,currencyValue)/100000000).toFixed(8)
+                let balance = getBalance(ret.info)
+                if(getWinStatus(ret)){
+                    fengari.load('wins=wins+1\ncurrentstreak='+currentStreak+'\n')()
+                } else {
+                    fengari.load('losses=losses+1\ncurrentstreak='+currentStreak+'\n')()
+                }
+                fengari.load('win='+ getWinStatus(ret) +'\nbets=bets+1\ncurrentprofit='+getCurrProfit(ret)+'\ncurrentroll='+getCurrentRoll(ret)+'\nprofit='+profit+'\nbalance='+balance+'\n')()
+            }
+            
+            function setChart(ret, count, currencyValue){
+                let profit = (getActProfit(ret.info,currencyValue)/100000000).toFixed(8)
+                $$("bet_chart").add({xValue: count, yValue: profit});
             }
     script(src=site)
