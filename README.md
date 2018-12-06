@@ -151,6 +151,7 @@
 |__losses__|int|Read Only|Shows the number of losses for the current session.|
 |__profit__|double|Read Only|Shows your session profit. Session is defined as the time since opening the current instance of bot or the last time you reset your stats in the bot.|
 |__currentstreak__|double|Read Only|Shows the current winning or losing streak. When positive (>0), it's a winning streak. When negative (<0) it's a losing streak. Can never be 0. Only set after first bet.|
+|__currentroll__|double|Read Only|Show current roll information|
 
 ## Internal Functions
 
