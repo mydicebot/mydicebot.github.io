@@ -1,8 +1,8 @@
-const version = '20181203073026';
+const version = '20181207094424';
 const cacheName = `static::${version}`;
 
 const buildContentBlob = () => {
-  return ["/dicesites/","/faq/","/","/tutorials/","/manifest.json","/assets/search.json","/assets/styles.css","/redirects.json","/sitemap.xml","/robots.txt","/feed.xml","https://mydicebot.github.io/screenshot/bot-logo.png", "/assets/default-offline-image.png", "/assets/scripts/fetch.js"
+  return ["/dicesites/","/faq/","/","/screenshots/","/tutorials/","/manifest.json","/assets/search.json","/assets/styles.css","/redirects.json","/sitemap.xml","/robots.txt","/feed.xml","https://mydicebot.github.io/screenshot/bot-logo.png", "/assets/default-offline-image.png", "/assets/scripts/fetch.js"
   ]
 }
 
