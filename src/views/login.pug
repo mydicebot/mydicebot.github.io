@@ -13,6 +13,7 @@ block content
             "DuckDice":"https://duckdice.com/ab61534783", 
             "Freebitco.in":"https://freebitco.in/?r=16392656", 
             "KingDice":"https://kingdice.com/#/welcome?aff=18072", 
+            "MagicDice": "https://magic-dice.com/?ref=mydicebot",
             "MegaDice":"https://www.megadice.com/?a=326492144", 
             "NitroDice":"https://www.nitrodice.com?ref=0N2pG8rkL7UR6oMzZWEj", 
             "NitrogenSports":"https://nitrogensports.eu/r/4998127", 
@@ -22,6 +23,8 @@ block content
             "YoloDice":"https://yolodice.com/r?6fAf-wVz" 
         };
 
+        webix.ui.fullScreen();
+
         webix.ui({
             view: "form", id: "form1", elements: [{
                 rows: [
@@ -30,6 +33,7 @@ block content
                            {id:"999Dice",value:"999Dice"},
                            {id:"Bitsler",value:"Bitsler"},
                            {id:"Crypto-Games",value:"Crypto-Games"},
+                           {id:"MagicDice", value:"MagicDice"},
                            {id:"PrimeDice",value:"PrimeDice"},
                            {id:"Stake",value:"Stake"},
                            {id:"YoloDice",value:"YoloDice"},              
@@ -137,6 +141,10 @@ block content
                     },
                     { 
                         view: "label", 
+                        label: "<a target='_blank' href='https://magic-dice.com/?ref=mydicebot'>MagicDice</a>", 
+                    },
+                    { 
+                        view: "label", 
                         label: "<a target='_blank' href='https://primedice.com/?c=mydicebot'>PrimeDice</a>", 
                     },
                     { 
@@ -230,9 +238,11 @@ block content
             var needTokenSites = ['test','PrimeDice','Stake'];
             var needApiKeySites = ['test','Bitsler'];
             var needOnlyApiKeySites = ['test','YoloDice','Crypto-Games']
+            var needSteemActiveKeySites = ['test','MagicDice']
             if(needUserSites.indexOf(newId)>0){
                 console.log("need user");
                 $$("form1").elements.apikey.hide(); 
+                $$("form1").elements.twofa.show(); 
                 $$("form1").elements.username.show(); 
                 $$("form1").elements.password.show(); 
                 //$$("form1").refresh();
@@ -240,6 +250,7 @@ block content
                 console.log("need token");
                 $$("form1").elements.username.hide(); 
                 $$("form1").elements.password.hide(); 
+                $$("form1").elements.twofa.show(); 
                 $$("form1").elements.apikey.show(); 
                 $$("form1").elements.apikey.define("label", "Token");
                 $$("form1").elements.apikey.refresh();
@@ -247,6 +258,7 @@ block content
                 console.log("need apikey");
                 $$("form1").elements.username.show(); 
                 $$("form1").elements.password.show(); 
+                $$("form1").elements.twofa.show(); 
                 $$("form1").elements.apikey.show(); 
                 $$("form1").elements.apikey.define("label", "Api Key");
                 $$("form1").elements.apikey.refresh();
@@ -254,8 +266,16 @@ block content
                 console.log("need only apikey");
                 $$("form1").elements.username.hide(); 
                 $$("form1").elements.password.hide(); 
+                $$("form1").elements.twofa.show(); 
                 $$("form1").elements.apikey.show(); 
                 $$("form1").elements.apikey.define("label", "Api Key");
+                $$("form1").elements.apikey.refresh();
+            } else if(needSteemActiveKeySites.indexOf(newId)>0) {
+                console.log("need Activekey");
+                $$("form1").elements.password.hide(); 
+                $$("form1").elements.twofa.hide(); 
+                $$("form1").elements.apikey.show(); 
+                $$("form1").elements.apikey.define("label", "Active Key");
                 $$("form1").elements.apikey.refresh();
             }
         });
