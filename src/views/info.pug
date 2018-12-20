@@ -439,6 +439,39 @@ block content
 
             var resizer = {view:"resizer"};
 
+            if (webix.env.mobile) {
+                webix.ui.fullScreen();
+                webix.ui({
+                id: "bet_layout_mobile",
+                rows: [
+                    //- {
+                    //-     cols: [
+                    //-         bet_total_stats,
+                    //-         resizer,
+                    //-         bet_current_stats,
+                    //-         resizer,
+                    //-         bet_current_stats2,
+                    //-         resizer,
+                    //-         {
+                    //-             rows: [
+                    //-                 bet_currency_selection, 
+                    //-                 reset_session_button,
+                    //-                 switch_site_button
+                    //-             ]
+                    //-         }
+                    //-     ]
+                    //- },
+                    //- {view: "resizer"},
+                    {
+                        rows: [
+                            {rows: [bet_chart, {view: "resizer"}, bet_datatable]},
+                            resizer,
+                            bet_config_tabview
+                        ]
+                    },
+                ]
+            });
+            } else {
             webix.ui({
                 id: "bet_layout",
                 rows: [
@@ -469,10 +502,12 @@ block content
                     },
                 ]
             });
+            }
             webix.extend($$("bet_chart"), webix.ProgressBar);
             let isLoop = false;
             let stopOnWin = false;
             let stopOnLoss = false;
+            let minBetAmount = 0.00000001;
             $$("script_bet_start_stop_button").attachEvent("onItemClick", function(){
                 let status = $$("script_bet_start_stop_button").getValue();
                 if(status == 'STOP') {
@@ -517,7 +552,7 @@ block content
                 }
             });
             $$("manual_bet_amount_min_button").attachEvent("onItemClick", function(){
-                $$("manual_bet_amount").setValue("0.00000001");
+                $$("manual_bet_amount").setValue(minBetAmount);
             });
             $$("manual_bet_amount_max_button").attachEvent("onItemClick", function(){
                 getInfo(function(userinfo){
@@ -527,7 +562,7 @@ block content
             });
             $$("manual_bet_amount_half_button").attachEvent("onItemClick", function(){
                 let betAmount = $$("manual_bet_amount").getValue()/2;
-                $$("manual_bet_amount").setValue(Math.max(0.00000001, betAmount).toFixed(8));
+                $$("manual_bet_amount").setValue(Math.max(minBetAmount, betAmount).toFixed(8));
             });
             $$("manual_bet_amount_double_button").attachEvent("onItemClick", function(){
                 getInfo(function(userinfo){

@@ -13,7 +13,6 @@ exports.login = async function(req, res) {
         if(typeof req.body.username !== 'undefined'){
             let dice = Factory.create(req.body.site);
             let ret = await dice.login(req.body.username, req.body.password, req.body.twofa, req.body.apikey, req);
-            console.log(ret);
             if(ret != true){
                 res.render('login', {message:ret});
             } else {
