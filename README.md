@@ -1,10 +1,10 @@
 ![](screenshot/bot-logo.png)
 # MyDiceBot
 * [https://mydicebot.github.io](https://mydicebot.github.io)
-* [MyDiceBot](https://mydicebot.github.io) is a cross-platform automated dicing bot for cryptocurrency dice-sites.
-* Similar to the bot pioneer [Seuntjies DiceBot](https://bot.seuntjie.com).
+* [MyDiceBot](https://mydicebot.github.io) is World #1 Cross-Platform Dicing Bot.
 * Multiple platforms are supported, including __Windows, Mac, Linux,__ and __Web__.
 * Multiple programming languages are supported such as  __Lua__.
+* [Open Source](https://github.com/mydicebot/mydicebot.github.io) and __Free Forever__
 
 ![](screenshot/mydicebot-1000-win.png)
 
@@ -39,6 +39,7 @@
 * [999Dice](https://www.999dice.com/?224280708)
 * [Bitsler](https://www.bitsler.com/?ref=mydicebot)
 * [Crypto-Games](https://www.crypto-games.net?i=CpQP3V8Up2)
+* [MagicDice](https://magic-dice.com/?ref=mydicebot)
 * [PrimeDice](https://primedice.com/?c=mydicebot)
 * [Stake](https://stake.com/?code=mydicebot)
 * [YoloDice](https://yolodice.com/r?6fAf-wVz)
