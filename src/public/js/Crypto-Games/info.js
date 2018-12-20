@@ -17,8 +17,8 @@ function init() {
 }
 
 function checkParams(p,ch){
-    //console.log(p,ch);
-    if(p < 0.000000001 || p > 1000000000) {
+    console.log(p,ch);
+    if(p < 0.00000001 || p > 1000000000*1000000000) {
         return false
     }
     if(ch>98 || ch<0.01) {
