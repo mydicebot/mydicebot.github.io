@@ -99,61 +99,66 @@ export class MagicDice extends BaseDice {
     }
 
     async bet(req) {
-        req.setTimeout(500000);
-        let info = req.session.info;
-        let amount = (req.body.PayIn/100000000).toFixed(3);
-        let condition = req.body.High == 1?'over':'under';
-        let currency = req.body.Currency.toLowerCase();
-        let target = 0;
-        if(req.body.High == 1){
-            // only magic dice using this formula + 1
-            target = 99-Math.floor(req.body.Chance) + 1;
-        } else {
-            // only magic dice using this formula + 1
-            target = Math.floor(req.body.Chance) + 1;
-        }
-        let memo = condition + ' ' + target + ' mydicebot' + Math.random().toString(36).substring(2);
-        let bet = amount + ' '+ req.body.Currency.toUpperCase();
-        let userName = req.session.username;
-        let token = req.session.accessToken;
-        let magicDice = 'magicdice';
-        let ret = await this._transfer(token, userName, magicDice, bet, memo);
-        let data = await this._getBetInfo(ret.id);
-        if(typeof data._id == "undefined") {
-            data = await this._getBetInfoFromUser(userName,ret.id);
-        }
-        if(typeof data._id != "undefined") {
-            let betInfo = {};
-            betInfo.id = data._id;
-            betInfo.condition = req.body.High == 1?'>':'<';
-            betInfo.target = target;
-            betInfo.profit = (parseFloat(data.payout) - parseFloat(data.amount)).toFixed(8);
-            betInfo.roll_number = data.diceRoll;
-            betInfo.payout = parseFloat(data.payout).toFixed(8);
-            betInfo.amount = parseFloat(data.amount).toFixed(8);
-            info.info.balance = (parseFloat(info.info.balance) + parseFloat(betInfo.profit)).toFixed(8);
-            info.currentInfo.balance = (parseFloat(info.currentInfo.balance) + parseFloat(betInfo.profit)).toFixed(8);
-            info.info.bets++;
-            info.currentInfo.bets++;
-            info.info.profit = (parseFloat(info.info.profit) + parseFloat(betInfo.profit)).toFixed(8);
-            info.info.wagered = (parseFloat(info.info.wagered) + parseFloat(amount)).toFixed(8);
-            info.currentInfo.wagered = (parseFloat(info.currentInfo.wagered) + parseFloat(amount)).toFixed(8);
-            info.currentInfo.profit = (parseFloat(info.currentInfo.profit) + parseFloat(betInfo.profit)).toFixed(8);
-            if(data.won){
-                betInfo.win = true;
-                info.info.wins++;
-                info.currentInfo.wins++;
+        try{
+            req.setTimeout(500000);
+            let info = req.session.info;
+            let amount = (req.body.PayIn/100000000).toFixed(3);
+            let condition = req.body.High == 1?'over':'under';
+            let currency = req.body.Currency.toLowerCase();
+            let target = 0;
+            if(req.body.High == 1){
+                // only magic dice using this formula + 1
+                target = 99-Math.floor(req.body.Chance) + 1;
             } else {
-                betInfo.win = false;
-                info.info.losses++;
-                info.currentInfo.losses++;
+                // only magic dice using this formula + 1
+                target = Math.floor(req.body.Chance) + 1;
             }
-            let returnInfo = {};
-            returnInfo.betInfo= betInfo;
-            returnInfo.info = info;
-            req.session.info = info;
-            return returnInfo;
-        } else {
+            let memo = condition + ' ' + target + ' mydicebot' + Math.random().toString(36).substring(2);
+            let bet = amount + ' '+ req.body.Currency.toUpperCase();
+            let userName = req.session.username;
+            let token = req.session.accessToken;
+            let magicDice = 'magicdice';
+            let ret = await this._transfer(token, userName, magicDice, bet, memo);
+            let data = await this._getBetInfo(ret.id);
+            if(typeof data._id == "undefined") {
+                data = await this._getBetInfoFromUser(userName,ret.id);
+            }
+            if(typeof data._id != "undefined") {
+                let betInfo = {};
+                betInfo.id = data._id;
+                betInfo.condition = req.body.High == 1?'>':'<';
+                betInfo.target = target;
+                betInfo.profit = (parseFloat(data.payout) - parseFloat(data.amount)).toFixed(8);
+                betInfo.roll_number = data.diceRoll;
+                betInfo.payout = parseFloat(data.payout).toFixed(8);
+                betInfo.amount = parseFloat(data.amount).toFixed(8);
+                info.info.balance = (parseFloat(info.info.balance) + parseFloat(betInfo.profit)).toFixed(8);
+                info.currentInfo.balance = (parseFloat(info.currentInfo.balance) + parseFloat(betInfo.profit)).toFixed(8);
+                info.info.bets++;
+                info.currentInfo.bets++;
+                info.info.profit = (parseFloat(info.info.profit) + parseFloat(betInfo.profit)).toFixed(8);
+                info.info.wagered = (parseFloat(info.info.wagered) + parseFloat(amount)).toFixed(8);
+                info.currentInfo.wagered = (parseFloat(info.currentInfo.wagered) + parseFloat(amount)).toFixed(8);
+                info.currentInfo.profit = (parseFloat(info.currentInfo.profit) + parseFloat(betInfo.profit)).toFixed(8);
+                if(data.won){
+                    betInfo.win = true;
+                    info.info.wins++;
+                    info.currentInfo.wins++;
+                } else {
+                    betInfo.win = false;
+                    info.info.losses++;
+                    info.currentInfo.losses++;
+                }
+                let returnInfo = {};
+                returnInfo.betInfo= betInfo;
+                returnInfo.info = info;
+                req.session.info = info;
+                return returnInfo;
+            } else {
+                return false;
+            }
+        } catch (e) {
+            console.log(e);
             return false;
         }
     }
