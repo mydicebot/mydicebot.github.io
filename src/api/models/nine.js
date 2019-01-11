@@ -8,7 +8,7 @@ import {APIError} from '../errors/APIError'
 export class NineDice extends BaseDice {
     constructor(){
         super();
-        this.url = 'https://www.999dice.com/';
+        this.url = 'https://www.999dice.com';
         this.benefit = '?ref=mydicebot'
     }
 

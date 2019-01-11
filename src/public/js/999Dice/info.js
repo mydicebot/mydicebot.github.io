@@ -3,7 +3,7 @@ function init(){
 }
 
 function checkParams(p,ch){
-    console.log(p,ch);
+    //console.log(p,ch);
     if(p < 0.00000001 || p > 1000000000*1000000000) {
         return false
     }
@@ -17,11 +17,17 @@ function checkParams(p,ch){
 function initScriptBalance(currencyValue, cb){
     getInfo(function(userinfo){
         if(userinfo.Balances.length>0){
-            fengari.load('balance='+parseFloat(userinfo.Balances[currencyValue].Balance/100000000).toFixed(8))();
-            fengari.load('bets='+userinfo.CurrentBalances[currencyValue].TotalBets)();
-            fengari.load('wins='+userinfo.CurrentBalances[currencyValue].TotalWins)();
-            fengari.load('losses='+(userinfo.CurrentBalances[currencyValue].TotalBets-userinfo.CurrentBalances[currencyValue].TotalWins))();
-            fengari.load('profit='+((userinfo.CurrentBalances[currencyValue].TotalPayIn+userinfo.CurrentBalances[currencyValue].TotalPayOut)/100000000).toFixed(8))();
+            try {
+                fengari.load('balance='+parseFloat(userinfo.Balances[currencyValue].Balance/100000000).toFixed(8))();
+                fengari.load('bets='+userinfo.CurrentBalances[currencyValue].TotalBets)();
+                fengari.load('wins='+userinfo.CurrentBalances[currencyValue].TotalWins)();
+                fengari.load('losses='+(userinfo.CurrentBalances[currencyValue].TotalBets-userinfo.CurrentBalances[currencyValue].TotalWins))();
+                fengari.load('profit='+((userinfo.CurrentBalances[currencyValue].TotalPayIn+userinfo.CurrentBalances[currencyValue].TotalPayOut)/100000000).toFixed(8))();
+            } catch(err){
+                console.error(err.message);
+                webix.message({type: 'error', text: err.message});
+                return false;
+            }
             cb();
         }
     });
@@ -33,16 +39,12 @@ function getBalance(userinfo){
     return balance;
 }
 
-function outError(ret, isLoop){
+async function outError(ret){
     let mess = ret.error;
     if(ret.NoPossibleProfit == 1) {
         mess = 'NoPossibleProfit';
     }
-    if(mess != '' && mess != undefined) {
-        webix.message({type: 'error', text: mess });
-        isLoop = false;
-    }
-    return isLoop;
+    return await retryError(mess);
 }
 
 function isError(ret){
@@ -53,31 +55,31 @@ function isError(ret){
 }
 
 function getWinStatus(ret){
-    console.log('win status:'+ ret.Win);
+    //console.log('win status:'+ ret.Win);
     return ret.Win;
 }
 
 function getActProfit(userinfo,currencyValue){
     let actProfit = userinfo.CurrentBalances[currencyValue].TotalPayIn+userinfo.CurrentBalances[currencyValue].TotalPayOut;
-    console.log('actprofit:'+actProfit);
+    //console.log('actprofit:'+actProfit);
     return actProfit;
 }
 
 function getCurrProfit(ret){
     let currProfit = ((ret.PayOut-ret.PayIn)/100000000).toFixed(8)
-    console.log('currprofit:'+currProfit);
+    //console.log('currprofit:'+currProfit);
     return currProfit;
 }
 
 function getCurrentBetId(ret){
     let betId = ret.betInfo.id;
-    console.log('currentBetId:'+betId);
+    //console.log('currentBetId:'+betId);
     return betId;
 }
 
 function getCurrentRoll(ret){
     let roll = ret.Secret/10000;
-    console.log('currentRoll:'+roll);
+    //console.log('currentRoll:'+roll);
     return roll;
 }
 

@@ -17,7 +17,7 @@ function init() {
 }
 
 function checkParams(p,ch){
-    console.log(p,ch);
+    //console.log(p,ch);
     if(p < 0.00000001 || p > 1000000000*1000000000) {
         return false
     }
@@ -37,6 +37,7 @@ function initScriptBalance(currencyValue, cb){
                 fengari.load('losses='+userinfo.info.losses)();
                 fengari.load('profit='+userinfo.info.profit)();
             } catch(err){
+                console.error(err.message);
                 webix.message({type: 'error', text: err.message});
                 return false;
             }
@@ -52,36 +53,31 @@ function getBalance(userinfo){
 
 function getActProfit(userinfo){
     let actProfit = userinfo.currentInfo.profit * 100000000;
-    console.log('actprofit:'+actProfit);
+    //console.log('actprofit:'+actProfit);
     return actProfit;
 }
 
 function getCurrProfit(ret){
     let currProfit = ret.betInfo.profit
-    console.log('currprofit:'+currProfit);
+    //console.log('currprofit:'+currProfit);
     return currProfit;
 }
 
 function getCurrentBetId(ret){
     let betId = ret.betInfo.id;
-    console.log('currentBetId:'+betId);
+    //console.log('currentBetId:'+betId);
     return betId;
 }
 
 function getCurrentRoll(ret){
     let roll = ret.betInfo.roll;
-    console.log('currentRoll:'+roll);
+    //console.log('currentRoll:'+roll);
     return roll;
 }
 
-function outError(ret, isLoop){
-    console.log(ret);
+async function outError(ret){
     let mess = ret.err;
-    if(mess != '' && mess != undefined) {
-        webix.message({type: 'error', text: mess });
-        isLoop = false;
-    }
-    return isLoop;
+    return await retryError(mess);
 }
 
 function isError(ret){

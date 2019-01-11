@@ -8,7 +8,7 @@ import {APIError} from '../errors/APIError'
 export class BitslerDice extends BaseDice {
     constructor(){
         super();
-        this.url = 'https://www.bitsler.com/';
+        this.url = 'https://www.bitsler.com';
         this.benefit = '?ref=mydicebot'
         this.currencys = ["btc","eth","ltc","doge","dash","bch","xrp","zec","etc","neo","kmd","btg","lsk","dgb","qtum","strat","waves","burst"];
     }
