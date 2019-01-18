@@ -1,8 +1,9 @@
 ![](screenshot/bot-logo.png)
 # MyDiceBot
-* [https://mydicebot.github.io](https://mydicebot.github.io)
-* [MyDiceBot](https://mydicebot.github.io) is World #1 Cross-Platform Dicing Bot.
+* [https://mydicebot.com](https://mydicebot.com)
+* [MyDiceBot](https://mydicebot.com) is World #1 Cross-Platform Dicing Bot.
 * Multiple platforms are supported, including __Windows, Mac, Linux,__ and __Web__.
+* Multiple blockchains are supported, including __STEEM__.
 * Multiple programming languages are supported such as  __Lua__.
 * [Open Source](https://github.com/mydicebot/mydicebot.github.io) and __Free Forever__
 
