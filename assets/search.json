@@ -11,7 +11,7 @@
   {
     "title": "Dice Sites",
     "excerpt": "\n",
-    "content": "Supported Dice Sites (alphabet sequence)\n\n  999Dice - This site pays 99.9%. That’s a house edge of only 0.1%.\n  Bitsler - One of the best and most popular bitcoin casinos, the fastest dice game.\n  Crypto-Games - An online gambling website offering seven games - Dice, Blackjack, Slot, Roulette, Video Poker, Plinko and Lottery.\n  MagicDice - Dice game on Steem blockchain.\n  PrimeDice - Creators of Dicing, most popular cryptocurrency gambling website.\n  Stake - The high stakes casino, most active gambling community.\n  YoloDice - Free Faucet and progressive Jackpots. Instant or batch withdrawals.\n\n\n\n\nOthers\n\n  BetKing\n  BitDice\n  BitVest\n  Dice-Bet\n  DuckDice\n  Freebitco.in\n  KingDice\n  MegaDice\n  NitroDice\n  NitrogenSports\n  SafeDice\n\n",
+    "content": "\n\nSupported Dice Sites (alphabet sequence)\n\n  999Dice - This site pays 99.9%. That’s a house edge of only 0.1%.\n  Bitsler - One of the best and most popular bitcoin casinos, the fastest dice game.\n  Crypto-Games - An online gambling website offering seven games - Dice, Blackjack, Slot, Roulette, Video Poker, Plinko and Lottery.\n  MagicDice - Dice game on Steem blockchain.\n  PrimeDice - Creators of Dicing, most popular cryptocurrency gambling website.\n  Stake - The high stakes casino, most active gambling community.\n  YoloDice - Free Faucet and progressive Jackpots. Instant or batch withdrawals.\n\n\n\n\nOthers\n\n  BetKing\n  BitDice\n  BitVest\n  Dice-Bet\n  DuckDice\n  Freebitco.in\n  KingDice\n  MegaDice\n  NitroDice\n  NitrogenSports\n  SafeDice\n\n\n\n",
     "url": "/dicesites/"
   },
   
@@ -25,21 +25,21 @@
   {
     "title": "MyDiceBot",
     "excerpt": "\n",
-    "content": "\n  Sites: 999Dice, Bitsler, Crypto-Games, MagicDice, PrimeDice, Stake, YoloDice, and more\n  Platforms: Windows, Mac, Linux, Web\n  Programming languages: Lua\n  Modes: Manual, Auto, Script\n  Open Source and Free Forever\n\n\nDOWNLOAD MyDiceBot and earn bitcoin fast!\n\n\n\n\n",
+    "content": "\n  Sites: 999Dice, Bitsler, Crypto-Games, MagicDice, PrimeDice, Stake, YoloDice, and more\n  Platforms: Windows, Mac, Linux, Web\n  Blockchains: STEEM\n  Programming languages: Lua\n  Modes: Manual, Auto, Script\n  Open Source and Free Forever\n\n\n\n\nDOWNLOAD MyDiceBot and earn bitcoin fast!\n\n\n",
     "url": "/"
   },
   
   {
     "title": "Screenshots",
     "excerpt": "\n",
-    "content": "\n\nMain UI\n\n\nLogin\n\n\nStats\n\n\nManual Bet\n\n\nAuto Bet\n\n\nScript Bet\n\n\n\n",
+    "content": "\nSlogan\n\n\nMain UI\n\n\nLogin\n\n\nStats\n\n\nManual Bet\n\n\nAuto Bet\n\n\nScript Bet\n\n\n\n",
     "url": "/screenshots/"
   },
   
   {
     "title": "Tutorials",
     "excerpt": "\n",
-    "content": "Quick Start\n\n  Download MyDiceBot Binaries.\n  Different execution methods on different platforms.\n    \n      \n        Linux (Open Terminal)\n\n          chmod +x mydicebot-linux\n        \n\n          ./mydicebot-linux\n        \n      \n      \n        Mac (Open Terminal)\n\n          chmod +x mydicebot-macos\n        \n\n          ./mydicebot-macos\n        \n      \n      \n        Windows (Open Command Prompt)\n\n          mydicebot-win.exe\n        \n      \n    \n  \n  Choose Dice Site, Input username/password/2FA/APIKey/Token, etc., then Login. (Different Sites may have different options.)\n\n\n\nMain Features\n\n  Manual Bet, Auto Bet and Script Bet\n  Statistics\n  Charts\n\n\n\nStartup Options\n\n  \n    -port (port is 3000 by default)\n\n    ```\n  mydicebot-win.exe -port 12345\n  \n\n\n",
+    "content": "\n\nQuick Start\n\n  Download MyDiceBot Binaries.\n  Different execution methods on different platforms.\n    \n      \n        Linux (Open Terminal)\n\n          chmod +x mydicebot-linux\n        \n\n          ./mydicebot-linux\n        \n      \n      \n        Mac (Open Terminal)\n\n          chmod +x mydicebot-macos\n        \n\n          ./mydicebot-macos\n        \n      \n      \n        Windows (Open Command Prompt)\n\n          mydicebot-win.exe\n        \n      \n    \n  \n  Choose Dice Site, Input username/password/2FA/APIKey/Token, etc., then Login. (Different Sites may have different options.)\n\n\n\nMain Features\n\n  Manual Bet, Auto Bet and Script Bet\n  Statistics\n  Charts\n\n\n\nStartup Options\n\n  \n    -port (port is 3000 by default)\n\n    ```\n  mydicebot-win.exe -port 12345\n  \n\n\n\n",
     "url": "/tutorials/"
   }
   
