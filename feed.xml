@@ -1,1 +1,359 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.5">Jekyll</generator><link href="https://mydicebot.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="https://mydicebot.github.io/" rel="alternate" type="text/html" /><updated>2019-01-19T00:09:58+00:00</updated><id>https://mydicebot.github.io/feed.xml</id><title type="html">MyDiceBot</title><subtitle>World #1 Cross-Platform Dicing Bot</subtitle><author><name>MyDiceBot</name></author></feed>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.5">Jekyll</generator><link href="https://mydicebot.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="https://mydicebot.github.io/" rel="alternate" type="text/html" /><updated>2019-01-19T11:05:51+00:00</updated><id>https://mydicebot.github.io/feed.xml</id><title type="html">MyDiceBot</title><subtitle>World #1 Cross-Platform Dicing Bot</subtitle><author><name>MyDiceBot</name></author><entry><title type="html">MyDiceBot v1.0.0 is released!</title><link href="https://mydicebot.github.io/2018/11/01/1st-post/" rel="alternate" type="text/html" title="MyDiceBot v1.0.0 is released!" /><published>2018-11-01T00:00:00+00:00</published><updated>2018-11-01T00:00:00+00:00</updated><id>https://mydicebot.github.io/2018/11/01/1st-post</id><content type="html" xml:base="https://mydicebot.github.io/2018/11/01/1st-post/">&lt;p&gt;&lt;img src=&quot;https://cdn.steemitimages.com/DQmWFCtqWW9fykYzmQmmYvdyAB4EZ15amgj1DNhFq31ijXN/mydicebot-steemit.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;iframe data-aa=&quot;1101762&quot; src=&quot;//ad.a-ads.com/1101762?size=468x60&quot; scrolling=&quot;no&quot; style=&quot;width:468px; height:60px; border:0px; padding:0; overflow:hidden&quot; allowtransparency=&quot;true&quot;&gt;&lt;/iframe&gt;
+
+&lt;h1 id=&quot;mydicebot&quot;&gt;MyDiceBot&lt;/h1&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;https://mydicebot.com&quot;&gt;https://mydicebot.com&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://mydicebot.com&quot;&gt;MyDiceBot&lt;/a&gt; is a cross-platform automated dicing bot for cryptocurrency dice-sites.&lt;/li&gt;
+  &lt;li&gt;Similar to the bot pioneer &lt;a href=&quot;https://bot.seuntjie.com&quot;&gt;Seuntjies DiceBot&lt;/a&gt;.&lt;/li&gt;
+  &lt;li&gt;Multiple platforms are supported, including &lt;strong&gt;Windows, Mac, Linux,&lt;/strong&gt; and &lt;strong&gt;Web&lt;/strong&gt;.&lt;/li&gt;
+  &lt;li&gt;Multiple programming languages are supported such as  &lt;strong&gt;Lua&lt;/strong&gt;. JavaScript and Python are coming soon.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://cdn.steemitimages.com/DQmeoH8i6T7FPgDR2jTkWmyQJRoQ7ZbXz2yEVxwjNGeJpRZ/mydicebot-1000-win.png&quot; alt=&quot;mydicebot-1000-win.png&quot; /&gt;&lt;/p&gt;
+
+&lt;h1 id=&quot;table-of-content&quot;&gt;Table Of Content&lt;/h1&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;#supporting-dice-sites-alphabet-sequence&quot;&gt;Supporting Dice Sites (alphabet sequence)&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#download&quot;&gt;Download&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#quick-start&quot;&gt;Quick Start&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#startup-options&quot;&gt;Startup Options&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#features&quot;&gt;Features&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#manual-bet&quot;&gt;Manual Bet&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#auto-bet&quot;&gt;Auto Bet&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#script-bet&quot;&gt;Script Bet&lt;/a&gt;
+    &lt;ul&gt;
+      &lt;li&gt;&lt;a href=&quot;#internal-variables&quot;&gt;Internal Variables&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#internal-functions&quot;&gt;Internal Functions&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#sample-code&quot;&gt;Sample Code&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#report-issue&quot;&gt;Report Issue&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#license&quot;&gt;License&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#thanks&quot;&gt;Thanks&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#quote&quot;&gt;Quote&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#disclaimer&quot;&gt;Disclaimer&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#legal&quot;&gt;Legal&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#contact&quot;&gt;Contact&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#donation&quot;&gt;Donation&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h1 id=&quot;download&quot;&gt;Download&lt;/h1&gt;
+&lt;iframe data-aa=&quot;1101762&quot; src=&quot;//ad.a-ads.com/1101762?size=468x60&quot; scrolling=&quot;no&quot; style=&quot;width:468px; height:60px; border:0px; padding:0; overflow:hidden&quot; allowtransparency=&quot;true&quot;&gt;&lt;/iframe&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Binaries: &lt;a href=&quot;https://github.com/mydicebot/mydicebot.github.io/releases&quot;&gt;https://github.com/mydicebot/mydicebot.github.io/releases&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;Source Code: &lt;a href=&quot;https://github.com/mydicebot/mydicebot.github.io&quot;&gt;https://github.com/mydicebot/mydicebot.github.io&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h1 id=&quot;supporting-dice-sites-alphabet-sequence&quot;&gt;Supporting Dice Sites (alphabet sequence)&lt;/h1&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;https://www.999dice.com/?224280708&quot;&gt;999Dice&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://www.bitsler.com/?ref=mydicebot&quot;&gt;Bitsler (coming soon)&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://bitvest.io?r=108792&quot;&gt;BitVest (coming soon)&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://www.crypto-games.net?i=CpQP3V8Up2&quot;&gt;Crypto-Games (coming soon)&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://duckdice.com/ab61534783&quot;&gt;DuckDice (coming soon)&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://freebitco.in/?r=16392656&quot;&gt;Freebitco.in (coming soon)&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://kingdice.com/#/welcome?aff=180722&quot;&gt;KingDice (coming soon)&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://www.megadice.com/?a=326492144&quot;&gt;MegaDice (coming soon)&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://www.nitrodice.com?ref=0N2pG8rkL7UR6oMzZWEj&quot;&gt;NitroDice (coming soon)&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://nitrogensports.eu/r/4998127&quot;&gt;NitrogenSports (coming soon)&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://primedice.com/?c=mydicebot&quot;&gt;PrimeDice (coming soon)&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://safedice.com/?r=100309&quot;&gt;SafeDice (coming soon)&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://stake.com/?code=mydicebot&quot;&gt;Stake (coming soon)&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://yolodice.com/r?6fAf-wVz&quot;&gt;YoloDice (coming soon)&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;(More will be coming soon)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h1 id=&quot;quick-start&quot;&gt;Quick Start&lt;/h1&gt;
+&lt;ul&gt;
+  &lt;li&gt;Download MyDiceBot Binaries here: &lt;a href=&quot;https://github.com/mydicebot/mydicebot.github.io/releases&quot;&gt;MyDiceBot Releases&lt;/a&gt;.&lt;/li&gt;
+  &lt;li&gt;Different execution methods on different platforms.
+    &lt;ul&gt;
+      &lt;li&gt;
+        &lt;p&gt;Linux (Open Terminal)&lt;/p&gt;
+
+        &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  chmod +x mydicebot-linux
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;        &lt;/div&gt;
+
+        &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  ./mydicebot-linux
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;        &lt;/div&gt;
+      &lt;/li&gt;
+      &lt;li&gt;
+        &lt;p&gt;Mac (Open Terminal)&lt;/p&gt;
+
+        &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  chmod +x mydicebot-macos
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;        &lt;/div&gt;
+
+        &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  ./mydicebot-macos
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;        &lt;/div&gt;
+      &lt;/li&gt;
+      &lt;li&gt;
+        &lt;p&gt;Windows (Open Command Prompt)&lt;/p&gt;
+
+        &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  mydicebot-win.exe
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;        &lt;/div&gt;
+      &lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Choose Dice Site, Input username/password/2FA/APIKey, then Login.&lt;/li&gt;
+  &lt;li&gt;Bet and WIN.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h1 id=&quot;startup-options&quot;&gt;Startup Options&lt;/h1&gt;
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;-port&lt;/strong&gt; (port is 3000 by default)&lt;/p&gt;
+
+    &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  mydicebot-win.exe -port 12345
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h1 id=&quot;features&quot;&gt;Features&lt;/h1&gt;
+&lt;ul&gt;
+  &lt;li&gt;Supported platforms: &lt;strong&gt;Windows, Mac, Linux, Web&lt;/strong&gt;&lt;/li&gt;
+  &lt;li&gt;Supported programming languages: &lt;strong&gt;Lua&lt;/strong&gt;, JavaScript, Python (coming soon)&lt;/li&gt;
+  &lt;li&gt;Supported multiple dice-sites&lt;/li&gt;
+  &lt;li&gt;Supported multiple strategies&lt;/li&gt;
+  &lt;li&gt;New account registration&lt;/li&gt;
+  &lt;li&gt;Existing account login&lt;/li&gt;
+  &lt;li&gt;Betting statistics&lt;/li&gt;
+  &lt;li&gt;Manual bet&lt;/li&gt;
+  &lt;li&gt;Auto bet&lt;/li&gt;
+  &lt;li&gt;Script bet (&lt;strong&gt;compatible with Seuntjies DiceBot scripts&lt;/strong&gt;)&lt;/li&gt;
+  &lt;li&gt;Script upload/download/voting (coming soon)&lt;/li&gt;
+  &lt;li&gt;Github integration (coming soon)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h1 id=&quot;manual-bet&quot;&gt;Manual Bet&lt;/h1&gt;
+&lt;ul&gt;
+  &lt;li&gt;You can control every bet by yourself.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://cdn.steemitimages.com/DQmVZw69XRuX3MD6gwZS73WbVUBQgqtDmaTHyh3s8witdGG/mydicebot-manual-bet.png&quot; alt=&quot;mydicebot-manual-bet.png&quot; /&gt;&lt;/p&gt;
+
+&lt;h1 id=&quot;auto-bet&quot;&gt;Auto Bet&lt;/h1&gt;
+&lt;ul&gt;
+  &lt;li&gt;Essential configurations are provided for betting automatically.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://cdn.steemitimages.com/DQmei1Y9nxCXfS2FiA3N53LgepSF12M2T98J9HSstQ92syB/mydicebot-auto-bet.png&quot; alt=&quot;mydicebot-auto-bet.png&quot; /&gt;&lt;/p&gt;
+
+&lt;h1 id=&quot;script-bet&quot;&gt;Script Bet&lt;/h1&gt;
+&lt;ul&gt;
+  &lt;li&gt;Lua programming language&lt;/li&gt;
+  &lt;li&gt;JavaScript programming language (coming soon)&lt;/li&gt;
+  &lt;li&gt;Python programming language (coming soon)&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Compatible with the variables and functions of Seuntjie DiceBot’s Lua script&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://cdn.steemitimages.com/DQmQnasapexZob8BpGWJaJtmNj7oPoqUbotVZjkFYUhyHXK/mydicebot-script-bet.png&quot; alt=&quot;mydicebot-script-bet.png&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;internal-variables&quot;&gt;Internal Variables&lt;/h2&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;strong&gt;Single Bet Info&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;Variable&lt;/th&gt;
+      &lt;th&gt;Type&lt;/th&gt;
+      &lt;th&gt;Permission&lt;/th&gt;
+      &lt;th&gt;Purpose&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;&lt;strong&gt;basebet&lt;/strong&gt;&lt;/td&gt;
+      &lt;td&gt;double&lt;/td&gt;
+      &lt;td&gt;Read Write&lt;/td&gt;
+      &lt;td&gt;Shows the amount of the first bet. Only set for first bet.&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;&lt;strong&gt;previousbet&lt;/strong&gt;&lt;/td&gt;
+      &lt;td&gt;double&lt;/td&gt;
+      &lt;td&gt;Read Only&lt;/td&gt;
+      &lt;td&gt;Shows the amount of the previous bet. Only set after first bet.&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;&lt;strong&gt;nextbet&lt;/strong&gt;&lt;/td&gt;
+      &lt;td&gt;double&lt;/td&gt;
+      &lt;td&gt;Read Write&lt;/td&gt;
+      &lt;td&gt;The amount to bet in the next bet. You need to assign a value to this variable to change the amount bet. Defaults to previousbet after first bet. Needs to be set before betting can start.&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;&lt;strong&gt;chance&lt;/strong&gt;&lt;/td&gt;
+      &lt;td&gt;double&lt;/td&gt;
+      &lt;td&gt;Read Write&lt;/td&gt;
+      &lt;td&gt;The chance to win when betting. Defaults to value set in advanced settings if not set. Need to set this value to change the chance to win/payout when betting.&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;&lt;strong&gt;bethigh&lt;/strong&gt;&lt;/td&gt;
+      &lt;td&gt;bool&lt;/td&gt;
+      &lt;td&gt;Read Write&lt;/td&gt;
+      &lt;td&gt;Whether to bet high/over (true) or low/under(false). Defaults to true (bet high/bet over)&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;&lt;strong&gt;win&lt;/strong&gt;&lt;/td&gt;
+      &lt;td&gt;bool&lt;/td&gt;
+      &lt;td&gt;Read Only&lt;/td&gt;
+      &lt;td&gt;Indicates whether the last bet you made was a winning bet (true) or a losing bet (false).&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;&lt;strong&gt;currentprofit&lt;/strong&gt;&lt;/td&gt;
+      &lt;td&gt;double&lt;/td&gt;
+      &lt;td&gt;Read Only&lt;/td&gt;
+      &lt;td&gt;Shows the profit for the last bet made. This is not the amount returned. betting 1 unit at x2 payout, when winning, currentprofit will show 0.00000001 (returned =0.00000002), when losing, profit will show -0.00000001&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;strong&gt;Current Session Info&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;Variable&lt;/th&gt;
+      &lt;th&gt;Type&lt;/th&gt;
+      &lt;th&gt;Permission&lt;/th&gt;
+      &lt;th&gt;Purpose&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;&lt;strong&gt;balance&lt;/strong&gt;&lt;/td&gt;
+      &lt;td&gt;double&lt;/td&gt;
+      &lt;td&gt;Read Only&lt;/td&gt;
+      &lt;td&gt;Lists your balance at the site you’re logged in to.&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;&lt;strong&gt;bets&lt;/strong&gt;&lt;/td&gt;
+      &lt;td&gt;int&lt;/td&gt;
+      &lt;td&gt;Read Only&lt;/td&gt;
+      &lt;td&gt;Shows the number of bets for the current session.&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;&lt;strong&gt;wins&lt;/strong&gt;&lt;/td&gt;
+      &lt;td&gt;int&lt;/td&gt;
+      &lt;td&gt;Read Only&lt;/td&gt;
+      &lt;td&gt;Shows the number of wins for the current session.&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;&lt;strong&gt;losses&lt;/strong&gt;&lt;/td&gt;
+      &lt;td&gt;int&lt;/td&gt;
+      &lt;td&gt;Read Only&lt;/td&gt;
+      &lt;td&gt;Shows the number of losses for the current session.&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;&lt;strong&gt;profit&lt;/strong&gt;&lt;/td&gt;
+      &lt;td&gt;double&lt;/td&gt;
+      &lt;td&gt;Read Only&lt;/td&gt;
+      &lt;td&gt;Shows your session profit. Session is defined as the time since opening the current instance of bot or the last time you reset your stats in the bot.&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;&lt;strong&gt;currentstreak&lt;/strong&gt;&lt;/td&gt;
+      &lt;td&gt;double&lt;/td&gt;
+      &lt;td&gt;Read Only&lt;/td&gt;
+      &lt;td&gt;Shows the current winning or losing streak. When positive (&amp;gt;0), it’s a winning streak. When negative (&amp;lt;0) it’s a losing streak. Can never be 0. Only set after first bet.&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;h2 id=&quot;internal-functions&quot;&gt;Internal Functions&lt;/h2&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;Function&lt;/th&gt;
+      &lt;th&gt;Purpose&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;&lt;strong&gt;dobet()&lt;/strong&gt;&lt;/td&gt;
+      &lt;td&gt;The loop of bets&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;&lt;strong&gt;stop()&lt;/strong&gt;&lt;/td&gt;
+      &lt;td&gt;Stop the bet&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;h2 id=&quot;sample-code&quot;&gt;Sample Code&lt;/h2&gt;
+&lt;ul&gt;
+  &lt;li&gt;Strategy: Basic Martingale&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;language-lua highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;chance&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;49&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;5&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;multiplier&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;basebet&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;00000010&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;bethigh&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;false&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;dobet&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;profit&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;then&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;stop&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
+    
+    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;win&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;then&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;nextbet&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;basebet&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;else&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;nextbet&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;previousbet&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;multiplier&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;h1 id=&quot;report-issue&quot;&gt;Report Issue&lt;/h1&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;https://github.com/mydicebot/mydicebot.github.io/issues&quot;&gt;https://github.com/mydicebot/mydicebot.github.io/issues&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h1 id=&quot;license&quot;&gt;License&lt;/h1&gt;
+&lt;ul&gt;
+  &lt;li&gt;GPL-3.0&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h1 id=&quot;thanks&quot;&gt;Thanks&lt;/h1&gt;
+&lt;ul&gt;
+  &lt;li&gt;Special thanks to the open source project of &lt;a href=&quot;https://github.com/Seuntjie900/DiceBot&quot;&gt;Seuntjies DiceBot&lt;/a&gt;.&lt;/li&gt;
+  &lt;li&gt;If you need simulation functions or advanced-autobet functions, we recommand Seuntjies DiceBot.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h1 id=&quot;quote&quot;&gt;Quote&lt;/h1&gt;
+&lt;ul&gt;
+  &lt;li&gt;“Gambling is gambling no matter what you do or how good your strategy is. The house always wins if you keep playing. Winners know when to stop.”&lt;/li&gt;
+  &lt;li&gt;“Like any human, we make mistakes, and like any program, the bot is bound to have a few bugs. Use the bot at your own risk. “&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h1 id=&quot;disclaimer&quot;&gt;Disclaimer&lt;/h1&gt;
+&lt;ul&gt;
+  &lt;li&gt;This is still gambling. The bot is not guaranteed to win.&lt;/li&gt;
+  &lt;li&gt;Please do not gamble more than you can afford to lose.&lt;/li&gt;
+  &lt;li&gt;The bot has a lot of settings, and we cannot test each and every combination.&lt;/li&gt;
+  &lt;li&gt;The bot might behave unpredictable and unreliably with certain combinations of settings.&lt;/li&gt;
+  &lt;li&gt;Certain actions from the server might also result in unexpected behavior.&lt;/li&gt;
+  &lt;li&gt;We cannot be held responsible for any losses incurred while using the bot.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h1 id=&quot;legal&quot;&gt;Legal&lt;/h1&gt;
+&lt;ul&gt;
+  &lt;li&gt;It is your obligation to ensure compliance with any legislation relevant to your country of domicile regarding online gambling.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h1 id=&quot;contact&quot;&gt;Contact&lt;/h1&gt;
+&lt;ul&gt;
+  &lt;li&gt;github: &lt;a href=&quot;https://github.com/mydicebot/mydicebot.github.io/issues&quot;&gt;https://github.com/mydicebot/mydicebot.github.io/issues&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;steemit: &lt;a href=&quot;https://steemit.com/@mydicebot&quot;&gt;https://steemit.com/@mydicebot&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;bitcointalk: PM mydicebot&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h1 id=&quot;donation&quot;&gt;Donation&lt;/h1&gt;
+&lt;ul&gt;
+  &lt;li&gt;steemit: &lt;a href=&quot;https://steemit.com/@mydicebot&quot;&gt;@mydicebot&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;iframe data-aa=&quot;1101762&quot; src=&quot;//ad.a-ads.com/1101762?size=468x60&quot; scrolling=&quot;no&quot; style=&quot;width:468px; height:60px; border:0px; padding:0; overflow:hidden&quot; allowtransparency=&quot;true&quot;&gt;&lt;/iframe&gt;</content><author><name>MyDiceBot</name></author><summary type="html"></summary></entry></feed>

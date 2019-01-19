@@ -1,3 +1,3 @@
 #!/bin/sh
 
-jekyll build
+jekyll build --watch --incremental
