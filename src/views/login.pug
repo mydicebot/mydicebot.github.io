@@ -30,13 +30,14 @@ block content
                 rows: [
                     {
                         options: [
+                           {id:"Simulator",value:"Simulator"}, 
                            {id:"999Dice",value:"999Dice"},
                            {id:"Bitsler",value:"Bitsler"},
                            {id:"Crypto-Games",value:"Crypto-Games"},
                            {id:"MagicDice", value:"MagicDice"},
                            {id:"PrimeDice",value:"PrimeDice"},
                            {id:"Stake",value:"Stake"},
-                           {id:"YoloDice",value:"YoloDice"},              
+                           {id:"YoloDice",value:"YoloDice"},      
                            {id:"BetKing",value:"BetKing (coming soon)"},
                            {id:"BitDice",value:"BitDice (coming soon)"},
                            {id:"BitVest",value:"BitVest (Coming Soon)"},
@@ -239,6 +240,7 @@ block content
             var needApiKeySites = ['test','Bitsler'];
             var needOnlyApiKeySites = ['test','YoloDice','Crypto-Games']
             var needSteemActiveKeySites = ['test','MagicDice']
+            var needSimulatorActiveKeySites = ['test','Simulator']
             if(needUserSites.indexOf(newId)>0){
                 console.log("need user");
                 $$("form1").elements.apikey.hide(); 
@@ -277,6 +279,13 @@ block content
                 $$("form1").elements.apikey.show(); 
                 $$("form1").elements.apikey.define("label", "Active Key");
                 $$("form1").elements.apikey.refresh();
+            } else if(needSimulatorActiveKeySites.indexOf(newId)>0) {
+                console.log("Simulator");
+                $$("form1").elements.username.hide(); 
+                $$("form1").elements.password.hide(); 
+                $$("form1").elements.password.hide(); 
+                $$("form1").elements.twofa.hide(); 
+                $$("form1").elements.apikey.hide(); 
             }
         });
 

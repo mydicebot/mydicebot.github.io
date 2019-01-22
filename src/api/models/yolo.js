@@ -114,10 +114,10 @@ export class YoloDice extends BaseDice {
         let range = 'lo';
         if(req.body.High == 1){
             range = 'hi';
-            betRoll = 999999-Math.floor((req.body.Chance*10000));
+            betRoll = 999999-Math.floor((req.body.Chance*10000))+1;
         } else {
             range = 'lo';
-            betRoll = Math.floor((req.body.Chance*10000));
+            betRoll = Math.floor((req.body.Chance*10000))-1;
         }
         let options = {
             id:this.id++,

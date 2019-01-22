@@ -79,9 +79,9 @@ export class CryptoDice extends BaseDice {
         let currency = req.body.Currency.toLowerCase();
         let target = 0;
         if(req.body.High == 1){
-            target = 999999-Math.floor((req.body.Chance*10000));
+            target = 999999-Math.floor((req.body.Chance*10000))+1;
         } else {
-            target = Math.floor((req.body.Chance*10000));
+            target = Math.floor((req.body.Chance*10000))-1;
         }
         target = target/10000;
         let underOver = condition + ' ' + target;
