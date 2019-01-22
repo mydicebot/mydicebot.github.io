@@ -7,7 +7,7 @@ block content
         var bet_total_stats = {
             id: "bet_total_stats",
             view: "property",
-            height: 200,
+            height: 210,
             //width: 0,
             elements: [
                 {label: "TOTAL STATS", type: "label"},
@@ -24,7 +24,7 @@ block content
             var bet_current_stats = {
                 id: "bet_current_stats",
                 view: "property",
-                height: 200,
+                height: 210,
                 //width: 0,
                 elements: [
                     {label: "CURRENT STATS 1", type: "label"},
@@ -40,13 +40,14 @@ block content
             var bet_current_stats2 = {
                 id: "bet_current_stats2",
                 view: "property",
-                height: 200,
+                height: 210,
                 //width: 0,
                 elements: [
                     {label: "CURRENT STATS 2", type: "label"},
                     {label: "currentstreak", type: "text", id: "bet_current_stats_current_streak", value:"0", labelWidth: 120},
                     {label: "maxwinstreak", type: "text", id: "bet_current_stats_max_win_streak", value:"0", labelWidth: 120},
                     {label: "maxlosstreak", type: "text", id: "bet_current_stats_max_loss_streak", value:"0", labelWidth: 120},
+                    {label: "maxbetamount", type: "text", id: "bet_current_stats_max_bet_amount", value:"0", labelWidth: 120},
                 ]
             };
 
@@ -68,6 +69,27 @@ block content
                 placeholder: "BTC",
                 name: "currency"
             };
+            var bet_house_edge_selection = {
+                id: "bet_house_edge_selection",
+                options: [
+                    {id:0.001,value:"0.1%"},
+                    {id:0.002,value:"0.2%"},
+                    {id:0.005,value:"0.5%"},
+                    {id:0.01,value:"1%"},
+                    {id:0.015,value:"1.5%"},
+                    {id:0.02,value:"2%"},
+                ],
+                view: "richselect",
+                left: 70,
+                top: 70,
+                width: 400,
+                value: 0.01,
+                label: "HOUSE EDGE",
+                labelWidth: 100,
+                placeholder: "0.1%",
+                name: "house_edge",
+                hidden: true,
+            };
 
             var reset_session_button = {
                 id: "reset_session_button",
@@ -83,6 +105,25 @@ block content
                 type: "danger",
                 label: "LOGOUT/SWITCH SITE",
                 width: 400
+            };
+
+            var ads_label = {
+                view:"label",
+                label:"ADVERTISE",
+                height:0,
+                width:80,
+            }
+
+            var ads_iframe = {
+                    view:"iframe", 
+                    src:"//ad.a-ads.com/1102518?size=320x50"
+            };
+
+            var ads = {
+                cols: [
+                    ads_label,
+                    ads_iframe
+                ]
             };
 
             var bet_chart = {
@@ -616,8 +657,10 @@ block content
                                 {
                                     rows: [
                                         bet_currency_selection, 
+                                        bet_house_edge_selection, 
                                         reset_session_button,
-                                        switch_site_button
+                                        switch_site_button,
+                                        ads,
                                     ]
                                 }
                             ]
@@ -883,7 +926,22 @@ block content
                 }
             }
             function action(c,h,p,ch,cv,cb){
-                webix.ajax().post('bet', { Currency:c, PayIn:p, High:h, Chance:ch, CurrencyValue: cv }).then(function (result) {
+                let maxBetAmount = $$('bet_current_stats2').getValues().bet_current_stats_max_bet_amount;
+                let currentStreak = $$('bet_current_stats2').getValues().bet_current_stats_current_streak;
+                let maxWinStreak = $$('bet_current_stats2').getValues().bet_current_stats_max_win_streak;
+                let maxLossStreak = $$('bet_current_stats2').getValues().bet_current_stats_max_loss_streak;
+                let currentAmount =  p/100000000;
+                if(currentAmount>maxBetAmount){
+                    maxBetAmount = currentAmount;
+                }
+                $$('bet_current_stats2').setValues({
+                    bet_current_stats_current_streak:currentStreak,
+                    bet_current_stats_max_win_streak:maxWinStreak,
+                    bet_current_stats_max_loss_streak:maxLossStreak,
+                    bet_current_stats_max_bet_amount:maxBetAmount,
+                });
+                let houseEdgeValue = $$("bet_house_edge_selection").getValue();
+                webix.ajax().post('bet', { Currency:c, PayIn:p, High:h, Chance:ch, CurrencyValue: cv, HouseEdge: houseEdgeValue  }).then(function (result) {
                     let ret = result.json();
                     cb(ret);
                 }).fail(function (xhr) {
@@ -1047,6 +1105,7 @@ block content
                     bet_current_stats_current_streak:0,
                     bet_current_stats_max_win_streak:0,
                     bet_current_stats_max_loss_streak:0,
+                    bet_current_stats_max_bet_amount:0,
                 });
                 $$('bet_datatable').clearAll();
                 $$("bet_chart").clearAll();
@@ -1089,6 +1148,7 @@ block content
                 let currentStreak = $$('bet_current_stats2').getValues().bet_current_stats_current_streak;
                 let maxWinStreak = $$('bet_current_stats2').getValues().bet_current_stats_max_win_streak;
                 let maxLossStreak = $$('bet_current_stats2').getValues().bet_current_stats_max_loss_streak;
+                let maxBetAmount = $$('bet_current_stats2').getValues().bet_current_stats_max_bet_amount;
                 if(win){
                     if(currentStreak>=0) {
                         currentStreak++;
@@ -1112,6 +1172,7 @@ block content
                     bet_current_stats_current_streak:currentStreak,
                     bet_current_stats_max_win_streak:maxWinStreak,
                     bet_current_stats_max_loss_streak:maxLossStreak,
+                    bet_current_stats_max_bet_amount:maxBetAmount,
                 });
             }
             function setBetToLua(ret, currencyValue){

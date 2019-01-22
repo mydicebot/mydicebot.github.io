@@ -93,9 +93,9 @@ export class BitslerDice extends BaseDice {
         let currency = req.body.Currency.toLowerCase();
         let game = 0;
         if(req.body.High == 1){
-            game = 999999-Math.floor((req.body.Chance*10000));
+            game = 999999-Math.floor((req.body.Chance*10000))+1;
         } else {
-            game = Math.floor((req.body.Chance*10000));
+            game = Math.floor((req.body.Chance*10000))-1;
         }
         console.log(game);
         formData.append('access_token', accessToken);

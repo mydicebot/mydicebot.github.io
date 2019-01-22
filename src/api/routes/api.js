@@ -8,6 +8,7 @@ import {PrimeDice} from '../models/prime';
 import {StakeDice} from '../models/stake';
 import {CryptoDice} from '../models/crypto';
 import {MagicDice} from '../models/magic';
+import {Simulator} from '../models/simulator';
 import {Factory} from '../models/factory';
 import fs from 'fs';
 import path from 'path';
@@ -37,6 +38,7 @@ function createDice (req, res, next) {
     Factory.register('Stake', new StakeDice());
     Factory.register('Crypto-Games', new CryptoDice());
     Factory.register('MagicDice', new MagicDice());
+    Factory.register('Simulator', new Simulator());
     next();
 }
 
