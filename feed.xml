@@ -1,4 +1,305 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.5">Jekyll</generator><link href="https://mydicebot.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="https://mydicebot.github.io/" rel="alternate" type="text/html" /><updated>2019-01-19T11:05:51+00:00</updated><id>https://mydicebot.github.io/feed.xml</id><title type="html">MyDiceBot</title><subtitle>World #1 Cross-Platform Dicing Bot</subtitle><author><name>MyDiceBot</name></author><entry><title type="html">MyDiceBot v1.0.0 is released!</title><link href="https://mydicebot.github.io/2018/11/01/1st-post/" rel="alternate" type="text/html" title="MyDiceBot v1.0.0 is released!" /><published>2018-11-01T00:00:00+00:00</published><updated>2018-11-01T00:00:00+00:00</updated><id>https://mydicebot.github.io/2018/11/01/1st-post</id><content type="html" xml:base="https://mydicebot.github.io/2018/11/01/1st-post/">&lt;p&gt;&lt;img src=&quot;https://cdn.steemitimages.com/DQmWFCtqWW9fykYzmQmmYvdyAB4EZ15amgj1DNhFq31ijXN/mydicebot-steemit.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.5">Jekyll</generator><link href="https://mydicebot.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="https://mydicebot.github.io/" rel="alternate" type="text/html" /><updated>2019-01-23T10:38:11+00:00</updated><id>https://mydicebot.github.io/feed.xml</id><title type="html">MyDiceBot</title><subtitle>World #1 Cross-Platform Dicing Bot</subtitle><author><name>MyDiceBot</name></author><entry><title type="html">MyDiceBot - 190122 is released &amp;amp; Simulator is available NOW!</title><link href="https://mydicebot.github.io/2019/01/22/simulator-out/" rel="alternate" type="text/html" title="MyDiceBot - 190122 is released &amp; Simulator is available NOW!" /><published>2019-01-22T00:00:00+00:00</published><updated>2019-01-22T00:00:00+00:00</updated><id>https://mydicebot.github.io/2019/01/22/simulator-out</id><content type="html" xml:base="https://mydicebot.github.io/2019/01/22/simulator-out/">&lt;p&gt;&lt;img src=&quot;https://cdn.steemitimages.com/DQmWFCtqWW9fykYzmQmmYvdyAB4EZ15amgj1DNhFq31ijXN/mydicebot-steemit.png&quot; alt=&quot;mydicebot-steemit.png&quot; /&gt;&lt;/p&gt;
+
+&lt;h1 id=&quot;mydicebot&quot;&gt;MyDiceBot&lt;/h1&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;https://mydicebot.com&quot;&gt;https://mydicebot.com&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://mydicebot.com&quot;&gt;MyDiceBot&lt;/a&gt; is World #1 Cross-Platform Dicing Bot.&lt;/li&gt;
+  &lt;li&gt;Multiple platforms are supported, including &lt;strong&gt;Windows, Mac, Linux,&lt;/strong&gt; and &lt;strong&gt;Web&lt;/strong&gt;.&lt;/li&gt;
+  &lt;li&gt;Multiple blockchains are supported, including &lt;strong&gt;STEEM&lt;/strong&gt;.&lt;/li&gt;
+  &lt;li&gt;Multiple programming languages are supported such as  &lt;strong&gt;Lua&lt;/strong&gt;.&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://github.com/mydicebot/mydicebot.github.io&quot;&gt;Open Source&lt;/a&gt; and &lt;strong&gt;Free Forever&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h1 id=&quot;download&quot;&gt;Download&lt;/h1&gt;
+&lt;iframe data-aa=&quot;1101762&quot; src=&quot;//ad.a-ads.com/1101762?size=468x60&quot; scrolling=&quot;no&quot; style=&quot;width:468px; height:60px; border:0px; padding:0; overflow:hidden&quot; allowtransparency=&quot;true&quot;&gt;&lt;/iframe&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;https://github.com/mydicebot/mydicebot.github.io/releases/tag/190122&quot;&gt;https://github.com/mydicebot/mydicebot.github.io/releases/tag/190122&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h1 id=&quot;major-feature-update&quot;&gt;Major Feature update&lt;/h1&gt;
+&lt;ul&gt;
+  &lt;li&gt;Simulator is available NOW!
+&lt;img src=&quot;https://cdn.steemitimages.com/DQmPsCCNeBMrWrGth1j2bX6vYwDHE3EoznyPpG1GaXWC4jt/Selection_111.png&quot; alt=&quot;Selection_111.png&quot; /&gt;&lt;/li&gt;
+  &lt;li&gt;You could debugging your own script in Simulator without any risk.
+&lt;img src=&quot;https://cdn.steemitimages.com/DQmWqtp17R3NMX9WgmDs3DTAXX5rQJE3hHEBwv2QntoEJYP/Selection_112.png&quot; alt=&quot;Selection_112.png&quot; /&gt;&lt;/li&gt;
+  &lt;li&gt;You can adjust house edge to debug against.
+&lt;img src=&quot;https://cdn.steemitimages.com/DQmXA9C15LGnMGn2sCL7tKrbd2rhQN9pbsLqgfc4moF4WUr/Selection_114.png&quot; alt=&quot;Selection_114.png&quot; /&gt;&lt;/li&gt;
+  &lt;li&gt;Server Simulation Code
+    &lt;div class=&quot;language-javascript highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  &lt;span class=&quot;k&quot;&gt;async&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;_simulatorBet&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;amount&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;target&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;condition&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;houseEdge&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+      &lt;span class=&quot;kd&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;betInfo&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{};&lt;/span&gt;
+      &lt;span class=&quot;nx&quot;&gt;betInfo&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;id&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'MyDiceBot_'&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;Math&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;random&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;().&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;toString&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;16&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;substring&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;substr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;10&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+      &lt;span class=&quot;nx&quot;&gt;betInfo&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;amount&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;parseFloat&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;amount&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+      &lt;span class=&quot;kd&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;serverSeed&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;Math&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;random&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;().&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;toString&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;36&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;substring&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+      &lt;span class=&quot;kd&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;clientSeed&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;Math&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;random&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;().&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;toString&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;36&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;substring&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+      &lt;span class=&quot;kd&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;cryptoHmac&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;crypto&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;createHmac&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'sha256'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;serverSeed&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+      &lt;span class=&quot;kd&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;resultSeed&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;cryptoHmac&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;update&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;`&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;clientSeed&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;`&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;digest&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'hex'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+      &lt;span class=&quot;kd&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;resultNumber&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;parseInt&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;resultSeed&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;substr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;10&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;16&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+      &lt;span class=&quot;kd&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;diceRoll&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;resultNumber&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1000000&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+      &lt;span class=&quot;kd&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;factor&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1000000&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;target&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+      &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;condition&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'over'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+          &lt;span class=&quot;nx&quot;&gt;factor&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1000000&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;999999&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;target&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+      &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+      &lt;span class=&quot;kd&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;profit&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;amount&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;factor&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;houseEdge&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;amount&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+      &lt;span class=&quot;nx&quot;&gt;console&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;amount&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;factor&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;betInfo&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;amount&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;houseEdge&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+      &lt;span class=&quot;nx&quot;&gt;betInfo&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;roll_number&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;diceRoll&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;10000&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+      &lt;span class=&quot;nx&quot;&gt;betInfo&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;win&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;false&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+      &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;condition&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'over'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+          &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;target&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;diceRoll&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+              &lt;span class=&quot;nx&quot;&gt;betInfo&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;win&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+          &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+      &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;else&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+          &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;target&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;diceRoll&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;){&lt;/span&gt;
+              &lt;span class=&quot;nx&quot;&gt;betInfo&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;win&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+          &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+      &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+      &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;betInfo&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;win&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+          &lt;span class=&quot;nx&quot;&gt;betInfo&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;payout&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;parseFloat&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;((&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;betInfo&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;amount&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;profit&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)).&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;toFixed&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;8&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+          &lt;span class=&quot;nx&quot;&gt;betInfo&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;profit&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;parseFloat&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;profit&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;toFixed&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;8&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+      &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;else&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+          &lt;span class=&quot;nx&quot;&gt;betInfo&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;payout&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+          &lt;span class=&quot;nx&quot;&gt;betInfo&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;profit&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;parseFloat&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;betInfo&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;amount&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;toFixed&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;8&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+      &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+      &lt;span class=&quot;nx&quot;&gt;console&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;betInfo&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+      &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;betInfo&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h1 id=&quot;improvement---default-embedded-scripts-for-easy-usage&quot;&gt;Improvement - Default embedded scripts for easy usage&lt;/h1&gt;
+&lt;ul&gt;
+  &lt;li&gt;basic-martingale.lua
+```lua
+chance = 49.5
+multiplier = 2
+basebet = 0.00000001
+bethigh = false
+nextbet = basebet&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;function dobet()&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;if win then
+    nextbet = basebet
+elseif !win then
+    nextbet = previousbet * multiplier
+end
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;end&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;* chance-10.lua
+```lua
+chance = 10
+nextbet = 0.00001000
+basebet = 0.00001000
+installBet = 0.00001000
+X = 1.101
+memberbet = 0
+breakpoint = 0
+bethigh = true
+game = true
+regame = true
+
+
+function dobet()
+  if balance &amp;gt;= breakpoint then
+    breakpoint = balance
+  end
+
+  if bethigh and currentroll &amp;lt; chance then
+    X = X + 0.001
+  end
+
+  if !bethigh and currentroll &amp;gt; (100-chance) then
+    X = X + 0.001
+  end
+
+  if game then
+    if !win then
+      installBet = previousbet*X
+    end
+    if win then
+      installBet = memberbet
+    end
+    if currentstreak &amp;lt; -10 then
+      installBet = 0.00001000
+      game = false
+      regame = false
+    end
+    nextbet = installBet
+  end
+  if !game and currentstreak &amp;lt; -20 then
+    regame = true
+  end
+  if win and regame then
+    game = true
+    nextbet = memberbet
+  end
+  if win and balance &amp;gt;= breakpoint then
+    memberbet = 0.00001000
+    X = 1.101
+    game = true
+    nextbet = 0.00001000
+  end
+  if previousbet &amp;gt;= memberbet then
+    memberbet = previousbet
+  end
+  print(breakpoint)
+  print('mult '..X)
+  print('memberbet '..memberbet)
+end
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;ul&gt;
+  &lt;li&gt;regression.lua
+```lua
+–[[
+  This script doubles the bet after a loss but starts at a very high chance of success:  95%.&lt;br /&gt;
+  After each bet the chance reduces enough to bring equilibrium to profit but stops reducing chance at 49.5%.&lt;br /&gt;
+  First loss goes from 95% to 67%, then 57% and then gradually lower and closer to 49.5%.&lt;br /&gt;
+  It basically buys you a few more higher probability roles before the same old 49.5% martingale.
+  author: grendel25aaaaa
+  link: https://bot.seuntjie.com/scripts.aspx?id=38
+]]&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;– You could just use Sleep(n) to use LUAs built in sleep function. 
+– But this one will have the same result without killing your CPU.
+function sleep(n)
+	t0 = os.clock() 
+	while os.clock() - t0 &amp;lt;= n do end
+end&lt;/p&gt;
+
+&lt;p&gt;– init
+chance = 95
+basebet = 0.00000100
+bethigh = false
+lossstreakcount = 0 – sample: user-defined lossstreakcount.
+nextbet = basebet&lt;/p&gt;
+
+&lt;p&gt;– do bet and let’s rock
+function dobet()&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;-- some sites limit bet latency due to the low bet amount.
+-- enable it and avoid to be banned, just in case.
+-- eg. 2 means sleeping 2 seconds
+-- sleep(2)
+
+-- adjust the stopping condition of session profit.
+if profit &amp;gt;= 0.00001000 then
+    print(&quot;profit done, so stop.&quot;)
+    stop()
+end
+
+-- adjust the stopping condition of wins.
+if wins &amp;gt;= 1000 then
+    print(&quot;wins done, so stop.&quot;)
+    stop()
+end
+
+-- adjust the stopping condition of bets. 
+if (bets &amp;gt;= 5000) then 
+    print(&quot;bets done, so stop.&quot;)
+    stop()
+end
+
+-- adjust the stopping condition of loss streak. 
+-- eg. -10 means 10 loss streak
+if (currentstreak &amp;lt;= -10) then
+    print(&quot;10 loss streak, so stop.&quot;)
+    stop()
+end
+
+-- if win, reset bet to base amount.
+if (win) then
+    chance = 95
+    nextbet = basebet
+    lossstreakcount = 0
+    print(&quot;WIN&quot;)
+end
+
+-- if loss, 
+-- first loss goes from 95% to 67%, 
+-- then 57% and then gradually lower and closer to 49.5%.
+if (!win) then
+    lossstreakcount += 1
+    if (lossstreakcount &amp;gt; 1) then
+        nextbet = previousbet*2
+        chance = (1/(((nextbet+(nextbet-basebet))/nextbet)))*100
+        if chance &amp;lt; 49.5 then chance = 49.5 end
+        bethigh = !bethigh
+        print (&quot;LOSE&quot;)
+    else
+        nextbet = previousbet*2
+        chance = (1/(((basebet+nextbet))/nextbet))*100
+        if chance &amp;lt; 49.5 then chance = 49.5 end
+        bethigh = !bethigh
+        print (&quot;LOSE&quot;)
+    end
+end end ```
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h1 id=&quot;supporting-dice-sites-alphabet-sequence&quot;&gt;Supporting Dice Sites (alphabet sequence)&lt;/h1&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;https://www.999dice.com/?224280708&quot;&gt;999Dice&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://www.bitsler.com/?ref=mydicebot&quot;&gt;Bitsler&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://www.crypto-games.net?i=CpQP3V8Up2&quot;&gt;Crypto-Games&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://magic-dice.com/?ref=mydicebot&quot;&gt;MagicDice&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://primedice.com/?c=mydicebot&quot;&gt;PrimeDice&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://stake.com/?code=mydicebot&quot;&gt;Stake&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://yolodice.com/r?6fAf-wVz&quot;&gt;YoloDice&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h1 id=&quot;quick-start&quot;&gt;Quick Start&lt;/h1&gt;
+&lt;iframe data-aa=&quot;1101762&quot; src=&quot;//ad.a-ads.com/1101762?size=468x60&quot; scrolling=&quot;no&quot; style=&quot;width:468px; height:60px; border:0px; padding:0; overflow:hidden&quot; allowtransparency=&quot;true&quot;&gt;&lt;/iframe&gt;
+&lt;ul&gt;
+  &lt;li&gt;Download MyDiceBot Binaries here: &lt;a href=&quot;https://github.com/mydicebot/mydicebot.github.io/releases&quot;&gt;MyDiceBot Releases&lt;/a&gt;.&lt;/li&gt;
+  &lt;li&gt;Different execution methods on different platforms.
+    &lt;ul&gt;
+      &lt;li&gt;
+        &lt;p&gt;Linux (Open Terminal)&lt;/p&gt;
+
+        &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  chmod +x mydicebot-linux
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;        &lt;/div&gt;
+
+        &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  ./mydicebot-linux
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;        &lt;/div&gt;
+      &lt;/li&gt;
+      &lt;li&gt;
+        &lt;p&gt;Mac (Open Terminal)&lt;/p&gt;
+
+        &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  chmod +x mydicebot-macos
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;        &lt;/div&gt;
+
+        &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  ./mydicebot-macos
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;        &lt;/div&gt;
+      &lt;/li&gt;
+      &lt;li&gt;
+        &lt;p&gt;Windows (Open Command Prompt)&lt;/p&gt;
+
+        &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  mydicebot-win.exe
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;        &lt;/div&gt;
+      &lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Choose Dice Site, Input username/password/2FA/APIKey, then Login.&lt;/li&gt;
+  &lt;li&gt;Bet and WIN.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h1 id=&quot;startup-options&quot;&gt;Startup Options&lt;/h1&gt;
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;-port&lt;/strong&gt; (port is 3000 by default)&lt;/p&gt;
+
+    &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  mydicebot-win.exe -port 12345
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+    &lt;h1 id=&quot;report-issue&quot;&gt;Report Issue&lt;/h1&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;a href=&quot;https://github.com/mydicebot/mydicebot.github.io/issues&quot;&gt;https://github.com/mydicebot/mydicebot.github.io/issues&lt;/a&gt;&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;iframe data-aa=&quot;1101762&quot; src=&quot;//ad.a-ads.com/1101762?size=468x60&quot; scrolling=&quot;no&quot; style=&quot;width:468px; height:60px; border:0px; padding:0; overflow:hidden&quot; allowtransparency=&quot;true&quot;&gt;&lt;/iframe&gt;</content><author><name>MyDiceBot</name></author><summary type="html"></summary></entry><entry><title type="html">MyDiceBot v1.0.0 is released!</title><link href="https://mydicebot.github.io/2018/11/01/1st-post/" rel="alternate" type="text/html" title="MyDiceBot v1.0.0 is released!" /><published>2018-11-01T00:00:00+00:00</published><updated>2018-11-01T00:00:00+00:00</updated><id>https://mydicebot.github.io/2018/11/01/1st-post</id><content type="html" xml:base="https://mydicebot.github.io/2018/11/01/1st-post/">&lt;p&gt;&lt;img src=&quot;https://cdn.steemitimages.com/DQmWFCtqWW9fykYzmQmmYvdyAB4EZ15amgj1DNhFq31ijXN/mydicebot-steemit.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
 &lt;iframe data-aa=&quot;1101762&quot; src=&quot;//ad.a-ads.com/1101762?size=468x60&quot; scrolling=&quot;no&quot; style=&quot;width:468px; height:60px; border:0px; padding:0; overflow:hidden&quot; allowtransparency=&quot;true&quot;&gt;&lt;/iframe&gt;
 
