@@ -9,7 +9,7 @@ export class NineDice extends BaseDice {
     constructor(){
         super();
         this.url = 'https://www.999dice.com';
-        this.benefit = '?ref=mydicebot'
+        this.benefit = '?224280708'
     }
 
     async login(userName, password, twoFactor ,apiKey, req) {
