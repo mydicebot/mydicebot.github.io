@@ -19,6 +19,16 @@ module.exports = function(app) {
   app.get('/:site/login', [], api.login);
   app.post('/login', [createDice], api.login);
   app.post('/:site/login', [createDice], api.login);
+  app.post('/keepass/load', [createDice,checkScript], api.keeload);
+  app.post('/:site/keepass/load', [createDice,checkScript], api.keeload);
+  app.put('/keepass/save', [createDice,checkScript], api.keesave);
+  app.put('/:site/keepass/save', [createDice,checkScript], api.keesave);
+  app.post('/keepass/reg', [createDice,checkScript], api.keereg);
+  app.post('/:site/keepass/reg', [createDice,checkScript], api.keereg);
+  app.get('/keepass/check', [createDice,checkScript], api.keecheck);
+  app.get('/:site/keepass/check', [createDice,checkScript], api.keecheck);
+  app.get('/:site/keepass/files', [createDice,checkScript], api.keefiles);
+  app.get('/keepass/files', [createDice,checkScript], api.keefiles);
   app.get('/:site/clear', [createDice], api.clear);
   app.get('/:site/refresh', [createDice], api.refresh);
   app.get('/:site/info', [createDice,userMiddleware], api.info);
@@ -46,13 +56,15 @@ function checkScript(req, res, next) {
     //let filePath = path.resolve(path.join(__dirname, '../../script/lua/'));
     let filePath = path.resolve(path.join(process.execPath, '../script/lua/'));
     mkdir(filePath);
+    filePath = path.resolve(path.join(process.execPath, '../keepass/'));
+    mkdir(filePath);
     next();
 }
 
 function userMiddleware (req, res, next) {
     if (!req.session.username) {
         console.log("username:"+req.session.username)
-        res.render('login', {message:'Please Login'});
+        res.render('login', {message:'Please Login',site:req.params.site});
     } else {
         next();
     }

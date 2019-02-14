@@ -14,7 +14,7 @@ function checkParams(p,ch){
     if(p < 0.00000001 || p > 1000000000*1000000000) {
         return false
     }
-    if(ch>98 || ch<0.0001) {
+    if(ch>98.99 || ch<0.0001) {
         return false
     }
     return true;

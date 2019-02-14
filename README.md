@@ -32,6 +32,9 @@
    * [Contact](#contact)
    * [Donation](#donation)
 
+# Online Simulator
+* [https://simulator.mydicebot.com](https://simulator.mydicebot.com)
+
 # Download
 * Binaries: [https://github.com/mydicebot/mydicebot.github.io/releases](https://github.com/mydicebot/mydicebot.github.io/releases)
 * Source Code: [https://github.com/mydicebot/mydicebot.github.io](https://github.com/mydicebot/mydicebot.github.io)
@@ -183,9 +186,6 @@ function dobet()
     end
 end
 ```
-## Script Gist
-* [Basic Martingale](https://gist.github.com/mydicebot/155ca3c1ff54c6b6707d2dc869154da0)
-* [High Chance Regression/Martingale Variation](https://gist.github.com/mydicebot/741035c7ed474037cc4dff26a300aef1)
 
 # Report Issue
 * [https://github.com/mydicebot/mydicebot.github.io/issues](https://github.com/mydicebot/mydicebot.github.io/issues)
@@ -216,6 +216,7 @@ end
 * github: [https://github.com/mydicebot/mydicebot.github.io/issues](https://github.com/mydicebot/mydicebot.github.io/issues)
 * steemit: [https://steemit.com/@mydicebot](https://steemit.com/@mydicebot)
 * bitcointalk: [MyDiceBot - Cross-Platform | Multi-Script-Language | Multi-Site | Multi-Strategy](https://bitcointalk.org/index.php?topic=5057661)
+* discord: [https://discord.gg/S6W5ec9](https://discord.gg/S6W5ec9)
 
 # Donation
 * BTC: 19Yw3Hs8zAidGEUNeEUM2r4tXLnrJDy7kN

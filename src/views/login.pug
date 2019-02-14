@@ -25,231 +25,557 @@ block content
 
         webix.ui.fullScreen();
 
-        webix.ui({
-            view: "form", id: "form1", elements: [{
-                rows: [
+        var login_tabview = {
+                id: "login_tabview",
+                view: "tabview",
+                Height: 500,
+                width: 400,
+                cells: [
                     {
-                        options: [
-                           {id:"Simulator",value:"Simulator"}, 
-                           {id:"999Dice",value:"999Dice"},
-                           {id:"Bitsler",value:"Bitsler"},
-                           {id:"Crypto-Games",value:"Crypto-Games"},
-                           {id:"MagicDice", value:"MagicDice"},
-                           {id:"PrimeDice",value:"PrimeDice"},
-                           {id:"Stake",value:"Stake"},
-                           {id:"YoloDice",value:"YoloDice"},      
-                           {id:"BetKing",value:"BetKing (coming soon)"},
-                           {id:"BitDice",value:"BitDice (coming soon)"},
-                           {id:"BitVest",value:"BitVest (Coming Soon)"},
-                           {id:"Dice-Bet",value:"Dice-Bet (coming soon)"},
-                           {id:"DuckDice",value:"DuckDice (Coming Soon)"},
-                           {id:"Freebitco.in",value:"Freebitco.in (Coming Soon)"},
-                           {id:"KingDice",value:"KingDice (Coming Soon)"},
-                           {id:"MegaDice",value:"MegaDice (Coming Soon)"},
-                           {id:"NitroDice",value:"NitroDice (Coming Soon)"},
-                           {id:"NitrogenSports",value:"NitrogenSports (Coming Soon)"},                       
-                           {id:"SafeDice",value:"SafeDice (Coming Soon)"}
-                        ],
-                        view: "richselect",
-                        left: 70,
-                        top: 70,
-                        width: 400,
-                        value: "999Dice",
-                        label: "SITE",
-                        labelWidth: 120,
-                        placeholder: "999Dice",
-                        id: "site",
-                        name: "site"
+                        header: "SITES",
+                        body: {
+                            view: "form", 
+                            id: "form1", 
+                            elements: [{
+                                rows: [{
+                                    options: [
+                                    {id:"Simulator",value:"Simulator"}, 
+                                    {id:"999Dice",value:"999Dice"},
+                                    {id:"Bitsler",value:"Bitsler"},
+                                    {id:"Crypto-Games",value:"Crypto-Games"},
+                                    {id:"MagicDice", value:"MagicDice"},
+                                    {id:"PrimeDice",value:"PrimeDice"},
+                                    {id:"Stake",value:"Stake"},
+                                    {id:"YoloDice",value:"YoloDice"},      
+                                    {id:"BetKing",value:"BetKing (coming soon)"},
+                                    {id:"BitDice",value:"BitDice (coming soon)"},
+                                    {id:"BitVest",value:"BitVest (Coming Soon)"},
+                                    {id:"Dice-Bet",value:"Dice-Bet (coming soon)"},
+                                    {id:"DuckDice",value:"DuckDice (Coming Soon)"},
+                                    {id:"Freebitco.in",value:"Freebitco.in (Coming Soon)"},
+                                    {id:"KingDice",value:"KingDice (Coming Soon)"},
+                                    {id:"MegaDice",value:"MegaDice (Coming Soon)"},
+                                    {id:"NitroDice",value:"NitroDice (Coming Soon)"},
+                                    {id:"NitrogenSports",value:"NitrogenSports (Coming Soon)"},                       
+                                    {id:"SafeDice",value:"SafeDice (Coming Soon)"}
+                                    ],
+                                    view: "richselect",
+                                    left: 70,
+                                    top: 70,
+                                    width: 400,
+                                    value: "999Dice",
+                                    label: "SITE",
+                                    labelWidth: 120,
+                                    placeholder: "999Dice",
+                                    id: "site",
+                                    name: "site"
+                                },
+                                {
+                                    id: "username_selection",
+                                    view: "richselect",
+                                    left: 70,
+                                    top: 70,
+                                    width: 400,
+                                    label: "Accounts",
+                                    labelWidth: 120,
+                                    name: "username_selection",
+                                    hidden: true,
+                                },
+                                {
+                                    view: "text",
+                                    left: 70,
+                                    top: 70,
+                                    width: 400,
+                                    label: "USERNAME",
+                                    labelWidth: 120,
+                                    name: "username",
+                                    invalidMessage:"username can not be empty",
+                                    validate:webix.rules.isNotEmpty
+                                },
+                                {
+                                    view: "text",
+                                    type: "password",
+                                    left: 70,
+                                    top: 190,
+                                    width: 400,
+                                    label: "PASSWORD",
+                                    labelWidth: 120,
+                                    name: "password",
+                                    invalidMessage:"password can not be empty",
+                                    validate:webix.rules.isNotEmpty
+                                },
+                                {
+                                    view: "text",
+                                    left: 60,
+                                    top: 250,
+                                    width: 400,
+                                    label: "2FA (Optional)",
+                                    labelWidth: 120,
+                                    name: "twofa"
+                                },
+                                {
+                                    view: "text",
+                                    type: "password",
+                                    left: 70,
+                                    top: 310,
+                                    width: 400,
+                                    labelWidth: 120,
+                                    label: "API Key",
+                                    name: "apikey",
+                                    invalidMessage:"apikey can not be empty",
+                                    validate:webix.rules.isNotEmpty
+                                },
+                                {
+                                     view: "switch", 
+                                     value: 1, 
+                                     label:"KeePass",
+                                     labelWidth:100,
+                                     onLabel: "On", 
+                                     offLabel:"Off",
+                                     id: "switch_lable",
+                                     name: "switch_lable",
+                                },
+                                {
+                                    label: "LOGIN",
+                                    view: "button",
+                                    type: "form",
+                                    left: 60,
+                                    top: 400,
+                                    width: 400,
+                                    name: "login_button",
+                                    click: "login"
+                                },
+                                {
+                                    label: "REGISTER",
+                                    view: "button",
+                                    left: 310,
+                                    top: 400,
+                                    width: 400,
+                                    name: "register_button",
+                                    click: register
+                                },                                
+                            ]
+                        }],
+                        }
                     },
                     {
-                        view: "text",
-                        left: 70,
-                        top: 130,
-                        width: 400,
-                        label: "USERNAME",
-                        labelWidth: 120,
-                        name: "username",
-                        invalidMessage:"username can not be empty",
-                        validate:webix.rules.isNotEmpty
-                    },
-                    {
-                        view: "text",
-                        type: "password",
-                        left: 70,
-                        top: 190,
-                        width: 400,
-                        label: "PASSWORD",
-                        labelWidth: 120,
-                        name: "password",
-                        invalidMessage:"password can not be empty",
-                        validate:webix.rules.isNotEmpty
-                    },
-                    {
-                        view: "text",
-                        left: 60,
-                        top: 250,
-                        width: 400,
-                        label: "2FA (Optional)",
-                        labelWidth: 120,
-                        name: "twofa"
-                    },
-                    {
-                        view: "text",
-                        type: "password",
-                        left: 70,
-                        top: 310,
-                        width: 400,
-                        labelWidth: 120,
-                        label: "API Key",
-                        name: "apikey",
-                        invalidMessage:"apikey can not be empty",
-                        validate:webix.rules.isNotEmpty
-                    },
-                    {
-                        label: "LOGIN",
-                        view: "button",
-                        type: "form",
-                        left: 60,
-                        top: 400,
-                        width: 400,
-                        name: "login_button",
-                        click: "login"
-                    },
-                    {
-                        label: "REGISTER",
-                        view: "button",
-                        left: 310,
-                        top: 400,
-                        width: 400,
-                        name: "register_button",
-                        click: register
-                    },
-                    {
-                        view: "label",
-                        label: "Supporting Dice Sites (alphabet sequence)"
-                    },
-                    { 
-                        view: "label", 
-                        label: "<a target='_blank' href='https://www.999dice.com/?224280708'>999Dice</a>", 
-                    },
-                    { 
-                        view: "label", 
-                        label: "<a target='_blank' href='https://www.bitsler.com/?ref=mydicebot'>Bitsler</a>", 
-                    },
-                    { 
-                        view: "label", 
-                        label: "<a target='_blank' href='https://www.crypto-games.net/?i=CpQP3V8Up2'>Crypto-Games</a>", 
-                    },
-                    { 
-                        view: "label", 
-                        label: "<a target='_blank' href='https://magic-dice.com/?ref=mydicebot'>MagicDice</a>", 
-                    },
-                    { 
-                        view: "label", 
-                        label: "<a target='_blank' href='https://primedice.com/?c=mydicebot'>PrimeDice</a>", 
-                    },
-                    { 
-                        view: "label", 
-                        label: "<a target='_blank' href='https://stake.com/?code=mydicebot'>Stake</a>", 
-                    },  
-                    { 
-                        view: "label", 
-                        label: "<a target='_blank' href='https://yolodice.com/r?6fAf-wVz'>YoloDice</a>", 
-                    },
-                    {
-                        view: "label",
-                        label: "TODO"
-                    },
-                    { 
-                        view: "label", 
-                        label: "<a target='_blank' href='https://betking.io/?ref=u:mydicebot'>BetKing (coming soon)</a>", 
-                    },
-                    { 
-                        view: "label", 
-                        label: "<a target='_blank' href='https://bitvest.io/?r=108792'>BitVest (coming soon)</a>", 
-                    },
-                    { 
-                        view: "label", 
-                        label: "<a target='_blank' href='https://www.bitdice.me/?r=90479'>BitDice (coming soon)</a>", 
-                    },
-                    { 
-                        view: "label", 
-                        label: "<a target='_blank' href='https://dice-bet.com/?ref=u:mydicebot'>Dice-Bet (coming soon)</a>", 
-                    },
-                    { 
-                        view: "label", 
-                        label: "<a target='_blank' href='https://duckdice.com/ab61534783'>DuckDice (coming soon)</a>", 
-                    },
-                    { 
-                        view: "label", 
-                        label: "<a target='_blank' href='https://freebitco.in/?r=16392656'>Freebitco.in (coming soon)</a>", 
-                    },
-                    { 
-                        view: "label", 
-                        label: "<a target='_blank' href='https://kingdice.com/#/welcome?aff=180722'>KingDice (coming soon)</a>", 
-                    },
-                    { 
-                        view: "label", 
-                        label: "<a target='_blank' href='https://www.megadice.com/?a=326492144'>MegaDice (coming soon)</a>", 
-                    },
-                    { 
-                        view: "label", 
-                        label: "<a target='_blank' href='https://www.nitrodice.com/?ref=0N2pG8rkL7UR6oMzZWEj'>NitroDice (coming soon)</a>", 
-                    },
-                    { 
-                        view: "label", 
-                        label: "<a target='_blank' href='https://nitrogensports.eu/r/4998127'>NitrogenSports (coming soon)</a>", 
-                    },
-                    { 
-                        view: "label", 
-                        label: "<a target='_blank' href='https://safedice.com/?r=100309'>SafeDice (coming soon)</a>", 
-                    },
-                                    
+                        header: "KEEPASS",
+                        body: {
+                            view: "form", 
+                            id: "keepass_form", 
+                            elements: [{
+                                rows: [
+                                {
+                                    id: "keepass_selection",
+                                    view: "richselect",
+                                    left: 70,
+                                    top: 130,
+                                    width: 400,
+                                    label: "KeePassFiles",
+                                    labelWidth: 120,
+                                    name: "keepass_selection",
+                                    hidden: true,
+                                },
+                                {
+                                    view: "text",
+                                    left: 70,
+                                    top: 130,
+                                    width: 400,
+                                    label: "KeePassFile",
+                                    labelWidth: 120,
+                                    name: "keepassfile",
+                                    invalidMessage:"kee pass file can not be empty",
+                                    validate:webix.rules.isNotEmpty
+                                },
+                                {
+                                    view: "label",
+                                    left: 70,
+                                    top: 130,
+                                    width: 400,
+                                    label: "KeePassStatus",
+                                    labelWidth: 120,
+                                    name: "keepassstatus",
+                                    hidden: true,
+                                },
+                                {
+                                    view: "text",
+                                    type: "password",
+                                    left: 70,
+                                    top: 310,
+                                    width: 400,
+                                    labelWidth: 120,
+                                    label: "Password",
+                                    name: "keepassword",
+                                    invalidMessage:"keepassword can not be empty",
+                                    validate:webix.rules.isNotEmpty
+                                },
+                                {
+                                    view: "text",
+                                    type: "password",
+                                    left: 70,
+                                    top: 310,
+                                    width: 400,
+                                    labelWidth: 120,
+                                    label: "Password Again",
+                                    name: "keepassword2",
+                                    invalidMessage:"keepassword can not be empty",
+                                    validate:webix.rules.isNotEmpty,
+                                    hidden: true,
+                                },
+                                {
+                                    label: "LOGIN",
+                                    view: "button",
+                                    type: "form",
+                                    left: 60,
+                                    top: 400,
+                                    width: 400,
+                                    name: "login_button",
+                                    click: "keelogin"
+                                },
+                                {
+                                    label: "REGISTER",
+                                    view: "button",
+                                    type: "form",
+                                    left: 60,
+                                    top: 400,
+                                    width: 400,
+                                    name: "register_button",
+                                    click: "keeregister",
+                                    hidden: true,
+                                },
+                                {
+                                    label: "LOGOUT",
+                                    view: "button",
+                                    type: "form",
+                                    left: 60,
+                                    top: 400,
+                                    width: 400,
+                                    name: "keepass_logout_button",
+                                    click: "keelogout",
+                                    hidden: true,
+                                },
+                                ]
+                            }]
+                        }
+                    }
                 ]
-            }],
-        });
+        };  
+
+        var mydicebot_official_site_info = {
+            padding: 20,
+            rows: [
+                {view: "label", label: "MyDiceBot Official Site"},
+                {view: "label", label: "<a target='_blank' href='https://mydicebot.com'>https://mydicebot.com</a>"},
+                {view: "label", label: "MyDiceBot Online Simulator"},
+                {view: "label", label: "<a target='_blank' href='https://simulator.mydicebot.com'>https://simulator.mydicebot.com</a>"},
+                {view: "label", label: "MyDiceBot Discord Chat"},
+                {view: "label", label: "<a target='_blank' href='https://discord.gg/S6W5ec9'>https://discord.gg/S6W5ec9</a>"},
+                {view: "label", label: "MyDiceBot Download"},
+                {view: "label", label: "<a target='_blank' href='https://github.com/mydicebot/mydicebot.github.io/releases'>DOWNLOAD MyDiceBot and Earn Bitcoin Fast!</a>"}
+            ]                 
+        };
+
+        var ads_iframe = {
+            rows: [
+                {view:"iframe", src:"//ad.a-ads.com/1102518?size=320x50", height: 60}
+            ]                   
+        }
+
+        var supported_dice_site_info = {
+            padding: 20,
+            rows: [
+                {view: "label", label: "Supporting Dice Sites"},
+                {view: "label", label: "<a target='_blank' href='https://www.999dice.com/?224280708'>999Dice</a>"},
+                {view: "label", label: "<a target='_blank' href='https://www.bitsler.com/?ref=mydicebot'>Bitsler</a>"},
+                {view: "label", label: "<a target='_blank' href='https://www.crypto-games.net/?i=CpQP3V8Up2'>Crypto-Games</a>"},
+                {view: "label", label: "<a target='_blank' href='https://magic-dice.com/?ref=mydicebot'>MagicDice</a>"},
+                {view: "label", label: "<a target='_blank' href='https://primedice.com/?c=mydicebot'>PrimeDice</a>"},
+                {view: "label", label: "<a target='_blank' href='https://stake.com/?code=mydicebot'>Stake</a>"},  
+                {view: "label", label: "<a target='_blank' href='https://yolodice.com/r?6fAf-wVz'>YoloDice</a>"},
+            ]
+        };
+
+        var todo_dice_site_info = {
+            padding: 20,
+            rows: [
+                {view: "label", label: "TODO"},
+                {view: "label", label: "<a target='_blank' href='https://betking.io/?ref=u:mydicebot'>BetKing</a>"},
+                {view: "label", label: "<a target='_blank' href='https://bitvest.io/?r=108792'>BitVest</a>"},
+                {view: "label", label: "<a target='_blank' href='https://www.bitdice.me/?r=90479'>BitDice</a>"},
+                {view: "label", label: "<a target='_blank' href='https://dice-bet.com/?ref=u:mydicebot'>Dice-Bet</a>"},
+                {view: "label", label: "<a target='_blank' href='https://duckdice.com/ab61534783'>DuckDice</a>"},
+                {view: "label", label: "<a target='_blank' href='https://freebitco.in/?r=16392656'>Freebitco.in</a>"},
+                {view: "label", label: "<a target='_blank' href='https://kingdice.com/#/welcome?aff=180722'>KingDice</a>"},
+                {view: "label", label: "<a target='_blank' href='https://www.megadice.com/?a=326492144'>MegaDice</a>"},
+                {view: "label", label: "<a target='_blank' href='https://www.nitrodice.com/?ref=0N2pG8rkL7UR6oMzZWEj'>NitroDice</a>"},
+                {view: "label", label: "<a target='_blank' href='https://nitrogensports.eu/r/4998127'>NitrogenSports</a>"},
+                {view: "label", label: "<a target='_blank' href='https://safedice.com/?r=100309'>SafeDice</a>"},
+            ]
+        };
+
+        var resizer = {view:"resizer"};
+        
+        webix.ui({
+                id: "login_layout",
+                cols: [
+                    {rows: [
+                        login_tabview,
+                        mydicebot_official_site_info,
+                        ads_iframe
+                    ]},
+                    resizer,
+                    {rows: [
+                        supported_dice_site_info,
+                        todo_dice_site_info
+                    ]}
+                ]
+            }
+        );
         webix.extend($$("form1"), webix.ProgressBar);
+        webix.extend($$("keepass_form"), webix.ProgressBar);
         function register() {
             let site = $$("site").getValue();
             window.open(registerUrls[site],'_blank');
         }
-        login = function() {
-            console.log($$("form1"));
+
+        $$("keepass_form").elements["keepassfile"].attachEvent("onChange", function(newv, oldv){
+            $$("keepass_form").showProgress({
+                type: "icon",
+                delay: 5000,
+                hide: true
+            });
+            webix.ajax().get('keepass/check?keepassfile='+newv).then(function (result) {
+                $$("keepass_form").hideProgress();
+                let ret = result.json();
+                if(ret == true){
+                    $$("keepass_form").elements.keepassword2.hide(); 
+                    $$("keepass_form").elements.register_button.hide(); 
+                    $$("keepass_form").elements.login_button.show(); 
+                } else {
+                    $$("keepass_form").elements.keepassword2.show(); 
+                    $$("keepass_form").elements.register_button.show(); 
+                    $$("keepass_form").elements.login_button.hide(); 
+                }
+            }).fail(function (xhr) {
+                console.error(response.error.message);
+                webix.message({type: 'error', text: response.error.message});
+            });
+        });
+
+        function keeregister() {
+            if($$("keepass_form").validate()){
+                if ($$("keepass_form").elements["keepassword"].getValue() != $$("keepass_form").elements["keepassword2"].getValue()){
+                    webix.message({type: 'error', text: 'Passwords are not the same'});
+                    return false;
+                }
+                $$("keepass_form").showProgress({
+                    type: "icon",
+                    delay: 5000,
+                    hide: true
+                });
+                webix.ajax().post('keepass/reg', $$("keepass_form").getValues()).then(function (result) {
+                    $$("keepass_form").hideProgress();
+                    if (result.json() == 'ok') {
+                        webix.message({type: 'info', text: 'keepass file create success'});
+                        keepasslogin = true;
+                        $$('form1').show();
+                        checkSiteParams($$("site").getText());
+                        webix.storage.session.put('keepasslogin', keepasslogin);
+                        webix.storage.session.put('keepassdb', keepassdb);
+                        webix.storage.session.put('keepassword', $$("keepass_form").elements.keepassword.getValue());
+                        webix.storage.session.put('keepassfile', $$("keepass_form").elements.keepassfile.getValue());
+                    } else {
+                        webix.message({type: 'info', text: 'keepass file create failed'});
+                    }
+                }).fail(function (xhr) {
+                    console.error(response.error.message);
+                    webix.message({type: 'error', text: response.error.message});
+                });
+            } else {
+                webix.message({type: 'error', text: 'Please enter the correct parameters'});
+            }
+        }
+
+        let keepassdb = {};
+        let keepasslogin = false;
+        let needUserSites = ['test','999Dice'];
+        let needTokenSites = ['test','PrimeDice','Stake'];
+        let needApiKeySites = ['test','Bitsler'];
+        let needOnlyApiKeySites = ['test','YoloDice','Crypto-Games'];
+        let needSteemActiveKeySites = ['test','MagicDice'];
+        let needSimulatorActiveKeySites = ['test','Simulator'];
+        function keelogin() {
+            if($$("keepass_form").validate()){
+                $$("keepass_form").showProgress({
+                    type: "icon",
+                    delay: 5000,
+                    hide: true
+                });
+                webix.ajax().post('keepass/load', $$("keepass_form").getValues()).then(function (result) {
+                    keepassdb = result.json();
+                    $$("keepass_form").hideProgress();
+                    if(keepassdb != null){
+                        keepasslogin = true;
+                        $$('form1').show();
+                        checkSiteParams($$("site").getValue());
+                        webix.storage.session.put('keepasslogin', keepasslogin);
+                        webix.storage.session.put('keepassdb', keepassdb);
+                        webix.storage.session.put('keepassword', $$("keepass_form").elements.keepassword.getValue());
+                        webix.storage.session.put('keepassfile', $$("keepass_form").elements.keepassfile.getValue());
+                        webix.message({type: 'info', text: 'keepass login success'});
+                    } else {
+                        keepassdb = {};
+                        webix.message({type: 'error', text: 'Please check  password'});
+                    }
+                }).fail(function (xhr) {
+                    console.error(response.error.message);
+                    webix.message({type: 'error', text: response.error.message});
+                });
+            } else {
+                webix.message({type: 'error', text: 'Please enter the correct parameters'});
+            }
+        }
+
+        function login() {
             if($$("form1").validate()){
                 $$("form1").showProgress({
                     type: "icon",
                     delay: 5000,
                     hide: true
                 });
-                webix.send("login", $$("form1").getValues());
+                //if (JSON.stringify(keepassdb) != '{}') {
+                if (keepasslogin) {
+                    let site = $$("site").getValue();
+                    let insert = true;
+                    let k = 0;
+                    let apikey = $$("form1").elements.apikey.getValue(); 
+                    let username = $$("form1").elements.username.getValue(); 
+                    let password = $$("form1").elements.password.getValue(); 
+                    let keepassword = webix.storage.session.get('keepassword');
+                    let keepassfile = webix.storage.session.get('keepassfile');
+                    let entrys = [];
+                    if(keepassdb != null && keepassdb[site]){
+                        for (k in keepassdb[site]){
+                            if(keepassdb[site][k]['username'] == username){
+                                keepassdb[site][k]['password'] = password;
+                                keepassdb[site][k]['apikey'] = apikey;
+                                if(needSteemActiveKeySites.indexOf(site)>0 || needOnlyApiKeySites.indexOf(site)>0 || needTokenSites.indexOf(site)>0 ) {
+                                    keepassdb[site][k]['username'] = apikey;
+                                }
+                                insert = false;
+                            }
+                            entrys.push(keepassdb[site][k]);
+                        }
+                    }
+                    if(insert){
+                        let en = {};
+                        en['username'] = username;
+                        en['password'] = password;
+                        en['apikey'] = apikey;
+                        entrys.push(en);
+                        keepassdb[site] = entrys;
+                    }
+
+                    webix.storage.session.put('keepassdb', keepassdb);
+                    webix.ajax().put('keepass/save?keepassfile='+keepassfile+'&keepassword='+keepassword, keepassdb).then(function (result) {
+                        webix.message({type: 'info', text: 'keepass save success'});
+                        $$("keepass_form").hideProgress();
+                        webix.send("login", $$("form1").getValues());
+                    }).fail(function (xhr) {
+                        console.error(response.error.message);
+                        webix.message({type: 'error', text: response.error.message});
+                    });
+                } else {
+                    webix.send("login", $$("form1").getValues());
+                }
             } else {
                 webix.message({type: 'error', text: 'Please enter the correct parameters'});
             }
         }
+
         webix.ready(function () {
-            let mess = "#{message}"
+            let mess = "#{message}";
+            let site = "#{site}";
             if(mess != '') {
                 webix.message({type: 'error', text: mess });
             }
-            console.log($$("form1"));
-            $$("form1").elements.apikey.hide(); 
+            if(site != '') {
+                $$("site").setValue(site);
+            }
+            keepassdb = webix.storage.session.get('keepassdb');
+            if(keepassdb == null){
+                keepassdb = {};
+            }
+            keepasslogin = webix.storage.session.get('keepasslogin');
+            checkSiteParams($$("site").getText());
+            setKeepass();
         });
-        $$("site").attachEvent("onChange", function(newId, oldId){
-            var needUserSites = ['test','999Dice'];
-            var needTokenSites = ['test','PrimeDice','Stake'];
-            var needApiKeySites = ['test','Bitsler'];
-            var needOnlyApiKeySites = ['test','YoloDice','Crypto-Games']
-            var needSteemActiveKeySites = ['test','MagicDice']
-            var needSimulatorActiveKeySites = ['test','Simulator']
+
+        function setKeepass() {
+            webix.ajax().get('keepass/files').then(function (result) {
+                keepassfiles = result.json();
+                if(keepassfiles.length>=1){
+                    let files = []; 
+                    for(let k in keepassfiles) {
+                        let file = {}; 
+                        file['id'] = k;
+                        file['value'] = keepassfiles[k].replace(/.kdbx/,"");
+                        files.push(file);
+                    }
+                    $$("keepass_selection").define("options", files);
+                    $$("keepass_selection").setValue(0);
+                    $$("keepass_selection").refresh();
+                    $$("keepass_selection").show();
+                    $$("keepass_form").elements["keepassfile"].setValue($$("keepass_selection").getText());
+                } else {
+                    $$("keepass_selection").hide();
+                    $$("keepass_form").elements.keepassword2.show(); 
+                    $$("keepass_form").elements.register_button.show(); 
+                    $$("keepass_form").elements.login_button.hide(); 
+                }
+            }).fail(function (xhr) {
+                console.error(response.error.message);
+                webix.message({type: 'error', text: response.error.message});
+            });
+        }
+
+        function setAccounts(site) {
+            if(keepassdb != null && keepassdb[site]){
+                let accounts = keepassdb[site];
+                if(accounts.length>1){
+                    let usernames = []; 
+                    for(let k in accounts) {
+                        let account = {}; 
+                        account['id'] = k;
+                        account['value'] = accounts[k]['username'];
+                        usernames.push(account);
+                    }
+                    $$("username_selection").define("options", usernames);
+                    $$("username_selection").setValue(0);
+                    $$("username_selection").refresh();
+                    $$("username_selection").show();
+                } else {
+                    $$("username_selection").hide();
+                }
+                $$("form1").elements.apikey.setValue(accounts[0]['apikey']); 
+                $$("form1").elements.username.setValue(accounts[0]['username']); 
+                $$("form1").elements.password.setValue(accounts[0]['password']); 
+            } else {
+                $$("username_selection").hide();
+                $$("form1").elements.apikey.setValue(''); 
+                $$("form1").elements.username.setValue(''); 
+                $$("form1").elements.password.setValue(''); 
+            } 
+        }
+
+        function checkSiteParams(newId){
             if(needUserSites.indexOf(newId)>0){
-                console.log("need user");
                 $$("form1").elements.apikey.hide(); 
                 $$("form1").elements.twofa.show(); 
                 $$("form1").elements.username.show(); 
                 $$("form1").elements.password.show(); 
                 //$$("form1").refresh();
             } else if(needTokenSites.indexOf(newId)>0) {
-                console.log("need token");
                 $$("form1").elements.username.hide(); 
                 $$("form1").elements.password.hide(); 
                 $$("form1").elements.twofa.show(); 
@@ -257,7 +583,6 @@ block content
                 $$("form1").elements.apikey.define("label", "Token");
                 $$("form1").elements.apikey.refresh();
             } else if (needApiKeySites.indexOf(newId)>0) {
-                console.log("need apikey");
                 $$("form1").elements.username.show(); 
                 $$("form1").elements.password.show(); 
                 $$("form1").elements.twofa.show(); 
@@ -265,7 +590,6 @@ block content
                 $$("form1").elements.apikey.define("label", "Api Key");
                 $$("form1").elements.apikey.refresh();
             } else if(needOnlyApiKeySites.indexOf(newId)>0) {
-                console.log("need only apikey");
                 $$("form1").elements.username.hide(); 
                 $$("form1").elements.password.hide(); 
                 $$("form1").elements.twofa.show(); 
@@ -273,19 +597,82 @@ block content
                 $$("form1").elements.apikey.define("label", "Api Key");
                 $$("form1").elements.apikey.refresh();
             } else if(needSteemActiveKeySites.indexOf(newId)>0) {
-                console.log("need Activekey");
                 $$("form1").elements.password.hide(); 
                 $$("form1").elements.twofa.hide(); 
                 $$("form1").elements.apikey.show(); 
                 $$("form1").elements.apikey.define("label", "Active Key");
                 $$("form1").elements.apikey.refresh();
             } else if(needSimulatorActiveKeySites.indexOf(newId)>0) {
-                console.log("Simulator");
                 $$("form1").elements.username.hide(); 
                 $$("form1").elements.password.hide(); 
                 $$("form1").elements.password.hide(); 
                 $$("form1").elements.twofa.hide(); 
                 $$("form1").elements.apikey.hide(); 
             }
+            setAccounts(newId);
+            $$("switch_lable").setValue(keepasslogin);
+            //$$("switch_lable").disable();
+            site = newId;
+        }
+        function keelogout(){
+            keepassdb = {};
+            keepasslogin = false;
+            $$("switch_lable").setValue(0);
+            webix.storage.session.clear();
+            $$("keepass_form").elements.keepassword2.hide(); 
+            $$("keepass_form").elements.keepassword.show(); 
+            $$("keepass_form").elements.register_button.hide(); 
+            $$("keepass_form").elements.login_button.show(); 
+            $$("keepass_form").elements.keepassfile.show(); 
+            $$("keepass_form").elements.keepass_logout_button.hide(); 
+            $$("keepass_form").elements.keepassstatus.hide(); 
+            setKeepass();
+        }
+        $$("switch_lable").attachEvent("onItemClick", function(){
+                if($$("switch_lable").getValue() == 1) {
+                    $$('keepass_form').show();
+                } else {
+                    keelogout();
+                }
+        });
+        $$("site").attachEvent("onChange", function(newId, oldId){
+            checkSiteParams(newId);
+        });
+        $$("username_selection").attachEvent("onChange", function(newId, oldId){
+            //setAccounts(newId);
+            if(keepassdb[site]){
+                let accounts = keepassdb[site];
+                $$("form1").elements.apikey.setValue(accounts[newId]['apikey']); 
+                $$("form1").elements.username.setValue(accounts[newId]['username']); 
+                $$("form1").elements.password.setValue(accounts[newId]['password']); 
+            }
+        });
+        $$("keepass_selection").attachEvent("onChange", function(newId, oldId){
+            $$("keepass_form").elements["keepassfile"].setValue($$("keepass_selection").getText());
+        });
+        $$("login_tabview").getTabbar().attachEvent("onBeforeTabClick", function(id){
+            if(id == 'keepass_form'){
+                if(keepasslogin) {
+                    let keepassfile = webix.storage.session.get('keepassfile');
+                    $$("keepass_form").elements.keepassword2.hide(); 
+                    $$("keepass_form").elements.keepassword.hide(); 
+                    $$("keepass_form").elements.register_button.hide(); 
+                    $$("keepass_form").elements.login_button.hide(); 
+                    $$("keepass_form").elements.keepassfile.hide(); 
+                    $$("keepass_form").elements.keepass_selection.hide(); 
+                    $$("keepass_form").elements.keepassstatus.setValue("keepass "+keepassfile+" file has logged"); 
+                    $$("keepass_form").elements.keepassstatus.show(); 
+                    $$("keepass_form").elements.keepass_logout_button.show(); 
+                } else {
+                    $$("keepass_form").elements.keepassword2.hide(); 
+                    $$("keepass_form").elements.keepassword.show(); 
+                    $$("keepass_form").elements.register_button.hide(); 
+                    $$("keepass_form").elements.login_button.show(); 
+                    $$("keepass_form").elements.keepassfile.show(); 
+                    $$("keepass_form").elements.keepassstatus.hide(); 
+                    $$("keepass_form").elements.keepass_logout_button.hide(); 
+                    setKeepass();
+                }
+            } 
         });
 
