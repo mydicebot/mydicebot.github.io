@@ -18,7 +18,8 @@ function init() {
         {id:15,value:"QTUM"},
         {id:16,value:"START"},
         {id:17,value:"WAVES"},
-        {id:18,value:"BURST"}
+        {id:18,value:"BURST"},
+        {id:19,value:"BTSLR"},
     ]);
     $$("bet_currency_selection").refresh();
 }

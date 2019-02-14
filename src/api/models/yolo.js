@@ -150,6 +150,7 @@ export class YoloDice extends BaseDice {
         info.info.wagered = info.info.wagered + betInfo.amount;
         info.currentInfo.wagered = info.currentInfo.wagered + betInfo.amount;
         info.currentInfo.profit = info.currentInfo.profit + betInfo.profit;
+        info.info.profit = info.info.profit + betInfo.profit;
         if(betInfo.win){
             info.info.wins++;
             info.currentInfo.wins++;
