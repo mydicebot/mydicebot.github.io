@@ -37,7 +37,7 @@ function checkParams(p,ch){
 
 function initScriptBalance(currencyValue, cb){
     getInfo(function(userinfo){
-        if(userinfo.info.success == 'true'){
+        if(userinfo.info.success == true){
             try {
                 fengari.load('balance='+userinfo.info.balance)();
                 fengari.load('bets='+userinfo.info.bets)();
@@ -78,14 +78,14 @@ function getCurrentBetId(ret){
 }
 
 function getCurrentRoll(ret){
-    let roll = ret.betInfo.roll_number;
-    //console.log('currentRoll:'+roll);
+    let roll = ret.betInfo.result;
+    console.log('currentRoll:'+roll);
     return roll;
 }
 
-async function outError(ret){
+function outError(ret){
     let mess = ret.err;
-    return await retryError(mess);
+    return checkerr(mess);
 }
 
 function isError(ret){
@@ -100,27 +100,27 @@ function getWinStatus(ret){
 }
 
 function setDatatable(ret){
-    let chanceStr = '<font size="3" color="red">'+ ret.betInfo.condition + ' '+ ret.betInfo.game +'</font>';
+    let chanceStr = '<font size="3" color="red">'+ ret.betInfo.condition + ' '+ ret.betInfo.target +'</font>';
     if(ret.betInfo.win){
-        chanceStr = '<font size="3" color="green">'+ ret.betInfo.condition + ' '+ ret.betInfo.game +'</font>';
+        chanceStr = '<font size="3" color="green">'+ ret.betInfo.condition + ' '+ ret.betInfo.target +'</font>';
     }
-    let profitStr = '<font size="3" color="red">' + ret.betInfo.amount_return+ '</font>';
-    if(ret.betInfo.amount_return>0) {
-        profitStr = '<font size="3" color="green">' + ret.betInfo.amount_return + '</font>';
+    let profitStr = '<font size="3" color="red">' + ret.betInfo.profit+ '</font>';
+    if(ret.betInfo.profit>0) {
+        profitStr = '<font size="3" color="green">' + ret.betInfo.profit + '</font>';
     }
     $$('bet_datatable').add({
         bet_datatable_id:ret.betInfo.id,
         bet_datatable_amount:ret.betInfo.amount,
         bet_datatable_low_high:ret.betInfo.condition,
-        bet_datatable_payout:ret.betInfo.payout,
+        bet_datatable_payout:(ret.betInfo.payout).toFixed(8),
         bet_datatable_bet_chance:chanceStr,
-        bet_datatable_actual_chance:ret.betInfo.roll_number,
+        bet_datatable_actual_chance:ret.betInfo.result,
         bet_datatable_profit:profitStr,
     },0);
 }
 
 function setStats(userinfo, cv){
-    if(userinfo.info.success == 'true'){
+    if(userinfo.info.success == true){
         $$('bet_total_stats').setValues({
             bet_total_stats_balance:userinfo.info.balance,
             bet_total_stats_win:userinfo.info.wins,

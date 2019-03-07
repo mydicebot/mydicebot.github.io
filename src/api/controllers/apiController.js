@@ -106,6 +106,10 @@ exports.keecheck = async function(req, res) {
     try{
         let keepassfile = req.query.keepassfile;
         let filePath = path.resolve(path.join(process.execPath, '../keepass/')+keepassfile+'.kdbx');
+        if(isMobile(req)) {
+            //filePath = path.resolve('/tmp/keepass/'+keepassfile+'.kdbx');
+            filePath = path.resolve(path.join(__dirname, '../../keepass/'+keepassfile+'.kdbx'));
+        }
         if (fs.existsSync(filePath)) {
             return res.status(200).json(true);
         } else {
@@ -120,6 +124,10 @@ exports.keecheck = async function(req, res) {
 exports.keeload = async function(req, res) {
     try{
         let filePath = path.resolve(path.join(process.execPath, '../keepass/')+req.body.keepassfile+'.kdbx');
+        if(isMobile(req)) {
+            //filePath = path.resolve('/tmp/keepass/'+req.body.keepassfile+'.kdbx');
+            filePath = path.resolve(path.join(__dirname, '../../keepass/'+req.body.keepassfile+'.kdbx'));
+        }
         let cred = new kdbxweb.Credentials(kdbxweb.ProtectedValue.fromString(req.body.keepassword));
         let data  = await fs.readFileSync(filePath);
         let db = await kdbxweb.Kdbx.load(new Uint8Array(data).buffer, cred);
@@ -149,6 +157,10 @@ exports.keeload = async function(req, res) {
 exports.keereg = async function(req, res) {
     try{
         let filePath = path.resolve(path.join(process.execPath, '../keepass/')+req.body.keepassfile+'.kdbx');
+        if(isMobile(req)) {
+            //filePath = path.resolve('/tmp/keepass/'+req.body.keepassfile+'.kdbx');
+            filePath = path.resolve(path.join(__dirname, '../../keepass/'+req.body.keepassfile+'.kdbx'));
+        }
         let cred = new kdbxweb.Credentials(kdbxweb.ProtectedValue.fromString(req.body.keepassword));
         let db = kdbxweb.Kdbx.create(cred, 'mydicebot');
         //let subGroup = db.createGroup(db.getDefaultGroup(), 'mydicebot');
@@ -165,6 +177,10 @@ exports.keereg = async function(req, res) {
 exports.keesave = async function(req, res) {
     try{
         let filePath = path.resolve(path.join(process.execPath, '../keepass/')+req.query.keepassfile+'.kdbx');
+        if(isMobile(req)) {
+            //filePath = path.resolve('/tmp/keepass/'+req.body.keepassfile+'.kdbx');
+            filePath = path.resolve(path.join(__dirname, '../../keepass/'+req.query.keepassfile+'.kdbx'));
+        }
         let cred = new kdbxweb.Credentials(kdbxweb.ProtectedValue.fromString(req.query.keepassword));
         let db = kdbxweb.Kdbx.create(cred, 'mydicebot');
         for(let k1  in req.body) {
@@ -201,6 +217,10 @@ exports.keefiles = async function(req, res) {
     try{
         //let filePath = path.resolve(path.join(__dirname, '../../script/lua/'));
         let filePath = path.resolve(path.join(process.execPath, '../keepass/'));
+        if(isMobile(req)) {
+            //filePath = path.resolve('/tmp/keepass/');
+            filePath = path.resolve(path.join(__dirname, '../../keepass/'));
+        }
         let paths = await getFiles(filePath, 'kdbx');
         return res.status(200).json(paths);
     } catch(err) {
@@ -215,6 +235,10 @@ exports.save = async function(req, res) {
         let fileName = req.body.fileName;
         //let filePath = path.resolve(path.join(__dirname, '../../script/lua/')+fileName);
         let filePath = path.resolve(path.join(process.execPath, '../script/lua/')+fileName);
+        if(isMobile(req)) {
+            //filePath = path.resolve('/tmp/script/lua/'+fileName);
+            filePath = path.resolve(path.join(__dirname, '../../script/lua/'+fileName));
+        }
         let str  = await writeFile(filePath, content);
         return res.status(200).json(str);
     } catch(err) {
@@ -227,6 +251,10 @@ exports.file = async function(req, res) {
     try{
         //let filePath = path.resolve(path.join(__dirname, '../../script/lua/')+req.query.file);
         let filePath = path.resolve(path.join(process.execPath, '../script/lua/')+req.query.file);
+        if(isMobile(req)) {
+            //filePath = path.resolve('/tmp/script/lua/'+req.query.file);
+            filePath = path.resolve(path.join(__dirname, '../../script/lua/'+req.query.file));
+        }
         let content  = await readFile(filePath);
         return res.status(200).json(content);
     } catch(err) {
@@ -239,6 +267,10 @@ exports.script = async function(req, res) {
     try{
         //let filePath = path.resolve(path.join(__dirname, '../../script/lua/'));
         let filePath = path.resolve(path.join(process.execPath, '../script/lua/'));
+        if(isMobile(req)) {
+            //filePath = path.resolve('/tmp/script/lua/');
+            filePath = path.resolve(path.join(__dirname, '../../script/lua/'));
+        }
         let paths = await getFiles(filePath, 'lua');
         return res.status(200).json(paths);
     } catch(err) {
@@ -251,6 +283,10 @@ exports.del = async function(req, res) {
     try{
         //let filePath = path.resolve(path.join(__dirname, '../../script/lua/')+req.query.file);
         let filePath = path.resolve(path.join(process.execPath, '../script/lua/')+req.query.file);
+        if(isMobile(req)) {
+            //filePath = path.resolve('/tmp/script/lua/'+req.query.file);
+            filePath = path.resolve(path.join(__dirname, '../../script/lua/'+req.query.file));
+        }
         fs.unlinkSync(filePath);
         return res.status(200).json('ok');
     } catch(err) {
@@ -265,12 +301,36 @@ exports.upload = async function(req, res) {
         form.parse(req, function(error, fields, files) {
             //let filePath = path.resolve(path.join(__dirname, '../../script/lua/')+files.upload.name);
             let filePath = path.resolve(path.join(process.execPath, '../script/lua/')+files.upload.name);
+            if(isMobile(req)) {
+                //filePath = path.resolve('/tmp/script/lua/'+files.upload.name);
+                filePath = path.resolve(path.join(__dirname, '../../script/lua/'+files.upload.name));
+            }
             fs.writeFileSync(filePath, fs.readFileSync(files.upload.path));
             return res.status(200).json('ok');
         });
     } catch(err) {
         console.log(err);
         res.render('error',{err: err.toString()});
+    }
+};
+
+exports.checkerr = async function(req, res) {
+    let mess = req.query.mess;
+    let errCount = req.query.count;
+    if(mess != '' && typeof mess !== 'undefined') {
+        //console.error(mess);
+        //webix.message({type: 'error', text: mess });
+        if (errCount>2) {
+            errCount = 1;
+            return res.status(200).json({'ret':false,'count':errCount});
+        } else {
+            await sleep(5000);
+            errCount++;
+            return res.status(200).json({'ret':true,'count':errCount});
+        }
+    } else {
+        errCount = 1;
+        return res.status(200).json({'ret':true,'count':errCount});
     }
 };
 
@@ -336,4 +396,19 @@ function field(entry, name) {
     }
     return field;
 }
+
+function isMobile(req) {
+    let deviceAgent = req.headers["user-agent"].toLowerCase();
+    let agentID = deviceAgent.match(/(iphone|ipod|ipad|android)/);
+    if(agentID){
+        return true;
+    }else{
+        return false;
+    }
+}
+
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
 

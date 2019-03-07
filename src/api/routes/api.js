@@ -38,6 +38,8 @@ module.exports = function(app) {
   app.post('/:site/save', [createDice,checkScript], api.save);
   app.get('/:site/del', [createDice,checkScript], api.del);
   app.post('/:site/upload', [createDice,checkScript], api.upload);
+  app.get('/:site/checkerr', [createDice,checkScript], api.checkerr);
+  app.get('/checkerr', [createDice,checkScript], api.checkerr);
 };
 
 function createDice (req, res, next) {
@@ -55,8 +57,16 @@ function createDice (req, res, next) {
 function checkScript(req, res, next) {
     //let filePath = path.resolve(path.join(__dirname, '../../script/lua/'));
     let filePath = path.resolve(path.join(process.execPath, '../script/lua/'));
+    if(isMobile(req)) {
+        //filePath = path.resolve('/tmp/script/lua/');
+        filePath = path.resolve(path.join(__dirname, '../../script/lua/'));
+    }
     mkdir(filePath);
     filePath = path.resolve(path.join(process.execPath, '../keepass/'));
+    if(isMobile(req)) {
+        filePath = path.resolve(path.join(__dirname, '../../keepass/'));
+        //filePath = path.resolve('/tmp/keepass/');
+    }
     mkdir(filePath);
     next();
 }
@@ -90,6 +100,16 @@ function mkdir(dirpath,dirname){
             //fs.mkdirSync(dirpath);
             fs.mkdir(dirpath, err => {})
         }
+    }
+}
+
+function isMobile(req) {
+    let deviceAgent = req.headers["user-agent"].toLowerCase();
+    let agentID = deviceAgent.match(/(iphone|ipod|ipad|android)/);
+    if(agentID){
+        return true;
+    }else{
+        return false;
     }
 }
 

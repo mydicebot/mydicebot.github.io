@@ -7,7 +7,7 @@ block content
         var bet_total_stats = {
             id: "bet_total_stats",
             view: "property",
-            height: 210,
+            //- height: 210,
             //width: 0,
             elements: [
                 {label: "TOTAL STATS", type: "label"},
@@ -24,7 +24,7 @@ block content
             var bet_current_stats = {
                 id: "bet_current_stats",
                 view: "property",
-                height: 210,
+                //- height: 210,
                 //width: 0,
                 elements: [
                     {label: "CURRENT STATS 1", type: "label"},
@@ -40,7 +40,7 @@ block content
             var bet_current_stats2 = {
                 id: "bet_current_stats2",
                 view: "property",
-                height: 210,
+                //- height: 210,
                 //width: 0,
                 elements: [
                     {label: "CURRENT STATS 2", type: "label"},
@@ -64,7 +64,7 @@ block content
                 view: "richselect",
                 left: 70,
                 top: 70,
-                width: 400,
+                //- width: 0,
                 value: 1,
                 label: "CURRENCY",
                 labelWidth: 100,
@@ -84,7 +84,7 @@ block content
                 view: "richselect",
                 left: 70,
                 top: 70,
-                width: 400,
+                //- width: 0,
                 value: 0.01,
                 label: "HOUSE EDGE",
                 labelWidth: 100,
@@ -98,7 +98,7 @@ block content
                 view: "button",
                 label: "RESET SESSION",
             // height: 0,
-                width: 400
+                //- width: 0
             };
 
             var switch_site_button = {
@@ -106,7 +106,7 @@ block content
                 view: "button",
                 type: "danger",
                 label: "LOGOUT/SWITCH SITE",
-                width: 400
+                //- width: 400
             };
 
             var ads_label = {
@@ -132,8 +132,9 @@ block content
             };
 
             var ads = {
+                id: "ads",
                 cols: [
-                    ads_label,
+                    //- ads_label,
                     ads_iframe
                 ]
             };
@@ -141,8 +142,8 @@ block content
             var bet_chart = {
                 id: "bet_chart",
                 view: "chart",
-                height: 0,
-                width: 0,
+                //- height: 0,
+                //- width: 0,
                 type: "spline",
                 value: "#yValue#",
                 cellWidth: 10,
@@ -180,18 +181,36 @@ block content
                 ]
             };
 
-            var bet_datatable = {
-                id: "bet_datatable",
-                view: "datatable",
-                columns: [
-                    {id: "bet_datatable_id", header: ["ID",{content:"textFilter"}], fillspace:true},
-                    {id: "bet_datatable_bet_chance", header: ["GAME",{content:"textFilter"}], fillspace:true},
-                    {id: "bet_datatable_actual_chance", header: ["ROLL",{content:"textFilter"}], fillspace:true,sort:"int"},
-                    {id: "bet_datatable_amount", header: ["AMOUNT",{content:"textFilter"}], fillspace:true,sort:"int"},
-                    {id: "bet_datatable_payout", header: ["PAYOUT",{content:"textFilter"}], fillspace:true,sort:"int"},
-                    {id: "bet_datatable_profit", header: ["PROFIT",{content:"textFilter"}], fillspace:true,sort:"int"}
-                ]
-            };
+            var bet_datatable;
+
+            if(!webix.env.mobile) {
+                bet_datatable = {
+                    id: "bet_datatable",
+                    view: "datatable",
+                    columns: [
+                        {id: "bet_datatable_id", header: ["ID",{content:"textFilter"}], fillspace:true},
+                        {id: "bet_datatable_bet_chance", header: ["GAME",{content:"textFilter"}], fillspace:true},
+                        {id: "bet_datatable_actual_chance", header: ["ROLL",{content:"textFilter"}], fillspace:true,sort:"int"},
+                        {id: "bet_datatable_amount", header: ["AMOUNT",{content:"textFilter"}], fillspace:true,sort:"int"},
+                        {id: "bet_datatable_payout", header: ["PAYOUT",{content:"textFilter"}], fillspace:true,sort:"int"},
+                        {id: "bet_datatable_profit", header: ["PROFIT",{content:"textFilter"}], fillspace:true,sort:"int"}
+                    ]
+                };
+            } else {
+                bet_datatable = {
+                    id: "bet_datatable",
+                    view: "datatable",
+                    columns: [
+                        {id: "bet_datatable_id", header: ["ID"], fillspace:true},
+                        {id: "bet_datatable_bet_chance", header: ["GAME"], fillspace:true},
+                        {id: "bet_datatable_actual_chance", header: ["ROLL"], fillspace:true},
+                        {id: "bet_datatable_amount", header: ["AMOUNT"], fillspace:true},
+                        {id: "bet_datatable_payout", header: ["PAYOUT"], fillspace:true},
+                        {id: "bet_datatable_profit", header: ["PROFIT",], fillspace:true}
+                    ]
+                };
+            }
+            
 
             var bet_config_tabview = {
                 id: "bet_config_tabview",
@@ -207,6 +226,7 @@ block content
                         body: {
                             id: "site_form",
                             view: "form",
+                            padding: 4,
                             minHeight: 500,
                             width: 0,
                             elements: [
@@ -219,6 +239,8 @@ block content
                         body: {
                             id: "manual_bet_form",
                             view: "form",
+                            paddingY: 4,
+                            margin: 0,
                             minHeight: 500,
                             width: 0,
                             elements: [
@@ -296,6 +318,8 @@ block content
                             {
                             id: "auto_bet_form",
                             view: "form",
+                            paddingY: 4,
+                            margin: 0,
                             height: 0,
                             width: 0,
                             scroll:true,
@@ -416,7 +440,7 @@ block content
                                     id: "auto_bet_stop_on_profit",
                                     view: "text",
                                     label: "STOP ON PROFIT(0:NON-STOP)",
-                                    labelWidth: 240,
+                                    labelWidth: 230,
                                     value: "0.00000000",
                                     name: "auto_bet_stop_on_profit"
                                 },
@@ -424,7 +448,7 @@ block content
                                     id: "auto_bet_stop_on_win",
                                     view: "text",
                                     label: "STOP ON WIN(0:NON-STOP)",
-                                    labelWidth: 240,
+                                    labelWidth: 230,
                                     value: "0",
                                     name: "auto_bet_stop_on_win"
                                 },
@@ -432,7 +456,7 @@ block content
                                     id: "auto_bet_stop_on_loss",
                                     view: "text",
                                     label: "STOP ON LOSS(0:NON-STOP)",
-                                    labelWidth: 240,
+                                    labelWidth: 230,
                                     value: "0",
                                     name: "auto_bet_stop_on_loss"
                                 },
@@ -441,7 +465,10 @@ block content
                         {
                             id: "auto_bet_form_start_stop_buttons",
                             view: "form",
-                            height: 0,
+                            paddingY: 1,
+                            margin: 0,
+                            //- height: 0,
+                            minHeight: 70,
                             width: 0,
                             elements: [
                                 {
@@ -471,6 +498,8 @@ block content
                         body: {
                             id: "script_bet_form",
                             view: "form",
+                            paddingY: 4,
+                            margin: 0,
                             height: 0,
                             width: 0,
                             elements: [
@@ -478,6 +507,7 @@ block content
                                 {
                                     id: "script_bet_menu",
                                     view:"menu",
+                                    width: 80,
                                     data:[
                                         { id:"1",value:"MENU", submenu:[
                                             "Import",
@@ -486,6 +516,7 @@ block content
                                             "Delete"
                                         ]}
                                     ],
+                                    openAction:"click",
                                     on:{
                                         onMenuItemClick:function(id){
                                             if(this.getMenuItem(id).value == 'Save') {
@@ -509,7 +540,7 @@ block content
                                     view: "richselect",
                                     //- left: 70,
                                     //- top: 70,
-                                    width: 280,
+                                    //- width: 280,
                                     value: "Untitled.lua",
                                     //- label: "STRATEGY",
                                     //- labelWidth: 100,
@@ -523,7 +554,7 @@ block content
                                 {
                                     id: "script_bet_tabview",
                                     view: "tabview",
-                                    minHeight: 300,
+                                    //- minHeight: 240,
                                     cells: [
                                         //- {
                                         //-     header: "STRATEGY",
@@ -567,25 +598,35 @@ block content
                                     ]
                                 },
                                 {
-                                    id: "script_bet_start_stop_button",
-                                    view: "button",
-                                    type: "form",
-                                    label: "START",
-                                    value: "START"
-                                },
-                                {
-                                    id: "script_bet_stop_on_next_win_button",
-                                    view: "button",
-                                    type: "form",
-                                    label: "STOP ON NEXT WIN"
-                                },
-                                {
-                                    id: "script_bet_stop_on_next_loss_button",
-                                    view: "button",
-                                    type: "form",
-                                    label: "STOP ON NEXT LOSS"
-                                },
-
+                                    id: "script_bet_form_start_stop_buttons",
+                                    view: "form",
+                                    margin: 0,
+                                    padding: 0,
+                                    borderless: true,
+                                    //- height: 0,
+                                    minHeight: 70,
+                                    width: 0,
+                                    elements: [
+                                        {
+                                            id: "script_bet_start_stop_button",
+                                            view: "button",
+                                            type: "form",
+                                            label: "START",
+                                            value: "START"
+                                        },
+                                        {
+                                            id: "script_bet_stop_on_next_win_button",
+                                            view: "button",
+                                            type: "form",
+                                            label: "STOP ON NEXT WIN"
+                                        },
+                                        {
+                                            id: "script_bet_stop_on_next_loss_button",
+                                            view: "button",
+                                            type: "form",
+                                            label: "STOP ON NEXT LOSS"
+                                        },
+                                ]}
                             ]
                         }
                     }
@@ -634,41 +675,41 @@ block content
                 }
             });
 
-            var resizer = {view:"resizer"};
+            var resizer = {id:"info_resizer", view:"resizer"};
 
-            //- if (webix.env.mobile) {
-            //-     webix.ui.fullScreen();
-            //-     webix.ui({
-            //-     id: "bet_layout_mobile",
-            //-     rows: [
-            //-         {
-            //-             cols: [
-            //-                 bet_total_stats,
-            //-                 resizer,
-            //-                 bet_current_stats,
-            //-                 resizer,
-            //-                 bet_current_stats2,
-            //-                 resizer,
-            //-                 {
-            //-                     rows: [
-            //-                         bet_currency_selection, 
-            //-                         reset_session_button,
-            //-                         switch_site_button
-            //-                     ]
-            //-                 }
-            //-             ]
-            //-         },
-            //-         {view: "resizer"},
-            //-         {
-            //-             rows: [
-            //-                 {rows: [bet_chart, {view: "resizer"}, bet_datatable]},
-            //-                 resizer,
-            //-                 bet_config_tabview
-            //-             ]
-            //-         },
-            //-     ]
-            //- });
-            //- } else {
+            var misc_items = {
+                id: "misc_items_form",
+                view: "form",
+                paddingY: 0,
+                margin: 0,
+                height: 210,
+                width: 400,
+                elements: [
+                    bet_currency_selection, 
+                    bet_house_edge_selection, 
+                    reset_session_button,
+                    switch_site_button,
+                    ads,
+                ]
+            };
+
+            var mobile_toolbar = {
+                id:"mobile_toolbar",
+                view:"toolbar",
+                width: 100,
+                padding: 0,
+                margin: -5,
+                rows:[
+                    { id: "mobile_toolbar_total", view:"button", value:"TOTAL", },
+                    { id: "mobile_toolbar_stats1", view:"button", value:"STATS 1", },
+                    { id: "mobile_toolbar_stats2", view:"button", value:"STATS 2", },
+                    { id: "mobile_toolbar_chart", view:"button", value:"CHART", },
+                    { id: "mobile_toolbar_history", view:"button", value:"HISTORY", },
+                    { id: "mobile_toolbar_setting", view:"button", value:"SETTING", }
+                ]
+            };
+
+            if(!webix.env.mobile) {
                 webix.ui(
                 {
                     id: "bet_layout",
@@ -681,29 +722,130 @@ block content
                                 resizer,
                                 bet_current_stats2,
                                 resizer,
-                                {
-                                    rows: [
-                                        bet_currency_selection, 
-                                        bet_house_edge_selection, 
-                                        reset_session_button,
-                                        switch_site_button,
-                                        ads,
-                                    ]
-                                }
+                                misc_items,
                             ]
                         },
-                        {view: "resizer"},
+                        {view:"resizer"},
                         {
                             cols: [
-                                {rows: [bet_chart, {view: "resizer"}, bet_datatable]},
-                                resizer,
+                                {rows: [bet_chart, {view:"resizer"}, bet_datatable]},
+                                {view:"resizer"},
                                 bet_config_tabview
                             ]
                         },
                     ]
                 });
-            //- }
+            } else {
+                webix.ui.fullScreen();
+                webix.ui(
+                {
+                    id: "bet_layout_mobile",
+                    rows: [
+                        {
+                            cols: [
+                                mobile_toolbar,
+                                bet_total_stats,
+                                bet_current_stats,
+                                bet_current_stats2,
+                                bet_chart,
+                                bet_datatable,
+                                misc_items, 
+                            ]
+                        },       
+                        bet_config_tabview
+                    ]
+                });
+                $$("bet_total_stats").hide();
+
+                $$("bet_current_stats").hide();
+                //- $$("bet_current_stats").define("height", 0);
+
+                $$("bet_current_stats2").hide();
+
+                $$("misc_items_form").show();
+                $$("misc_items_form").define("height", 0);
+                $$("misc_items_form").define("width", 0);
+                //- $$("misc_items_form").resize();
+
+                $$("bet_chart").hide();
+
+                $$("bet_datatable").hide();
+
+                $$("bet_config_tabview").define("minHeight", 380);
+                $$("bet_config_tabview").define("width", 0);
+
+                $$("auto_bet_stop_on_next_win_button").hide();
+                $$("auto_bet_stop_on_next_loss_button").hide();
+
+                $$("script_bet_stop_on_next_win_button").hide();
+                $$("script_bet_stop_on_next_loss_button").hide();
+
+                $$("mobile_toolbar_total").attachEvent("onItemClick", function(){
+                    $$("bet_total_stats").show();
+                    $$("bet_current_stats").hide();
+                    $$("bet_current_stats2").hide();
+                    $$("bet_chart").hide();
+                    $$("bet_datatable").hide();
+                    $$("misc_items_form").hide();
+                });
+                $$("mobile_toolbar_stats1").attachEvent("onItemClick", function(){
+                    $$("bet_total_stats").hide();
+                    $$("bet_current_stats").show();
+                    $$("bet_current_stats2").hide();
+                    $$("bet_chart").hide();
+                    $$("bet_datatable").hide();
+                    $$("misc_items_form").hide();
+                });
+                $$("mobile_toolbar_stats2").attachEvent("onItemClick", function(){
+                    $$("bet_total_stats").hide();
+                    $$("bet_current_stats").hide();
+                    $$("bet_current_stats2").show();
+                    $$("bet_chart").hide();
+                    $$("bet_datatable").hide();
+                    $$("misc_items_form").hide();
+                });
+                $$("mobile_toolbar_chart").attachEvent("onItemClick", function(){
+                    $$("bet_total_stats").hide();
+                    $$("bet_current_stats").hide();
+                    $$("bet_current_stats2").hide();
+                    $$("bet_chart").show();
+                    $$("bet_datatable").hide();
+                    $$("misc_items_form").hide();
+                });
+                $$("mobile_toolbar_history").attachEvent("onItemClick", function(){
+                    $$("bet_total_stats").hide();
+                    $$("bet_current_stats").hide();
+                    $$("bet_current_stats2").hide();
+                    $$("bet_chart").hide();
+                    $$("bet_datatable").show();
+                    $$("bet_datatable").hideColumn("bet_datatable_id");
+                    $$("bet_datatable").hideColumn("bet_datatable_payout");
+                    $$("misc_items_form").hide();
+                });
+                $$("mobile_toolbar_setting").attachEvent("onItemClick", function(){
+                    $$("bet_total_stats").hide();
+                    $$("bet_current_stats").hide();
+                    $$("bet_current_stats2").hide();
+                    $$("bet_chart").hide();
+                    $$("bet_datatable").hide();
+                    $$("misc_items_form").show();
+                });
+            }
+
+            var mobiles = ['bet_total_stats', 'bet_current_stats', 'bet_current_stats2', 'bet_datatable', 'misc_items_form'];
+
             webix.extend($$("bet_chart"), webix.ProgressBar);
+            if(webix.env.mobile) {
+                mobiles.forEach(function(element) {
+                        console.log(element);
+                    webix.extend($$(element), webix.ProgressBar);
+                });
+                //webix.extend($$("bet_total_stats"), webix.ProgressBar);
+                //webix.extend($$("bet_current_stats"), webix.ProgressBar);
+                //webix.extend($$("bet_current_stats2"), webix.ProgressBar);
+                //webix.extend($$("bet_datatable"), webix.ProgressBar);
+                //webix.extend($$("misc_items_form"), webix.ProgressBar);
+            }
             let isLoop = false;
             let stopOnWin = false;
             let stopOnLoss = false;
@@ -857,6 +999,14 @@ block content
                     type:"icon",
                     delay:3000
                 });
+                if(webix.env.mobile) {
+                    mobiles.forEach(function(element) {
+                        $$(element).showProgress({
+                            type:"icon",
+                            delay:3000
+                        });
+                    });
+                }
                 webix.ajax().get('script').then(function (result) {
                     let ret = result.json();
                     $$("script_bet_strategy_list").define("options", ret);
@@ -870,6 +1020,11 @@ block content
                     $$("script_bet_strategy_list").enable();
                     $$("script_bet_strategy_list").refresh();
                     $$("bet_chart").hideProgress();
+                    if(webix.env.mobile) {
+                        mobiles.forEach(function(element) {
+                            $$(element).hideProgress();
+                        });
+                    }
                 }).fail(function (xhr) {
                     console.error(response.error.message);
                     webix.message({type: 'error', text: response.error.message});
@@ -966,6 +1121,17 @@ block content
                     webix.message({type: 'error', text: response.error.message});
                 });
             }
+
+            function checkerr(mess){
+                let result = webix.ajax().sync().get('checkerr?mess='+mess+'&count='+errCount ); 
+                let ret = JSON.parse(result.responseText);
+                errCount = ret.count;
+                if(mess != '' && typeof mess !== 'undefined') {
+                    console.error(mess);
+                    webix.message({type: 'error', text: mess });
+                }
+                return ret.ret;
+            }
             
             function bet(c,h,p,ch) {
                 if(!checkParams(p,ch)) {
@@ -979,9 +1145,17 @@ block content
                     type:"icon",
                     delay:3000
                 });
+                if(webix.env.mobile) {
+                    mobiles.forEach(function(element) {
+                        $$(element).showProgress({
+                            type:"icon",
+                            delay:3000
+                        });
+                    });
+                }
                 let currencyValue = $$("bet_currency_selection").getValue() -1;
                 let currentAmount =  p/100000000;
-                action(c,h,p,ch,currencyValue,async function(ret) {
+                action(c,h,p,ch,currencyValue,function(ret) {
                     //console.log(ret);
                     try{
                     if(isError(ret)) {
@@ -992,9 +1166,14 @@ block content
                             setStats(ret.info, currencyValue);
                             count++
                     } else {
-                        isLoop = await outError(ret);
+                        isLoop = outError(ret);
                     }
                     $$("bet_chart").hideProgress();
+                    if(webix.env.mobile) {
+                        mobiles.forEach(function(element) {
+                            $$(element).hideProgress();
+                        });
+                    }
                     //console.log(isLoop, stopOnWin, stopOnLoss, iswin);
                     if (stopOnWin == true && iswin) {
                         //console.log("stop on win");
@@ -1081,9 +1260,17 @@ block content
                     type:"icon",
                     delay:3000
                 });
+                if(webix.env.mobile) {
+                    mobiles.forEach(function(element) {
+                        $$(element).showProgress({
+                            type:"icon",
+                            delay:3000
+                        });
+                    });
+                }
                 let currencyValue = $$("bet_currency_selection").getValue() -1;
                 let currentAmount =  p/100000000;
-                action(c,h,p,ch,currencyValue,async function(ret) {
+                action(c,h,p,ch,currencyValue,function(ret) {
                     if(isError(ret)) {
                         try {
                             iswin = getWinStatus(ret);
@@ -1098,9 +1285,14 @@ block content
                         }
                         count++;
                     } else {
-                        isLoop = await outError(ret);
+                        isLoop = outError(ret);
                     }
                     $$("bet_chart").hideProgress();
+                    if(webix.env.mobile) {
+                        mobiles.forEach(function(element) {
+                            $$(element).hideProgress();
+                        });
+                    }
                     //console.log(isLoop, stopOnWin, stopOnLoss, iswin);
                     if (stopOnWin == true && iswin) {
                         //console.log("stop on win");
@@ -1147,10 +1339,23 @@ block content
                     type:"icon",
                     delay:3000
                 });
+                if(webix.env.mobile) {
+                    mobiles.forEach(function(element) {
+                        $$(element).showProgress({
+                            type:"icon",
+                            delay:3000
+                        });
+                    });
+                }
                 webix.ajax().get('clear?currency='+$$("bet_currency_selection").getText().toLowerCase()).then(function (result) {
                     let ret = result.json();
                     //console.log(ret);
                     $$("bet_chart").hideProgress();
+                    if(webix.env.mobile) {
+                        mobiles.forEach(function(element) {
+                            $$(element).hideProgress();
+                        });
+                    }
                     cb(ret);
                 });
             }
@@ -1159,9 +1364,22 @@ block content
                     type:"icon",
                     delay:3000
                 });
+                if(webix.env.mobile) {
+                    mobiles.forEach(function(element) {
+                        $$(element).showProgress({
+                            type:"icon",
+                            delay:3000
+                        });
+                    });
+                }
                 webix.ajax().get('refresh?currency='+$$("bet_currency_selection").getText().toLowerCase()).then(function (result) {
                     let ret = result.json();
                     $$("bet_chart").hideProgress();
+                    if(webix.env.mobile) {
+                        mobiles.forEach(function(element) {
+                            $$(element).hideProgress();
+                        });
+                    }
                     cb(ret);
                 });
             }
@@ -1173,7 +1391,7 @@ block content
                 let maxLossStreakAmount = $$('bet_current_stats2').getValues().bet_current_stats_max_loss_streak_amount;
                 let maxBetAmount = $$('bet_current_stats2').getValues().bet_current_stats_max_bet_amount;
                 if(currentAmount>maxBetAmount){
-                    maxBetAmount = currentAmount;
+                    maxBetAmount = currentAmount.toFixed(8);
                 }
                 if(win){
                     maxStreakAmount = maxStreakAmount + currentAmount;
@@ -1278,24 +1496,4 @@ block content
                     orig.apply(console, arguments);
                 }
             })();
-            function sleep(ms) {
-              return new Promise(resolve => setTimeout(resolve, ms));
-            }
-            async function retryError(mess){
-                if(mess != '' && typeof mess !== 'undefined') {
-                    console.error(mess);
-                    webix.message({type: 'error', text: mess });
-                    if (errCount>1) {
-                        errCount = 1;
-                        return false;
-                    } else {
-                        await sleep(5000);
-                        errCount++;
-                        return true;
-                    }
-                } else {
-                    errCount = 1;
-                    return true;
-                }
-            }
     script(src=site)

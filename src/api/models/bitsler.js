@@ -45,15 +45,21 @@ export class BitslerDice extends BaseDice {
 
     async refresh(req) {
         let formData = new FormData();
-        let accessToken = req.session.accessToken; 
+        let info = req.session.info;
+        if(info){
+            console.log("info is not null");
+            return info;
+        }
+        let accessToken = req.session.accessToken;
         formData.append('access_token', accessToken);
         let userinfo = await this._send('getuserstats', 'POST', formData,'');
-        let info = req.session.info;
-        console.log(info);
-        if(!info){
-            console.log('info ture');
-            return true;
-        }
+        userinfo.balance = eval("ret."+req.query.currency+"_balance");
+        userinfo.profit = eval("ret."+req.query.currency+"_profit");
+        userinfo.wagered = eval("ret."+req.query.currency+"_wagered");
+        userinfo.bets = ret.bets;
+        userinfo.wins = ret.wins;
+        userinfo.losses = ret.losses;
+        userinfo.success = ret.success;
         info.info = userinfo;
         req.session.info = info;
         return info;
@@ -97,28 +103,29 @@ export class BitslerDice extends BaseDice {
         } else {
             game = Math.floor((req.body.Chance*10000))-1;
         }
-        console.log(game);
         formData.append('access_token', accessToken);
-        formData.append('type', 'dice');
+//        formData.append('type', 'dice');
         formData.append('amount', amount);
         formData.append('condition', condition);
-        formData.append('game', game/10000);
-        formData.append('devise', currency);
+        formData.append('target', game/10000);
+        formData.append('currency', currency);
         formData.append('api_key','JNOEF-PTSBI-2MCCP-4PAAJ-GDBMP');
         //formData.append('api_key','0b2edbfe44e98df79665e52896c22987445683e78');
-        let ret = await this._send('bet', 'POST', formData,'');
+        let ret = await this._send('bet-dice', 'POST', formData,'');
         let info = req.session.info;
         let betInfo = ret;
-        betInfo.profit = betInfo.amount_return;
+        betInfo.profit = betInfo.profit;
+        betInfo.condition = condition;
         info.info.bets++;
         info.currentInfo.bets++;
-        info.info.profit = parseFloat(info.info.profit) + parseFloat(betInfo.amount_return);
+        info.info.profit = parseFloat(info.info.profit) + parseFloat(betInfo.profit);
         info.info.balance = betInfo.new_balance;
         info.currentInfo.balance = betInfo.new_balance;
         info.info.wagered = parseFloat(info.info.wagered) + parseFloat(amount);
         info.currentInfo.wagered = parseFloat(info.currentInfo.wagered) + parseFloat(amount);
-        info.currentInfo.profit = parseFloat(info.currentInfo.profit) + parseFloat(betInfo.amount_return);
-        if(betInfo.amount_return>0){
+        info.currentInfo.profit = parseFloat(info.currentInfo.profit) + parseFloat(betInfo.profit);
+        betInfo.payout = parseFloat(betInfo.amount)+parseFloat(betInfo.profit);
+        if(betInfo.profit>0){
             betInfo.win = true;
             info.info.wins++;
             info.currentInfo.wins++;
@@ -131,7 +138,7 @@ export class BitslerDice extends BaseDice {
         returnInfo.betInfo= betInfo;
         returnInfo.info = info;
         req.session.info = info;
-        console.log(returnInfo);
+        console.log(returnInfo.betInfo);
         return returnInfo;
     }
 
@@ -145,9 +152,11 @@ export class BitslerDice extends BaseDice {
             body: body,
         });
         let data = await res.json();
-        if (data.return.success == 'false') {
-            throw new APIError(data.return.value,data.return);
+        if (data.success == false) {
+            let errs = new Error(data.error);
+            errs.value = data.error;
+            throw new APIError(data.error ,errs);
         }
-        return data.return;
+        return data;
     }
 }

@@ -23,12 +23,12 @@ block content
             "YoloDice":"https://yolodice.com/r?6fAf-wVz" 
         };
 
-        webix.ui.fullScreen();
+        //- webix.ui.fullScreen();
 
         var login_tabview = {
                 id: "login_tabview",
                 view: "tabview",
-                Height: 500,
+                height: 500,
                 width: 400,
                 cells: [
                     {
@@ -62,7 +62,7 @@ block content
                                     view: "richselect",
                                     left: 70,
                                     top: 70,
-                                    width: 400,
+                                    width: 350,
                                     value: "999Dice",
                                     label: "SITE",
                                     labelWidth: 120,
@@ -75,7 +75,7 @@ block content
                                     view: "richselect",
                                     left: 70,
                                     top: 70,
-                                    width: 400,
+                                    width: 350,
                                     label: "Accounts",
                                     labelWidth: 120,
                                     name: "username_selection",
@@ -85,7 +85,7 @@ block content
                                     view: "text",
                                     left: 70,
                                     top: 70,
-                                    width: 400,
+                                    width: 350,
                                     label: "USERNAME",
                                     labelWidth: 120,
                                     name: "username",
@@ -97,7 +97,7 @@ block content
                                     type: "password",
                                     left: 70,
                                     top: 190,
-                                    width: 400,
+                                    width: 350,
                                     label: "PASSWORD",
                                     labelWidth: 120,
                                     name: "password",
@@ -108,7 +108,7 @@ block content
                                     view: "text",
                                     left: 60,
                                     top: 250,
-                                    width: 400,
+                                    width: 350,
                                     label: "2FA (Optional)",
                                     labelWidth: 120,
                                     name: "twofa"
@@ -118,7 +118,7 @@ block content
                                     type: "password",
                                     left: 70,
                                     top: 310,
-                                    width: 400,
+                                    width: 350,
                                     labelWidth: 120,
                                     label: "API Key",
                                     name: "apikey",
@@ -141,7 +141,7 @@ block content
                                     type: "form",
                                     left: 60,
                                     top: 400,
-                                    width: 400,
+                                    width: 350,
                                     name: "login_button",
                                     click: "login"
                                 },
@@ -150,7 +150,7 @@ block content
                                     view: "button",
                                     left: 310,
                                     top: 400,
-                                    width: 400,
+                                    width: 350,
                                     name: "register_button",
                                     click: register
                                 },                                
@@ -170,7 +170,7 @@ block content
                                     view: "richselect",
                                     left: 70,
                                     top: 130,
-                                    width: 400,
+                                    width: 350,
                                     label: "KeePassFiles",
                                     labelWidth: 120,
                                     name: "keepass_selection",
@@ -180,7 +180,7 @@ block content
                                     view: "text",
                                     left: 70,
                                     top: 130,
-                                    width: 400,
+                                    width: 350,
                                     label: "KeePassFile",
                                     labelWidth: 120,
                                     name: "keepassfile",
@@ -191,7 +191,7 @@ block content
                                     view: "label",
                                     left: 70,
                                     top: 130,
-                                    width: 400,
+                                    width: 350,
                                     label: "KeePassStatus",
                                     labelWidth: 120,
                                     name: "keepassstatus",
@@ -202,7 +202,7 @@ block content
                                     type: "password",
                                     left: 70,
                                     top: 310,
-                                    width: 400,
+                                    width: 350,
                                     labelWidth: 120,
                                     label: "Password",
                                     name: "keepassword",
@@ -214,7 +214,7 @@ block content
                                     type: "password",
                                     left: 70,
                                     top: 310,
-                                    width: 400,
+                                    width: 350,
                                     labelWidth: 120,
                                     label: "Password Again",
                                     name: "keepassword2",
@@ -228,7 +228,7 @@ block content
                                     type: "form",
                                     left: 60,
                                     top: 400,
-                                    width: 400,
+                                    width: 350,
                                     name: "login_button",
                                     click: "keelogin"
                                 },
@@ -238,7 +238,7 @@ block content
                                     type: "form",
                                     left: 60,
                                     top: 400,
-                                    width: 400,
+                                    width: 350,
                                     name: "register_button",
                                     click: "keeregister",
                                     hidden: true,
@@ -249,7 +249,7 @@ block content
                                     type: "form",
                                     left: 60,
                                     top: 400,
-                                    width: 400,
+                                    width: 350,
                                     name: "keepass_logout_button",
                                     click: "keelogout",
                                     hidden: true,
@@ -262,6 +262,7 @@ block content
         };  
 
         var mydicebot_official_site_info = {
+            id: "mydicebot_official_site_info",
             padding: 20,
             rows: [
                 {view: "label", label: "MyDiceBot Official Site"},
@@ -276,12 +277,14 @@ block content
         };
 
         var ads_iframe = {
+            id: "ads_iframe",
             rows: [
                 {view:"iframe", src:"//ad.a-ads.com/1102518?size=320x50", height: 60}
             ]                   
         }
 
         var supported_dice_site_info = {
+            id: "supported_dice_site_info",
             padding: 20,
             rows: [
                 {view: "label", label: "Supporting Dice Sites"},
@@ -296,6 +299,7 @@ block content
         };
 
         var todo_dice_site_info = {
+            id: "todo_dice_site_info",
             padding: 20,
             rows: [
                 {view: "label", label: "TODO"},
@@ -313,7 +317,7 @@ block content
             ]
         };
 
-        var resizer = {view:"resizer"};
+        var resizer = {id: "login_resizer",view:"resizer"};
         
         webix.ui({
                 id: "login_layout",
@@ -331,6 +335,19 @@ block content
                 ]
             }
         );
+
+        if(webix.env.mobile) {
+            //- $$("mydicebot_official_site_info").hide();
+            $$("login_resizer").hide();
+            $$("supported_dice_site_info").hide();
+            $$("todo_dice_site_info").hide();
+            $$("login_tabview").define("height", 0);
+            $$("login_tabview").define("width", 0);
+            //- $$("login_tabview").resize();
+            //- $$("login_tabview").resizeChildren();
+            webix.ui.fullScreen();
+        }
+        
         webix.extend($$("form1"), webix.ProgressBar);
         webix.extend($$("keepass_form"), webix.ProgressBar);
         function register() {

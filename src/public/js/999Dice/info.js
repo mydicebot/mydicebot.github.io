@@ -39,12 +39,12 @@ function getBalance(userinfo){
     return balance;
 }
 
-async function outError(ret){
+function outError(ret){
     let mess = ret.error;
     if(ret.NoPossibleProfit == 1) {
         mess = 'NoPossibleProfit';
     }
-    return await retryError(mess);
+    return checkerr(mess);
 }
 
 function isError(ret){
