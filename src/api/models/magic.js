@@ -51,8 +51,8 @@ export class MagicDice extends BaseDice {
 
     async refresh(req) {
         let info = req.session.info;
-        if(!info){
-            return false;
+        if(info){
+            return info;
         }
         let userName = req.session.username;
         let ret = await steem.api.getAccountsAsync([userName]);

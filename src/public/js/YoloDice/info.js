@@ -68,9 +68,9 @@ function getCurrentRoll(ret){
     return roll;
 }
 
-async function outError(ret){
+function outError(ret){
     let mess = ret.err;
-    return await retryError(mess);
+    return checkerr(mess);
 }
 
 function isError(ret){
