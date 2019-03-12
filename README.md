@@ -40,13 +40,16 @@
 * Source Code: [https://github.com/mydicebot/mydicebot.github.io](https://github.com/mydicebot/mydicebot.github.io)
 
 # Supporting Dice Sites (alphabet sequence)
+## Traditional
 * [999Dice](https://www.999dice.com/?224280708)
 * [Bitsler](https://www.bitsler.com/?ref=mydicebot)
 * [Crypto-Games](https://www.crypto-games.net?i=CpQP3V8Up2)
-* [MagicDice](https://magic-dice.com/?ref=mydicebot)
 * [PrimeDice](https://primedice.com/?c=mydicebot)
 * [Stake](https://stake.com/?code=mydicebot)
 * [YoloDice](https://yolodice.com/r?6fAf-wVz)
+## Blockchain - STEEM
+* [EpicDice](https://epicdice.io/?ref=mydicebot)
+* [MagicDice](https://magic-dice.com/?ref=mydicebot)
 
 # TODO
 * [BetKing (coming soon)](https://betking.io/?ref=u:mydicebot)
