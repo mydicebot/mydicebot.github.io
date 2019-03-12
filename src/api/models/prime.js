@@ -113,11 +113,11 @@ export class PrimeDice extends BaseDice {
         let currency = req.body.Currency.toLowerCase();
         let target = 0;
         if(req.body.High == 1){
-            target = 999999-Math.floor((req.body.Chance*10000))+1;
+            target = 9999-Math.floor((req.body.Chance*100));
         } else {
-            target = Math.floor((req.body.Chance*10000))-1;
+            target = Math.floor((req.body.Chance*100));
         }
-        target = parseFloat(target/10000).toFixed(2);
+        target = parseFloat(target/100).toFixed(2);
         let data = " mutation{primediceRoll(amount:"+amount+",target:"+target+",condition:"+ condition +",currency:"+currency+ ") { id iid nonce currency amount payout state { ... on BetGamePrimedice { result target condition } } createdAt serverSeed{seedHash seed nonce} clientSeed{seed} user{balances{available{amount currency}} statistic{game bets wins losses amount profit currency}}}}";
         let ret = await this._send('', 'POST', data, req.session.accessToken);
         let info = req.session.info;
