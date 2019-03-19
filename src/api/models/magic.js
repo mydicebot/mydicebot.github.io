@@ -13,6 +13,7 @@ export class MagicDice extends BaseDice {
         this.url = 'https://magic-dice.com';
         this.benefit = '?ref=mydicebot'
         this.currencys = ["btc","eth","ltc","doge","dash","bch","xrp","zec","etc","neo","kmd","btg","lsk","dgb","qtum","strat","waves","burst"];
+        steem.api.setOptions({url:'https://api.steemit.com'});
     }
 
     async login(userName, password, twoFactor ,apiKey, req) {
@@ -38,8 +39,8 @@ export class MagicDice extends BaseDice {
         };
         for(let k in ret){
             let sbd = ret[k]['sbd_balance'].split(' ');
-            let steem = ret[k]['balance'].split(' ');
-            userinfo.balance = parseFloat(steem[0]);
+            let steem_balance = ret[k]['balance'].split(' ');
+            userinfo.balance = parseFloat(steem_balance[0]);
         }
         info = {};
         let currentInfo = userinfo;
@@ -198,7 +199,7 @@ export class MagicDice extends BaseDice {
 
     async _getBetInfo(id){
         let memoRegEx = /\{(.*)/;
-        let tryQueryCount =0;
+        let tryQueryCount = 0;
         return new Promise(( resolve, reject ) => {
             let release = steem.api.streamOperations(async function (err, op) {
                 if (err) {
@@ -211,7 +212,7 @@ export class MagicDice extends BaseDice {
                             try {
                                 json = JSON.parse(json);
                                 if(json.refTransactionId == id ){
-                                    tryQueryCount = 999;
+                                    release();
                                     let url = 'https://magic-dice.com/api/bets?bet_id=' + json.betId;
                                     let res = await fetch(url);
                                     let data = await res.json();
@@ -224,8 +225,9 @@ export class MagicDice extends BaseDice {
                         }
                     }
                 }
-                if(tryQueryCount>=10){
+                if(tryQueryCount>=100){
                     release();
+                    resolve({});
                 }
             });
         });
