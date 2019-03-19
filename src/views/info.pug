@@ -218,7 +218,7 @@ block content
                 tabbar:{
                     optionWidth:80
                 },
-                minHeight: 500,
+                //- minHeight: 500,
                 width: 400,
                 cells: [
                     {
@@ -227,7 +227,7 @@ block content
                             id: "site_form",
                             view: "form",
                             padding: 4,
-                            minHeight: 500,
+                            //- minHeight: 500,
                             width: 0,
                             elements: [
                                 bot_iframe
@@ -242,6 +242,7 @@ block content
                             paddingY: 4,
                             margin: 0,
                             minHeight: 500,
+                            height: 0,
                             width: 0,
                             elements: [
                                 //- {
@@ -755,6 +756,7 @@ block content
                         bet_config_tabview
                     ]
                 });
+                webix.Touch.limit(true);
                 $$("bet_total_stats").hide();
 
                 $$("bet_current_stats").hide();
@@ -771,7 +773,7 @@ block content
 
                 $$("bet_datatable").hide();
 
-                $$("bet_config_tabview").define("minHeight", 380);
+                $$("bet_config_tabview").define("height", 380);
                 $$("bet_config_tabview").define("width", 0);
 
                 $$("auto_bet_stop_on_next_win_button").hide();
@@ -779,6 +781,111 @@ block content
 
                 $$("script_bet_stop_on_next_win_button").hide();
                 $$("script_bet_stop_on_next_loss_button").hide();
+
+                $$("manual_bet_amount").attachEvent("onFocus", function(current_view, prev_view){
+                    let layout = $$("mobile_toolbar").getParentView();
+                    layout.hide();
+                });
+                $$("manual_bet_amount").attachEvent("onBlur", function(current_view, prev_view){
+                    let layout = $$("mobile_toolbar").getParentView();
+                    layout.show();
+                });
+                $$("manual_bet_chance").attachEvent("onFocus", function(current_view, prev_view){
+                    let layout = $$("mobile_toolbar").getParentView();
+                    layout.hide();
+                });
+                $$("manual_bet_chance").attachEvent("onBlur", function(current_view, prev_view){
+                    let layout = $$("mobile_toolbar").getParentView();
+                    layout.show();
+                });
+                $$("auto_bet_number_of_bets").attachEvent("onFocus", function(current_view, prev_view){
+                    let layout = $$("mobile_toolbar").getParentView();
+                    layout.hide();
+                });
+                $$("auto_bet_number_of_bets").attachEvent("onBlur", function(current_view, prev_view){
+                    let layout = $$("mobile_toolbar").getParentView();
+                    layout.show();
+                });
+                $$("auto_bet_base_amount").attachEvent("onFocus", function(current_view, prev_view){
+                    let layout = $$("mobile_toolbar").getParentView();
+                    layout.hide();
+                });
+                $$("auto_bet_base_amount").attachEvent("onBlur", function(current_view, prev_view){
+                    let layout = $$("mobile_toolbar").getParentView();
+                    layout.show();
+                });
+                $$("auto_bet_amount_radio_on_loss_multiplier").attachEvent("onFocus", function(current_view, prev_view){
+                    let layout = $$("mobile_toolbar").getParentView();
+                    layout.hide();
+                });
+                $$("auto_bet_amount_radio_on_loss_multiplier").attachEvent("onBlur", function(current_view, prev_view){
+                    let layout = $$("mobile_toolbar").getParentView();
+                    layout.show();
+                });
+                $$("auto_bet_amount_radio_on_win_multiplier").attachEvent("onFocus", function(current_view, prev_view){
+                    let layout = $$("mobile_toolbar").getParentView();
+                    layout.hide();
+                });
+                $$("auto_bet_amount_radio_on_win_multiplier").attachEvent("onBlur", function(current_view, prev_view){
+                    let layout = $$("mobile_toolbar").getParentView();
+                    layout.show();
+                });
+                $$("auto_bet_base_chance").attachEvent("onFocus", function(current_view, prev_view){
+                    let layout = $$("mobile_toolbar").getParentView();
+                    layout.hide();
+                });
+                $$("auto_bet_base_chance").attachEvent("onBlur", function(current_view, prev_view){
+                    let layout = $$("mobile_toolbar").getParentView();
+                    layout.show();
+                });
+                $$("auto_bet_roll_min").attachEvent("onFocus", function(current_view, prev_view){
+                    let layout = $$("mobile_toolbar").getParentView();
+                    layout.hide();
+                });
+                $$("auto_bet_roll_min").attachEvent("onBlur", function(current_view, prev_view){
+                    let layout = $$("mobile_toolbar").getParentView();
+                    layout.show();
+                });
+                $$("auto_bet_roll_max").attachEvent("onFocus", function(current_view, prev_view){
+                    let layout = $$("mobile_toolbar").getParentView();
+                    layout.hide();
+                });
+                $$("auto_bet_roll_max").attachEvent("onBlur", function(current_view, prev_view){
+                    let layout = $$("mobile_toolbar").getParentView();
+                    layout.show();
+                });
+                $$("auto_bet_stop_on_profit").attachEvent("onFocus", function(current_view, prev_view){
+                    let layout = $$("mobile_toolbar").getParentView();
+                    layout.hide();
+                });
+                $$("auto_bet_stop_on_profit").attachEvent("onBlur", function(current_view, prev_view){
+                    let layout = $$("mobile_toolbar").getParentView();
+                    layout.show();
+                });
+                $$("auto_bet_stop_on_win").attachEvent("onFocus", function(current_view, prev_view){
+                    let layout = $$("mobile_toolbar").getParentView();
+                    layout.hide();
+                });
+                $$("auto_bet_stop_on_win").attachEvent("onBlur", function(current_view, prev_view){
+                    let layout = $$("mobile_toolbar").getParentView();
+                    layout.show();
+                });
+                $$("auto_bet_stop_on_loss").attachEvent("onFocus", function(current_view, prev_view){
+                    let layout = $$("mobile_toolbar").getParentView();
+                    layout.hide();
+                });
+                $$("auto_bet_stop_on_loss").attachEvent("onBlur", function(current_view, prev_view){
+                    let layout = $$("mobile_toolbar").getParentView();
+                    layout.show();
+                });
+                $$("script_bet_coding_board").attachEvent("onFocus", function(current_view, prev_view){
+                    let layout = $$("mobile_toolbar").getParentView();
+                    layout.hide();
+                });
+                $$("script_bet_coding_board").attachEvent("onBlur", function(current_view, prev_view){
+                    let layout = $$("mobile_toolbar").getParentView();
+                    layout.show();
+                });
 
                 $$("mobile_toolbar_total").attachEvent("onItemClick", function(){
                     $$("bet_total_stats").show();
