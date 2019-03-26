@@ -568,7 +568,8 @@ block content
                                             header: "CODE",
                                             body: {
                                                 id: "script_bet_coding_board",
-                                                view: "textarea",
+                                                view: "codemirror-editor",
+                                                mode: "lua",
                                             }
                                         },
                                         {
@@ -875,14 +876,6 @@ block content
                     layout.hide();
                 });
                 $$("auto_bet_stop_on_loss").attachEvent("onBlur", function(current_view, prev_view){
-                    let layout = $$("mobile_toolbar").getParentView();
-                    layout.show();
-                });
-                $$("script_bet_coding_board").attachEvent("onFocus", function(current_view, prev_view){
-                    let layout = $$("mobile_toolbar").getParentView();
-                    layout.hide();
-                });
-                $$("script_bet_coding_board").attachEvent("onBlur", function(current_view, prev_view){
                     let layout = $$("mobile_toolbar").getParentView();
                     layout.show();
                 });
@@ -1603,4 +1596,16 @@ block content
                     orig.apply(console, arguments);
                 }
             })();
+            function focusFunction() {
+                if(webix.env.mobile) {
+                    let layout = $$("mobile_toolbar").getParentView();
+                    layout.hide();
+                }
+            }
+            function onblurFunction() {
+                if(webix.env.mobile) {
+                    let layout = $$("mobile_toolbar").getParentView();
+                    layout.show();
+                }
+            }
     script(src=site)
