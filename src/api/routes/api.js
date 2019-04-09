@@ -39,6 +39,7 @@ module.exports = function(app) {
   app.get('/:site/del', [createDice,checkScript], api.del);
   app.post('/:site/upload', [createDice,checkScript], api.upload);
   app.get('/:site/checkerr', [createDice,checkScript], api.checkerr);
+  app.get('/mydicebot/callback', [createDice,checkScript], api.callback);
   app.get('/checkerr', [createDice,checkScript], api.checkerr);
 };
 

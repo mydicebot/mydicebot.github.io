@@ -123,7 +123,7 @@ block content
 
             var bot_iframe = {
                     view:"iframe", 
-                    src:"//mydicebot.com"
+                    src:"https://mydicebot.com"
             };
 
             var faq_iframe = {
@@ -183,7 +183,7 @@ block content
 
             var bet_datatable;
 
-            if(!webix.env.mobile) {
+            if(!webix.env.touch) {
                 bet_datatable = {
                     id: "bet_datatable",
                     view: "datatable",
@@ -221,19 +221,19 @@ block content
                 //- minHeight: 500,
                 width: 400,
                 cells: [
-                    {
-                        header: "BOT",
-                        body: {
-                            id: "site_form",
-                            view: "form",
-                            padding: 4,
-                            //- minHeight: 500,
-                            width: 0,
-                            elements: [
-                                bot_iframe
-                            ]
-                        }
-                    },
+                    <!--{-->
+                        <!--header: "BOT",-->
+                        <!--body: {-->
+                            <!--id: "site_form",-->
+                            <!--view: "form",-->
+                            <!--padding: 4,-->
+                            <!--//- minHeight: 500,-->
+                            <!--width: 0,-->
+                            <!--elements: [-->
+                                <!--bot_iframe-->
+                            <!--]-->
+                        <!--}-->
+                    <!--},-->
                     {
                         header: "MANUAL",
                         body: {
@@ -691,7 +691,7 @@ block content
                     bet_house_edge_selection, 
                     reset_session_button,
                     switch_site_button,
-                    ads,
+                    <!--ads,-->
                 ]
             };
 
@@ -711,7 +711,7 @@ block content
                 ]
             };
 
-            if(!webix.env.mobile) {
+            if(!webix.env.touch) {
                 webix.ui(
                 {
                     id: "bet_layout",
@@ -935,7 +935,7 @@ block content
             var mobiles = ['bet_total_stats', 'bet_current_stats', 'bet_current_stats2', 'bet_datatable', 'misc_items_form'];
 
             webix.extend($$("bet_chart"), webix.ProgressBar);
-            if(webix.env.mobile) {
+            if(webix.env.touch ) {
                 mobiles.forEach(function(element) {
                         console.log(element);
                     webix.extend($$(element), webix.ProgressBar);
@@ -1099,7 +1099,7 @@ block content
                     type:"icon",
                     delay:3000
                 });
-                if(webix.env.mobile) {
+                if(webix.env.touch) {
                     mobiles.forEach(function(element) {
                         $$(element).showProgress({
                             type:"icon",
@@ -1120,7 +1120,7 @@ block content
                     $$("script_bet_strategy_list").enable();
                     $$("script_bet_strategy_list").refresh();
                     $$("bet_chart").hideProgress();
-                    if(webix.env.mobile) {
+                    if(webix.env.touch) {
                         mobiles.forEach(function(element) {
                             $$(element).hideProgress();
                         });
@@ -1245,7 +1245,7 @@ block content
                     type:"icon",
                     delay:3000
                 });
-                if(webix.env.mobile) {
+                if(webix.env.touch) {
                     mobiles.forEach(function(element) {
                         $$(element).showProgress({
                             type:"icon",
@@ -1269,7 +1269,7 @@ block content
                         isLoop = outError(ret);
                     }
                     $$("bet_chart").hideProgress();
-                    if(webix.env.mobile) {
+                    if(webix.env.touch) {
                         mobiles.forEach(function(element) {
                             $$(element).hideProgress();
                         });
@@ -1360,7 +1360,7 @@ block content
                     type:"icon",
                     delay:3000
                 });
-                if(webix.env.mobile) {
+                if(webix.env.touch) {
                     mobiles.forEach(function(element) {
                         $$(element).showProgress({
                             type:"icon",
@@ -1388,7 +1388,7 @@ block content
                         isLoop = outError(ret);
                     }
                     $$("bet_chart").hideProgress();
-                    if(webix.env.mobile) {
+                    if(webix.env.touch) {
                         mobiles.forEach(function(element) {
                             $$(element).hideProgress();
                         });
@@ -1439,7 +1439,7 @@ block content
                     type:"icon",
                     delay:3000
                 });
-                if(webix.env.mobile) {
+                if(webix.env.touch) {
                     mobiles.forEach(function(element) {
                         $$(element).showProgress({
                             type:"icon",
@@ -1451,7 +1451,7 @@ block content
                     let ret = result.json();
                     //console.log(ret);
                     $$("bet_chart").hideProgress();
-                    if(webix.env.mobile) {
+                    if(webix.env.touch) {
                         mobiles.forEach(function(element) {
                             $$(element).hideProgress();
                         });
@@ -1464,7 +1464,7 @@ block content
                     type:"icon",
                     delay:3000
                 });
-                if(webix.env.mobile) {
+                if(webix.env.touch) {
                     mobiles.forEach(function(element) {
                         $$(element).showProgress({
                             type:"icon",
@@ -1475,7 +1475,7 @@ block content
                 webix.ajax().get('refresh?currency='+$$("bet_currency_selection").getText().toLowerCase()).then(function (result) {
                     let ret = result.json();
                     $$("bet_chart").hideProgress();
-                    if(webix.env.mobile) {
+                    if(webix.env.touch) {
                         mobiles.forEach(function(element) {
                             $$(element).hideProgress();
                         });
@@ -1597,13 +1597,13 @@ block content
                 }
             })();
             function focusFunction() {
-                if(webix.env.mobile) {
+                if(webix.env.touch) {
                     let layout = $$("mobile_toolbar").getParentView();
                     layout.hide();
                 }
             }
             function onblurFunction() {
-                if(webix.env.mobile) {
+                if(webix.env.touch) {
                     let layout = $$("mobile_toolbar").getParentView();
                     layout.show();
                 }
