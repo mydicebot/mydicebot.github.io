@@ -334,6 +334,12 @@ exports.checkerr = async function(req, res) {
     }
 };
 
+exports.callback = async function(req, res) {
+    let code = req.query.code;
+    console.log(code);
+    return res.status(200).json({'ret':false});
+};
+
 async function getFiles(filePath,ext){
     let paths = [];
     return new Promise(( resolve, reject ) => {
