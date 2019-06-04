@@ -95,10 +95,10 @@ export class BitslerDice extends BaseDice {
         let formData = new FormData();
         let accessToken = req.session.accessToken; 
         let amount = req.body.PayIn/100000000;
-        let condition = req.body.High == 1?'>':'<';
+        let condition = req.body.High == "true"?'>':'<';
         let currency = req.body.Currency.toLowerCase();
         let game = 0;
-        if(req.body.High == 1){
+        if(req.body.High == "true"){
             game = 999999-Math.floor((req.body.Chance*10000))+1;
         } else {
             game = Math.floor((req.body.Chance*10000))-1;

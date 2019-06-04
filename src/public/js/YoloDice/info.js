@@ -24,11 +24,11 @@ function initScriptBalance(currencyValue, cb){
     getInfo(function(userinfo){
         if(userinfo.info.id){
             try {
-                fengari.load('balance='+(userinfo.info.balance/100000000).toFixed(8))();
-                fengari.load('bets='+userinfo.info.bets)();
-                fengari.load('wins='+userinfo.info.wins)();
-                fengari.load('losses='+userinfo.info.losses)();
-                fengari.load('profit='+(userinfo.info.profit/100000000).toFixed(8))();
+                balance = (userinfo.info.balance/100000000).toFixed(8);
+                bets = userinfo.info.bets;
+                wins = userinfo.info.wins;
+                losses = userinfo.info.losses;
+                profit = (userinfo.info.profit/100000000).toFixed(8);
             } catch(err){
                 console.error(err.message);
                 webix.message({type: 'error', text: err.message});
@@ -40,20 +40,20 @@ function initScriptBalance(currencyValue, cb){
 }
 
 function getBalance(userinfo){
-    let balance = (userinfo.info.balance/100000000).toFixed(8)
+    balance = (userinfo.info.balance/100000000).toFixed(8)
     return balance;
 }
 
-function getActProfit(userinfo){
-    let actProfit = userinfo.currentInfo.profit;
+function getProfit(userinfo){
+    profit = userinfo.currentInfo.profit;
     //console.log('actprofit:'+actProfit);
-    return actProfit;
+    return profit;
 }
 
 function getCurrProfit(ret){
-    let currProfit = (ret.betInfo.profit/100000000).toFixed(8)
+    currentprofit = (ret.betInfo.profit/100000000).toFixed(8)
     //console.log('currprofit:'+currProfit);
-    return currProfit;
+    return currentprofit;
 }
 
 function getCurrentBetId(ret){
@@ -63,9 +63,9 @@ function getCurrentBetId(ret){
 }
 
 function getCurrentRoll(ret){
-    let roll = ret.betInfo.rolled/10000;
+    currentroll = ret.betInfo.rolled/10000;
     //console.log('currentRoll:'+roll);
-    return roll;
+    return currentroll;
 }
 
 function outError(ret){

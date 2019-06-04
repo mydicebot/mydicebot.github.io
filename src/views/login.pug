@@ -20,7 +20,9 @@ block content
             "PrimeDice":"https://primedice.com/?c=mydicebot", 
             "SafeDice":"https://safedice.com/?r=100309", 
             "Stake":"https://stake.com/?code=mydicebot", 
-            "YoloDice":"https://yolodice.com/r?6fAf-wVz" 
+            "YoloDice":"https://yolodice.com/r?6fAf-wVz", 
+            "EpicDice": "https://epicdice.io/?ref=mydicebot",
+            "SteemBet": "https://steem-bet.com?ref=mydicebot",
         };
 
         //- webix.ui.fullScreen();
@@ -37,15 +39,33 @@ block content
                             view: "form", 
                             id: "form1", 
                             elements: [{
-                                rows: [{
+                                rows: [
+                                {
+                                    id: "skin_selection",
+                                    options: [
+                                        {id: "Material", value: "Material"},
+                                        {id: "Contrast", value: "Contrast"},
+                                    ],
+                                    view: "richselect",
+                                    left: 70,
+                                    top: 70,
+                                    width: 350,
+                                    label: "SKIN",
+                                    placeholder: "#{skin}",
+                                    labelWidth: 120,
+                                    name: "skin_selection",
+                                },
+                                {
                                     options: [
                                     {id:"Simulator",value:"Simulator"}, 
                                     {id:"999Dice",value:"999Dice"},
                                     {id:"Bitsler",value:"Bitsler"},
                                     {id:"Crypto-Games",value:"Crypto-Games"},
+                                    {id:"EpicDice", value:"EpicDice"},
                                     {id:"MagicDice", value:"MagicDice"},
                                     {id:"PrimeDice",value:"PrimeDice"},
                                     {id:"Stake",value:"Stake"},
+                                    {id:"SteemBet", value:"SteemBet"},
                                     {id:"YoloDice",value:"YoloDice"},      
                                     {id:"BetKing",value:"BetKing (coming soon)"},
                                     {id:"BitDice",value:"BitDice (coming soon)"},
@@ -143,6 +163,7 @@ block content
                                     top: 400,
                                     width: 350,
                                     name: "login_button",
+                                    css: "webix_primary",
                                     click: "login"
                                 },
                                 {
@@ -152,6 +173,7 @@ block content
                                     top: 400,
                                     width: 350,
                                     name: "register_button",
+                                    css: "webix_secondary",
                                     click: register
                                 },                                
                             ]
@@ -230,6 +252,7 @@ block content
                                     top: 400,
                                     width: 350,
                                     name: "login_button",
+                                    css: "webix_primary",
                                     click: "keelogin"
                                 },
                                 {
@@ -241,6 +264,7 @@ block content
                                     width: 350,
                                     name: "register_button",
                                     click: "keeregister",
+                                    css: "webix_secondary",
                                     hidden: true,
                                 },
                                 {
@@ -252,6 +276,7 @@ block content
                                     width: 350,
                                     name: "keepass_logout_button",
                                     click: "keelogout",
+                                    css: "webix_danger",
                                     hidden: true,
                                 },
                                 ]
@@ -292,6 +317,8 @@ block content
                 {view: "label", label: "<a target='_blank' href='https://www.bitsler.com/?ref=mydicebot'>Bitsler</a>"},
                 {view: "label", label: "<a target='_blank' href='https://www.crypto-games.net/?i=CpQP3V8Up2'>Crypto-Games</a>"},
                 {view: "label", label: "<a target='_blank' href='https://magic-dice.com/?ref=mydicebot'>MagicDice</a>"},
+                {view: "label", label: "<a target='_blank' href='https://magic-dice.com/?ref=mydicebot'>EpicDice</a>"},
+                {view: "label", label: "<a target='_blank' href='https://magic-dice.com/?ref=mydicebot'>SteemBet</a>"},
                 {view: "label", label: "<a target='_blank' href='https://primedice.com/?c=mydicebot'>PrimeDice</a>"},
                 {view: "label", label: "<a target='_blank' href='https://stake.com/?code=mydicebot'>Stake</a>"},  
                 {view: "label", label: "<a target='_blank' href='https://yolodice.com/r?6fAf-wVz'>YoloDice</a>"},
@@ -320,28 +347,29 @@ block content
         var resizer = {id: "login_resizer",view:"resizer"};
         
         webix.ui({
-                id: "login_layout",
-                cols: [
-                    {rows: [
-                        login_tabview,
-                        mydicebot_official_site_info,
-                        ads_iframe
-                    ]},
-                    resizer,
-                    {rows: [
-                        supported_dice_site_info,
-                        todo_dice_site_info
-                    ]}
+            id: "login_layout",
+            align: "center,middle",
+            body: {
+                rows: [
+                    login_tabview,
+                    // mydicebot_official_site_info,
+                    // ads_iframe
                 ]
-            }
-        );
+            },
+            // resizer,
+            // {rows: [
+            //     supported_dice_site_info,
+            //     todo_dice_site_info
+            // ]}
 
-        if(webix.env.touch) {
-            $$("mydicebot_official_site_info").hide();
-            $$("ads_iframe").hide();
-            $$("login_resizer").hide();
-            $$("supported_dice_site_info").hide();
-            $$("todo_dice_site_info").hide();
+        });
+
+        if(webix.env.mobile) {
+            // $$("mydicebot_official_site_info").hide();
+            // $$("ads_iframe").hide();
+            // $$("login_resizer").hide();
+            // $$("supported_dice_site_info").hide();
+            // $$("todo_dice_site_info").hide();
             $$("login_tabview").define("height", 0);
             $$("login_tabview").define("width", 0);
             //- $$("login_tabview").resize();
@@ -375,8 +403,10 @@ block content
                     $$("keepass_form").elements.login_button.hide(); 
                 }
             }).fail(function (xhr) {
-                console.error(response.error.message);
-                webix.message({type: 'error', text: response.error.message});
+                $$("keepass_form").hideProgress();
+                var response = JSON.parse(xhr.response);
+                console.error(response.err);
+                webix.message({type: 'error', text: response.err});
             });
         });
 
@@ -406,8 +436,10 @@ block content
                         webix.message({type: 'info', text: 'keepass file create failed'});
                     }
                 }).fail(function (xhr) {
-                    console.error(response.error.message);
-                    webix.message({type: 'error', text: response.error.message});
+                    $$("keepass_form").hideProgress();
+                    var response = JSON.parse(xhr.response);
+                    console.error(response.err);
+                    webix.message({type: 'error', text: response.err});
                 });
             } else {
                 webix.message({type: 'error', text: 'Please enter the correct parameters'});
@@ -420,7 +452,7 @@ block content
         let needTokenSites = ['test','PrimeDice','Stake'];
         let needApiKeySites = ['test','Bitsler'];
         let needOnlyApiKeySites = ['test','YoloDice','Crypto-Games'];
-        let needSteemActiveKeySites = ['test','MagicDice'];
+        let needSteemActiveKeySites = ['test','MagicDice','EpicDice','SteemBet'];
         let needSimulatorActiveKeySites = ['test','Simulator'];
         function keelogin() {
             if($$("keepass_form").validate()){
@@ -446,8 +478,10 @@ block content
                         webix.message({type: 'error', text: 'Please check  password'});
                     }
                 }).fail(function (xhr) {
-                    console.error(response.error.message);
-                    webix.message({type: 'error', text: response.error.message});
+                    $$("keepass_form").hideProgress();
+                    var response = JSON.parse(xhr.response);
+                    console.error(response.err);
+                    webix.message({type: 'error', text: response.err});
                 });
             } else {
                 webix.message({type: 'error', text: 'Please enter the correct parameters'});
@@ -477,7 +511,7 @@ block content
                             if(keepassdb[site][k]['username'] == username){
                                 keepassdb[site][k]['password'] = password;
                                 keepassdb[site][k]['apikey'] = apikey;
-                                if(needSteemActiveKeySites.indexOf(site)>0 || needOnlyApiKeySites.indexOf(site)>0 || needTokenSites.indexOf(site)>0 ) {
+                                if( needOnlyApiKeySites.indexOf(site)>0 || needTokenSites.indexOf(site)>0 ) {
                                     keepassdb[site][k]['username'] = apikey;
                                 }
                                 insert = false;
@@ -500,8 +534,10 @@ block content
                         $$("keepass_form").hideProgress();
                         webix.send("login", $$("form1").getValues());
                     }).fail(function (xhr) {
-                        console.error(response.error.message);
-                        webix.message({type: 'error', text: response.error.message});
+                        $$("keepass_form").hideProgress();
+                        var response = JSON.parse(xhr.response);
+                        console.error(response.err);
+                        webix.message({type: 'error', text: response.err});
                     });
                 } else {
                     webix.send("login", $$("form1").getValues());
@@ -552,8 +588,9 @@ block content
                     $$("keepass_form").elements.login_button.hide(); 
                 }
             }).fail(function (xhr) {
-                console.error(response.error.message);
-                webix.message({type: 'error', text: response.error.message});
+                var response = JSON.parse(xhr.response);
+                console.error(response.err);
+                webix.message({type: 'error', text: response.err});
             });
         }
 
@@ -615,17 +652,18 @@ block content
                 $$("form1").elements.apikey.define("label", "Api Key");
                 $$("form1").elements.apikey.refresh();
             } else if(needSteemActiveKeySites.indexOf(newId)>0) {
-                $$("form1").elements.password.hide(); 
-                $$("form1").elements.twofa.hide(); 
-                $$("form1").elements.apikey.show(); 
+                $$("form1").elements.username.show();
+                $$("form1").elements.password.hide();
+                $$("form1").elements.twofa.hide();
+                $$("form1").elements.apikey.show();
                 $$("form1").elements.apikey.define("label", "Active Key");
                 $$("form1").elements.apikey.refresh();
             } else if(needSimulatorActiveKeySites.indexOf(newId)>0) {
-                $$("form1").elements.username.hide(); 
-                $$("form1").elements.password.hide(); 
-                $$("form1").elements.password.hide(); 
-                $$("form1").elements.twofa.hide(); 
-                $$("form1").elements.apikey.hide(); 
+                $$("form1").elements.username.hide();
+                $$("form1").elements.password.hide();
+                $$("form1").elements.password.hide();
+                $$("form1").elements.twofa.hide();
+                $$("form1").elements.apikey.hide();
             }
             setAccounts(newId);
             $$("switch_lable").setValue(keepasslogin);
@@ -664,6 +702,9 @@ block content
                 $$("form1").elements.username.setValue(accounts[newId]['username']); 
                 $$("form1").elements.password.setValue(accounts[newId]['password']); 
             }
+        });
+        $$("skin_selection").attachEvent("onChange", function(newId, oldId){
+            window.location.href = location.protocol+'//'+location.host +'/'+site+'/login?skin='+newId;
         });
         $$("keepass_selection").attachEvent("onChange", function(newId, oldId){
             $$("keepass_form").elements["keepassfile"].setValue($$("keepass_selection").getText());
