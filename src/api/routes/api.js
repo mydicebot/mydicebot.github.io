@@ -1,6 +1,7 @@
 'use strict';
 
 import api from '../controllers/apiController';
+import cb from '../controllers/callbackController';
 import {BitslerDice} from '../models/bitsler';
 import {NineDice} from '../models/nine';
 import {YoloDice} from '../models/yolo';
@@ -9,16 +10,18 @@ import {StakeDice} from '../models/stake';
 import {CryptoDice} from '../models/crypto';
 import {MagicDice} from '../models/magic';
 import {Simulator} from '../models/simulator';
+import {EpicDice} from '../models/epic';
+import {SteemBet} from '../models/steembet';
 import {Factory} from '../models/factory';
 import fs from 'fs';
 import path from 'path';
 
 module.exports = function(app) {
-  app.get('/', [], api.index);
-  app.get('/login', [], api.login);
-  app.get('/:site/login', [], api.login);
-  app.post('/login', [createDice], api.login);
-  app.post('/:site/login', [createDice], api.login);
+  app.get('/', [checkSkin], api.index);
+  app.get('/login', [checkSkin], api.login);
+  app.get('/:site/login', [checkSkin], api.login);
+  app.post('/login', [checkSkin,createDice], api.login);
+  app.post('/:site/login', [checkSkin,createDice], api.login);
   app.post('/keepass/load', [createDice,checkScript], api.keeload);
   app.post('/:site/keepass/load', [createDice,checkScript], api.keeload);
   app.put('/keepass/save', [createDice,checkScript], api.keesave);
@@ -31,7 +34,7 @@ module.exports = function(app) {
   app.get('/keepass/files', [createDice,checkScript], api.keefiles);
   app.get('/:site/clear', [createDice], api.clear);
   app.get('/:site/refresh', [createDice], api.refresh);
-  app.get('/:site/info', [createDice,userMiddleware], api.info);
+  app.get('/:site/info', [checkSkin,createDice,userMiddleware], api.info);
   app.post('/:site/bet', [createDice,userMiddleware], api.bet);
   app.get('/:site/script', [createDice,checkScript], api.script);
   app.get('/:site/file', [createDice,checkScript], api.file);
@@ -39,9 +42,25 @@ module.exports = function(app) {
   app.get('/:site/del', [createDice,checkScript], api.del);
   app.post('/:site/upload', [createDice,checkScript], api.upload);
   app.get('/:site/checkerr', [createDice,checkScript], api.checkerr);
-  app.get('/mydicebot/callback', [createDice,checkScript], api.callback);
   app.get('/checkerr', [createDice,checkScript], api.checkerr);
+
+  app.get('/:oauth/cb', [checkSkin,createDice,checkScript], cb.cb);
+  app.get('/:site/:oauth/cb', [checkSkin,createDice,checkScript], cb.cb);
+  app.get('/user', [createDice,checkScript], cb.user);
+  app.get('/:site/user', [createDice,checkScript], cb.user);
+  app.get('/logout', [createDice,checkScript], cb.logout);
+  app.get('/:site/logout', [createDice,checkScript], cb.logout);
 };
+
+function checkSkin(req, res, next) {
+    if(req.query.skin) {
+        req.session.skin = req.query.skin;
+    }
+    if (!req.session.skin) {
+        req.session.skin = 'Material';
+    }
+    next();
+}
 
 function createDice (req, res, next) {
     Factory.register('Bitsler', new BitslerDice());
@@ -52,21 +71,30 @@ function createDice (req, res, next) {
     Factory.register('Crypto-Games', new CryptoDice());
     Factory.register('MagicDice', new MagicDice());
     Factory.register('Simulator', new Simulator());
+    Factory.register('EpicDice', new EpicDice());
+    Factory.register('SteemBet', new SteemBet());
     next();
 }
 
 function checkScript(req, res, next) {
-    //let filePath = path.resolve(path.join(__dirname, '../../script/lua/'));
     let filePath = path.resolve(path.join(process.execPath, '../script/lua/'));
     if(isMobile(req)) {
-        //filePath = path.resolve('/tmp/script/lua/');
         filePath = path.resolve(path.join(__dirname, '../../script/lua/'));
+    }
+    mkdir(filePath);
+    filePath = path.resolve(path.join(process.execPath, '../script/js/'));
+    if(isMobile(req)) {
+        filePath = path.resolve(path.join(__dirname, '../../script/js/'));
+    }
+    mkdir(filePath);
+    filePath = path.resolve(path.join(process.execPath, '../script/py/'));
+    if(isMobile(req)) {
+        filePath = path.resolve(path.join(__dirname, '../../script/py/'));
     }
     mkdir(filePath);
     filePath = path.resolve(path.join(process.execPath, '../keepass/'));
     if(isMobile(req)) {
         filePath = path.resolve(path.join(__dirname, '../../keepass/'));
-        //filePath = path.resolve('/tmp/keepass/');
     }
     mkdir(filePath);
     next();
@@ -75,7 +103,7 @@ function checkScript(req, res, next) {
 function userMiddleware (req, res, next) {
     if (!req.session.username) {
         console.log("username:"+req.session.username)
-        res.render('login', {message:'Please Login',site:req.params.site});
+        res.render('login', {message:'Please Login',site:req.params.site, skin:req.session.skin});
     } else {
         next();
     }
@@ -94,11 +122,9 @@ function mkdir(dirpath,dirname){
             return;
         }
         if(fs.existsSync(dirname)){
-            //fs.mkdirSync(dirpath)
             fs.mkdir(dirpath, err => {})
         }else{
             mkdir(dirname,path.dirname(dirname));
-            //fs.mkdirSync(dirpath);
             fs.mkdir(dirpath, err => {})
         }
     }

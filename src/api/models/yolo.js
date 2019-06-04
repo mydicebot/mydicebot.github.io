@@ -112,7 +112,7 @@ export class YoloDice extends BaseDice {
         let currency = req.body.Currency.toLowerCase();
         console.log(currency)
         let range = 'lo';
-        if(req.body.High == 1){
+        if(req.body.High =="true"){
             range = 'hi';
             //betRoll = 999999-Math.floor((req.body.Chance*10000))+1;
             betRoll = Math.floor((req.body.Chance*10000));
@@ -141,7 +141,7 @@ export class YoloDice extends BaseDice {
             return betInfo.error;
         }
         betInfo = betInfo.result;
-        betInfo.range = req.body.High == 1?'>':'<';
+        betInfo.range = req.body.High == "true"?'>':'<';
         betInfo.payout = betInfo.amount + betInfo.profit ;
         info.info.bets++;
         info.currentInfo.bets++;

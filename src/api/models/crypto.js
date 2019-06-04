@@ -75,10 +75,10 @@ export class CryptoDice extends BaseDice {
     async bet(req) {
         let amount = parseFloat(req.body.PayIn/100000000);
         //let amount = 0.00000001;
-        let condition = req.body.High == 1?true:false;
+        let condition = req.body.High;
         let currency = req.body.Currency.toLowerCase();
         let target = 0;
-        if(req.body.High == 1){
+        if(req.body.High == "true"){
             target = 999999-Math.floor((req.body.Chance*10000))+1;
         } else {
             target = Math.floor((req.body.Chance*10000))-1;
@@ -95,7 +95,7 @@ export class CryptoDice extends BaseDice {
         console.log(ret);
         let info = req.session.info;
         let betInfo = {};
-        betInfo.condition = req.body.High == 1?'>':'<';
+        betInfo.condition = req.body.High == "true"?'>':'<';
         betInfo.id = ret.BetId;
         betInfo.target = target;
         betInfo.profit = ret.Profit;

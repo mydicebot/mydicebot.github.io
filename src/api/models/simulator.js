@@ -76,17 +76,17 @@ export class Simulator extends BaseDice {
     async bet(req) {
         let info = req.session.info;
         let amount = (req.body.PayIn/100000000).toFixed(8);
-        let condition = req.body.High == 1?'over':'under';
+        let condition = req.body.High == "true"?'over':'under';
         let currency = req.body.Currency.toLowerCase();
         let houseEdge = req.body.HouseEdge;
         let target = 0;
-        if(req.body.High == 1){
+        if(req.body.High == "true"){
             target = 999999-Math.floor(req.body.Chance*10000)+1;
         } else {
           target = Math.floor(req.body.Chance*10000)-1;
         }
         let betInfo = await this._simulatorBet(amount, target, condition, houseEdge);
-        betInfo.condition = req.body.High == 1?'>':'<';
+        betInfo.condition = req.body.High == "true"?'>':'<';
         betInfo.target = target/10000;
         info.info.balance = (parseFloat(info.info.balance) + parseFloat(betInfo.profit)).toFixed(8);
         info.currentInfo.balance = (parseFloat(info.currentInfo.balance) + parseFloat(betInfo.profit)).toFixed(8);

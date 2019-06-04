@@ -71,7 +71,7 @@ export class NineDice extends BaseDice {
         formData.append('Currency', currency);
         formData.append('ProtocolVersion', 2);
         let betRoll = 0;
-        if(req.body.High == 1){
+        if(req.body.High == "true"){
             betRoll = 999999-Math.floor((req.body.Chance*10000))+1;
             formData.append('Low', betRoll);
             formData.append('High', 999999);
@@ -85,7 +85,7 @@ export class NineDice extends BaseDice {
         if(ret.NoPossibleProfit == 1) {
             return ret;
         }
-        ret.High = req.body.High == 1?'>':'<';
+        ret.High = req.body.High == "true"?'>':'<';
         ret.PayIn = req.body.PayIn;
         let info = req.session.info;
         let currencyValue = req.body.CurrencyValue;

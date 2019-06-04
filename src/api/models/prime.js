@@ -109,10 +109,10 @@ export class PrimeDice extends BaseDice {
 
     async bet(req) {
         let amount = req.body.PayIn/100000000;
-        let condition = req.body.High == 1?'above':'below';
+        let condition = req.body.High == "true"?'above':'below';
         let currency = req.body.Currency.toLowerCase();
         let target = 0;
-        if(req.body.High == 1){
+        if(req.body.High == "true"){
             target = 9999-Math.floor((req.body.Chance*100));
         } else {
             target = Math.floor((req.body.Chance*100));
@@ -122,7 +122,7 @@ export class PrimeDice extends BaseDice {
         let ret = await this._send('', 'POST', data, req.session.accessToken);
         let info = req.session.info;
         let betInfo = ret.primediceRoll;
-        betInfo.condition = req.body.High == 1?'>':'<';
+        betInfo.condition = req.body.High == "true"?'>':'<';
         betInfo.target = target;
         betInfo.profit = (parseFloat(betInfo.payout) - parseFloat(betInfo.amount)).toFixed(8);
         betInfo.roll = parseFloat(betInfo.state.result).toFixed(2);

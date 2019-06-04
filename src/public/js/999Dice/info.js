@@ -18,11 +18,11 @@ function initScriptBalance(currencyValue, cb){
     getInfo(function(userinfo){
         if(userinfo.Balances.length>0){
             try {
-                fengari.load('balance='+parseFloat(userinfo.Balances[currencyValue].Balance/100000000).toFixed(8))();
-                fengari.load('bets='+userinfo.CurrentBalances[currencyValue].TotalBets)();
-                fengari.load('wins='+userinfo.CurrentBalances[currencyValue].TotalWins)();
-                fengari.load('losses='+(userinfo.CurrentBalances[currencyValue].TotalBets-userinfo.CurrentBalances[currencyValue].TotalWins))();
-                fengari.load('profit='+((userinfo.CurrentBalances[currencyValue].TotalPayIn+userinfo.CurrentBalances[currencyValue].TotalPayOut)/100000000).toFixed(8))();
+                balance = parseFloat(userinfo.Balances[currencyValue].Balance/100000000).toFixed(8);
+                bets = userinfo.CurrentBalances[currencyValue].TotalBets;
+                wins = userinfo.CurrentBalances[currencyValue].TotalWins;
+                losses = (userinfo.CurrentBalances[currencyValue].TotalBets-userinfo.CurrentBalances[currencyValue].TotalWins);
+                profit = ((userinfo.CurrentBalances[currencyValue].TotalPayIn+userinfo.CurrentBalances[currencyValue].TotalPayOut)/100000000).toFixed(8);
             } catch(err){
                 console.error(err.message);
                 webix.message({type: 'error', text: err.message});
@@ -34,8 +34,8 @@ function initScriptBalance(currencyValue, cb){
 }
 
 function getBalance(userinfo){
-    let currencyValue = $$("bet_currency_selection").getValue() -1;
-    let balance = (userinfo.Balances[currencyValue].Balance/100000000).toFixed(8)
+    currencyValue = $$("bet_currency_selection").getValue() -1;
+    balance = (userinfo.Balances[currencyValue].Balance/100000000).toFixed(8)
     return balance;
 }
 
@@ -59,16 +59,16 @@ function getWinStatus(ret){
     return ret.Win;
 }
 
-function getActProfit(userinfo,currencyValue){
-    let actProfit = userinfo.CurrentBalances[currencyValue].TotalPayIn+userinfo.CurrentBalances[currencyValue].TotalPayOut;
+function getProfit(userinfo,currencyValue){
+    profit = ((userinfo.CurrentBalances[currencyValue].TotalPayIn+userinfo.CurrentBalances[currencyValue].TotalPayOut)/100000000).toFixed(8);
     //console.log('actprofit:'+actProfit);
-    return actProfit;
+    return profit;
 }
 
 function getCurrProfit(ret){
-    let currProfit = ((ret.PayOut-ret.PayIn)/100000000).toFixed(8)
+    currentprofit = ((ret.PayOut-ret.PayIn)/100000000).toFixed(8)
     //console.log('currprofit:'+currProfit);
-    return currProfit;
+    return currentprofit;
 }
 
 function getCurrentBetId(ret){
@@ -78,9 +78,9 @@ function getCurrentBetId(ret){
 }
 
 function getCurrentRoll(ret){
-    let roll = ret.Secret/10000;
+    currentroll = ret.Secret/10000;
     //console.log('currentRoll:'+roll);
-    return roll;
+    return currentroll;
 }
 
 

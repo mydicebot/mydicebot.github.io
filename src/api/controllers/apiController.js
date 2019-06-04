@@ -4,6 +4,7 @@ import {Factory} from '../models/factory'
 import {APIError} from '../errors/APIError';
 import formidable from 'formidable';
 import kdbxweb from 'kdbxweb';
+import config from 'config';
 import fs from 'fs';
 import path from 'path';
 
@@ -25,7 +26,9 @@ let registerUrls = {
     "PrimeDice":"https://primedice.com/?c=mydicebot",
     "SafeDice":"https://safedice.com/?r=100309",
     "Stake":"https://stake.com/?code=mydicebot",
-    "YoloDice":"https://yolodice.com/r?6fAf-wVz"
+    "YoloDice":"https://yolodice.com/r?6fAf-wVz",
+    "EpicDice": "https://magic-dice.com/?ref=mydicebot",
+    "SteemBet": "https://magic-dice.com/?ref=mydicebot",
 };
 
 let mydiceUrls = {
@@ -36,7 +39,7 @@ let mydiceUrls = {
 }
 
 exports.index = function(req, res) {
-    res.render('index', { title: 'My Dice Bot' });
+    res.render('index', { title: 'My Dice Bot',skin:req.session.skin });
 };
 
 exports.login = async function(req, res) {
@@ -45,27 +48,39 @@ exports.login = async function(req, res) {
             let dice = Factory.create(req.body.site);
             let ret = await dice.login(req.body.username, req.body.password, req.body.twofa, req.body.apikey, req);
             if(ret != true){
-                res.render('login', {message:ret,site:req.params.site});
+                res.render('login', {message:ret,site:req.params.site,skin:req.session.skin});
             } else {
                 res.redirect(req.protocol+"://"+req.headers.host+'/'+req.body.site+'/info');
             }
         } else {
-            res.render('login',{site:req.params.site});
+            res.render('login',{site:req.params.site,skin:req.session.skin});
         }
     } catch(err) {
         console.log(err);
-        res.render('login', {message:err.toString(),site:req.params.site});
+        res.render('login', {message:err.toString(),site:req.params.site,skin:req.session.skin});
     }
 };
 
 exports.info = async function(req, res) {
     try{
         let dice = Factory.create(req.params.site);
-        let ret = await dice.getUserInfo(req);
-        res.render('info', {site: '../js/'+req.params.site+'/info.js'});
+        let retUser = await dice.getUserInfo(req);
+        let ret = {};
+        ret.site = '../js/'+req.params.site+'/info.js';
+        ret.chatUrl = config.mydice.chat.url;
+        ret.authGoogle = encodeURIComponent(config.mydice.oauth.google.url);
+        ret.authGithub = config.mydice.oauth.github.url;
+        ret.authSteem = encodeURIComponent(config.mydice.oauth.steem.url);
+        ret.skin = req.session.skin;
+        ret.codeSkin = 'default';
+        if(req.session.skin == 'Contrast') {
+            ret.codeSkin = 'night';
+        }
+        res.render('info', ret);
     } catch(err) {
         console.log(err);
-        res.render('error',{err: err.toString()});
+        //res.render('error',{err: err.toString()});
+        res.render('login', {message:err.toString(),site:req.params.site,skin:req.session.skin});
     }
 };
 
@@ -87,7 +102,7 @@ exports.refresh = async function(req, res) {
         return res.status(200).json(ret);
     } catch(err) {
         console.log(err);
-        res.render('error',{err: err.toString()});
+        return res.status(500).json({err: err.toString()});
     }
 };
 
@@ -98,7 +113,7 @@ exports.clear = async function(req, res) {
         return res.status(200).json(ret);
     } catch(err) {
         console.log(err);
-        res.render('error',{err: err.toString()});
+        return res.status(500).json({err: err.toString()});
     }
 };
 
@@ -117,7 +132,7 @@ exports.keecheck = async function(req, res) {
         }
     } catch(err) {
         console.log(err);
-        res.render('error',{err: err.toString()});
+        return res.status(500).json({err: err.toString()});
     }
 };
 
@@ -150,7 +165,7 @@ exports.keeload = async function(req, res) {
         return res.status(200).send(kees);
     } catch(err) {
         console.log(err);
-        res.render('error',{err: err.toString()});
+        return res.status(500).send({err: err.toString()});
     }
 };
 
@@ -170,7 +185,7 @@ exports.keereg = async function(req, res) {
         });
     } catch(err) {
         console.log(err);
-        res.render('error',{err: err.toString()});
+        return res.status(500).send({err: err.toString()});
     }
 };
 
@@ -209,7 +224,7 @@ exports.keesave = async function(req, res) {
         });
     } catch(err) {
         console.log(err);
-        res.render('error',{err: err.toString()});
+        return res.status(500).send({err: err.toString()});
     }
 };
 
@@ -225,7 +240,7 @@ exports.keefiles = async function(req, res) {
         return res.status(200).json(paths);
     } catch(err) {
         console.log(err);
-        res.render('error',{err: err.toString()});
+        return res.status(500).send({err: err.toString()});
     }
 };
 
@@ -233,84 +248,93 @@ exports.save = async function(req, res) {
     try{
         let content = req.body.scriptStr;
         let fileName = req.body.fileName;
+        let index= fileName.lastIndexOf(".");
+        let ext = fileName.substr(index+1);
         //let filePath = path.resolve(path.join(__dirname, '../../script/lua/')+fileName);
-        let filePath = path.resolve(path.join(process.execPath, '../script/lua/')+fileName);
+        let filePath = path.resolve(path.join(process.execPath, '../script/'+ext+'/')+fileName);
         if(isMobile(req)) {
             //filePath = path.resolve('/tmp/script/lua/'+fileName);
-            filePath = path.resolve(path.join(__dirname, '../../script/lua/'+fileName));
+            filePath = path.resolve(path.join(__dirname, '../../script/'+ext+'/'+fileName));
         }
         let str  = await writeFile(filePath, content);
         return res.status(200).json(str);
     } catch(err) {
         console.log(err);
-        res.render('error',{err: err.toString()});
+        return res.status(500).send({err: err.toString()});
     }
 };
 
 exports.file = async function(req, res) {
     try{
+        let index= req.query.file.lastIndexOf(".");
+        let ext = req.query.file.substr(index+1);
         //let filePath = path.resolve(path.join(__dirname, '../../script/lua/')+req.query.file);
-        let filePath = path.resolve(path.join(process.execPath, '../script/lua/')+req.query.file);
+        let filePath = path.resolve(path.join(process.execPath, '../script/'+ext+'/')+req.query.file);
         if(isMobile(req)) {
             //filePath = path.resolve('/tmp/script/lua/'+req.query.file);
-            filePath = path.resolve(path.join(__dirname, '../../script/lua/'+req.query.file));
+            filePath = path.resolve(path.join(__dirname, '../../script/'+ext+'/'+req.query.file));
         }
         let content  = await readFile(filePath);
         return res.status(200).json(content);
     } catch(err) {
         console.log(err);
-        res.render('error',{err: err.toString()});
+        return res.status(500).json({err: err.toString()});
     }
 };
 
 exports.script = async function(req, res) {
     try{
         //let filePath = path.resolve(path.join(__dirname, '../../script/lua/'));
-        let filePath = path.resolve(path.join(process.execPath, '../script/lua/'));
+        let ext = req.query.ext;
+        let filePath = path.resolve(path.join(process.execPath, '../script/'+ext+'/'));
         if(isMobile(req)) {
             //filePath = path.resolve('/tmp/script/lua/');
-            filePath = path.resolve(path.join(__dirname, '../../script/lua/'));
+            filePath = path.resolve(path.join(__dirname, '../../script/'+ext+'/'));
         }
-        let paths = await getFiles(filePath, 'lua');
+        let paths = await getFiles(filePath, ext);
         return res.status(200).json(paths);
     } catch(err) {
         console.log(err);
-        res.render('error',{err: err.toString()});
+        return res.status(500).send({err: err.toString()});
     }
 };
 
 exports.del = async function(req, res) {
     try{
+        let index= req.query.file.lastIndexOf(".");
+        let ext = req.query.file.substr(index+1);
         //let filePath = path.resolve(path.join(__dirname, '../../script/lua/')+req.query.file);
-        let filePath = path.resolve(path.join(process.execPath, '../script/lua/')+req.query.file);
+        let filePath = path.resolve(path.join(process.execPath, '../script/'+ext+'/')+req.query.file);
         if(isMobile(req)) {
             //filePath = path.resolve('/tmp/script/lua/'+req.query.file);
-            filePath = path.resolve(path.join(__dirname, '../../script/lua/'+req.query.file));
+            filePath = path.resolve(path.join(__dirname, '../../script/'+ext+'/'+req.query.file));
         }
         fs.unlinkSync(filePath);
         return res.status(200).json('ok');
     } catch(err) {
         console.log(err);
-        res.render('error',{err: err.toString()});
+        return res.status(500).send({err: err.toString()});
     }
 };
 
 exports.upload = async function(req, res) {
     try{
         let form = new formidable.IncomingForm();
+        let index= files.upload.name.lastIndexOf(".");
+        let ext = files.upload.name.substr(index+1);
         form.parse(req, function(error, fields, files) {
             //let filePath = path.resolve(path.join(__dirname, '../../script/lua/')+files.upload.name);
-            let filePath = path.resolve(path.join(process.execPath, '../script/lua/')+files.upload.name);
+            let filePath = path.resolve(path.join(process.execPath, '../script/'+ext+'/')+files.upload.name);
             if(isMobile(req)) {
                 //filePath = path.resolve('/tmp/script/lua/'+files.upload.name);
-                filePath = path.resolve(path.join(__dirname, '../../script/lua/'+files.upload.name));
+                filePath = path.resolve(path.join(__dirname, '../../script/'+ext+'/'+files.upload.name));
             }
             fs.writeFileSync(filePath, fs.readFileSync(files.upload.path));
             return res.status(200).json('ok');
         });
     } catch(err) {
         console.log(err);
-        res.render('error',{err: err.toString()});
+        return res.status(500).send({err: err.toString()});
     }
 };
 
@@ -332,12 +356,6 @@ exports.checkerr = async function(req, res) {
         errCount = 1;
         return res.status(200).json({'ret':true,'count':errCount});
     }
-};
-
-exports.callback = async function(req, res) {
-    let code = req.query.code;
-    console.log(code);
-    return res.status(200).json({'ret':false});
 };
 
 async function getFiles(filePath,ext){

@@ -1,0 +1,300 @@
+extends layout
+
+block content
+    script.
+        var registerUrls = {
+            "999Dice":"https://www.999dice.com/?224280708", 
+            "BetKing":"https://betking.io/?ref=u:mydicebot",
+            "BitDice":"https://www.bitdice.me/?r=90479",
+            "Bitsler":"https://www.bitsler.com/?ref=mydicebot", 
+            "BitVest":"https://bitvest.io?r=108792", 
+            "Crypto-Games":"https://www.crypto-games.net?i=CpQP3V8Up2", 
+            "Dice-Bet":"https://dice-bet.com/?ref=u:mydicebot",
+            "DuckDice":"https://duckdice.com/ab61534783", 
+            "Freebitco.in":"https://freebitco.in/?r=16392656", 
+            "KingDice":"https://kingdice.com/#/welcome?aff=18072", 
+            "MagicDice": "https://magic-dice.com/?ref=mydicebot",
+            "MegaDice":"https://www.megadice.com/?a=326492144", 
+            "NitroDice":"https://www.nitrodice.com?ref=0N2pG8rkL7UR6oMzZWEj", 
+            "NitrogenSports":"https://nitrogensports.eu/r/4998127", 
+            "PrimeDice":"https://primedice.com/?c=mydicebot", 
+            "SafeDice":"https://safedice.com/?r=100309", 
+            "Stake":"https://stake.com/?code=mydicebot", 
+            "YoloDice":"https://yolodice.com/r?6fAf-wVz" 
+        };
+
+        webix.ui.fullScreen();
+
+        var login_tabview = {
+                id: "login_tabview",
+                view: "tabview",
+                Height: 500,
+                width: 400,
+                cells: [
+                    {
+                        header: "SITES",
+                        body: {
+                            view: "form", 
+                            id: "form1", 
+                            elements: [{
+                                rows: [{
+                                    options: [
+                                    {id:"Simulator",value:"Simulator"}
+                                    ],
+                                    view: "richselect",
+                                    left: 70,
+                                    top: 70,
+                                    width: 400,
+                                    value: "Simulator",
+                                    label: "SITE",
+                                    labelWidth: 120,
+                                    placeholder: "Simulator",
+                                    id: "site",
+                                    name: "site"
+                                },
+                                {
+                                    id: "username_selection",
+                                    view: "richselect",
+                                    left: 70,
+                                    top: 70,
+                                    width: 400,
+                                    label: "Accounts",
+                                    labelWidth: 120,
+                                    name: "username_selection",
+                                    hidden: true,
+                                },
+                                {
+                                    view: "text",
+                                    left: 70,
+                                    top: 70,
+                                    width: 400,
+                                    label: "USERNAME",
+                                    labelWidth: 120,
+                                    name: "username",
+                                    invalidMessage:"username can not be empty",
+                                    validate:webix.rules.isNotEmpty
+                                },
+                                {
+                                    view: "text",
+                                    type: "password",
+                                    left: 70,
+                                    top: 190,
+                                    width: 400,
+                                    label: "PASSWORD",
+                                    labelWidth: 120,
+                                    name: "password",
+                                    invalidMessage:"password can not be empty",
+                                    validate:webix.rules.isNotEmpty
+                                },
+                                {
+                                    view: "text",
+                                    left: 60,
+                                    top: 250,
+                                    width: 400,
+                                    label: "2FA (Optional)",
+                                    labelWidth: 120,
+                                    name: "twofa"
+                                },
+                                {
+                                    view: "text",
+                                    type: "password",
+                                    left: 70,
+                                    top: 310,
+                                    width: 400,
+                                    labelWidth: 120,
+                                    label: "API Key",
+                                    name: "apikey",
+                                    invalidMessage:"apikey can not be empty",
+                                    validate:webix.rules.isNotEmpty
+                                },
+                                //- {
+                                //-      view: "switch", 
+                                //-      value: 1, 
+                                //-      label:"KeePass",
+                                //-      labelWidth:100,
+                                //-      onLabel: "On", 
+                                //-      offLabel:"Off",
+                                //-      id: "switch_lable",
+                                //-      name: "switch_lable",
+                                //- },
+                                {
+                                    label: "LOGIN",
+                                    view: "button",
+                                    type: "form",
+                                    left: 60,
+                                    top: 400,
+                                    width: 400,
+                                    name: "login_button",
+                                    click: "login"
+                                },
+                                //- {
+                                //-     label: "REGISTER",
+                                //-     view: "button",
+                                //-     left: 310,
+                                //-     top: 400,
+                                //-     width: 400,
+                                //-     name: "register_button",
+                                //-     click: register
+                                //- },                                
+                            ]
+                        }],
+                        }
+                    },
+                ]
+        };  
+
+        var mydicebot_official_site_info = {
+            padding: 20,
+            rows: [
+                {view: "label", label: "MyDiceBot Official Site"},
+                {view: "label", label: "<a target='_blank' href='https://mydicebot.com'>https://mydicebot.com</a>"},
+                {view: "label", label: "MyDiceBot Online Simulator"},
+                {view: "label", label: "<a target='_blank' href='https://simulator.mydicebot.com'>https://simulator.mydicebot.com</a>"},
+                {view: "label", label: "MyDiceBot Discord Chat"},
+                {view: "label", label: "<a target='_blank' href='https://discord.gg/S6W5ec9'>https://discord.gg/S6W5ec9</a>"},
+                {view: "label", label: "MyDiceBot Download"},
+                {view: "label", label: "<a target='_blank' href='https://github.com/mydicebot/mydicebot.github.io/releases'>DOWNLOAD MyDiceBot and Earn Bitcoin Fast!</a>"}
+            ]                 
+        };
+
+        var ads_iframe = {
+            rows: [
+                {view:"iframe", src:"//ad.a-ads.com/1102518?size=320x50", height: 60}
+            ]                   
+        }
+
+        var supported_dice_site_info = {
+            padding: 20,
+            rows: [
+                {view: "label", label: "Supporting Dice Sites"},
+                {view: "label", label: "<a target='_blank' href='https://www.999dice.com/?224280708'>999Dice</a>"},
+                {view: "label", label: "<a target='_blank' href='https://www.bitsler.com/?ref=mydicebot'>Bitsler</a>"},
+                {view: "label", label: "<a target='_blank' href='https://www.crypto-games.net/?i=CpQP3V8Up2'>Crypto-Games</a>"},
+                {view: "label", label: "<a target='_blank' href='https://magic-dice.com/?ref=mydicebot'>MagicDice</a>"},
+                {view: "label", label: "<a target='_blank' href='https://primedice.com/?c=mydicebot'>PrimeDice</a>"},
+                {view: "label", label: "<a target='_blank' href='https://stake.com/?code=mydicebot'>Stake</a>"},  
+                {view: "label", label: "<a target='_blank' href='https://yolodice.com/r?6fAf-wVz'>YoloDice</a>"},
+            ]
+        };
+
+        var todo_dice_site_info = {
+            padding: 20,
+            rows: [
+                {view: "label", label: "TODO"},
+                {view: "label", label: "<a target='_blank' href='https://betking.io/?ref=u:mydicebot'>BetKing</a>"},
+                {view: "label", label: "<a target='_blank' href='https://bitvest.io/?r=108792'>BitVest</a>"},
+                {view: "label", label: "<a target='_blank' href='https://www.bitdice.me/?r=90479'>BitDice</a>"},
+                {view: "label", label: "<a target='_blank' href='https://dice-bet.com/?ref=u:mydicebot'>Dice-Bet</a>"},
+                {view: "label", label: "<a target='_blank' href='https://duckdice.com/ab61534783'>DuckDice</a>"},
+                {view: "label", label: "<a target='_blank' href='https://freebitco.in/?r=16392656'>Freebitco.in</a>"},
+                {view: "label", label: "<a target='_blank' href='https://kingdice.com/#/welcome?aff=180722'>KingDice</a>"},
+                {view: "label", label: "<a target='_blank' href='https://www.megadice.com/?a=326492144'>MegaDice</a>"},
+                {view: "label", label: "<a target='_blank' href='https://www.nitrodice.com/?ref=0N2pG8rkL7UR6oMzZWEj'>NitroDice</a>"},
+                {view: "label", label: "<a target='_blank' href='https://nitrogensports.eu/r/4998127'>NitrogenSports</a>"},
+                {view: "label", label: "<a target='_blank' href='https://safedice.com/?r=100309'>SafeDice</a>"},
+            ]
+        };
+
+        var resizer = {view:"resizer"};
+        
+        webix.ui({
+                id: "login_layout",
+                cols: [
+                    {rows: [
+                        login_tabview,
+                        mydicebot_official_site_info,
+                        ads_iframe
+                    ]},
+                    resizer,
+                    {rows: [
+                        supported_dice_site_info,
+                        todo_dice_site_info
+                    ]}
+                ]
+            }
+        );
+        webix.extend($$("form1"), webix.ProgressBar);
+        function register() {
+            let site = $$("site").getValue();
+            window.open(registerUrls[site],'_blank');
+        }
+        login = function() {
+            console.log($$("form1"));
+            if($$("form1").validate()){
+                $$("form1").showProgress({
+                    type: "icon",
+                    delay: 5000,
+                    hide: true
+                });
+                webix.send("login", $$("form1").getValues());
+            } else {
+                webix.message({type: 'error', text: 'Please enter the correct parameters'});
+            }
+        }
+        webix.ready(function () {
+            let mess = "#{message}"
+            if(mess != '') {
+                webix.message({type: 'error', text: mess });
+            }
+            console.log($$("form1"));
+            $$("form1").elements.username.hide(); 
+            $$("form1").elements.password.hide(); 
+            $$("form1").elements.password.hide(); 
+            $$("form1").elements.twofa.hide(); 
+            $$("form1").elements.apikey.hide(); 
+        });
+        $$("site").attachEvent("onChange", function(newId, oldId){
+            var needUserSites = ['test','999Dice'];
+            var needTokenSites = ['test','PrimeDice','Stake'];
+            var needApiKeySites = ['test','Bitsler'];
+            var needOnlyApiKeySites = ['test','YoloDice','Crypto-Games']
+            var needSteemActiveKeySites = ['test','MagicDice']
+            var needSimulatorActiveKeySites = ['test','Simulator']
+            if(needUserSites.indexOf(newId)>0){
+                console.log("need user");
+                $$("form1").elements.apikey.hide(); 
+                $$("form1").elements.twofa.show(); 
+                $$("form1").elements.username.show(); 
+                $$("form1").elements.password.show(); 
+                //$$("form1").refresh();
+            } else if(needTokenSites.indexOf(newId)>0) {
+                console.log("need token");
+                $$("form1").elements.username.hide(); 
+                $$("form1").elements.password.hide(); 
+                $$("form1").elements.twofa.show(); 
+                $$("form1").elements.apikey.show(); 
+                $$("form1").elements.apikey.define("label", "Token");
+                $$("form1").elements.apikey.refresh();
+            } else if (needApiKeySites.indexOf(newId)>0) {
+                console.log("need apikey");
+                $$("form1").elements.username.show(); 
+                $$("form1").elements.password.show(); 
+                $$("form1").elements.twofa.show(); 
+                $$("form1").elements.apikey.show(); 
+                $$("form1").elements.apikey.define("label", "Api Key");
+                $$("form1").elements.apikey.refresh();
+            } else if(needOnlyApiKeySites.indexOf(newId)>0) {
+                console.log("need only apikey");
+                $$("form1").elements.username.hide(); 
+                $$("form1").elements.password.hide(); 
+                $$("form1").elements.twofa.show(); 
+                $$("form1").elements.apikey.show(); 
+                $$("form1").elements.apikey.define("label", "Api Key");
+                $$("form1").elements.apikey.refresh();
+            } else if(needSteemActiveKeySites.indexOf(newId)>0) {
+                console.log("need Activekey");
+                $$("form1").elements.password.hide(); 
+                $$("form1").elements.twofa.hide(); 
+                $$("form1").elements.apikey.show(); 
+                $$("form1").elements.apikey.define("label", "Active Key");
+                $$("form1").elements.apikey.refresh();
+            } else if(needSimulatorActiveKeySites.indexOf(newId)>0) {
+                console.log("Simulator");
+                $$("form1").elements.username.hide(); 
+                $$("form1").elements.password.hide(); 
+                $$("form1").elements.password.hide(); 
+                $$("form1").elements.twofa.hide(); 
+                $$("form1").elements.apikey.hide(); 
+            }
+        });
+
