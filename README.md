@@ -49,7 +49,6 @@
 * [YoloDice](https://yolodice.com/r?6fAf-wVz)
 ## Blockchain - STEEM
 * [EpicDice](https://epicdice.io/?ref=mydicebot)
-* [MagicDice](https://magic-dice.com/?ref=mydicebot)
 * [SteemBet](https://steem-bet.com?ref=mydicebot)
 
 # TODO
