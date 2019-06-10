@@ -4,8 +4,8 @@
 * [MyDiceBot](https://mydicebot.com) is World #1 Cross-Platform Dicing Bot.
 * Multiple platforms are supported, including __Windows, Mac, Linux,__ and __Web__.
 * Multiple blockchains are supported, including __STEEM__.
-* Multiple programming languages are supported such as  __Lua__.
-* [Open Source](https://github.com/mydicebot/mydicebot.github.io) and __Free Forever__
+* Multiple programming languages are supported such as  __Lua__ and __Javascript__.
+* [Open Source](https://github.com/mydicebot/mydicebot.github.io) and __Free Forever__.
 
 ![](screenshot/mydicebot-1000-win.png)
 
@@ -49,6 +49,7 @@
 * [YoloDice](https://yolodice.com/r?6fAf-wVz)
 ## Blockchain - STEEM
 * [EpicDice](https://epicdice.io/?ref=mydicebot)
+* [KryptoGames](https://kryptogamers.com/?ref=mydicebot)
 * [SteemBet](https://steem-bet.com?ref=mydicebot)
 
 # TODO
@@ -97,16 +98,9 @@
 * Choose Dice Site, Input username/password/2FA/APIKey, then Login.
 * Bet and WIN.
 
-# Startup Options
-* __-port__ (port is 3000 by default)
-  
-    ```
-    mydicebot-win.exe -port 12345
-    ```
-
 # Features
 * Supported platforms: __Windows, Mac, Linux, Web__
-* Supported programming languages: __Lua__
+* Supported programming languages: __Lua__ and __Javascript__
 * Supported multiple dice-sites
 * Supported multiple strategies
 * New account registration
@@ -170,7 +164,7 @@
 
 ## Sample Code
 * Strategy: Basic Martingale
-
+* Using Lua
 ```lua
 chance = 49.5
 multiplier = 2
@@ -188,6 +182,21 @@ function dobet()
         nextbet = previousbet * multiplier
     end
 end
+```
+* Using Javascript
+```javascript
+chance = 49.5;
+multiplier = 2;
+baseBet = 0.00000001;
+betHigh = false;
+
+function dobet() {
+    if (win) {
+        nextBet = basebet;
+    } else {
+        nextBet = previousbet * multiplier;
+    }
+}
 ```
 
 # Report Issue
