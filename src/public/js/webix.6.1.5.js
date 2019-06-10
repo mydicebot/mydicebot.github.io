@@ -2576,10 +2576,14 @@
 	    this.client.on('chat message', function (update) {
 	      if (update.clientId == selfid) return;
 	      use("dp")(view).ignore(function () {
-	        if (update.operation == "delete") view.remove(update.data.id);else if (update.operation == "insert") view.add(update.data);else if (update.operation == "update") {
+	        if (update.operation == "delete") {
+                view.remove(update.data.id);
+            } else if (update.operation == "insert") {
+                view.add(update.data);
+            } else if (update.operation == "update") {
 	          var item = view.getItem(update.data.id);
-
 	          if (item) {
+                if (update.data.date) update.data.date = new Date(update.data.date);
 	            exports.extend(item, update.data, true);
 	            view.refresh(item.id);
 	          }
@@ -2591,8 +2595,6 @@
 	            use("dp")(view).ignore(function () {
                     view.remove(update.id);
 	            });
-	            //var obj = view.getItem(update.id); //save for later event
-	            //callEvent("onStoreUpdated", [update.id, obj, "delete"]);
             }
             message({type: 'error', text: update.error});
 	    });
@@ -2605,7 +2607,6 @@
 	  save: function (view, update) {
 	    update.clientId = this.clientId;
         this.client.emit('chat message', update);
-	    //this.client.publish(this.source, update);
 	  }
 	};
 
@@ -35089,15 +35090,15 @@
 	      type: type,
 	      scheme: {
 	        $init: function (obj) {
-	          if (obj.date) obj.date = _this5._strToDate(obj.date);
+                if (obj.date) obj.date = _this5._strToDate(new Date(obj.date));
 	        },
 	        $save: function (obj) {
-	          if (obj.date) obj.date = _this5._dateToStr(obj.date);
+	          //if (obj.date) obj.date = _this5._dateToStr(obj.date);
 	        },
 	        $serialize: function (obj) {
 	          if (obj.date) {
 	            var item = copy(obj);
-	            item.date = _this5._dateToStr(obj.date);
+	            //item.date = _this5._dateToStr(obj.date);
 	            return item;
 	          }
 

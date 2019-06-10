@@ -22,6 +22,7 @@ block content
             "YoloDice":"https://yolodice.com/r?6fAf-wVz",
             "EpicDice": "https://epicdice.io/?ref=mydicebot",
             "SteemBet": "https://steem-bet.com?ref=mydicebot", 
+            "KryptoGames": "https://kryptogamers.com/?ref=mydicebot",
         };
 
         //- webix.ui.fullScreen();
@@ -62,6 +63,7 @@ block content
                                     {id:"Crypto-Games",value:"Crypto-Games"},
                                     {id:"EpicDice", value:"EpicDice"},
                                     {id:"PrimeDice",value:"PrimeDice"},
+                                    {id:"KryptoGames", value:"KryptoGames"},
                                     {id:"Stake",value:"Stake"},
                                     {id:"SteemBet", value:"SteemBet"},
                                     {id:"YoloDice",value:"YoloDice"},      
@@ -447,7 +449,7 @@ block content
         let needTokenSites = ['test','PrimeDice','Stake'];
         let needApiKeySites = ['test','Bitsler'];
         let needOnlyApiKeySites = ['test','YoloDice','Crypto-Games'];
-        let needSteemActiveKeySites = ['test','EpicDice','SteemBet'];
+        let needSteemActiveKeySites = ['test','EpicDice','SteemBet','KryptoGames'];
         let needSimulatorActiveKeySites = ['test','Simulator'];
         function keelogin() {
             if($$("keepass_form").validate()){

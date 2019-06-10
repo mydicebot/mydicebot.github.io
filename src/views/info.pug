@@ -119,11 +119,12 @@ block content
                 "<a target='_blank' href='https://www.999dice.com/?224280708'>999Dice-0.1% House</a>",
                 "<a target='_blank' href='https://www.bitsler.com/?ref=mydicebot'>Bitsler-1% House</a>",
                 "<a target='_blank' href='https://www.crypto-games.net/?i=CpQP3V8Up2'>CryptoGames-0.8% House</a>",
-                "<a target='_blank' href='https://primedice.com/?c=mydicebot'>PrimeDice-1% House</a>",
-                "<a target='_blank' href='https://stake.com/?code=mydicebot'>Stake-2% House</a>",
-                "<a target='_blank' href='https://yolodice.com/r?6fAf-wVz'>YoloDice-1% House</a>",
                 "<a target='_blank' href='https://epicdice.io/?ref=mydicebot'>EpicDice-2% House</a>",
+                "<a target='_blank' href='https://primedice.com/?c=mydicebot'>PrimeDice-1% House</a>",
+                "<a target='_blank' href='https://kryptogamers.com/?ref=mydicebot'>KryptoGamers-1% House</a>",
+                "<a target='_blank' href='https://stake.com/?code=mydicebot'>Stake-2% House</a>",
                 "<a target='_blank' href='https://steem-bet.com?ref=mydicebot'>SteemBet-2% House</a>",
+                "<a target='_blank' href='https://yolodice.com/r?6fAf-wVz'>YoloDice-1% House</a>",   
             ];
             var dice_site_ref_info = {
                 id: "dice_site_ref_info",
@@ -1723,7 +1724,7 @@ block content
                   $$("user_login_logout_button").config.image = "../images/guest.png";
                   $$("user_login_logout_button").config.label = 'click to login';
                   $$("user_login_logout_button").refresh();
-                  console.error(response.err);
+                  //console.error(response.err);
                   //webix.message({type: 'error', text: response.err});
               });
             }
@@ -1763,7 +1764,7 @@ block content
                         "login",
                         "width=600,height=600,status=0,toolbar=0"
                         );
-                intervalID = setInterval(function(){checkUser(github_login_page);}, 3000);
+                intervalID = setInterval(function(){checkUser(github_login_page);}, 1000);
             });
             $$("google_auth_button").attachEvent("onItemClick", function(){
                 $$('switch_oauth').hide();
@@ -1772,7 +1773,7 @@ block content
                         "login",
                         "width=600,height=600,status=0,toolbar=0"
                         );
-                intervalID = setInterval(function(){checkUser(google_login_page);}, 3000);
+                intervalID = setInterval(function(){checkUser(google_login_page);}, 1000);
             });
             $$("steem_auth_button").attachEvent("onItemClick", function(){
                 $$('switch_oauth').hide();
@@ -1781,7 +1782,7 @@ block content
                         "login",
                         "width=600,height=600,status=0,toolbar=0"
                         );
-                intervalID = setInterval(function(){checkUser(steem_login_page);}, 3000);
+                intervalID = setInterval(function(){checkUser(steem_login_page);}, 1000);
             });
             $$("login_close_button").attachEvent("onItemClick", function(){
                 $$('switch_oauth').hide();
