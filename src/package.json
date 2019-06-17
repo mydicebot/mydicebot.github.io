@@ -1,0 +1,76 @@
+{
+  "name": "mydicebot-190616",
+  "version": "0.0.1",
+  "description": "My Dice Bot",
+  "main": "index.js",
+  "pkg": {
+    "assets": [
+      "views/**/*",
+      "public/**/*"
+    ],
+    "scripts": [
+      "public/**/*.js"
+    ]
+  },
+  "babel": {
+    "presets": [
+      "es2015-node",
+      "stage-0"
+    ]
+  },
+  "bin": {
+    "start": "./index.js"
+  },
+  "dependencies": {
+    "babel-cli": "^6.24.1",
+    "babel-core": "^6.24.1",
+    "babel-plugin-transform-builtin-extend": "^1.1.2",
+    "babel-preset-env": "^1.6.1",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-es2015-node": "^6.1.1",
+    "babel-preset-stage-0": "^6.24.1",
+    "bitcore-message": "^1.0.4",
+    "body-parser": "^1.10.2",
+    "command-exists": "^1.2.7",
+    "config": "^1.28.1",
+    "cookie-parser": "^1.3.3",
+    "execa": "^1.0.0",
+    "express": "^4.16.2",
+    "formidable": "^1.2.1",
+    "graphql-request": "^1.8.2",
+    "isomorphic-fetch": "^2.2.1",
+    "kdbxweb": "https://github.com/keeweb/kdbxweb.git",
+    "morgan": "^1.5.1",
+    "opn": "^5.4.0",
+    "pug": "^2.0.3",
+    "request": "^2.88.0",
+    "pkg": "^4.3.7",
+    "steem": "^0.7.1"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.24.1",
+    "babel-core": "^6.24.1",
+    "babel-plugin-transform-builtin-extend": "^1.1.2",
+    "babel-preset-env": "^1.6.1",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-es2015-node": "^6.1.1",
+    "babel-preset-stage-0": "^6.24.1",
+    "body-parser": "^1.10.2",
+    "config": "^1.28.1",
+    "cookie-parser": "^1.3.3",
+    "express": "^4.16.2",
+    "express-session": "^1.16.1",
+    "kdbxweb": "https://github.com/keeweb/kdbxweb.git",
+    "isomorphic-fetch": "^2.2.1",
+    "morgan": "^1.5.1",
+    "pkg": "^4.3.7",
+    "pug": "^2.0.3"
+  },
+  "scripts": {
+    "test": "node test.js",
+    "dev": "pm2-dev pm2.json",
+    "start": "pm2-docker pm2.json"
+  },
+  "author": "mydicebot",
+  "license": "MIT"
+}

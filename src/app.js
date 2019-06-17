@@ -7,11 +7,12 @@ import session from 'express-session';
 import {createServer} from 'http';
 import routes from './api/routes/api';
 import commandExists from 'command-exists'
+import config from 'config'
 import execa from 'execa'
 import opn from 'opn'
 
 let params = process.argv;
-let port = 3000;
+let port = 57432;
 let portIndex = params.indexOf('-port');
 if(portIndex != -1) {
     let reg = /[0-9]+/;
@@ -58,31 +59,52 @@ app.use(bodyParser.urlencoded({extended: false}));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 let sess = {
-      secret: 'mydicebot987',
-      cookie: {},
+      secret: 'mydicebot12323',
+      cookie: {
+          secure: false,
+          maxAge: 1000 * 60 * 30,
+          httpOnly: true,
+      },
       resave: false,
       saveUninitialized: false
 }
-if (app.get('env') === 'production') {
-  app.set('trust proxy', 1);
-}
+app.set('trust proxy', 1);
 app.use(session(sess))
 routes(app);
 
-let url = 'http://127.0.0.1:'+port+'/login';
-if (['win32', 'darwin'].includes(process.platform)) {
-    opn(url, {
-        wait: false,
-        app:browser
-    })
-} else {
-    try {
-        const xdgOpenExists = commandExists('xdg-open')
-        if (!xdgOpenExists) {
-            throw new Error('xdg-open does not exist')
+if(process.env.NODE_ENV == 'production' && typeof config.mydice =='undefined') {
+    config.mydice = {};
+    config.mydice.auth = {};
+    config.mydice.chat = {};
+    config.mydice.oauth = {};
+    config.mydice.oauth.github = {};
+    config.mydice.oauth.google = {};
+    config.mydice.oauth.steem = {};
+    config.mydice.pkg = true;
+    config.mydice.auth.url = 'https://auth.mydicebot.com/';
+    config.mydice.chat.url = 'https://chat.mydicebot.com/';
+    config.mydice.oauth.github.url= 'https://github.com/login/oauth/authorize?client_id=9f8842af70978390f78d';
+    config.mydice.oauth.google.url = 'https://accounts.google.com/o/oauth2/auth?response_type=code&access_type=offline&client_id=192445019791-rupf3vtns5708bhtpt1vrmbhqk817qrr.apps.googleusercontent.com&redirect_uri=http://localhost:57432/google/cb&scope=https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email';
+    config.mydice.oauth.steem.url = 'https://app.steemconnect.com/oauth2/authorize?client_id=mydicebot&redirect_uri=http://localhost:57432/steem/cb&scope=login&response_type=code';
+}
+
+console.log('pkg:',config.mydice.pkg);
+if (config.mydice.pkg) {
+    let url = 'http://localhost:'+port+'/login';
+    if (['win32', 'darwin'].includes(process.platform)) {
+        opn(url, {
+            wait: false,
+            app:browser
+        })
+    } else {
+        try {
+            const xdgOpenExists = commandExists('xdg-open')
+            if (!xdgOpenExists) {
+                throw new Error('xdg-open does not exist')
+            }
+            execa('xdg-open', [url])
+        } catch (_) {
+            log(`Unable to open your browser automatically. Please open the following URI in your browser:\n\n${oAuthURL}\n\n`)
         }
-        execa('xdg-open', [url])
-    } catch (_) {
-        log(`Unable to open your browser automatically. Please open the following URI in your browser:\n\n${oAuthURL}\n\n`)
     }
 }
