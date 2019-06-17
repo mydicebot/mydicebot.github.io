@@ -21,6 +21,7 @@ block content
             var dataProxy = webix.proxy("socketio", "/comments", {
               client: io('#{chatUrl}',{transports: ['websocket']}),
               clientId: webix.uid(),
+              hUrl:'#{chatUrl}messages',
               load:function(view){
                 view = view.queryView("list");
                 webix.proxy.socketio.load.call(this, view);
@@ -233,7 +234,10 @@ block content
                         width: 0,
                         minHeight: 300,
                         url:  dataProxy,
-                        save: dataProxy
+                        save: dataProxy,
+                        //urls: 'http://localhost:18889/messages?room=1',
+                        mode:"chat",
+                        moreButton:webix.template("Load more (#value#)")
                       }
                     },
                     {
