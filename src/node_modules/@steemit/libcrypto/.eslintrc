@@ -1,0 +1,23 @@
+{
+  "globals": {
+    "exports": true,
+    "console": true,
+    "Promise": true,
+    "Uint8Array": true,
+    "Uint16Array": true,
+    "Uint32Array": true,
+    "Int8Array": true,
+    "Int16Array": true,
+    "Int32Array": true,
+    "ArrayBuffer": true
+  },
+  "parserOptions": {
+    "ecmaVersion": 5,
+    "impliedStrict": true
+  },
+  "extends": "eslint:recommended",
+  "rules": {
+      "curly": ["error", "all"],
+      "quotes": ["error", "single"]
+  }
+}
