@@ -16,42 +16,42 @@ webix.protoUI({
 
 
 		var sources = [];
-		sources.push("http://localhost:57432/js/code/codemirror.js");
-		sources.push("http://localhost:57432/js/code/javascript.js");
-		sources.push("http://localhost:57432/js/code/lua.js");
-		sources.push("http://localhost:57432/js/code/matchbrackets.js");
+		sources.push("/js/code/codemirror.js");
+		sources.push("/js/code/javascript.js");
+		sources.push("/js/code/lua.js");
+		sources.push("/js/code/matchbrackets.js");
         //fullscreen
-		sources.push("http://localhost:57432/js/code/codemirror_addon_fullscreen.js");
+		sources.push("/js/code/codemirror_addon_fullscreen.js");
         //lint
-		sources.push("http://localhost:57432/js/code/lint.js");
-		sources.push("http://localhost:57432/js/code/javascript-lint.js");
-		sources.push("http://localhost:57432/js/code/jshint.js");
+		sources.push("/js/code/lint.js");
+		sources.push("/js/code/javascript-lint.js");
+		sources.push("/js/code/jshint.js");
         //match-hightlighter
-		sources.push("http://localhost:57432/js/code/annotatescrollbar.js");
-		sources.push("http://localhost:57432/js/code/matchesonscrollbar.js");
-		sources.push("http://localhost:57432/js/code/match-highlighter.js");
-		sources.push("http://localhost:57432/js/code/searchcursor.js");
+		sources.push("/js/code/annotatescrollbar.js");
+		sources.push("/js/code/matchesonscrollbar.js");
+		sources.push("/js/code/match-highlighter.js");
+		sources.push("/js/code/searchcursor.js");
         //fold
-		sources.push("http://localhost:57432/js/code/foldcode.js");
-		sources.push("http://localhost:57432/js/code/foldgutter.js");
-		sources.push("http://localhost:57432/js/code/comment-fold.js");
-		sources.push("http://localhost:57432/js/code/brace-fold.js");
+		sources.push("/js/code/foldcode.js");
+		sources.push("/js/code/foldgutter.js");
+		sources.push("/js/code/comment-fold.js");
+		sources.push("/js/code/brace-fold.js");
         //lua
-		//sources.push("http://localhost:57432/js/code/parselua.js");
+		//sources.push("/js/code/parselua.js");
         //python
-		sources.push("http://localhost:57432/js/code/python.js");
+		sources.push("/js/code/python.js");
         //active-line
-		sources.push("http://localhost:57432/js/code/active-line.js");
+		sources.push("/js/code/active-line.js");
         //change
-		sources.push("http://localhost:57432/js/code/change.js");
+		sources.push("/js/code/change.js");
 
-		sources.push("http://localhost:57432/css/code/codemirror.css");
-		sources.push("http://localhost:57432/css/code/night.css");
-		sources.push("http://localhost:57432/css/code/codemirror_addon_fullscreen.css");
-		sources.push("http://localhost:57432/css/code/lint.css");
-		sources.push("http://localhost:57432/css/code/highlight.css");
-		sources.push("http://localhost:57432/css/code/foldgutter.css");
-		//sources.push("http://localhost:57432/css/code/luacolors.css");
+		sources.push("/css/code/codemirror.css");
+		sources.push("/css/code/night.css");
+		sources.push("/css/code/codemirror_addon_fullscreen.css");
+		sources.push("/css/code/lint.css");
+		sources.push("/css/code/highlight.css");
+		sources.push("/css/code/foldgutter.css");
+		//sources.push("/css/code/luacolors.css");
 
 		webix.require(sources)
 		.then( webix.bind(this._render_when_ready, this) )
