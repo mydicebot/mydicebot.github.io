@@ -95,7 +95,7 @@ export class BitslerDice extends BaseDice {
         let formData = new FormData();
         let accessToken = req.session.accessToken; 
         let amount = req.body.PayIn/100000000;
-        let condition = req.body.High == "true"?'>':'<';
+        let condition = req.body.High == "true"?'true':'false';
         let currency = req.body.Currency.toLowerCase();
         let game = 0;
         if(req.body.High == "true"){
@@ -106,8 +106,8 @@ export class BitslerDice extends BaseDice {
         formData.append('access_token', accessToken);
 //        formData.append('type', 'dice');
         formData.append('amount', amount);
-        formData.append('condition', condition);
-        formData.append('target', game/10000);
+        formData.append('over', condition);
+        formData.append('target', parseFloat(game/10000).toFixed(2));
         formData.append('currency', currency);
         formData.append('api_key','JNOEF-PTSBI-2MCCP-4PAAJ-GDBMP');
         //formData.append('api_key','0b2edbfe44e98df79665e52896c22987445683e78');
@@ -115,7 +115,7 @@ export class BitslerDice extends BaseDice {
         let info = req.session.info;
         let betInfo = ret;
         betInfo.profit = betInfo.profit;
-        betInfo.condition = condition;
+        betInfo.condition = req.body.High == "true"?'>':'<';
         info.info.bets++;
         info.currentInfo.bets++;
         info.info.profit = parseFloat(info.info.profit) + parseFloat(betInfo.profit);

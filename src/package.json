@@ -1,5 +1,5 @@
 {
-  "name": "mydicebot-190625",
+  "name": "mydicebot-190626",
   "version": "0.0.1",
   "description": "My Dice Bot",
   "homepage": "https://mydicebot.com",
@@ -74,7 +74,7 @@
       "productName":"mydicebot",
       "appId": "com.app.mydicebot",
       "directories": {
-          "output": "build"
+          "output": "release/electron/builder"
       },
       "files":[
           "**/*",
@@ -85,6 +85,7 @@
           "!**/*.{iml,o,hprof,orig,pyc,pyo,rbc,swp,csproj,sln,xproj}",
           "!.editorconfig",
           "!/build",
+          "!/release",
           "!**/._*",
           "!*.sh",
           "!**/{.DS_Store,.git,.hg,.svn,CVS,RCS,SCCS,.gitignore,.gitattributes}",
@@ -148,12 +149,9 @@
     "test": "node test.js",
     "dev": "pm2-dev pm2.json",
     "start": "pm2-docker pm2.json",
-    "electron-packager-linux": "./build/node_modules/.bin/electron-packager . --overwrite --platform=linux --arch=x64 --out=build --ignore=build/ --ignore=test/ --ignore=.git/ --ignore=.sh --app-version=0.0.1 --electron-version=$(./build/node_modules/.bin/electron -v | cut -c 2-)",
-    "electron-packager-darwin": "./build/node_modules/.bin/electron-packager . --overwrite --platform=darwin --arch=x64 --out=build --ignore=.git/ --ignore=build/ --ignore=test/ --ignore=.sh --app-version=0.0.1 --electron-version=$(./build/node_modules/.bin/electron -v | cut -c 2-)",
-    "electron-packager-win32": "./build/node_modules/.bin/electron-packager . --overwrite --platform=win32 --arch=x64 --out=build --ignore=.git/ --ignore=build/ --ignore=test/ --ignore=.sh --app-version=0.0.1 --electron-version=$(./build/node_modules/.bin/electron -v | cut -c 2-)",
-    "electron-zip-darwin": "cd build/*-darwin-x64 && zip -yDr ../electron-express-darwin-x64.zip .",
-    "electron-zip-win32": "cd build/*-win32-x64 && zip -yDr ../electron-express-win32-x64.zip .",
-    "electron-zip-linux": "cd build/*-linux-x64 && zip -yDr ../electron-express-linux-x64.zip .",
+    "electron-packager-linux": "./build/node_modules/.bin/electron-packager . --overwrite --platform=linux --arch=x64 --out=release/electron/package --ignore=build/ --ignore=release/ --ignore=test/ --ignore=.git/ --ignore=.sh --app-version=0.0.1 --electron-version=$(./build/node_modules/.bin/electron -v | cut -c 2-)",
+    "electron-packager-darwin": "./build/node_modules/.bin/electron-packager . --overwrite --platform=darwin --arch=x64 --out=release/electron/package --ignore=.git/ --ignore=build/ --ignore=release/ --ignore=test/ --ignore=.sh --app-version=0.0.1 --electron-version=$(./build/node_modules/.bin/electron -v | cut -c 2-)",
+    "electron-packager-win32": "./build/node_modules/.bin/electron-packager . --overwrite --platform=win32 --arch=x64 --out=release/electron/package --ignore=.git/ --ignore=build/ --ignore=release/ --ignore=test/ --ignore=.sh --app-version=0.0.1 --electron-version=$(./build/node_modules/.bin/electron -v | cut -c 2-)",
     "pack": "electron-builder --dir",
     "dist": "electron-builder --linux --ia32 --x64 --armv7l --arm64",
     "win-dist": "electron-builder --win",
