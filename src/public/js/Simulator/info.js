@@ -1,17 +1,8 @@
 function init() {
     console.log('hello Simulator');
-    let currencies = ["btc","eth","ltc","doge","dash","bch","xrp","zec","etc","neo","kmd","btg","lsk","dgb","qtum","strat","waves","burst"];
-
-    let options=[];
-    
-    for(i=0;i<currencies.length;i++){
-
-        options.push({id:i,value:(currencies[i]).toUpperCase()});
-    
-    }
-
-    $$("bet_currency_selection").define("options", options);
-    
+    $$("bet_currency_selection").define("options", [
+        {id:1,value:"BTC"},
+    ]);
     minBetAmount = 0.1;
     $$("manual_bet_amount").setValue(minBetAmount);
     $$("auto_bet_base_amount").setValue(minBetAmount);
