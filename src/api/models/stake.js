@@ -120,8 +120,10 @@ export class StakeDice extends BaseDice {
         target = parseFloat(target/10000).toFixed(2);
         let data = " mutation{diceRoll(amount:"+amount+",target:"+target+",condition:"+ condition +",currency:"+currency+ ") { id nonce currency amount payout state { ... on CasinoGameDice { result target condition } } createdAt serverSeed{seedHash seed nonce} clientSeed{seed} user{balances{available{amount currency}} statistic{game bets wins losses amount profit currency}}}}";
         let ret = await this._send('', 'POST', data, req.session.accessToken);
+        console.log(ret);
         let info = req.session.info;
         let betInfo = ret.diceRoll;
+        betInfo.iid = betInfo.id;
         betInfo.condition = req.body.High == "true"?'>':'<';
         betInfo.target = target;
         betInfo.profit = (parseFloat(betInfo.payout) - parseFloat(betInfo.amount)).toFixed(8);
