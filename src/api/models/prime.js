@@ -122,7 +122,9 @@ export class PrimeDice extends BaseDice {
         let ret = await this._send('', 'POST', data, req.session.accessToken);
         let info = req.session.info;
         let betInfo = ret.primediceRoll;
-        betInfo.iid = betInfo.id;
+        let queryIID = " query{bet(betId:\""+betInfo.id+"\"){iid}}";
+        let dataIID = await this._send('', 'POST', queryIID, req.session.accessToken);
+        betInfo.iid = dataIID.bet.iid.split(":")[1];
         betInfo.condition = req.body.High == "true"?'>':'<';
         betInfo.target = target;
         betInfo.profit = (parseFloat(betInfo.payout) - parseFloat(betInfo.amount)).toFixed(8);
