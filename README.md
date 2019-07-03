@@ -2,7 +2,7 @@
 # MyDiceBot
 * [https://mydicebot.com](https://mydicebot.com)
 * [MyDiceBot](https://mydicebot.com) is World #1 Cross-Platform Dicing Bot.
-* Multiple platforms are supported, including __Windows, Mac, Linux,__ and __Web__.
+* Multiple platforms are supported, including __Windows, Mac, Linux, Web__ and __Android__.
 * Multiple blockchains are supported, including __STEEM__.
 * Multiple programming languages are supported such as  __Lua__ and __Javascript__.
 * [Open Source](https://github.com/mydicebot/mydicebot.github.io) and __Free Forever__.
@@ -44,6 +44,7 @@
 * [999Dice](https://www.999dice.com/?224280708)
 * [Bitsler](https://www.bitsler.com/?ref=mydicebot)
 * [Crypto-Games](https://www.crypto-games.net?i=CpQP3V8Up2)
+* [DuckDice](https://duckdice.com/ab61534783)
 * [PrimeDice](https://primedice.com/?c=mydicebot)
 * [Stake](https://stake.com/?code=mydicebot)
 * [YoloDice](https://yolodice.com/r?6fAf-wVz)
@@ -57,7 +58,6 @@
 * [BitDice (coming soon)](https://www.bitdice.me/?r=90479)
 * [BitVest (coming soon)](https://bitvest.io?r=108792)
 * [Dice-Bet (coming soon)](https://dice-bet.com/?ref=u:mydicebot)
-* [DuckDice (coming soon)](https://duckdice.com/ab61534783)
 * [Freebitco.in (coming soon)](https://freebitco.in/?r=16392656)
 * [KingDice (coming soon)](https://kingdice.com/#/welcome?aff=180722)
 * [MegaDice (coming soon)](https://www.megadice.com/?a=326492144)
@@ -99,7 +99,7 @@
 * Bet and WIN.
 
 # Features
-* Supported platforms: __Windows, Mac, Linux, Web__
+* Supported platforms: __Windows, Mac, Linux, Web__ and __Android__
 * Supported programming languages: __Lua__ and __Javascript__
 * Supported multiple dice-sites
 * Supported multiple strategies
@@ -109,8 +109,9 @@
 * Manual bet
 * Auto bet
 * Script bet (__compatible with Seuntjies DiceBot scripts__)
+* Chat room
 * Script upload/download/voting (coming soon)
-* Github integration (coming soon)
+* Github/STEEM/Google Login integration
 
 # Manual Bet
 * You can control every bet by yourself.
@@ -124,7 +125,7 @@
 
 # Script Bet
 * Lua programming language
-* JavaScript programming language (coming soon)
+* JavaScript programming language
 * Python programming language (coming soon)
 * __Compatible with the variables and functions of Seuntjie DiceBot's Lua script__
 

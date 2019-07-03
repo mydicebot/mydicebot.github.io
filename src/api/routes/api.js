@@ -13,6 +13,7 @@ import {Simulator} from '../models/simulator';
 import {EpicDice} from '../models/epic';
 import {SteemBet} from '../models/steembet';
 import {KryptoGames} from '../models/kryptogames';
+import {DuckDice} from '../models/duckdice';
 import {Factory} from '../models/factory';
 import fs from 'fs';
 import path from 'path';
@@ -75,6 +76,7 @@ function createDice (req, res, next) {
     Factory.register('EpicDice', new EpicDice());
     Factory.register('SteemBet', new SteemBet());
     Factory.register('KryptoGames', new KryptoGames());
+    Factory.register('DuckDice', new DuckDice());
     next();
 }
 
