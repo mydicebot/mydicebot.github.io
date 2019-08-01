@@ -30,6 +30,7 @@ let registerUrls = {
     "EpicDice": "https://magic-dice.com/?ref=mydicebot",
     "SteemBet": "https://magic-dice.com/?ref=mydicebot",
     "KryptoGames": "https://magic-dice.com/?ref=mydicebot",
+    "WinDice": "https://windice.io/?r=e63q8xq4y",
 };
 
 let mydiceUrls = {
@@ -74,6 +75,7 @@ exports.info = async function(req, res) {
         ret.authSteem = encodeURIComponent(config.mydice.oauth.steem.url);
         ret.skin = req.session.skin;
         ret.codeSkin = 'default';
+        ret.url = config.mydice.url;
         if(req.session.skin == 'Contrast') {
             ret.codeSkin = 'night';
         }

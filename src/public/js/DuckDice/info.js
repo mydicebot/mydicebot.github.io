@@ -16,7 +16,7 @@ function init() {
         {id:13,value:"USDT"},
     ]);
     $$("bet_currency_selection").refresh();
-    minBetAmount = 0.00000001;
+    minBetAmount = 0.0000001;
     $$("manual_bet_amount").setValue(minBetAmount.toFixed(8));
     $$("auto_bet_base_amount").setValue(minBetAmount.toFixed(8));
 }

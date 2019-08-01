@@ -84,11 +84,12 @@ if(process.env.NODE_ENV == 'production' && typeof config.mydice =='undefined') {
     config.mydice.auth.url = 'https://auth.mydicebot.com/';
     config.mydice.chat.url = 'https://chat.mydicebot.com/';
     config.mydice.oauth.github.url= 'https://github.com/login/oauth/authorize?client_id=9f8842af70978390f78d';
-    config.mydice.oauth.google.url = 'https://accounts.google.com/o/oauth2/auth?response_type=code&access_type=offline&client_id=192445019791-rupf3vtns5708bhtpt1vrmbhqk817qrr.apps.googleusercontent.com&redirect_uri=http://localhost:57432/google/cb&scope=https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email';
-    config.mydice.oauth.steem.url = 'https://app.steemconnect.com/oauth2/authorize?client_id=mydicebot&redirect_uri=http://localhost:57432/steem/cb&scope=login&response_type=code';
+    config.mydice.oauth.google.url = 'https://accounts.google.com/o/oauth2/auth?response_type=code&access_type=offline&client_id=192445019791-rupf3vtns5708bhtpt1vrmbhqk817qrr.apps.googleusercontent.com&redirect_uri=https://auth.mydicebot.com/google/cb&scope=https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email';
+    config.mydice.oauth.steem.url = 'https://app.steemconnect.com/oauth2/authorize?client_id=mydicebot&redirect_uri=https://auth.mydicebot.com/steem/cb&scope=login&response_type=code';
 }
 
 console.log('pkg:',config.mydice.pkg);
+config.mydice.url = 'http://localhost:'+port;
 if (config.mydice.pkg) {
     let url = 'http://localhost:'+port+'/login';
     if (['win32', 'darwin'].includes(process.platform)) {
