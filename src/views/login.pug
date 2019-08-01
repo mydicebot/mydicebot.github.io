@@ -3,26 +3,27 @@ extends layout
 block content
     script.
         var registerUrls = {
-            "999Dice":"https://www.999dice.com/?224280708", 
+            "999Dice":"https://www.999dice.com/?224280708",
             "BetKing":"https://betking.io/?ref=u:mydicebot",
             "BitDice":"https://www.bitdice.me/?r=90479",
-            "Bitsler":"https://www.bitsler.com/?ref=mydicebot", 
-            "BitVest":"https://bitvest.io?r=108792", 
-            "Crypto-Games":"https://www.crypto-games.net?i=CpQP3V8Up2", 
+            "Bitsler":"https://www.bitsler.com/?ref=mydicebot",
+            "BitVest":"https://bitvest.io?r=108792",
+            "Crypto-Games":"https://www.crypto-games.net?i=CpQP3V8Up2",
             "Dice-Bet":"https://dice-bet.com/?ref=u:mydicebot",
-            "DuckDice":"https://duckdice.com/ab61534783", 
-            "Freebitco.in":"https://freebitco.in/?r=16392656", 
-            "KingDice":"https://kingdice.com/#/welcome?aff=18072", 
-            "MegaDice":"https://www.megadice.com/?a=326492144", 
-            "NitroDice":"https://www.nitrodice.com?ref=0N2pG8rkL7UR6oMzZWEj", 
-            "NitrogenSports":"https://nitrogensports.eu/r/4998127", 
-            "PrimeDice":"https://primedice.com/?c=mydicebot", 
-            "SafeDice":"https://safedice.com/?r=100309", 
-            "Stake":"https://stake.com/?code=mydicebot", 
-            "YoloDice":"https://yolodice.com/r?6fAf-wVz", 
+            "DuckDice":"https://duckdice.com/ab61534783",
+            "Freebitco.in":"https://freebitco.in/?r=16392656",
+            "KingDice":"https://kingdice.com/#/welcome?aff=18072",
+            "MegaDice":"https://www.megadice.com/?a=326492144",
+            "NitroDice":"https://www.nitrodice.com?ref=0N2pG8rkL7UR6oMzZWEj",
+            "NitrogenSports":"https://nitrogensports.eu/r/4998127",
+            "PrimeDice":"https://primedice.com/?c=mydicebot",
+            "SafeDice":"https://safedice.com/?r=100309",
+            "Stake":"https://stake.com/?code=mydicebot",
+            "YoloDice":"https://yolodice.com/r?6fAf-wVz",
             "EpicDice": "https://epicdice.io/?ref=mydicebot",
             "SteemBet": "https://steem-bet.com?ref=mydicebot",
             "KryptoGames": "https://kryptogamers.com/?ref=mydicebot",
+            "WinDice": "https://windice.io/?r=e63q8xq4y",
         };
 
         //- webix.ui.fullScreen();
@@ -57,22 +58,23 @@ block content
                                 },
                                 {
                                     options: [
-                                    {id:"Simulator",value:"Simulator"}, 
+                                    {id:"Simulator",value:"Simulator"},
                                     {id:"999Dice",value:"999Dice"},
                                     {id:"Bitsler",value:"Bitsler"},
                                     {id:"Crypto-Games",value:"Crypto-Games"},
                                     {id:"DuckDice",value:"DuckDice"},
-                                    {id:"EpicDice", value:"EpicDice"},
                                     {id:"PrimeDice",value:"PrimeDice"},
-                                    {id:"KryptoGames", value:"KryptoGames"},
                                     {id:"Stake",value:"Stake"},
-                                    {id:"SteemBet", value:"SteemBet"},          
-                                    {id:"YoloDice",value:"YoloDice"},      
+                                    {id:"YoloDice",value:"YoloDice"},
+                                    {id:"FreeBitco",value:"FreeBitco.in"},
+                                    {id:"WinDice",value:"WinDice"},
+                                    {id:"EpicDice", value:"EpicDice"},
+                                    {id:"SteemBet", value:"SteemBet"},
+                                    {id:"KryptoGames", value:"KryptoGames"},
                                     {id:"BetKing",value:"BetKing (coming soon)"},
                                     {id:"BitDice",value:"BitDice (coming soon)"},
                                     {id:"BitVest",value:"BitVest (Coming Soon)"},
                                     {id:"Dice-Bet",value:"Dice-Bet (coming soon)"},
-                                    {id:"Freebitco.in",value:"Freebitco.in (Coming Soon)"},
                                     {id:"KingDice",value:"KingDice (Coming Soon)"},
                                     {id:"MegaDice",value:"MegaDice (Coming Soon)"},
                                     {id:"NitroDice",value:"NitroDice (Coming Soon)"},
@@ -146,11 +148,11 @@ block content
                                     validate:webix.rules.isNotEmpty
                                 },
                                 {
-                                     view: "switch", 
-                                     value: 1, 
+                                     view: "switch",
+                                     value: 1,
                                      label:"KeePass",
                                      labelWidth:100,
-                                     onLabel: "On", 
+                                     onLabel: "On",
                                      offLabel:"Off",
                                      id: "switch_lable",
                                      name: "switch_lable",
@@ -320,6 +322,8 @@ block content
                 {view: "label", label: "<a target='_blank' href='https://stake.com/?code=mydicebot'>Stake</a>"},  
                 {view: "label", label: "<a target='_blank' href='https://yolodice.com/r?6fAf-wVz'>YoloDice</a>"},
                 {view: "label", label: "<a target='_blank' href='https://duckdice.com/ab61534783'>DuckDice</a>"},
+                {view: "label", label: "<a target='_blank' href='https://freebitco.in/?r=16392656'>Freebitco.in</a>"},
+                {view: "label", label: "<a target='_blank' href='https://windice.io/?r=e63q8xq4y'>WinDice</a>"},
             ]
         };
 
@@ -332,7 +336,6 @@ block content
                 {view: "label", label: "<a target='_blank' href='https://bitvest.io/?r=108792'>BitVest</a>"},
                 {view: "label", label: "<a target='_blank' href='https://www.bitdice.me/?r=90479'>BitDice</a>"},
                 {view: "label", label: "<a target='_blank' href='https://dice-bet.com/?ref=u:mydicebot'>Dice-Bet</a>"},
-                {view: "label", label: "<a target='_blank' href='https://freebitco.in/?r=16392656'>Freebitco.in</a>"},
                 {view: "label", label: "<a target='_blank' href='https://kingdice.com/#/welcome?aff=180722'>KingDice</a>"},
                 {view: "label", label: "<a target='_blank' href='https://www.megadice.com/?a=326492144'>MegaDice</a>"},
                 {view: "label", label: "<a target='_blank' href='https://www.nitrodice.com/?ref=0N2pG8rkL7UR6oMzZWEj'>NitroDice</a>"},
@@ -367,11 +370,13 @@ block content
             // $$("login_resizer").hide();
             // $$("supported_dice_site_info").hide();
             // $$("todo_dice_site_info").hide();
-            $$("login_tabview").define("height", 0);
+            $$("login_tabview").define("height", window.screen.availHeight);
+
             $$("login_tabview").define("width", 0);
             //- $$("login_tabview").resize();
             //- $$("login_tabview").resizeChildren();
             webix.ui.fullScreen();
+            webix.Touch.limit(true);
         }
         
         webix.extend($$("form1"), webix.ProgressBar);
@@ -445,10 +450,10 @@ block content
 
         let keepassdb = {};
         let keepasslogin = false;
-        let needUserSites = ['test','999Dice'];
+        let needUserSites = ['test','999Dice','FreeBitco'];
         let needTokenSites = ['test','PrimeDice','Stake'];
         let needApiKeySites = ['test','Bitsler'];
-        let needOnlyApiKeySites = ['test','YoloDice','Crypto-Games','DuckDice'];
+        let needOnlyApiKeySites = ['test','YoloDice','Crypto-Games','DuckDice','WinDice'];
         let needSteemActiveKeySites = ['test','EpicDice','SteemBet','KryptoGames'];
         let needSimulatorActiveKeySites = ['test','Simulator'];
         function keelogin() {

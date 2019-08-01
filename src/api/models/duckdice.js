@@ -96,12 +96,12 @@ export class DuckDice extends BaseDice {
         betInfo.amount = betInfo.betAmount;
         info.info.bets++;
         info.currentInfo.bets++;
-        info.info.profit = parseFloat(info.info.profit) + parseFloat(betInfo.profit);
+        info.info.profit = (parseFloat(info.info.profit) + parseFloat(betInfo.profit)).toFixed(8);
         info.info.balance = ret.user.balance;
         info.currentInfo.balance = ret.user.balance;
-        info.info.wagered = parseFloat(info.info.wagered) + parseFloat(betInfo.amount);
-        info.currentInfo.wagered = parseFloat(info.currentInfo.wagered) + parseFloat(betInfo.amount);
-        info.currentInfo.profit = parseFloat(info.currentInfo.profit) + parseFloat(betInfo.profit);
+        info.info.wagered = (parseFloat(info.info.wagered) + parseFloat(betInfo.amount)).toFixed(8);
+        info.currentInfo.wagered = (parseFloat(info.currentInfo.wagered) + parseFloat(betInfo.amount)).toFixed(8);
+        info.currentInfo.profit = (parseFloat(info.currentInfo.profit) + parseFloat(betInfo.profit)).toFixed(8);
         if(betInfo.profit>0){
             betInfo.win = true;
             info.info.wins++;

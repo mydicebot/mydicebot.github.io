@@ -1,4 +1,4 @@
-![](screenshot/bot-logo.png)
+![](screenshot/bot-logo-256.png)
 # MyDiceBot
 * [https://mydicebot.com](https://mydicebot.com)
 * [MyDiceBot](https://mydicebot.com) is World #1 Cross-Platform Dicing Bot.
@@ -45,9 +45,11 @@
 * [Bitsler](https://www.bitsler.com/?ref=mydicebot)
 * [Crypto-Games](https://www.crypto-games.net?i=CpQP3V8Up2)
 * [DuckDice](https://duckdice.com/ab61534783)
+* [Freebitco.in](https://freebitco.in/?r=16392656)
 * [PrimeDice](https://primedice.com/?c=mydicebot)
 * [Stake](https://stake.com/?code=mydicebot)
 * [YoloDice](https://yolodice.com/r?6fAf-wVz)
+* [WinDice](https://windice.io/?r=e63q8xq4y)
 ## Blockchain - STEEM
 * [EpicDice](https://epicdice.io/?ref=mydicebot)
 * [KryptoGames](https://kryptogamers.com/?ref=mydicebot)
@@ -58,7 +60,6 @@
 * [BitDice (coming soon)](https://www.bitdice.me/?r=90479)
 * [BitVest (coming soon)](https://bitvest.io?r=108792)
 * [Dice-Bet (coming soon)](https://dice-bet.com/?ref=u:mydicebot)
-* [Freebitco.in (coming soon)](https://freebitco.in/?r=16392656)
 * [KingDice (coming soon)](https://kingdice.com/#/welcome?aff=180722)
 * [MegaDice (coming soon)](https://www.megadice.com/?a=326492144)
 * [NitroDice (coming soon)](https://www.nitrodice.com?ref=0N2pG8rkL7UR6oMzZWEj)

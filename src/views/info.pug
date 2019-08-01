@@ -658,7 +658,7 @@ block content
                              minHeight: 500,
                              width: 0,
                              elements: [
-                                {view:"iframe", src:"//mydicebot.com"}
+                                {view:"iframe", src:"https://mydicebot.com"}
                              ]
                          }
                      },
@@ -672,6 +672,7 @@ block content
                         optionWidth:70
                     },
                     width: 400,
+                    height: 0,
                     cells: [
                         {
                           header: "CHAT",
@@ -680,7 +681,7 @@ block content
                             id:"chat",
                             width: 0,
                             height: 0,
-                            //minHeight: 300,
+                            //minHeight: 400,
                             url:  dataProxy,
                             save: dataProxy
                           }
@@ -688,13 +689,20 @@ block content
                         {
                             header: "MANUAL",
                             body: {
+                                view:"fullscreenlayout",
+                                height:0,
+                                //minHeight: 400,
+                                cells:[
+                                //rows: [
+                                {
                                 id: "manual_bet_form",
                                 view: "form",
-                                paddingY: 4,
-                                margin: 0,
-                                minHeight: 500,
+                                //paddingY: 4,
+                                //margin: 0,
+                                //minHeight: 400,
                                 height: 0,
                                 width: 0,
+                                relative:true,
                                 elements: [
                                     {
                                         id: "manual_bet_amount",
@@ -740,28 +748,37 @@ block content
                                         labelWidth: 200,
                                         name: "manual_bet_chance"
                                     },
-                                    {
-                                        id: "manual_bet_low_button",
-                                        view: "button",
-                                        type: "form",
-                                        label: "BET LOW",
-                                        css: "webix_secondary",
-                                    },
-                                    {
-                                        id: "manual_bet_high_button",
-                                        view: "button",
-                                        type: "form",
-                                        label: "BET HIGH",
-                                        css: "webix_secondary",
-                                    }
-                                ]
-                            }
+                                ]},
+                                {
+                                    id: "manual_bet_low_button",
+                                    view: "button",
+                                    type: "form",
+                                    label: "BET LOW",
+                                    css: "webix_primary",
+                                    bottom: 80,
+                                    right: 30,
+                                    width: 120,
+                                    height: 30,
+                                },
+                                {
+                                    id: "manual_bet_high_button",
+                                    view: "button",
+                                    type: "form",
+                                    label: "BET HIGH",
+                                    css: "webix_primary",
+                                    bottom: 40,
+                                    right: 30,
+                                    width: 120,
+                                    height: 30,
+                                },
+                            ]}
                         },
                         {
                             header: "AUTO",
                             body: {
                                 view:"fullscreenlayout",
                                 height:0,
+                                //minHeight: 400,
                                 cells:[
                                 //rows: [
                                 {
@@ -952,6 +969,7 @@ block content
                             body: {
                                 view:"fullscreenlayout",
                                 height:0,
+                                //minHeight: 400,
                                 cells:[
                                 {
                                 id: "script_bet_form",
@@ -1120,13 +1138,13 @@ block content
                              body: {
                                  id: "site_form",
                                  view: "form",
-                                 minHeight: 500,
+                                 height:0,
                                  width: 0,
                                  elements: [
-                                    {view:"iframe", src:"//mydicebot.com"}
+                                    {view:"iframe", src:"https:://mydicebot.com"}
                                  ]
                              }
-                         },
+                        },
                     ]
                 };
             }
@@ -1310,7 +1328,6 @@ block content
                     rows: [
                         {
                             cols: [
-                                mobile_toolbar,
                                 bet_total_stats,
                                 bet_current_stats,
                                 bet_current_stats2,
@@ -1318,6 +1335,7 @@ block content
                                 bet_datatable,
                                 misc_items, 
                                 user_info,
+                                mobile_toolbar,
                             ]
                         },       
                         bet_config_tabview
@@ -1325,22 +1343,29 @@ block content
                 });
                 webix.Touch.limit(true);
                 $$("bet_total_stats").hide();
+                $$("bet_total_stats").define("height", 210);
 
                 $$("bet_current_stats").hide();
+                $$("bet_current_stats").define("height", 210);
 
                 $$("bet_current_stats2").hide();
+                $$("bet_current_stats2").define("height", 210);
 
                 $$("misc_items_form").hide();
                 $$("user_info_form").show();
-                $$("user_info_form").define("height", 0);
+                //$$("user_info_form").define("height", 0);
                 $$("user_info_form").define("width", 0);
 
                 $$("bet_chart").hide();
+                $$("bet_chart").define("height", 210);
 
                 $$("bet_datatable").hide();
+                $$("bet_datatable").define("height", 210);
 
-                $$("bet_config_tabview").define("height", 380);
+                //- $$("bet_config_tabview").define("height", 380);
                 $$("bet_config_tabview").define("width", 0);
+                $$("bet_config_tabview").define("height",(window.screen.availHeight - $$("user_info_form").$height - 35) );
+                $$("manual_bet_form").define("height",(window.screen.availHeight - $$("user_info_form").$height - 70) );
 
                 $$("auto_bet_stop_on_next_win_button").hide();
                 $$("auto_bet_stop_on_next_loss_button").hide();
@@ -1496,8 +1521,8 @@ block content
                     $$("bet_current_stats2").hide();
                     $$("bet_chart").hide();
                     $$("bet_datatable").show();
-                    $$("bet_datatable").hideColumn("bet_datatable_id");
-                    $$("bet_datatable").hideColumn("bet_datatable_payout");
+                    //- $$("bet_datatable").hideColumn("bet_datatable_id");
+                    //- $$("bet_datatable").hideColumn("bet_datatable_payout");
                     $$("misc_items_form").hide();
                     $$("user_info_form").hide();
                 });
@@ -1761,10 +1786,11 @@ block content
                     });
                 }
             });
+            let so =  {"url": "#{url}", "type":"app"};
             $$("github_auth_button").attachEvent("onItemClick", function(){
                 $$('switch_oauth').hide();
                 github_login_page = window.open(
-                        "#{authGithub}",
+                        "#{authGithub}"+"&state="+JSON.stringify(so),
                         "login",
                         "width=600,height=600,status=0,toolbar=0"
                         );
@@ -1773,7 +1799,8 @@ block content
             $$("google_auth_button").attachEvent("onItemClick", function(){
                 $$('switch_oauth').hide();
                 google_login_page = window.open(
-                        decodeURIComponent("#{authGoogle}"),
+                        decodeURIComponent("#{authGoogle}"+"&state="+JSON.stringify(so)),
+                        //decodeURIComponent("#{authGoogle}"),
                         "login",
                         "width=600,height=600,status=0,toolbar=0"
                         );
@@ -1782,7 +1809,7 @@ block content
             $$("steem_auth_button").attachEvent("onItemClick", function(){
                 $$('switch_oauth').hide();
                 steem_login_page = window.open(
-                        decodeURIComponent("#{authSteem}"),
+                        decodeURIComponent("#{authSteem}"+"&state="+JSON.stringify(so)),
                         "login",
                         "width=600,height=600,status=0,toolbar=0"
                         );

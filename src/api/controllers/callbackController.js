@@ -34,6 +34,7 @@ exports.user = async function(req, res) {
 exports.cb = async function(req, res) {
     try{
         let code = req.query.code;
+        let ref = req.query.ref;
         let route = req.params.oauth
         if(oauths.indexOf(route) == -1) {
             return res.status(500).json({resCode:500, err:'error'});
@@ -41,6 +42,7 @@ exports.cb = async function(req, res) {
         let method = 'POST';
         let body = {};
         body.code = code;
+        body.ref = ref;
         let user = await _send(route, method, body);
         req.session.user = user.user;
         req.session.sid = user.sid;
