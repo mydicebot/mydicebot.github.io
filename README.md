@@ -37,7 +37,7 @@
 
 # Download
 ![](screenshot/download-qr-code.png)
-* Binaries: [https://github.com/mydicebot/mydicebot.github.io/releases](https://github.com/mydicebot/mydicebot.github.io/releases)
+* Binaries: [https://mydicebot.com/contents/download/](https://mydicebot.com/contents/download/)
 * Source Code: [https://github.com/mydicebot/mydicebot.github.io](https://github.com/mydicebot/mydicebot.github.io)
 
 # Supporting Dice Sites (alphabet sequence)
