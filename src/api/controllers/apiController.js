@@ -50,16 +50,16 @@ exports.login = async function(req, res) {
             let dice = Factory.create(req.body.site);
             let ret = await dice.login(req.body.username, req.body.password, req.body.twofa, req.body.apikey, req);
             if(ret != true){
-                res.render('login', {message:ret,site:req.params.site,skin:req.session.skin});
+                res.render('login', {title: 'My Dice Bot',message:ret,site:req.params.site,skin:req.session.skin});
             } else {
-                res.redirect(req.protocol+"://"+req.headers.host+'/'+req.body.site+'/info');
+                res.redirect(req.protocol+"://"+req.headers.host+"/"+req.body.site+"/info");
             }
         } else {
-            res.render('login',{site:req.params.site,skin:req.session.skin});
+            res.render('login',{title: 'My Dice Bot',site:req.params.site,skin:req.session.skin});
         }
     } catch(err) {
         console.log(err);
-        res.render('login', {message:err.toString(),site:req.params.site,skin:req.session.skin});
+        res.render('login', {title: 'My Dice Bot',message:err.toString(),site:req.params.site,skin:req.session.skin});
     }
 };
 
@@ -75,6 +75,7 @@ exports.info = async function(req, res) {
         ret.authSteem = encodeURIComponent(config.mydice.oauth.steem.url);
         ret.skin = req.session.skin;
         ret.codeSkin = 'default';
+        ret.title = 'My Dice Bot';
         ret.url = config.mydice.url;
         if(req.session.skin == 'Contrast') {
             ret.codeSkin = 'night';
@@ -128,6 +129,9 @@ exports.keecheck = async function(req, res) {
             //filePath = path.resolve('/tmp/keepass/'+keepassfile+'.kdbx');
             filePath = path.resolve(path.join(__dirname, '../../keepass/'+keepassfile+'.kdbx'));
         }
+        if(process.env.electron) {
+            filePath = path.resolve(path.join(config.mydice.path, '/keepass/'+keepassfile+'.kdbx'));
+        }
         if (fs.existsSync(filePath)) {
             return res.status(200).json(true);
         } else {
@@ -145,6 +149,9 @@ exports.keeload = async function(req, res) {
         if(isMobile(req)) {
             //filePath = path.resolve('/tmp/keepass/'+req.body.keepassfile+'.kdbx');
             filePath = path.resolve(path.join(__dirname, '../../keepass/'+req.body.keepassfile+'.kdbx'));
+        }
+        if(process.env.electron) {
+            filePath = path.resolve(path.join(config.mydice.path, '/keepass/'+req.body.keepassfile+'.kdbx'));
         }
         let cred = new kdbxweb.Credentials(kdbxweb.ProtectedValue.fromString(req.body.keepassword));
         let data  = await fs.readFileSync(filePath);
@@ -179,6 +186,9 @@ exports.keereg = async function(req, res) {
             //filePath = path.resolve('/tmp/keepass/'+req.body.keepassfile+'.kdbx');
             filePath = path.resolve(path.join(__dirname, '../../keepass/'+req.body.keepassfile+'.kdbx'));
         }
+        if(process.env.electron) {
+            filePath = path.resolve(path.join(config.mydice.path, '/keepass/'+req.body.keepassfile+'.kdbx'));
+        }
         let cred = new kdbxweb.Credentials(kdbxweb.ProtectedValue.fromString(req.body.keepassword));
         let db = kdbxweb.Kdbx.create(cred, 'mydicebot');
         //let subGroup = db.createGroup(db.getDefaultGroup(), 'mydicebot');
@@ -198,6 +208,9 @@ exports.keesave = async function(req, res) {
         if(isMobile(req)) {
             //filePath = path.resolve('/tmp/keepass/'+req.body.keepassfile+'.kdbx');
             filePath = path.resolve(path.join(__dirname, '../../keepass/'+req.query.keepassfile+'.kdbx'));
+        }
+        if(process.env.electron) {
+            filePath = path.resolve(path.join(config.mydice.path, '/keepass/'+req.query.keepassfile+'.kdbx'));
         }
         let cred = new kdbxweb.Credentials(kdbxweb.ProtectedValue.fromString(req.query.keepassword));
         let db = kdbxweb.Kdbx.create(cred, 'mydicebot');
@@ -239,6 +252,9 @@ exports.keefiles = async function(req, res) {
             //filePath = path.resolve('/tmp/keepass/');
             filePath = path.resolve(path.join(__dirname, '../../keepass/'));
         }
+        if(process.env.electron) {
+            filePath = path.resolve(path.join(config.mydice.path, '/keepass/'));
+        }
         let paths = await getFiles(filePath, 'kdbx');
         return res.status(200).json(paths);
     } catch(err) {
@@ -259,6 +275,9 @@ exports.save = async function(req, res) {
             //filePath = path.resolve('/tmp/script/lua/'+fileName);
             filePath = path.resolve(path.join(__dirname, '../../script/'+ext+'/'+fileName));
         }
+        if(process.env.electron) {
+            filePath = path.resolve(path.join(config.mydice.path, '/script/'+ext+'/'+fileName));
+        }
         let str  = await writeFile(filePath, content);
         return res.status(200).json(str);
     } catch(err) {
@@ -277,6 +296,9 @@ exports.file = async function(req, res) {
             //filePath = path.resolve('/tmp/script/lua/'+req.query.file);
             filePath = path.resolve(path.join(__dirname, '../../script/'+ext+'/'+req.query.file));
         }
+        if(process.env.electron) {
+            filePath = path.resolve(path.join(config.mydice.path, '/script/'+ext+'/'+req.query.file));
+        }
         let content  = await readFile(filePath);
         return res.status(200).json(content);
     } catch(err) {
@@ -293,6 +315,9 @@ exports.script = async function(req, res) {
         if(isMobile(req)) {
             //filePath = path.resolve('/tmp/script/lua/');
             filePath = path.resolve(path.join(__dirname, '../../script/'+ext+'/'));
+        }
+        if(process.env.electron) {
+            filePath = path.resolve(path.join(config.mydice.path, '/script/'+ext+'/'));
         }
         let paths = await getFiles(filePath, ext);
         return res.status(200).json(paths);
@@ -311,6 +336,9 @@ exports.del = async function(req, res) {
         if(isMobile(req)) {
             //filePath = path.resolve('/tmp/script/lua/'+req.query.file);
             filePath = path.resolve(path.join(__dirname, '../../script/'+ext+'/'+req.query.file));
+        }
+        if(process.env.electron) {
+            filePath = path.resolve(path.join(config.mydice.path, '/script/'+ext+'/'+req.query.file));
         }
         fs.unlinkSync(filePath);
         return res.status(200).json('ok');
@@ -331,6 +359,9 @@ exports.upload = async function(req, res) {
             if(isMobile(req)) {
                 //filePath = path.resolve('/tmp/script/lua/'+files.upload.name);
                 filePath = path.resolve(path.join(__dirname, '../../script/'+ext+'/'+files.upload.name));
+            }
+            if(process.env.electron) {
+                filePath = path.resolve(path.join(config.mydice.path, '/script/'+ext+'/'+files.upload.name));
             }
             fs.writeFileSync(filePath, fs.readFileSync(files.upload.path));
             return res.status(200).json('ok');
