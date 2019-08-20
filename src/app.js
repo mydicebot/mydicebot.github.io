@@ -6,10 +6,7 @@ import bodyParser from 'body-parser';
 import session from 'express-session';
 import {createServer} from 'http';
 import routes from './api/routes/api';
-import commandExists from 'command-exists'
 import config from 'config'
-import execa from 'execa'
-import opn from 'opn'
 
 let params = process.argv;
 let port = 57432;
@@ -20,31 +17,6 @@ if(portIndex != -1) {
         port = params.slice(portIndex+1,portIndex+2)[0];
     }
 }
-let browser = [];
-let browserIndex = params.indexOf('-browser');
-if(browserIndex != -1) {
-    let reg = /^--[a-zA-Z0-9]+/;
-    if(params.slice(browserIndex+1,browserIndex+2)[0] == 'chrome'){
-        if (['darwin'].includes(process.platform)) {
-            browser.push('Google Chrome');
-        } else if (['win32'].includes(process.platform)) {
-            browser.push('chrome');
-        } else {
-            browser.push('google-chrome');
-        }
-    } else {
-        browser.push(params.slice(browserIndex+1,browserIndex+2)[0]);
-    }
-    if(reg.test(params.slice(browserIndex+2,browserIndex+3)[0])){
-        browser.push(params.slice(browserIndex+2,browserIndex+3)[0]);
-    }
-    console.log(browser);
-}
-let consoleIndex = params.indexOf('-console');
-if(consoleIndex != -1) {
-    console.log("console bet");
-}
-
 let app = express();
 app.set('port', port);
 let server = createServer(app);
@@ -88,24 +60,4 @@ if(process.env.NODE_ENV == 'production' && typeof config.mydice =='undefined') {
     config.mydice.oauth.steem.url = 'https://app.steemconnect.com/oauth2/authorize?client_id=mydicebot&redirect_uri=https://auth.mydicebot.com/steem/cb&scope=login&response_type=code';
 }
 
-console.log('pkg:',config.mydice.pkg);
 config.mydice.url = 'http://localhost:'+port;
-if (config.mydice.pkg) {
-    let url = 'http://localhost:'+port+'/login';
-    if (['win32', 'darwin'].includes(process.platform)) {
-        opn(url, {
-            wait: false,
-            app:browser
-        })
-    } else {
-        try {
-            const xdgOpenExists = commandExists('xdg-open')
-            if (!xdgOpenExists) {
-                throw new Error('xdg-open does not exist')
-            }
-            execa('xdg-open', [url])
-        } catch (_) {
-            log(`Unable to open your browser automatically. Please open the following URI in your browser:\n\n${oAuthURL}\n\n`)
-        }
-    }
-}

@@ -190,9 +190,7 @@ block content
                     }
                 ]
             };
-            var bet_datatable;
-            if(!webix.env.mobile) {
-                bet_datatable = {
+            var bet_datatable = {
                     id: "bet_datatable",
                     view: "datatable",
                     columns: [
@@ -204,20 +202,7 @@ block content
                         {id: "bet_datatable_profit", header: ["PROFIT",{content:"textFilter"}], fillspace:true,sort:"int"}
                     ]
                 };
-            } else {
-                bet_datatable = {
-                    id: "bet_datatable",
-                    view: "datatable",
-                    columns: [
-                        {id: "bet_datatable_id", header: ["ID"], fillspace:true},
-                        {id: "bet_datatable_bet_chance", header: ["GAME"], fillspace:true},
-                        {id: "bet_datatable_actual_chance", header: ["ROLL"], fillspace:true},
-                        {id: "bet_datatable_amount", header: ["AMOUNT"], fillspace:true},
-                        {id: "bet_datatable_payout", header: ["PAYOUT"], fillspace:true},
-                        {id: "bet_datatable_profit", header: ["PROFIT",], fillspace:true}
-                    ]
-                };
-            }
+
             var bet_config_tabview = {
                 id: "bet_config_tabview",
                 view: "tabview",

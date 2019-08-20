@@ -17,8 +17,10 @@ import {DuckDice} from '../models/duckdice';
 import {FreeBitco} from '../models/freebitco';
 import {WinDice} from '../models/windice';
 import {Factory} from '../models/factory';
+import config from 'config';
 import fs from 'fs';
 import path from 'path';
+import fse from 'fs-extra';
 
 module.exports = function(app) {
   app.get('/', [checkSkin], api.index);
@@ -89,22 +91,43 @@ function checkScript(req, res, next) {
     if(isMobile(req)) {
         filePath = path.resolve(path.join(__dirname, '../../script/lua/'));
     }
+    if(process.env.electron) {
+        filePath = path.resolve(path.join(config.mydice.path, '/script/lua/'));
+    }
     mkdir(filePath);
     filePath = path.resolve(path.join(process.execPath, '../script/js/'));
     if(isMobile(req)) {
         filePath = path.resolve(path.join(__dirname, '../../script/js/'));
+    }
+    if(process.env.electron) {
+        filePath = path.resolve(path.join(config.mydice.path, '/script/js/'));
     }
     mkdir(filePath);
     filePath = path.resolve(path.join(process.execPath, '../script/py/'));
     if(isMobile(req)) {
         filePath = path.resolve(path.join(__dirname, '../../script/py/'));
     }
+    if(process.env.electron) {
+        filePath = path.resolve(path.join(config.mydice.path, '/script/py/'));
+    }
     mkdir(filePath);
     filePath = path.resolve(path.join(process.execPath, '../keepass/'));
     if(isMobile(req)) {
         filePath = path.resolve(path.join(__dirname, '../../keepass/'));
     }
+    if(process.env.electron) {
+        filePath = path.resolve(path.join(config.mydice.path, '/keepass/'));
+    }
     mkdir(filePath);
+    if(process.env.electron) {
+      try {
+        fse.copySync(path.resolve(path.join(process.execPath, '../script/py/')),path.resolve(path.join(config.mydice.path, '/script/py/')),{ overwrite: false });
+        fse.copySync(path.resolve(path.join(process.execPath, '../script/js/')),path.resolve(path.join(config.mydice.path, '/script/js/')),{ overwrite: false });
+        fse.copySync(path.resolve(path.join(process.execPath, '../script/lua/')),path.resolve(path.join(config.mydice.path, '/script/lua/')),{ overwrite: false });
+      } catch (err) {
+        console.error(err)
+      }
+    }
     next();
 }
 
