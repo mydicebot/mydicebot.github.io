@@ -118,20 +118,20 @@ export class WinDice extends BaseDice {
         betInfo.target = ret.chance;
         betInfo.roll = parseFloat(ret.result/100).toFixed(2);
         betInfo.amount = amount.toFixed(8);
-        betInfo.payout = parseFloat(ret.payout/100000000).toFixed(8);
+        betInfo.payout = parseFloat(ret.payout/10000000).toFixed(11);
         info.info.bets++;
         info.currentInfo.bets++;
+        betInfo.profit = parseFloat(ret.win-ret.bet).toFixed(8);
         if(ret.win >0){
             betInfo.win = true;
-            betInfo.profit = parseFloat(ret.bet).toFixed(8);
             info.info.wins++;
             info.currentInfo.wins++;
         } else {
             betInfo.win = false;
-            betInfo.profit = parseFloat(-ret.bet).toFixed(8);
             info.info.losses++;
             info.currentInfo.losses++;
         }
+        console.log(betInfo);
         info.info.profit = (parseFloat(info.info.profit) + parseFloat(betInfo.profit)).toFixed(8);
         info.info.balance = (parseFloat(info.info.balance) + parseFloat(betInfo.profit)).toFixed(8);
         info.currentInfo.balance = (parseFloat(info.currentInfo.balance) + parseFloat(betInfo.profit)).toFixed(8);
