@@ -1,11 +1,11 @@
 'use strict';
 
-import {BaseDice} from './base'
-import fetch from 'isomorphic-fetch';
-import FormData from 'form-data';
-import {APIError} from '../errors/APIError'
+var BaseDice = require('./base');
+var fetch = require('isomorphic-fetch');
+var FormData = require('form-data');
+var APIError = require('../errors/APIError');
 
-export class DuckDice extends BaseDice {
+module.exports = class DuckDice extends BaseDice {
     constructor(){
         super();
         this.url = 'https://duckdice.io';
@@ -119,6 +119,19 @@ export class DuckDice extends BaseDice {
         return returnInfo;
     }
 
+    async resetseed(req) {
+        let data = {};
+        let accessToken = req.session.accessToken;
+        data.clientSeed = Math.random().toString(36).substring(2);
+        let ret = await this._send('randomize?api_key='+ accessToken, 'POST',data,'');
+        console.log(ret);
+        let info = {};
+        info.previous_seed = ret.new.clientSeed;
+        info.current_seed = ret.current.clientSeed;
+        info.success = true;
+        return info;
+    }
+
     async _send(route, method, body, accessToken){
         let url = `${this.url}/api/${route}${this.benefit}`;
         let res  = null;
@@ -149,3 +162,4 @@ export class DuckDice extends BaseDice {
         return data;
     }
 }
+exports.DuckDice

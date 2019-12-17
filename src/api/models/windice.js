@@ -1,12 +1,10 @@
 'use strict';
 
-import {BaseDice} from './base'
-import fetch from 'isomorphic-fetch';
-import FormData from 'form-data';
-import {APIError} from '../errors/APIError';
-import querystring from 'querystring';
+var BaseDice = require('./base');
+var fetch = require('isomorphic-fetch');
+var APIError = require('../errors/APIError');
 
-export class WinDice extends BaseDice {
+module.exports = class WinDice extends BaseDice {
     constructor(){
         super();
         this.url = 'https://windice.io/';
@@ -146,6 +144,21 @@ export class WinDice extends BaseDice {
         return returnInfo;
     }
 
+    async resetseed(req) {
+        let data = {};
+        let accessToken = req.session.accessToken;
+        data.value = Math.random().toString(12).substring(2);
+        //let ret = await this._send('randomize?api_key='+ accessToken, 'POST',data,'');
+        let ret = await this._send('/api/v1/api/seed', 'POST', data, accessToken);
+        console.log(ret);
+        let info = {};
+        info.current_client = ret.client;
+        info.hash = ret.hash;
+        info.new_hash = ret.newHash;
+        info.success = true;
+        return info;
+    }
+
     async _send(route, method, body, accessToken){
         let url = `${this.url}/${route}`;
         let res = await fetch(url, {
@@ -167,3 +180,4 @@ export class WinDice extends BaseDice {
         return ret;
     }
 }
+exports.WinDice

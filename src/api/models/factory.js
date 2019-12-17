@@ -1,17 +1,17 @@
 'use strict';
 
-import {BaseDice} from './base'
+var BaseDice = require('./base');
 
-export const Factory = {
+module.exports = {
     instances: new Map(),
     register(clazzname, clazz) {
-        if (!(Factory.instances.has(clazzname) &&
+        if (!(this.instances.has(clazzname) &&
             clazz instanceof BaseDice)) {
-            Factory.instances.set(clazzname, clazz);
+            this.instances.set(clazzname, clazz);
         }
     },
     create(clazzname) {
-        if (!Factory.instances.has(clazzname)) {
+        if (!this.instances.has(clazzname)) {
             console.error("class error!");
             return null;
         }

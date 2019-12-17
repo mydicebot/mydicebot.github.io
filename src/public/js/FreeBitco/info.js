@@ -4,6 +4,8 @@ function init() {
         {id:1,value:"BTC"},
     ]);
     $$("bet_currency_selection").refresh();
+    $$("manual_resetseed_button").hide();
+    $$("auto_resetseed_button").hide();
 }
 
 function checkParams(p,ch){

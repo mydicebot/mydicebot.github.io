@@ -1,11 +1,11 @@
 'use strict';
 
-import {BaseDice} from './base'
-import fetch from 'isomorphic-fetch';
-import FormData from 'form-data';
-import {APIError} from '../errors/APIError'
+var BaseDice = require('./base');
+var fetch = require('isomorphic-fetch');
+var FormData = require('form-data');
+var APIError = require('../errors/APIError');
 
-export class NineDice extends BaseDice {
+module.exports = class NineDice extends BaseDice {
     constructor(){
         super();
         this.url = 'https://www.999dice.com';
@@ -27,9 +27,9 @@ export class NineDice extends BaseDice {
         if(ret.error) {
             return ret.error;
         }
-        if(!ret.ClientSeed) {
-            return 'Login Invalid, Please enter the correct information!';
-        }
+        //if(!ret.ClientSeed) {
+        //    return 'Login Invalid, Please enter the correct information!';
+        //}
 
         req.session.clientSeed = ret.ClientSeed;
         req.session.accessToken = ret.SessionCookie;
@@ -142,3 +142,4 @@ export class NineDice extends BaseDice {
         }
     }
 }
+exports.NineDice

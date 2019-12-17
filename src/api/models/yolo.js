@@ -1,14 +1,11 @@
 'use strict';
 
-import {BaseDice} from './base'
-import fetch from 'isomorphic-fetch';
-import FormData from 'form-data';
-import tls from 'tls';
-import bitcore from 'bitcore-lib';
-import Message from 'bitcore-message';
-import {APIError} from '../errors/APIError'
+var BaseDice = require('./base');
+var tls = require('tls');
+var bitcore = require('bitcore-lib');
+var Message = require('bitcore-message');
 
-export class YoloDice extends BaseDice {
+module.exports = class YoloDice extends BaseDice {
     constructor(){
         super();
         this.host = 'api.yolodice.com';
@@ -191,9 +188,30 @@ export class YoloDice extends BaseDice {
         return info;
     }
 
+    async resetseed(req) {
+        await this.connect(req.session.apiKey);
+        let seed = Math.random().toString(32).substring(2);
+        let options = {
+            id:this.id++,
+            method: 'create_seed',
+            attrs:{
+                client_seed: seed,
+            }
+        }
+
+        let ret = await this._send(options);
+        let info = JSON.parse(ret).result;
+        console.log(info);
+        //info.seed = ret.rotateServerSeed.seed;
+        //info.seedHash = ret.rotateServerSeed.seedHash;
+        info.success = true;
+        return info;
+    }
+
     async _send(options){
         return new Promise(async (resolve, reject) => {
             let basestring = JSON.stringify(options)+'\n';
+            console.log(basestring);
             this.client.write(basestring);
             this.client.on("data", function(data) {
                 resolve(Buffer.from(data,'hex').toString('utf8'));
@@ -201,3 +219,4 @@ export class YoloDice extends BaseDice {
         });
     }
 }
+exports.YoloDice

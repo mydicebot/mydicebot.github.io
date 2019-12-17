@@ -1,11 +1,11 @@
 'use strict';
 
-import {BaseDice} from './base'
-import FormData from 'form-data';
-import {APIError} from '../errors/APIError'
-import { request, GraphQLClient } from 'graphql-request'
+var BaseDice = require('./base');
+var APIError = require('../errors/APIError');
+var request = require('graphql-request').request;
+var GraphQLClient = require('graphql-request').GraphQLClient;
 
-export class StakeDice extends BaseDice {
+module.exports = class StakeDice extends BaseDice {
     constructor(){
         super();
         this.url = 'https://api.stake.com/graphql';
@@ -155,6 +155,18 @@ export class StakeDice extends BaseDice {
         return returnInfo;
     }
 
+    async resetseed(req) {
+        let clientSeed = Math.random().toString(36).substring(2);
+        let data = "mutation{rotateServerSeed{ seed seedHash nonce } changeClientSeed(seed:\"" + clientSeed + "\"){seed}}"
+        let ret = await this._send('', 'POST', data, req.session.accessToken);
+        console.log(ret);
+        let info = {};
+        info.seed = ret.rotateServerSeed.seed;
+        info.seedHash = ret.rotateServerSeed.seedHash;
+        info.success = true;
+        return info;
+    }
+
     async _send(route, method, body, accessToken){
         let endpoint =`${this.url}`;
 
@@ -179,3 +191,4 @@ export class StakeDice extends BaseDice {
         }
     }
 }
+exports.StakeDice

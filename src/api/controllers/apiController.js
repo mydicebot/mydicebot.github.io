@@ -1,12 +1,11 @@
 'use strict';
 
-import {Factory} from '../models/factory'
-import {APIError} from '../errors/APIError';
-import formidable from 'formidable';
-import kdbxweb from 'kdbxweb';
-import config from 'config';
-import fs from 'fs';
-import path from 'path';
+var Factory = require('../models/factory');
+var formidable = require('formidable');
+var kdbxweb = require('kdbxweb');
+var config = require('config');
+var fs = require('fs');
+var path = require('path');
 
 let registerUrls = {
     "999Dice":"https://www.999dice.com/?224280708",
@@ -19,7 +18,6 @@ let registerUrls = {
     "DuckDice":"https://duckdice.com/ab61534783",
     "Freebitco.in":"https://freebitco.in/?r=16392656",
     "KingDice":"https://kingdice.com/#/welcome?aff=18072",
-    "MagicDice": "https://magic-dice.com/?ref=mydicebot",
     "MegaDice":"https://www.megadice.com/?a=326492144",
     "NitroDice":"https://www.nitrodice.com?ref=0N2pG8rkL7UR6oMzZWEj",
     "NitrogenSports":"https://nitrogensports.eu/r/4998127",
@@ -69,10 +67,6 @@ exports.info = async function(req, res) {
         let retUser = await dice.getUserInfo(req);
         let ret = {};
         ret.site = '../js/'+req.params.site+'/info.js';
-        ret.chatUrl = config.mydice.chat.url;
-        ret.authGoogle = encodeURIComponent(config.mydice.oauth.google.url);
-        ret.authGithub = config.mydice.oauth.github.url;
-        ret.authSteem = encodeURIComponent(config.mydice.oauth.steem.url);
         ret.skin = req.session.skin;
         ret.codeSkin = 'default';
         ret.title = 'My Dice Bot';
@@ -96,6 +90,17 @@ exports.bet = async function(req, res) {
     } catch(err) {
         console.log(err);
         return res.status(200).json({err: err.toString()});
+    }
+};
+
+exports.resetseed = async function(req, res) {
+    try{
+        let dice = Factory.create(req.params.site);
+        let ret = await dice.resetseed(req);
+        return res.status(200).json(ret);
+    } catch(err) {
+        console.log(err);
+        return res.status(500).json({err: err.toString()});
     }
 };
 
@@ -348,12 +353,33 @@ exports.del = async function(req, res) {
     }
 };
 
+exports.sound = async function(req, res) {
+  try{
+    let filePath = path.resolve(path.join(process.execPath, '../sound/')+req.query.file);
+    if(isMobile(req)) {
+      filePath = path.resolve(path.join(__dirname, '../../sound/'+req.query.file));
+    }
+    if(process.env.electron) {
+      filePath = path.resolve(path.join(config.mydice.path, '/sound/'+req.query.file));
+    }
+    if(!fs.existsSync(filePath)){
+      return res.status(500).send({err: 'Music file does not exist'});
+    }
+    res.setHeader("content-type", "audio/mpeg");
+    let readStream = fs.createReadStream(filePath);
+    readStream.pipe(res);
+    //fs.createReadStream(filePath).pipe(res);
+  } catch(err) {
+    console.log(err);
+    return res.status(500).send({err: err.toString()});
+  }
+}
 exports.upload = async function(req, res) {
     try{
         let form = new formidable.IncomingForm();
-        let index= files.upload.name.lastIndexOf(".");
-        let ext = files.upload.name.substr(index+1);
         form.parse(req, function(error, fields, files) {
+            let index= files.upload.name.lastIndexOf(".");
+            let ext = files.upload.name.substr(index+1);
             //let filePath = path.resolve(path.join(__dirname, '../../script/lua/')+files.upload.name);
             let filePath = path.resolve(path.join(process.execPath, '../script/'+ext+'/')+files.upload.name);
             if(isMobile(req)) {

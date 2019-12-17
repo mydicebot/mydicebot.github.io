@@ -1,10 +1,11 @@
 'use strict';
 
-import {BaseDice} from './base'
-import FormData from 'form-data';
-import {APIError} from '../errors/APIError'
+var BaseDice = require('./base');
+var fetch = require('isomorphic-fetch');
+var FormData = require('form-data');
+var APIError = require('../errors/APIError');
 
-export class CryptoDice extends BaseDice {
+module.exports = class CryptoDice extends BaseDice {
     constructor(){
         super();
         this.url = 'https://api.crypto-games.net';
@@ -148,3 +149,4 @@ export class CryptoDice extends BaseDice {
         return data;
     }
 }
+exports.CryptoDice

@@ -1,13 +1,9 @@
 'use strict';
 
-import {BaseDice} from './base'
-import FormData from 'form-data';
-import {APIError} from '../errors/APIError';
-import request from 'request';
-import fetch from 'isomorphic-fetch';
-import crypto from 'crypto';
+var BaseDice = require('./base');
+var crypto = require('crypto');
 
-export class Simulator extends BaseDice {
+module.exports = class Simulator extends BaseDice {
     constructor(){
         super();
         this.url = 'https://magic-dice.com';
@@ -199,3 +195,4 @@ export class Simulator extends BaseDice {
         return betInfo;
     }
 }
+exports.Simulator

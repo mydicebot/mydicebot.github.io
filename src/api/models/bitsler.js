@@ -1,11 +1,11 @@
 'use strict';
 
-import {BaseDice} from './base'
-import fetch from 'isomorphic-fetch';
-import FormData from 'form-data';
-import {APIError} from '../errors/APIError'
+var BaseDice = require('./base')
+var fetch = require('isomorphic-fetch');
+var FormData = require('form-data');
+var APIError = require('../errors/APIError');
 
-export class BitslerDice extends BaseDice {
+module.exports  = class BitslerDice extends BaseDice {
     constructor(){
         super();
         this.url = 'https://www.bitsler.com';
@@ -70,6 +70,7 @@ export class BitslerDice extends BaseDice {
         let accessToken = req.session.accessToken;
         formData.append('access_token', accessToken);
         let ret = await this._send('getuserstats', 'POST', formData,'');
+        console.log(ret);
         let info = {};
         let userinfo = {};
         userinfo.balance = eval("ret."+req.query.currency+"_balance");
@@ -88,6 +89,22 @@ export class BitslerDice extends BaseDice {
         info.currentInfo.profit = 0;
         info.currentInfo.wagered = 0;
         req.session.info = info;
+        return info;
+    }
+    
+    async resetseed(req) {
+        let formData = new FormData();
+        let accessToken = req.session.accessToken;
+        formData.append('access_token', accessToken);
+        //formData.append('seed_client', Math.sin(1).toString().substr(6));
+        formData.append('seed_client', Math.random().toString(36).substring(2));
+        let ret = await this._send('change-seeds', 'POST', formData,'');
+        console.log(ret);
+        let info = {};
+        info.previous_seed = ret.previous_seed;
+        info.previous_client = ret.previous_client;
+        info.current_client = ret.current_client;
+        info.success = ret.success;
         return info;
     }
 
@@ -118,12 +135,12 @@ export class BitslerDice extends BaseDice {
         betInfo.condition = req.body.High == "true"?'>':'<';
         info.info.bets++;
         info.currentInfo.bets++;
-        info.info.profit = parseFloat(info.info.profit) + parseFloat(betInfo.profit);
+        info.info.profit = (parseFloat(info.info.profit) + parseFloat(betInfo.profit)).toFixed(8);
         info.info.balance = betInfo.new_balance;
         info.currentInfo.balance = betInfo.new_balance;
-        info.info.wagered = parseFloat(info.info.wagered) + parseFloat(amount);
-        info.currentInfo.wagered = parseFloat(info.currentInfo.wagered) + parseFloat(amount);
-        info.currentInfo.profit = parseFloat(info.currentInfo.profit) + parseFloat(betInfo.profit);
+        info.info.wagered = (parseFloat(info.info.wagered) + parseFloat(amount)).toFixed(8);
+        info.currentInfo.wagered = (parseFloat(info.currentInfo.wagered) + parseFloat(amount)).toFixed(8);
+        info.currentInfo.profit = (parseFloat(info.currentInfo.profit) + parseFloat(betInfo.profit)).toFixed(8);
         betInfo.payout = parseFloat(betInfo.amount)+parseFloat(betInfo.profit);
         if(betInfo.profit>0){
             betInfo.win = true;

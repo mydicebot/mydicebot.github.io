@@ -10,6 +10,8 @@ function init() {
     $$("manual_bet_chance").setValue(49);
     $$("auto_bet_base_chance").setValue(49);
     $$("bet_currency_selection").refresh();
+    $$("manual_resetseed_button").hide();
+    $$("auto_resetseed_button").hide();
 }
 
 function checkParams(p,ch){

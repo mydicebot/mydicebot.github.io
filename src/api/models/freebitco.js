@@ -1,12 +1,12 @@
 'use strict';
 
-import {BaseDice} from './base'
-import fetch from 'isomorphic-fetch';
-import FormData from 'form-data';
-import {APIError} from '../errors/APIError';
-import querystring from 'querystring';
+var BaseDice = require('./base');
+var fetch = require('isomorphic-fetch');
+var FormData = require('form-data');
+var APIError = require('../errors/APIError');
+var querystring = require('querystring');
 
-export class FreeBitco extends BaseDice {
+module.exports = class FreeBitco extends BaseDice {
     constructor(){
         super();
         this.url = 'https://freebitco.in';
@@ -224,3 +224,4 @@ export class FreeBitco extends BaseDice {
         return Math.random() * (high - low) + low
     }
 }
+exports.FreeBitco

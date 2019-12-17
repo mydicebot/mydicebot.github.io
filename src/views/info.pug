@@ -1,32 +1,20 @@
 extends layout
 
 block content
-    script(src=chatUrl+'socket.io/socket.io.js')
-    script(type="application/lua").
-        print("hello bot!")
     script.
-            let mobiles = ['bet_total_stats', 'bet_current_stats', 'bet_current_stats2', 'bet_datatable', 'misc_items_form', 'user_info_form'];
-            let stopOnWin = false, stopOnLoss = false, iswin = false;
-            let minBetAmount = 0.00000001, currencyValue = 0, betAmount = 0;
-            let count = 1, errCount = 1;
-            let intervalID, buttonStatus;
-            let format = webix.Date.dateToStr("%H:%i:%s");
-            let nums = 0, currency = 'btc', base = 0, isloop = false, currentLanguage = 'lua';
-            let autoLossRadio, autoWinRadio;
-            let code;
-            let basebet = 0, nextbet = 0, chance = 0, bethigh = false;
-            let previousbet = 0, win = false, currentprofit = 0, balance = 0, bets = 0, wins = 0, losses = 0, profit = 0, currentstreak = 0, currentroll = 0 ;
-            let humps = ['baseBet', 'nextBet', 'betHigh', 'previousBet', 'currentProfit', 'currentStreak','currentRoll'];
-            let maxwinstreak = 0, maxlossstreak = 0, maxwinstreakamount = 0, maxlossstreakamount = 0, maxstreakamount = 0, minstreakamount = 0 ;
-            var dataProxy = webix.proxy("socketio", "/comments", {
-              client: io('#{chatUrl}',{transports: ['websocket']}),
-              clientId: webix.uid(),
-              hUrl:'#{chatUrl}messages',
-              load:function(view){
-                view = view.queryView("list");
-                webix.proxy.socketio.load.call(this, view);
-              }
-            });
+            var mobiles = ['bet_total_stats', 'bet_current_stats', 'bet_current_stats2', 'bet_datatable', 'misc_items_form'];
+            var stopOnWin = false, stopOnLoss = false, iswin = false;
+            var minBetAmount = 0.00000001, currencyValue = 0, betAmount = 0;
+            var count = 1, errCount = 1, isChart = true, lastResetSeed = 0;
+            var intervalID, buttonStatus;
+            var format = webix.Date.dateToStr("%H:%i:%s");
+            var nums = 0, currency = 'btc', base = 0, isloop = false, currentLanguage = 'lua';
+            var autoLossRadio, autoWinRadio;
+            var code;
+            var basebet = 0.00000001, nextbet = 0.00000001, chance = 90, bethigh = false;
+            var previousbet = 0, win = false, currentprofit = 0, balance = 0, bets = 0, wins = 0, losses = 0, profit = 0, currentstreak = 0, currentroll = 0 ;
+            var humps = ['baseBet', 'nextBet', 'betHigh', 'previousBet', 'currentProfit', 'currentStreak','currentRoll'];
+            var maxwinstreak = 0, maxlossstreak = 0, maxwinstreakamount = 0, maxlossstreakamount = 0, maxstreakamount = 0, minstreakamount = 0 ;
             var bet_total_stats = {
                 id: "bet_total_stats",
                 view: "property",
@@ -135,22 +123,6 @@ block content
                     label: dice_site_ref_list[Math.floor(Math.random() * dice_site_ref_list.length)]
                 }]
             };
-            var user_login_logout_button = {
-                id: "user_login_logout_button",
-                view: "button",
-                height: 100,
-                type: "imageTop",
-                image:"../images/guest.png",
-                label: "click to login"
-            };
-            var user_info_stats = {
-                id: "user_info_stats",
-                view: "property",
-                elements: [
-                    {label: "UID", type: "text", id: "user_id", },
-                    {label: "NAME", type: "text", id: "user_name", },
-                ]
-            };
             var bet_chart = {
                 id: "bet_chart",
                 view: "chart",
@@ -214,15 +186,10 @@ block content
                     {
                       header: "CHAT",
                       body: {
-                        view:"comments",
+                        view:"iframe",
                         id:"chat",
                         width: 0,
-                        minHeight: 300,
-                        url:  dataProxy,
-                        save: dataProxy,
-                        //urls: 'http://localhost:18889/messages?room=1',
-                        mode:"chat",
-                        moreButton:webix.template("Load more (#value#)")
+                        minHeight: 300
                       }
                     },
                     {
@@ -278,7 +245,26 @@ block content
                                     label: "BET CHANCE",
                                     value: "49.50",
                                     labelWidth: 200,
-                                    name: "manual_bet_chance"
+                                    name: "manual_bet_chance",
+                                    on:{
+                                      onChange:function(){
+                                        $$("manual_bet_chance_slider").setValue(this.getValue());
+                                      }
+                                    }
+                                },
+                                {
+                                    id: "manual_bet_chance_slider",
+                                    view: "slider",
+                                    label: "",
+                                    value: "49.50",
+                                    labelWidth: 0,
+                                    title:webix.template("#value#"),
+                                    name: "manual_bet_chance_slider",
+                                    on:{
+                                      onChange:function(){
+                                        $$("manual_bet_chance").setValue(this.getValue());
+                                      }
+                                    }
                                 },
                                 {
                                     id: "manual_bet_low_button",
@@ -293,7 +279,14 @@ block content
                                     type: "form",
                                     label: "BET HIGH",
                                     css: "webix_primary",
-                                }
+                                },
+                                {
+                                    id: "manual_resetseed_button",
+                                    view: "button",
+                                    type: "form",
+                                    label: "RESET SEED",
+                                    css: "webix_primary"
+                                },
                             ]
                         }
                     },
@@ -391,7 +384,26 @@ block content
                                     label: "BET BASE CHANCE",
                                     value: "49.50",
                                     labelWidth: 240,
-                                    name: "auto_bet_base_chance"
+                                    name: "auto_bet_base_chance",
+                                    on:{
+                                      onChange:function(){
+                                        $$("auto_bet_base_chance_slider").setValue(this.getValue());
+                                      }
+                                    }
+                                },
+                                {
+                                    id: "auto_bet_base_chance_slider",
+                                    view: "slider",
+                                    label: "",
+                                    value: "49.50",
+                                    labelWidth: 0,
+                                    title:webix.template("#value#"),
+                                    name: "auto_bet_base_chance_slider",
+                                    on:{
+                                      onChange:function(){
+                                        $$("auto_bet_base_chance").setValue(this.getValue());
+                                      }
+                                    }
                                 },
                                 {
                                     cols:[
@@ -447,8 +459,8 @@ block content
                                     name: "auto_bet_stop_on_loss"
                                 },
                             ]
-                        },
-                        {
+                            },
+                            {
                             id: "auto_bet_form_start_stop_buttons",
                             view: "form",
                             paddingY: 1,
@@ -477,6 +489,13 @@ block content
                                     css: "webix_secondary",
                                     type: "form",
                                     label: "STOP ON NEXT LOSS"
+                                },
+                                {
+                                    id: "auto_resetseed_button",
+                                    view: "button",
+                                    css: "webix_secondary",
+                                    type: "form",
+                                    label: "RESET SEED"
                                 },
                             ]}
                         ]} 
@@ -532,7 +551,7 @@ block content
                                     name: "script_bet_strategy_list"
                                 },
                                 ]},
-                                { view:"radio", id:"script_language_radio",  name:"script_language_radio", label:"Script", value:"lua",  options:["lua", "javascript"]},
+                                { view:"radio", id:"script_language_radio",  name:"script_language_radio", label:"Script", value:"lua",  options:["lua", "js","py"]},
                                 {
                                     id: "script_bet_tabview",
                                     view: "tabview",
@@ -662,13 +681,10 @@ block content
                         {
                           header: "CHAT",
                           body: {
-                            view:"comments",
+                            view:"iframe",
                             id:"chat",
                             width: 0,
                             height: 0,
-                            //minHeight: 400,
-                            url:  dataProxy,
-                            save: dataProxy
                           }
                         },
                         {
@@ -857,7 +873,26 @@ block content
                                         label: "BET BASE CHANCE",
                                         value: "49.50",
                                         labelWidth: 240,
-                                        name: "auto_bet_base_chance"
+                                        name: "auto_bet_base_chance",
+                                        on:{
+                                          onChange:function(){
+                                            $$("auto_bet_base_chance_slider").setValue(this.getValue());
+                                          }
+                                        }
+                                    },
+                                    {
+                                        id: "auto_bet_base_chance_slider",
+                                        view: "slider",
+                                        label: "",
+                                        value: "49.50",
+                                        labelWidth: 0,
+                                        title:webix.template("#value#"),
+                                        name: "auto_bet_base_chance_slider",
+                                        on:{
+                                          onChange:function(){
+                                            $$("auto_bet_base_chance").setValue(this.getValue());
+                                          }
+                                        }
                                     },
                                     {
                                         cols:[
@@ -1009,7 +1044,7 @@ block content
                                         ]
                                     },
                                     {
-                                        view:"radio", id:"script_language_radio",  name:"script_language_radio", label:"Script", value:"lua",  options:["lua", "javascript"]
+                                        view:"radio", id:"script_language_radio",  name:"script_language_radio", label:"Script", value:"lua",  options:["lua", "js","py"]
                                     },
                                     {
                                         id: "script_bet_tabview",
@@ -1175,65 +1210,6 @@ block content
                    ]
                 }
             });
-            var github_auth_button = {
-                id: "github_auth_button",
-                view: "button",
-                width: 400,
-                height: 80,
-                type: "imageTop",
-                image:"../images/github.png",
-            };
-            var facebook_auth_button = {
-                id: "facebook_auth_button",
-                view: "button",
-                width: 400,
-                height: 80,
-                type: "imageTop",
-                image:"../images/facebook.png",
-            };
-            var google_auth_button = {
-                id: "google_auth_button",
-                view: "button",
-                width: 400,
-                height: 80,
-                type: "imageTop",
-                image:"../images/google.png",
-            };
-            var steem_auth_button = {
-                id: "steem_auth_button",
-                view: "button",
-                width: 400,
-                height: 80,
-                type: "imageTop",
-                image:"../images/steem.png",
-            };
-            var login_close_button = {
-                id: "login_close_button",
-                view: "button",
-                width: 400,
-                height: 80,
-                type: "imageTop",
-                image:"../images/close.png",
-            };
-            webix.ui({
-                id:"switch_oauth",
-                view:"window",
-                width:150,
-                height:320,
-                head:false,
-                move:true,
-                modal:true,
-                position:"center",
-                body:{
-                   view:"toolbar",
-                   rows:[
-                        github_auth_button,
-                        steem_auth_button,
-                        google_auth_button,
-                        login_close_button
-                       ]
-               }
-            });
             var misc_items = {
                 id: "misc_items_form",
                 view: "form",
@@ -1249,18 +1225,6 @@ block content
                     dice_site_ref_info,
                 ]
             };
-            var user_info = {
-                id: "user_info_form",
-                view: "form",
-                padding: 0,
-                margin: 0,
-                height: 210,
-                width: 190,
-                elements: [
-                    user_login_logout_button,
-                    user_info_stats
-                ]
-            };
             var mobile_toolbar = {
                 id:"mobile_toolbar",
                 view:"toolbar",
@@ -1268,7 +1232,6 @@ block content
                 padding: 0,
                 margin: -5,
                 rows:[
-                    { id: "mobile_toolbar_userinfo", view:"button", value:"USER", css: "webix_secondary" },
                     { id: "mobile_toolbar_total", view:"button", value:"TOTAL", css: "webix_secondary" },
                     { id: "mobile_toolbar_stats1", view:"button", value:"STATS 1", css: "webix_secondary" },
                     { id: "mobile_toolbar_stats2", view:"button", value:"STATS 2", css: "webix_secondary" },
@@ -1291,8 +1254,6 @@ block content
                                 bet_current_stats2,
                                 {view:"resizer"},
                                 misc_items,
-                                {view:"resizer"},
-                                user_info,
                             ]
                         },
                         {view:"resizer"},
@@ -1318,8 +1279,7 @@ block content
                                 bet_current_stats2,
                                 bet_chart,
                                 bet_datatable,
-                                misc_items, 
-                                user_info,
+                                misc_items,
                                 mobile_toolbar,
                             ]
                         },       
@@ -1336,10 +1296,8 @@ block content
                 $$("bet_current_stats2").hide();
                 $$("bet_current_stats2").define("height", 210);
 
-                $$("misc_items_form").hide();
-                $$("user_info_form").show();
-                //$$("user_info_form").define("height", 0);
-                $$("user_info_form").define("width", 0);
+                //$$("misc_items_form").hide();
+                $$("misc_items_form").show();
 
                 $$("bet_chart").hide();
                 $$("bet_chart").define("height", 210);
@@ -1349,8 +1307,8 @@ block content
 
                 //- $$("bet_config_tabview").define("height", 380);
                 $$("bet_config_tabview").define("width", 0);
-                $$("bet_config_tabview").define("height",(window.screen.availHeight - $$("user_info_form").$height - 35) );
-                $$("manual_bet_form").define("height",(window.screen.availHeight - $$("user_info_form").$height - 70) );
+                $$("bet_config_tabview").define("height",(window.screen.availHeight - $$("misc_items_form").$height - 35) );
+                $$("manual_bet_form").define("height",(window.screen.availHeight - $$("misc_items_form").$height - 70) );
 
                 $$("auto_bet_stop_on_next_win_button").hide();
                 $$("auto_bet_stop_on_next_loss_button").hide();
@@ -1455,15 +1413,6 @@ block content
                     layout.show();
                 });
 
-                $$("mobile_toolbar_userinfo").attachEvent("onItemClick", function(){
-                    $$("user_info_form").show();
-                    $$("bet_total_stats").hide();
-                    $$("bet_current_stats").hide();
-                    $$("bet_current_stats2").hide();
-                    $$("bet_chart").hide();
-                    $$("bet_datatable").hide();
-                    $$("misc_items_form").hide();
-                });
                 $$("mobile_toolbar_total").attachEvent("onItemClick", function(){
                     $$("bet_total_stats").show();
                     $$("bet_current_stats").hide();
@@ -1471,7 +1420,6 @@ block content
                     $$("bet_chart").hide();
                     $$("bet_datatable").hide();
                     $$("misc_items_form").hide();
-                    $$("user_info_form").hide();
                 });
                 $$("mobile_toolbar_stats1").attachEvent("onItemClick", function(){
                     $$("bet_total_stats").hide();
@@ -1480,7 +1428,6 @@ block content
                     $$("bet_chart").hide();
                     $$("bet_datatable").hide();
                     $$("misc_items_form").hide();
-                    $$("user_info_form").hide();
                 });
                 $$("mobile_toolbar_stats2").attachEvent("onItemClick", function(){
                     $$("bet_total_stats").hide();
@@ -1489,7 +1436,6 @@ block content
                     $$("bet_chart").hide();
                     $$("bet_datatable").hide();
                     $$("misc_items_form").hide();
-                    $$("user_info_form").hide();
                 });
                 $$("mobile_toolbar_chart").attachEvent("onItemClick", function(){
                     $$("bet_total_stats").hide();
@@ -1498,7 +1444,6 @@ block content
                     $$("bet_chart").show();
                     $$("bet_datatable").hide();
                     $$("misc_items_form").hide();
-                    $$("user_info_form").hide();
                 });
                 $$("mobile_toolbar_history").attachEvent("onItemClick", function(){
                     $$("bet_total_stats").hide();
@@ -1509,7 +1454,6 @@ block content
                     //- $$("bet_datatable").hideColumn("bet_datatable_id");
                     //- $$("bet_datatable").hideColumn("bet_datatable_payout");
                     $$("misc_items_form").hide();
-                    $$("user_info_form").hide();
                 });
                 $$("mobile_toolbar_setting").attachEvent("onItemClick", function(){
                     $$("bet_total_stats").hide();
@@ -1518,7 +1462,6 @@ block content
                     $$("bet_chart").hide();
                     $$("bet_datatable").hide();
                     $$("misc_items_form").show();
-                    $$("user_info_form").hide();
                 });
             }
             webix.extend($$("bet_chart"), webix.ProgressBar);
@@ -1532,12 +1475,18 @@ block content
                 if(buttonStatus == 'STOP') {
                     isloop = false;
                     $$("script_bet_start_stop_button").setValue('START');
+                    if (currentLanguage == 'py') {
+                        document.getElementById("python_stop_button").click();
+                    }
                 } else {
                     currencyValue = $$("bet_currency_selection").getValue() -1;
-                    bethigh = false;
-                    if(currentLanguage == 'lua') fengari.load('bethigh= false')();
+                    //bethigh = false;
+                    //if(currentLanguage == 'lua') fengari.load('bethigh= false')();
                     initScriptBalance(currencyValue, function(){
-                        code = $$("script_bet_coding_board").getValue().toLowerCase();
+                        code = $$("script_bet_coding_board").getValue();
+                        if (currentLanguage != 'py') {
+                            code = $$("script_bet_coding_board").getValue().toLowerCase();
+                        }
                         humps.forEach(function(element) {
                             code = code.replace(new RegExp(element, "gm"), element.toLowerCase());
                         });
@@ -1551,15 +1500,28 @@ block content
                                 code = code.replace(/([a-zA-Z]*[0-9]*\s*)\-\=(\s*[a-zA-Z]*[0-9]*)/g, '$1=$1-$2 ');
                                 code = code.replace(/([a-zA-Z]*[0-9]*\s*)\*\=(\s*[a-zA-Z]*[0-9]*)/g, '$1=$1*$2 ');
                                 code = code.replace(/([a-zA-Z]*[0-9]*\s*)\/\=(\s*[a-zA-Z]*[0-9]*)/g, '$1=$1/$2 ');
-                                fengari.load('balance='+balance+'\nbets='+bets+'\nwins='+wins+'\nlosses='+ losses +'\nprofit='+profit+'\n')();
+                                fengari.load('basebet='+basebet+'\nnextbet='+nextbet+'\nchance='+chance+'\nbethigh='+bethigh+'\n')();
                                 fengari.load(code)();
+                                fengari.load('nextbet=basebet\nisloop=true\n')();
+                                //fengari.load('nextbet=basebet\nbalance='+balance+'\nbets='+bets+'\nwins='+wins+'\nlosses='+ losses +'\nprofit='+profit+'\npreviousbet='+previousbet+'\ncurrentprofit='+currentprofit+'\ncurrentstreak='+currentstreak+'\ncurrentroll='+currentroll+'\nisloop=true\n')();
+                                fengari.load('function stop()\nisloop = false \n js.global:stop() \n print(isloop)\nend')();
+                                fengari.load('function resetseed()\n js.global:resetseed() \nend')();
+                                fengari.load('function resetsession()\n js.global:resetsession() \nend')();
+                                fengari.load('function sound(file)\n js.global:sound(file) \nend')();
+                                fengari.load('function message(text, type, expire)\n js.global:message(text, type, expire) \nend')();
                             }
-                            if (currentLanguage == 'javascript') evalScript(code);
+                            if (currentLanguage == 'py') {
+                                evalPython(code);
+                            }
+                            if (currentLanguage == 'js') {
+                                evalScript(code);
+                            }
                         } catch(err){
                             console.error(err.message);
                             webix.message({type: 'error', text: "load error:"+err.message});
                             return false;
                         }
+                        nextbet = basebet;
                         isloop = true;
                         $$("script_bet_start_stop_button").setValue('STOP');
                         scriptBet(true);
@@ -1651,8 +1613,7 @@ block content
                     text:"Reset current session. Sure?",
                     callback:function(result){
                         if(result){
-                            currencyValue = $$("bet_currency_selection").getValue();
-                            refresh(currencyValue);
+                            resetsession();
                         }
                     }
                 });
@@ -1704,105 +1665,70 @@ block content
                 init();
                 refresh(1);
                 loadScript();
-                checkUser();
-                webix.html.addStyle(".webix_primary{ z-index:10; }");
-            });
-            function checkUser(my_window) {
-              if(typeof my_window !=='undefined' && true == my_window.closed)
-              {
-                  clearTimeout(intervalID);
-              }
-              webix.ajax().get('user').then(function (result) {
-                  let user = result.json();
-                  if(user.sid) {
-                    dataProxy.client.emit('login',user.sid);
-                    $$("chat").setCurrentUser(user.user.uid, user.user.username, user.user.avatarUrl);
-                    if(!user.user.avatarUrl) {
-                        user.user.avatarUrl = "../images/guest_logged_in.png";
-                    }
-                    $$("user_login_logout_button").config.image = user.user.avatarUrl;
-                    $$("user_login_logout_button").config.label = 'click to logout';
-                    $$("user_login_logout_button").refresh();
-                    $$('user_info_stats').setValues({
-                        user_id:user.user.uid,
-                        user_name:user.user.username
-                    });
-                    clearTimeout(intervalID);
-                    if(typeof my_window !=='undefined' && true == my_window.closed)
-                    {
-                        my_window.close();
-                    }
-                  }
-              }).fail(function (xhr) {
-                  var response = JSON.parse(xhr.response);
-                  $$("user_login_logout_button").config.image = "../images/guest.png";
-                  $$("user_login_logout_button").config.label = 'click to login';
-                  $$("user_login_logout_button").refresh();
-                  //console.error(response.err);
-                  //webix.message({type: 'error', text: response.err});
-              });
-            }
-            $$("user_login_logout_button").attachEvent("onItemClick", function(){
-                if ($$("user_login_logout_button").config.label == "click to login"){
-                    $$('switch_oauth').show();
+                if('#{skin}' == "Contrast") {
+                    $$("chat").load("https://titanembeds.com/embed/525538452691877889?css=4");
                 } else {
-                    webix.confirm({
-                        title:"CONFIRMATION",
-                        ok:"Yes",
-                        cancel:"No",
-                        text:"Do you want to logout?",
-                        callback:function(result){
-                            if(result){
-                                webix.ajax().get('logout').then(function (ret) {
-                                    $$("user_login_logout_button").config.image = "../images/guest.png";
-                                    $$("user_login_logout_button").config.label = 'click to login';
-                                    $$('user_info_stats').setValues({
-                                        user_id:'',
-                                        user_name:''
-                                    });
-                                    $$("user_login_logout_button").refresh();
-                                }).fail(function (xhr) {
-                                    var response = JSON.parse(xhr.response);
-                                    console.error(response.err);
-                                    webix.message({type: 'error', text: response.err});
-                                });
-                            }
-                        }
-                    });
+                    //$$("chat").load("https://titanembeds.com/embed/525538452691877889?css=3&theme=IceWyvern");
+                    $$("chat").load("https://titanembeds.com/embed/525538452691877889?css=10");
                 }
+                webix.html.addStyle(".webix_primary{ z-index:10; }");
+                initPythonButton();
             });
-            let so =  {"url": "#{url}", "type":"app"};
-            $$("github_auth_button").attachEvent("onItemClick", function(){
-                $$('switch_oauth').hide();
-                github_login_page = window.open(
-                        "#{authGithub}"+"&state="+JSON.stringify(so),
-                        "login",
-                        "width=600,height=600,status=0,toolbar=0"
-                        );
-                intervalID = setInterval(function(){checkUser(github_login_page);}, 1000);
+            function initPythonButton(){
+                let btn = document.createElement("BUTTON");
+                btn.innerHTML = "click me";
+                btn.id="python_dobet_button";
+                btn.style="display: none;";
+                document.body.appendChild(btn);
+
+                btn = document.createElement("BUTTON");
+                btn.innerHTML = "click me";
+                btn.id="python_after_bet_button";
+                btn.style="display: none;";
+                document.body.appendChild(btn);
+
+                btn = document.createElement("BUTTON");
+                btn.innerHTML = "click me";
+                btn.id="python_before_bet_button";
+                btn.style="display: none;";
+                document.body.appendChild(btn);
+
+                btn = document.createElement("BUTTON");
+                btn.innerHTML = "click me";
+                btn.id="python_stop_button";
+                btn.style="display: none;";
+                document.body.appendChild(btn);
+            }
+            $$("auto_resetseed_button").attachEvent("onItemClick", function(){
+                resetseed();
             });
-            $$("google_auth_button").attachEvent("onItemClick", function(){
-                $$('switch_oauth').hide();
-                google_login_page = window.open(
-                        decodeURIComponent("#{authGoogle}"+"&state="+JSON.stringify(so)),
-                        //decodeURIComponent("#{authGoogle}"),
-                        "login",
-                        "width=600,height=600,status=0,toolbar=0"
-                        );
-                intervalID = setInterval(function(){checkUser(google_login_page);}, 1000);
+            $$("manual_resetseed_button").attachEvent("onItemClick", function(){
+                resetseed();
             });
-            $$("steem_auth_button").attachEvent("onItemClick", function(){
-                $$('switch_oauth').hide();
-                steem_login_page = window.open(
-                        decodeURIComponent("#{authSteem}"+"&state="+JSON.stringify(so)),
-                        "login",
-                        "width=600,height=600,status=0,toolbar=0"
-                        );
-                intervalID = setInterval(function(){checkUser(steem_login_page);}, 1000);
-            });
-            $$("login_close_button").attachEvent("onItemClick", function(){
-                $$('switch_oauth').hide();
-            });
+            function resetsession(){
+                currencyValue = $$("bet_currency_selection").getValue();
+                refresh(currencyValue);
+            }
+            function resetseed(){
+                let now = Math.floor(Date.now()/1000);
+                let diff = now - lastResetSeed;
+                console.log('Reset Seed, Diff Time:', diff);
+                if(diff > 300  || lastResetSeed == 0) {
+                    webix.ajax().get('resetseed?currency='+$$("bet_currency_selection").getText().toLowerCase()).then(function (result) {
+                        let ret = result.json();
+                        if (ret.success == true) {
+                            webix.message({type: 'info', text: 'reset seed successd'});
+                        }
+                        lastResetSeed = now;
+                    }).fail(function (xhr) {
+                        var response = JSON.parse(xhr.response);
+                        console.error(response.err);
+                        webix.message({type: 'error', text: response.err});
+                    });
+                } else {
+                    webix.message({type: 'error', text: 'Too many request. 5 minutes left for change your seeds.'});
+                }
+            }
             function loadScriptContent(filename) {
                 webix.ajax().get('file?file='+filename).then(function (result) {
                     let ret = result.json();
@@ -1816,9 +1742,9 @@ block content
             function loadScript(filename){
                 let sc = $$("script_language_radio").getValue();
                 let ext = 'lua';
-                if (sc == "javascript") {
+                if (sc == "js") {
                     ext = 'js';
-                } else if (sc == "python") {
+                } else if (sc == "py") {
                     ext = 'py';
                 }
                 $$("script_bet_strategy_list").disable();
@@ -1870,9 +1796,9 @@ block content
             function saveScriptSync(filename, sc){
                 if(filename == '' || filename == 'Untitled.lua'  ){
                     filename = 'Untitled.lua';
-                    if (sc == "javascript") {
+                    if (sc == "js") {
                         filename = 'Untitled.js';
-                    } else if (sc == "python") {
+                    } else if (sc == "py") {
                         filename = 'Untitled.py';
                     }
                 }
@@ -1889,9 +1815,9 @@ block content
                 let sc = $$("script_language_radio").getValue()
                 if(filename == '' || filename == 'Untitled.lua'  ){
                     filename = 'Untitled.lua';
-                    if (sc == "javascript") {
+                    if (sc == "js") {
                         filename = 'Untitled.js';
-                    } else if (sc == "python") {
+                    } else if (sc == "py") {
                         filename = 'Untitled.py';
                     }
                 }
@@ -1949,40 +1875,35 @@ block content
             }
             function scriptBet(init){
                 try{
-                    if (currentLanguage == 'lua') {
-                        nextbet = fengari.load('return nextbet')();
-                        previousbet = fengari.load('return previousbet')();
-                        chance = fengari.load('return chance')();
-                        bethigh = fengari.load('return bethigh')();
-                    }
                     currency = $$("bet_currency_selection").getText().toLowerCase();
-                    if(init){
-                        nextbet = basebet;
-                        if (currentLanguage == 'lua') {
-                            fengari.load('nextbet=basebet')();
-                            nextbet = fengari.load('return basebet')();
-                            fengari.load('previousbet=basebet\ncurrentprofit=0\ncurrentstreak=0\nwins=0\nlosses=0\nbets=0\nisloop=true\nprofit=0\ncurrentroll=0\n')();
-                            fengari.load('function stop()\nisloop = false \n print(isloop)\nend')();
-                        }
-                    } else {
+                    if(!init){
                         if (currentLanguage == 'lua') {
                             fengari.load('dobet()')();
+                        } else if (currentLanguage == 'js') {
+                            dobet();
+                        } else if (currentLanguage == 'py') {
+                            document.getElementById("python_dobet_button").click();
+                        }
+                    }
+                    if (currentLanguage == 'lua') {
                             nextbet = fengari.load('return nextbet')();
                             chance = fengari.load('return chance')();
                             bethigh = fengari.load('return bethigh')();
-                        } else if (currentLanguage == 'javascript') {
-                            dobet();
-                        }
+                            fengari.load('print("script",basebet,nextbet,previousbet,chance,win,currentprofit,currentstreak,wins,losses,bets,bethigh,isloop,profit,currentroll)')();
+                    } else if (currentLanguage == 'js') {
+                            console.log(basebet,nextbet,previousbet,chance,win,currentprofit,currentstreak,wins,losses,bets,bethigh,isloop,profit,currentroll);
+                    } else if (currentLanguage == 'py') {
+                            document.getElementById("python_before_bet_button").click();
+                            console.log(basebet,nextbet,previousbet,chance,win,currentprofit,currentstreak,wins,losses,bets,bethigh,isloop,profit,currentroll);
                     }
                     previousbet = nextbet;
-                    if (currentLanguage == 'lua') {
-                        fengari.load('previousbet=nextbet')();
-                        fengari.load('print("script",basebet,nextbet,previousbet,chance,win,currentprofit,currentstreak,wins,losses,bets,bethigh,isloop,profit,currentroll)')();
-                    }
                     betScript(currency, bethigh, Math.round(parseFloat(nextbet*100000000)), chance);
                 }catch(err){
                     console.error(err);
                     $$("script_bet_start_stop_button").setValue('START');
+                    if (currentLanguage == 'py') {
+                        document.getElementById("python_stop_button").click();
+                    }
                     webix.message({type: 'error', text:"script error:"+ err});
                 }
             }
@@ -2035,7 +1956,9 @@ block content
                     if(isError(ret)) {
                             iswin = getWinStatus(ret);
                             setStreak(iswin, currentAmount);
-                            setChart(ret, count, currencyValue);
+                            if(isChart) {
+                              setChart(ret, count, currencyValue);
+                            }
                             setDatatable(ret, iswin);
                             setStats(ret.info, currencyValue);
                             count++
@@ -2112,14 +2035,17 @@ block content
                     $$("script_bet_start_stop_button").setValue('START');
                     console.error('Please enter the correct parameters');
                     webix.message({type: 'error', text: 'Please enter the correct parameters'});
+                    if (currentLanguage == 'py') {
+                        document.getElementById("python_stop_button").click();
+                    }
                     return false;
                 }
                 iswin = false;
-                if(isloop){
-                    if (currentLanguage == 'lua') isloop = fengari.load('return isloop')();
-                }
                 if(!isloop){
                     $$("script_bet_start_stop_button").setValue('START');
+                    if (currentLanguage == 'py') {
+                        document.getElementById("python_stop_button").click();
+                    }
                     return false;
                 }
                 $$("bet_chart").showProgress({
@@ -2142,7 +2068,9 @@ block content
                             iswin = getWinStatus(ret);
                             setStreak(iswin, currentAmount);
                             setBetToLua(ret, currencyValue);
-                            setChart(ret, count, currencyValue);
+                            if(isChart) {
+                              setChart(ret, count, currencyValue);
+                            }
                             setDatatable(ret, iswin);
                             setStats(ret.info, currencyValue);
                         } catch(err){
@@ -2169,6 +2097,9 @@ block content
                         scriptBet(false);
                     } else {
                         $$("script_bet_start_stop_button").setValue('START');
+                        if (currentLanguage == 'py') {
+                            document.getElementById("python_stop_button").click();
+                        }
                     }
                 });
             }
@@ -2309,12 +2240,11 @@ block content
                 bets = bets + 1;
                 if(getWinStatus(ret)){
                     wins = wins + 1;
-                    if(currentLanguage == 'lua') fengari.load('wins='+wins+'\ncurrentstreak='+currentstreak+'\n')();
                 } else {
                     losses = losses + 1;
-                    if(currentLanguage == 'lua') fengari.load('losses='+losses+'\ncurrentstreak='+currentstreak+'\n')();
                 }
-                if(currentLanguage == 'lua') fengari.load('win='+ win +'\nbets='+bets+'\ncurrentprofit='+currentprofit+'\ncurrentroll='+currentroll+'\nprofit='+profit+'\nbalance='+balance+'\n')()
+                if(currentLanguage == 'lua') fengari.load('previousbet='+previousbet+'\nwins='+wins+'\nlosses='+losses+'\ncurrentstreak='+currentstreak+'\nwin='+ win +'\nbets='+bets+'\ncurrentprofit='+currentprofit+'\ncurrentroll='+currentroll+'\nprofit='+profit+'\nbalance='+balance+'\n')()
+                if(currentLanguage == 'py') document.getElementById("python_after_bet_button").click();
             }
             function setChart(ret, count, currencyValue){
                 profit = getProfit(ret.info,currencyValue);
@@ -2370,6 +2300,11 @@ block content
             }
             function changeMode(language) {
                 currentLanguage  = language;
+                if(language == 'js') {
+                    language  = 'javascript';
+                } else if (language == 'py') {
+                    language  = 'python';
+                }
                 let cm = $$("script_bet_coding_board")._editor;
                 cm.setOption("mode", language);
                 loadScript();
@@ -2383,8 +2318,108 @@ block content
                 dynamicStr.text= strScript;
                 document.getElementsByTagName ("head")[0].appendChild(dynamicStr);
             }
+            function  evalPython(strScript){
+                let t = Math.floor(Date.now() / 1000);
+                let pyid = "pymydice"+t;
+                //headScript = 'if __name__==\'__main__\':\n'+
+                //             '    print(\'hello !\')\n'+
+                //             'assert __name__ == \''+pyid+'\'\n'+
+                headScript = 'from browser import document, window\n';
+
+                initParams ='\nisloop = True\n' +
+                            'previousbet = window.previousbet\n' +
+                            'bets = window.bets\n' +
+                            'wins = window.wins\n' +
+                            'losses = window.losses\n' +
+                            'profit = window.profit\n' +
+                            'currentprofit = window.currentprofit\n' +
+                            'currentstreak = window.currentstreak\n' +
+                            'currentroll = window.currentroll\n' +
+                            'balance = window.balance\n'+
+                            'win = window.win\n';
+
+                //let regex = /def \w*/g;
+                //strScript = strScript.replace(regex, function($all){
+                //    return $all + t;
+                //});
+
+                strScript = headScript + initParams + strScript;
+                firstParams = '\nnextbet = basebet\n';
+                strScript = strScript + firstParams;
+                messageFun = '\ndef message(text, type=\'debug\', expire=4000):\n'+
+                          '    window.message(text, type, expire)\n';
+                soundFun = '\ndef sound(file):\n'+
+                          '    window.sound(file)\n';
+                resetSeedFun = '\ndef resetseed():\n'+
+                          '    window.resetseed()\n';
+                resetSessionFun = '\ndef resetsession():\n'+
+                          '    window.resetsession()\n';
+                stopFun = '\ndef stop():\n'+
+                          '    global isloop\n'+
+                          '    isloop = False\n';
+                stopBetFun = '\ndef stopbet(event):\n'+
+                          '    document["python_dobet_button"].unbind("click", dobet)\n'+
+                          '    document["python_before_bet_button"].unbind("click", beforebet)\n'+
+                          '    document["python_stop_button"].unbind("click", stopbet)\n'+
+                          '    document["python_after_bet_button"].unbind("click", afterbet)\n';
+                beforeBetFun = '\ndef beforebet(event):\n'+
+                          '    window.nextbet = nextbet\n'+
+                          '    window.chance = chance\n'+
+                          '    window.bethigh = bethigh\n'+
+                          '    window.isloop = isloop\n';
+                afterBetFun = '\ndef afterbet(event):\n'+
+                          '    global previousbet,bets,wins,losses,profit,currentprofit,currentstreak,currentroll,balance,win\n'+
+                          '    previousbet = window.nextbet\n'+
+                          '    bets = window.bets\n'+
+                          '    wins = window.wins\n'+
+                          '    losses = window.losses\n'+
+                          '    profit = window.profit\n'+
+                          '    currentprofit = window.currentprofit\n'+
+                          '    currentstreak = window.currentstreak\n'+
+                          '    currentroll = window.currentroll\n'+
+                          '    balance = window.balance\n'+
+                          '    win = window.win\n';
+                clickFun = '\ndocument["python_dobet_button"].bind("click", dobet)\n'+
+                              '\ndocument["python_before_bet_button"].bind("click", beforebet)\n'+
+                              '\ndocument["python_after_bet_button"].bind("click", afterbet)\n'+
+                              '\ndocument["python_stop_button"].bind("click", stopbet)\n';
+                strScript = strScript + messageFun + resetSeedFun + resetSessionFun + soundFun + stopFun + stopBetFun + beforeBetFun + afterBetFun + clickFun;
+
+                console.log("eval python:",strScript);
+                let dynamicStr = document.createElement ("script");
+                dynamicStr.type= "text/python3";
+                dynamicStr.text= strScript;
+                dynamicStr.id = pyid;
+                let head = document.getElementsByTagName("head")[0];
+                if(head.lastChild.type == "text/python3"){
+                    head.removeChild(head.lastChild);
+                }
+                head.appendChild(dynamicStr);
+                brython({debug:1, indexedDB: false});
+                //brython({debug:1, ipy_id:[pyid]})
+            }
             function currentCodeChanged() {
                 let cm = $$("script_bet_coding_board")._editor;
                 return cm.execCommand("isChange");
+            }
+            function sound(file){
+                let audio = new Audio('sound?file='+file);
+                audio.play();
+            }
+            function message(text, type ='debug' , expire = 4000){
+                webix.message({type: type, text: text, expire: expire});
+            }
+            try {
+                require('electron').ipcRenderer.on('chart', (event, message) => {
+                    if (message == 'show') {
+                        isChart = true;
+                        $$("bet_chart").show();
+                    } else {
+                        isChart = false;
+                        $$("bet_chart").hide();
+                    }
+                });
+            } catch(err){
+                console.error(err.message);
             }
     script(src=site)

@@ -14,6 +14,8 @@ function init() {
         {id:11,value:"ETC"}
     ]);
     $$("bet_currency_selection").refresh();
+    $$("manual_resetseed_button").hide();
+    $$("auto_resetseed_button").hide();
 }
 
 function checkParams(p,ch){

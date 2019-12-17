@@ -1,13 +1,10 @@
 'use strict';
 
-import {BaseDice} from './base'
-import FormData from 'form-data';
-import {APIError} from '../errors/APIError';
-import steem from 'steem';
-import request from 'request';
-import fetch from 'isomorphic-fetch';
+var BaseDice = require('./base');
+var request = require('request');
+var steem = require('steem');
 
-export class KryptoGames extends BaseDice {
+module.exports = class KryptoGames extends BaseDice {
     constructor(){
         super();
         this.url = 'https://kryptogames.io';
@@ -303,3 +300,4 @@ export class KryptoGames extends BaseDice {
         });
     }
 }
+exports.KryptoGames

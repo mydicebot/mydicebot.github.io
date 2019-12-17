@@ -107,7 +107,7 @@ function setDatatable(ret){
     }
     $$('bet_datatable').add({
         bet_datatable_id:ret.betInfo.id,
-        bet_datatable_amount:ret.betInfo.amount,
+        bet_datatable_amount:(ret.betInfo.amount).toFixed(8),
         bet_datatable_low_high:ret.betInfo.condition,
         bet_datatable_payout:ret.betInfo.payout,
         bet_datatable_bet_chance:chanceStr,

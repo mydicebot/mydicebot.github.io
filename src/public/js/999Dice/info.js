@@ -1,5 +1,7 @@
 function init(){
     console.log('hello 999Dice');
+    $$("manual_resetseed_button").hide();
+    $$("auto_resetseed_button").hide();
 }
 
 function checkParams(p,ch){

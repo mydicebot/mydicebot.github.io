@@ -13,6 +13,8 @@ function init() {
     $$("manual_bet_high_button").hide();
     $$("auto_bet_start_low_high").define("options", ["LOW"]);
     $$("auto_bet_start_low_high").refresh();
+    $$("manual_resetseed_button").hide();
+    $$("auto_resetseed_button").hide();
 }
 
 function checkParams(p,ch){

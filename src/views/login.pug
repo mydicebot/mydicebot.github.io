@@ -390,7 +390,6 @@ block content
             $$("keepass_form").showProgress({
                 type: "icon",
                 delay: 5000,
-                hide: true
             });
             webix.ajax().get('keepass/check?keepassfile='+newv).then(function (result) {
                 $$("keepass_form").hideProgress();
@@ -421,7 +420,6 @@ block content
                 $$("keepass_form").showProgress({
                     type: "icon",
                     delay: 5000,
-                    hide: true
                 });
                 webix.ajax().post('keepass/reg', $$("keepass_form").getValues()).then(function (result) {
                     $$("keepass_form").hideProgress();
@@ -461,7 +459,6 @@ block content
                 $$("keepass_form").showProgress({
                     type: "icon",
                     delay: 5000,
-                    hide: true
                 });
                 webix.ajax().post('keepass/load', $$("keepass_form").getValues()).then(function (result) {
                     keepassdb = result.json();
@@ -480,10 +477,10 @@ block content
                         webix.message({type: 'error', text: 'Please check  password'});
                     }
                 }).fail(function (xhr) {
-                    $$("keepass_form").hideProgress();
                     var response = JSON.parse(xhr.response);
                     console.error(response.err);
                     webix.message({type: 'error', text: response.err});
+                    $$("keepass_form").hideProgress();
                 });
             } else {
                 webix.message({type: 'error', text: 'Please enter the correct parameters'});
@@ -494,8 +491,7 @@ block content
             if($$("form1").validate()){
                 $$("form1").showProgress({
                     type: "icon",
-                    delay: 5000,
-                    hide: true
+                    delay: 60000,
                 });
                 //if (JSON.stringify(keepassdb) != '{}') {
                 if (keepasslogin) {
@@ -533,8 +529,8 @@ block content
                     webix.storage.session.put('keepassdb', keepassdb);
                     webix.ajax().put('keepass/save?keepassfile='+keepassfile+'&keepassword='+keepassword, keepassdb).then(function (result) {
                         webix.message({type: 'info', text: 'keepass save success'});
-                        $$("keepass_form").hideProgress();
                         webix.send("login", $$("form1").getValues());
+                        $$("keepass_form").hideProgress();
                     }).fail(function (xhr) {
                         $$("keepass_form").hideProgress();
                         var response = JSON.parse(xhr.response);

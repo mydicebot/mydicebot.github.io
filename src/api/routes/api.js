@@ -1,26 +1,24 @@
 'use strict';
 
-import api from '../controllers/apiController';
-import cb from '../controllers/callbackController';
-import {BitslerDice} from '../models/bitsler';
-import {NineDice} from '../models/nine';
-import {YoloDice} from '../models/yolo';
-import {PrimeDice} from '../models/prime';
-import {StakeDice} from '../models/stake';
-import {CryptoDice} from '../models/crypto';
-import {MagicDice} from '../models/magic';
-import {Simulator} from '../models/simulator';
-import {EpicDice} from '../models/epic';
-import {SteemBet} from '../models/steembet';
-import {KryptoGames} from '../models/kryptogames';
-import {DuckDice} from '../models/duckdice';
-import {FreeBitco} from '../models/freebitco';
-import {WinDice} from '../models/windice';
-import {Factory} from '../models/factory';
-import config from 'config';
-import fs from 'fs';
-import path from 'path';
-import fse from 'fs-extra';
+var api = require('../controllers/apiController');
+var BitslerDice = require('../models/bitsler');
+var NineDice = require('../models/nine');
+var YoloDice = require('../models/yolo');
+var PrimeDice = require('../models/prime');
+var StakeDice = require('../models/stake');
+var CryptoDice = require('../models/crypto');
+var Simulator = require('../models/simulator');
+var EpicDice = require('../models/epic');
+var SteemBet = require('../models/steembet');
+var KryptoGames = require('../models/kryptogames');
+var DuckDice = require('../models/duckdice');
+var FreeBitco = require('../models/freebitco');
+var WinDice = require('../models/windice');
+var Factory = require('../models/factory');
+var config = require('config');
+var fs = require('fs');
+var path = require('path');
+var fse = require('fs-extra');
 
 module.exports = function(app) {
   app.get('/', [checkSkin], api.index);
@@ -40,6 +38,7 @@ module.exports = function(app) {
   app.get('/keepass/files', [createDice,checkScript], api.keefiles);
   app.get('/:site/clear', [createDice], api.clear);
   app.get('/:site/refresh', [createDice], api.refresh);
+  app.get('/:site/resetseed', [createDice,userMiddleware], api.resetseed);
   app.get('/:site/info', [checkSkin,createDice,userMiddleware], api.info);
   app.post('/:site/bet', [createDice,userMiddleware], api.bet);
   app.get('/:site/script', [createDice,checkScript], api.script);
@@ -49,13 +48,7 @@ module.exports = function(app) {
   app.post('/:site/upload', [createDice,checkScript], api.upload);
   app.get('/:site/checkerr', [createDice,checkScript], api.checkerr);
   app.get('/checkerr', [createDice,checkScript], api.checkerr);
-
-  app.get('/:oauth/cb', [checkSkin,createDice,checkScript], cb.cb);
-  app.get('/:site/:oauth/cb', [checkSkin,createDice,checkScript], cb.cb);
-  app.get('/user', [createDice,checkScript], cb.user);
-  app.get('/:site/user', [createDice,checkScript], cb.user);
-  app.get('/logout', [createDice,checkScript], cb.logout);
-  app.get('/:site/logout', [createDice,checkScript], cb.logout);
+  app.get('/:site/sound', [checkScript], api.sound);
 };
 
 function checkSkin(req, res, next) {
@@ -69,13 +62,13 @@ function checkSkin(req, res, next) {
 }
 
 function createDice (req, res, next) {
+    //console.log(Factory);
     Factory.register('Bitsler', new BitslerDice());
     Factory.register('999Dice', new NineDice());
     Factory.register('YoloDice', new YoloDice());
     Factory.register('PrimeDice', new PrimeDice());
     Factory.register('Stake', new StakeDice());
     Factory.register('Crypto-Games', new CryptoDice());
-    Factory.register('MagicDice', new MagicDice());
     Factory.register('Simulator', new Simulator());
     Factory.register('EpicDice', new EpicDice());
     Factory.register('SteemBet', new SteemBet());
@@ -119,11 +112,27 @@ function checkScript(req, res, next) {
         filePath = path.resolve(path.join(config.mydice.path, '/keepass/'));
     }
     mkdir(filePath);
+    filePath = path.resolve(path.join(process.execPath, '../sound/'));
+    if(isMobile(req)) {
+        filePath = path.resolve(path.join(__dirname, '../../sound/'));
+    }
+    if(process.env.electron) {
+        filePath = path.resolve(path.join(config.mydice.path, '/sound/'));
+    }
+    mkdir(filePath);
     if(process.env.electron) {
       try {
-        fse.copySync(path.resolve(path.join(process.execPath, '../script/py/')),path.resolve(path.join(config.mydice.path, '/script/py/')),{ overwrite: false });
-        fse.copySync(path.resolve(path.join(process.execPath, '../script/js/')),path.resolve(path.join(config.mydice.path, '/script/js/')),{ overwrite: false });
-        fse.copySync(path.resolve(path.join(process.execPath, '../script/lua/')),path.resolve(path.join(config.mydice.path, '/script/lua/')),{ overwrite: false });
+          if(process.platform === 'darwin') {
+              fse.copySync(path.resolve(path.join(process.execPath, '../../script/py/')),path.resolve(path.join(config.mydice.path, '/script/py/')),{ overwrite: false });
+              fse.copySync(path.resolve(path.join(process.execPath, '../../script/js/')),path.resolve(path.join(config.mydice.path, '/script/js/')),{ overwrite: false });
+              fse.copySync(path.resolve(path.join(process.execPath, '../../script/lua/')),path.resolve(path.join(config.mydice.path, '/script/lua/')),{ overwrite: false });
+              fse.copySync(path.resolve(path.join(process.execPath, '../../sound/')),path.resolve(path.join(config.mydice.path, '/sound/')),{ overwrite: false });
+          } else {
+              fse.copySync(path.resolve(path.join(process.execPath, '../script/py/')),path.resolve(path.join(config.mydice.path, '/script/py/')),{ overwrite: false });
+              fse.copySync(path.resolve(path.join(process.execPath, '../script/js/')),path.resolve(path.join(config.mydice.path, '/script/js/')),{ overwrite: false });
+              fse.copySync(path.resolve(path.join(process.execPath, '../script/lua/')),path.resolve(path.join(config.mydice.path, '/script/lua/')),{ overwrite: false });
+              fse.copySync(path.resolve(path.join(process.execPath, '../sound/')),path.resolve(path.join(config.mydice.path, '/sound/')),{ overwrite: false });
+          }
       } catch (err) {
         console.error(err)
       }
