@@ -751,6 +751,17 @@ block content
                                     },
                                 ]},
                                 {
+                                    id: "manual_resetseed_button",
+                                    view: "button",
+                                    type: "form",
+                                    label: "RESET SEED",
+                                    css: "webix_primary",
+                                    bottom: 120,
+                                    right: 30,
+                                    width: 120,
+                                    height: 30,
+                                },
+                                {
                                     id: "manual_bet_low_button",
                                     view: "button",
                                     type: "form",
@@ -949,15 +960,26 @@ block content
                                     },
                                 ]},
                                 {
+                                    id: "auto_resetseed_button",
+                                    view: "button",
+                                    css: "webix_primary",
+                                    type: "form",
+                                    label: "RESET SEED",
+                                    bottom: 80,
+                                    right: 30,
+                                    width: 120,
+                                    height: 30,
+                                },
+                                {
                                     id: "auto_bet_start_stop_button",
                                     view: "button",
                                     type: "form",
                                     label: "START",
                                     value: "START",
                                     css: "webix_primary",
-                                    bottom: 30,
+                                    bottom: 40,
                                     right: 30,
-                                    width: 80,
+                                    width: 120,
                                     height: 30,
                                 },
                                 {
@@ -1501,14 +1523,13 @@ block content
                                 code = code.replace(/([a-zA-Z]*[0-9]*\s*)\*\=(\s*[a-zA-Z]*[0-9]*)/g, '$1=$1*$2 ');
                                 code = code.replace(/([a-zA-Z]*[0-9]*\s*)\/\=(\s*[a-zA-Z]*[0-9]*)/g, '$1=$1/$2 ');
                                 fengari.load('basebet='+basebet+'\nnextbet='+nextbet+'\nchance='+chance+'\nbethigh='+bethigh+'\n')();
-                                fengari.load(code)();
-                                fengari.load('nextbet=basebet\nisloop=true\n')();
-                                //fengari.load('nextbet=basebet\nbalance='+balance+'\nbets='+bets+'\nwins='+wins+'\nlosses='+ losses +'\nprofit='+profit+'\npreviousbet='+previousbet+'\ncurrentprofit='+currentprofit+'\ncurrentstreak='+currentstreak+'\ncurrentroll='+currentroll+'\nisloop=true\n')();
                                 fengari.load('function stop()\nisloop = false \n js.global:stop() \n print(isloop)\nend')();
                                 fengari.load('function resetseed()\n js.global:resetseed() \nend')();
                                 fengari.load('function resetsession()\n js.global:resetsession() \nend')();
                                 fengari.load('function sound(file)\n js.global:sound(file) \nend')();
                                 fengari.load('function message(text, type, expire)\n js.global:message(text, type, expire) \nend')();
+                                fengari.load('nextbet=basebet\nbalance='+balance+'\nbets='+bets+'\nwins='+wins+'\nlosses='+ losses +'\nprofit='+profit+'\npreviousbet='+previousbet+'\ncurrentprofit='+currentprofit+'\ncurrentstreak='+currentstreak+'\ncurrentroll='+currentroll+'\nisloop=true\n')();
+                                fengari.load(code)();
                             }
                             if (currentLanguage == 'py') {
                                 evalPython(code);
@@ -1517,8 +1538,13 @@ block content
                                 evalScript(code);
                             }
                         } catch(err){
-                            console.error(err.message);
-                            webix.message({type: 'error', text: "load error:"+err.message});
+                            if(typeof err.message != 'undefined' ) {
+                                console.error(err.message);
+                                webix.message({type: 'error', text: "load error:"+err.message});
+                            } else {
+                                console.error(err);
+                                webix.message({type: 'error', text: "load error:"+err});
+                            }
                             return false;
                         }
                         nextbet = basebet;
@@ -2025,8 +2051,13 @@ block content
                     }
                     } catch(err){
                         $$("auto_bet_start_stop_button").setValue('START');
-                        console.error(err.message);
-                        webix.message({type: 'error', text: err.message});
+                        if(typeof err.message != 'undefined' ) {
+                            console.error(err.message);
+                            webix.message({type: 'error', text: err.message});
+                        } else {
+                            console.error(err);
+                            webix.message({type: 'error', text: err});
+                        }
                     }
                 });
             }
@@ -2074,8 +2105,13 @@ block content
                             setDatatable(ret, iswin);
                             setStats(ret.info, currencyValue);
                         } catch(err){
-                            console.error(err.message);
-                            webix.message({type: 'error', text: err.message});
+                            if(typeof err.message != 'undefined' ) {
+                                console.error(err.message);
+                                webix.message({type: 'error', text: err.message});
+                            } else {
+                                console.error(err);
+                                webix.message({type: 'error', text: err});
+                            }
                         }
                         count++;
                     } else {
@@ -2420,6 +2456,10 @@ block content
                     }
                 });
             } catch(err){
-                console.error(err.message);
+                 if(typeof err.message != 'undefined' ) {
+                     console.error(err.message);
+                 } else {
+                     console.error(err);
+                 }
             }
     script(src=site)
