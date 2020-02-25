@@ -23,13 +23,13 @@ module.exports = class CryptoDice extends BaseDice {
     }
 
     async refresh(req) {
-        console.log('refresh');
+        //console.log('refresh');
         let info = req.session.info;
         if(!info){
             return false;
         }
         let ret = await this._send('user/'+req.query.currency, 'GET', '', req.session.accessToken);
-        console.log(ret);
+        //console.log(ret);
         let userinfo = info.info;
         userinfo.bets = ret.TotalBets;
         userinfo.profit = ret.Profit;
@@ -42,9 +42,8 @@ module.exports = class CryptoDice extends BaseDice {
     }
 
     async clear(req) {
-        console.log('clear');
+        console.log('loading....');
         let ret = await this._send('user/'+req.query.currency, 'GET', '', req.session.accessToken);
-        console.log(ret);
         let info = {};
         let userinfo = {
             'bets' : 0,
@@ -129,7 +128,7 @@ module.exports = class CryptoDice extends BaseDice {
 
     async _send(route, method, body, accessToken){
         let url = `${this.url}/v1/${route}/${accessToken}`;
-        console.log(JSON.stringify(body));
+        //console.log(JSON.stringify(body));
         let res = await fetch(url, {
             method,
             headers: {
@@ -140,7 +139,7 @@ module.exports = class CryptoDice extends BaseDice {
             //body: body,
         });
         let data = await res.json();
-        console.log(data);
+        //console.log(data);
         if (!res.ok) {
             let errs = new Error(data.Message);
             errs.value = data.Message;

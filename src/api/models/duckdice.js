@@ -47,6 +47,7 @@ module.exports = class DuckDice extends BaseDice {
     }
 
     async clear(req) {
+        console.log('loading....');
         let accessToken = req.session.accessToken;
         let info = {};
         let ret = await this._send('stat/'+req.query.currency+'?api_key='+ accessToken, 'GET', '','');

@@ -1,3 +1,7 @@
+function consoleInit() {
+    currencies = ["STEEM","SBD"];
+}
+
 function init() {
     console.log('hello SteemBet');
     $$("bet_currency_selection").define("options", [

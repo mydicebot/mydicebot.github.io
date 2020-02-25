@@ -23,7 +23,7 @@ module.exports = class NineDice extends BaseDice {
             formData.append('Totp', twoFactor);
         }
         let ret = await this._send('web.aspx', 'POST', formData,'');
-        console.log(ret);
+        //console.log(ret);
         if(ret.error) {
             return ret.error;
         }
@@ -56,7 +56,7 @@ module.exports = class NineDice extends BaseDice {
             ret.CurrentBalances[i].TotalPayOut = 0;
             ret.CurrentBalances[i].TotalWins = 0;
         }
-        console.log(ret);
+        //console.log(ret);
         req.session.info = ret;
         return ret;
     }
@@ -110,7 +110,7 @@ module.exports = class NineDice extends BaseDice {
     }
 
     async clear(req) {
-        console.log('enter clear');
+        console.log('loading....');
         let info = req.session.info;
         let bs =JSON.parse(JSON.stringify(info.Balances));
         info.CurrentBalances = bs;

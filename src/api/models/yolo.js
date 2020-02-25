@@ -28,7 +28,7 @@ module.exports = class YoloDice extends BaseDice {
         };
         let ret = await this._send(options);
         let challenge = JSON.parse(ret).result;
-        console.log(challenge);
+        //console.log(challenge);
         let privateKey = bitcore.PrivateKey.fromWIF(apiKey);
         let sig = Message(challenge).sign(privateKey);
         options = {
@@ -53,7 +53,7 @@ module.exports = class YoloDice extends BaseDice {
     }
 
     async refresh(req) {
-        console.log('refresh')
+        //console.log('refresh')
         await this.connect(req.session.apiKey);
         let options = {
             id:this.id++,
@@ -66,7 +66,7 @@ module.exports = class YoloDice extends BaseDice {
         }
         let ret = await this._send(options);
         let info = req.session.info;
-        console.log(info);
+        //console.log(info);
         if(!info){
             return true;
         }
@@ -77,6 +77,7 @@ module.exports = class YoloDice extends BaseDice {
     }
 
     async clear(req) {
+        console.log('loading....');
         await this.connect(req.session.apiKey);
         let options = {
             id:this.id++,
@@ -88,7 +89,6 @@ module.exports = class YoloDice extends BaseDice {
             }
         }
         let ret = await this._send(options);
-        console.log(ret);
         let currentInfo = ret;
         let info = {};
         info.info = JSON.parse(ret).result;
@@ -99,7 +99,6 @@ module.exports = class YoloDice extends BaseDice {
         info.currentInfo.profit = 0;
         info.currentInfo.wagered = 0;
         req.session.info = info;
-        console.log(info);
         return info;
     }
 
@@ -107,7 +106,7 @@ module.exports = class YoloDice extends BaseDice {
         await this.connect(req.session.apiKey);
         let betRoll = 0;
         let currency = req.body.Currency.toLowerCase();
-        console.log(currency)
+        //console.log(currency)
         let range = 'lo';
         if(req.body.High =="true"){
             range = 'hi';
@@ -164,7 +163,7 @@ module.exports = class YoloDice extends BaseDice {
     }
 
     async getUserInfo(req) {
-        console.log('get user info')
+        //console.log('get user info')
         await this.connect(req.session.apiKey);
         let options = {
             id:this.id++,
@@ -177,14 +176,14 @@ module.exports = class YoloDice extends BaseDice {
         }
         let ret = await this._send(options);
         let info = req.session.info;
-        console.log(info);
+        //console.log(info);
         if(!info){
             return true;
         }
         let currentInfo = ret;
         info.info = JSON.parse(ret).result;
         req.session.info = info;
-        console.log(info);
+        //console.log(info);
         return info;
     }
 

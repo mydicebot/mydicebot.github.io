@@ -1,3 +1,7 @@
+function consoleInit() {
+    currencies = ["STEEM","SBD"];
+}
+
 function init() {
     console.log('hello KryptoGames Dice');
     $$("bet_currency_selection").define("options", [
@@ -130,5 +134,35 @@ function setStats(userinfo, cv){
             bet_current_stats_profit:userinfo.currentInfo.profit,
             bet_current_stats_wagered:userinfo.currentInfo.wagered,
         });
+    }
+}
+
+function consoleData(ret, iswin){
+    let chanceStr = ret.betInfo.condition + ' '+ ret.betInfo.target;
+    let profitStr = ret.betInfo.profit;
+    datalog.log('betid:' +ret.betInfo.id + ' amount:'+ ret.betInfo.amount+ ' low_high:'+ ret.betInfo.condition+' payout:'+ ret.betInfo.payout +' chance:'+chanceStr+' actual_chance:'+ ret.betInfo.roll_number +' profit:'+profitStr );
+}
+
+function consoleStats(userinfo, cv){
+    if(userinfo.info.success == 'true'){
+        let info = JSON.stringify(userinfo.info);
+        console.log(info.replace(/\"/g,""));
+        wagered = userinfo.info.wagered;
+        table1.setData(
+            { headers: ['balance','profit', 'wagered','wins','bets','losses']
+                , data:
+                 [[userinfo.info.balance, userinfo.info.profit, userinfo.info.wagered, userinfo.info.wins, userinfo.info.bets, userinfo.info.losses]] });
+        table2.setData(
+            { headers: ['balance','profit', 'wagered','wins','bets','losses']
+                , data:
+                 [[userinfo.currentInfo.balance, userinfo.currentInfo.profit, userinfo.currentInfo.wagered, userinfo.currentInfo.wins, userinfo.currentInfo.bets, userinfo.currentInfo.losses]] });
+        table3.setData(
+            { headers: ['maxwinstreakamount','maxstreakamount','minstreakamount','maxbetamount','curstreak','maxwinstreak','maxlossstreak']
+                , data:
+                [[maxwinstreakamount, maxstreakamount.toFixed(8), minstreakamount.toFixed(8), maxbetamount, currentstreak, maxwinstreak, maxlossstreak]] });
+        table1.focus()
+        table2.focus()
+        table3.focus()
+        screen.render();
     }
 }

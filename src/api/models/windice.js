@@ -39,7 +39,7 @@ module.exports = class WinDice extends BaseDice {
         userinfo.wagered = 0;
         let statistics =  ret.statistics;
         statistics.forEach(function (value) {
-            console.log(value, currency);
+            //console.log(value, currency);
             if(value.curr == currency){
                 userinfo.profit = parseFloat(value.profit).toFixed(8);
                 userinfo.wagered = parseFloat(value.bet).toFixed(8);
@@ -54,11 +54,12 @@ module.exports = class WinDice extends BaseDice {
     }
 
     async clear(req) {
+        console.log('loading....');
         let accessToken = req.session.accessToken;
         let currency = req.query.currency;
         let info = {};
         let ret = await this._send('/api/v1/api/stats', 'GET', '', accessToken);
-        console.log(ret);
+        //console.log(ret);
         let userinfo = {};
         userinfo.bets = ret.stats.bets;
         userinfo.wins = ret.stats.wins;
@@ -67,14 +68,14 @@ module.exports = class WinDice extends BaseDice {
         userinfo.wagered = 0;
         let statistics =  ret.statistics;
         statistics.forEach(function (value) {
-            console.log(value, currency);
+            //console.log(value, currency);
             if(value.curr == currency){
                 userinfo.profit = parseFloat(value.profit).toFixed(8);
                 userinfo.wagered = parseFloat(value.bet).toFixed(8);
             }
         });
         ret = await this._send('/api/v1/api/user', 'GET', '', accessToken);
-        console.log(ret);
+        //console.log(ret);
         userinfo.balance = parseFloat(eval("ret.balance."+currency)).toFixed(8);
         userinfo.success = true;
         info.info = userinfo;
@@ -86,7 +87,7 @@ module.exports = class WinDice extends BaseDice {
         info.currentInfo.profit = 0;
         info.currentInfo.wagered = 0;
         req.session.info = info;
-        console.log(info);
+        //console.log(info);
         return info;
     }
 

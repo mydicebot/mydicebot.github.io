@@ -46,8 +46,9 @@ module.exports = class Simulator extends BaseDice {
     }
 
     async clear(req) {
+        console.log('loading....');
         let userName = req.session.username;
-        let currency = req._parsedOriginalUrl.query.toLowerCase();
+        let currency = req.body.Currency;
 
         let info = {};
 
@@ -172,7 +173,7 @@ module.exports = class Simulator extends BaseDice {
             factor = 1000000/(999999-target+1);
         }
         let profit = (amount * factor) * (1 - houseEdge) - amount;
-        console.log(amount,factor,betInfo.amount, houseEdge);
+        //console.log(amount,factor,betInfo.amount, houseEdge);
         betInfo.roll_number = diceRoll/10000;
         betInfo.win = false;
         if(condition == 'over') {
@@ -191,7 +192,7 @@ module.exports = class Simulator extends BaseDice {
             betInfo.payout = 0;
             betInfo.profit = parseFloat(-betInfo.amount).toFixed(8);
         }
-        console.log(betInfo);
+        //console.log(betInfo);
         return betInfo;
     }
 }

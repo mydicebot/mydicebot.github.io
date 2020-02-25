@@ -66,11 +66,12 @@ module.exports  = class BitslerDice extends BaseDice {
     }
 
     async clear(req) {
+        console.log('loading....');
         let formData = new FormData();
         let accessToken = req.session.accessToken;
         formData.append('access_token', accessToken);
         let ret = await this._send('getuserstats', 'POST', formData,'');
-        console.log(ret);
+        //console.log(ret);
         let info = {};
         let userinfo = {};
         userinfo.balance = eval("ret."+req.query.currency+"_balance");

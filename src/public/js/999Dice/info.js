@@ -1,3 +1,7 @@
+function consoleInit() {
+    currencies = ['BTC', 'Doge', 'LTC', 'ETH'];
+}
+
 function init(){
     console.log('hello 999Dice');
     $$("manual_resetseed_button").hide();
@@ -36,7 +40,6 @@ function initScriptBalance(currencyValue, cb){
 }
 
 function getBalance(userinfo){
-    currencyValue = $$("bet_currency_selection").getValue() -1;
     balance = (userinfo.Balances[currencyValue].Balance/100000000).toFixed(8)
     return balance;
 }
@@ -124,3 +127,31 @@ function setStats(userinfo, currencyValue){
         bet_current_stats_wagered:(Math.abs(userinfo.CurrentBalances[currencyValue].TotalPayIn)/100000000).toFixed(8),
     });
 } 
+
+function consoleData(ret, iswin){
+    let chanceStr = ret.High + ' '+ ret.BetRoll/10000 ;
+    let profitStr = ((ret.PayOut-ret.PayIn)/100000000).toFixed(8);
+    datalog.log('betid:' +ret.BetId + ' amount:'+ (ret.PayIn/100000000).toFixed(8)+ ' low_high:'+ ret.High+' payout:'+ (ret.PayOut/100000000).toFixed(8)+' chance:'+chanceStr+' actual_chance:'+ ret.Secret/10000 +' profit:'+profitStr );
+}
+
+function consoleStats(userinfo, cv){
+    let info = JSON.stringify(userinfo.Balances[cv]);
+    console.log(info.replace(/\"/g,""));
+    wagered = (Math.abs(userinfo.Balances[cv].TotalPayIn)/100000000).toFixed(8);
+    table1.setData(
+        { headers: ['balance','profit', 'wagered','wins','bets','losses']
+            , data:
+            [[parseFloat(userinfo.Balances[cv].Balance/100000000).toFixed(8), ((userinfo.Balances[cv].TotalPayIn+userinfo.Balances[cv].TotalPayOut)/100000000).toFixed(8), (Math.abs(userinfo.Balances[cv].TotalPayIn)/100000000).toFixed(8), userinfo.Balances[cv].TotalWins, userinfo.Balances[cv].TotalBets, (userinfo.Balances[cv].TotalBets-userinfo.Balances[cv].TotalWins)]] });
+    table2.setData(
+        { headers: ['balance','profit', 'wagered','wins','bets','losses']
+            , data:
+            [[parseFloat(userinfo.CurrentBalances[cv].Balance/100000000).toFixed(8), ((userinfo.CurrentBalances[cv].TotalPayIn+userinfo.CurrentBalances[cv].TotalPayOut)/100000000).toFixed(8), (Math.abs(userinfo.CurrentBalances[cv].TotalPayIn)/100000000).toFixed(8), userinfo.CurrentBalances[cv].TotalWins, userinfo.CurrentBalances[cv].TotalBets, (userinfo.CurrentBalances[cv].TotalBets-userinfo.CurrentBalances[cv].TotalWins)]] });
+    table3.setData(
+        { headers: ['maxwinstreakamount','maxstreakamount','minstreakamount','maxbetamount','curstreak','maxwinstreak','maxlossstreak']
+            , data:
+            [[maxwinstreakamount, maxstreakamount.toFixed(8), minstreakamount.toFixed(8), maxbetamount, currentstreak, maxwinstreak, maxlossstreak]] });
+    table1.focus()
+    table2.focus()
+    table3.focus()
+    screen.render();
+}

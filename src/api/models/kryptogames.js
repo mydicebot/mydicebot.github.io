@@ -43,7 +43,7 @@ module.exports = class KryptoGames extends BaseDice {
         let currentInfo = userinfo;
         info.info = userinfo;
         req.session.info = info;
-        console.log(req.session.info);
+        //console.log(req.session.info);
         return info;
     }
 
@@ -65,6 +65,7 @@ module.exports = class KryptoGames extends BaseDice {
     }
 
     async clear(req) {
+        console.log('loading....');
         let userName = req.session.username;
         let ret = await steem.api.getAccountsAsync([userName]);
         let info = {};

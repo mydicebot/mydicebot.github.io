@@ -26,7 +26,7 @@ module.exports = class PrimeDice extends BaseDice {
     }
 
     async refresh(req) {
-        console.log('refresh');
+        //console.log('refresh');
         let info = req.session.info;
         if(!info){
             return false;
@@ -63,7 +63,7 @@ module.exports = class PrimeDice extends BaseDice {
     }
 
     async clear(req) {
-        console.log('clear');
+        console.log('loading....');
         let data = "query{user {activeServerSeed { seedHash seed nonce} activeClientSeed{seed} id balances{available{currency amount}} statistic {game bets wins losses amount profit currency}}}";
         let ret = await this._send('', 'POST', data, req.session.accessToken);
         ret=ret.user;
@@ -85,7 +85,7 @@ module.exports = class PrimeDice extends BaseDice {
             'balance' : 0,
         };
         for (let i=0; i<ret.balances.length; i++) {
-            console.log(ret.balances[i].available);
+            //console.log(ret.balances[i].available);
             if(req.query.currency  == ret.balances[i].available.currency) {
                 userinfo.balance = parseFloat(ret.balances[i].available.amount).toFixed(8);
                 info.currentInfo.balance = parseFloat(ret.balances[i].available.amount).toFixed(8);

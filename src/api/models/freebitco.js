@@ -61,6 +61,7 @@ module.exports = class FreeBitco extends BaseDice {
     }
 
     async clear(req) {
+        console.log('loading....');
         let accessToken = req.session.accessToken;
         let info = {};
         let uname = req.session.username;
@@ -68,7 +69,7 @@ module.exports = class FreeBitco extends BaseDice {
         let csrf_token = uname.split(':')[1];
         let cookie = 'csrf_token='+csrf_token+';btc_address='+btc_address+';password='+accessToken+';have_account=1';
         let ret = await this._send('cgi-bin/api.pl?op=get_user_stats', 'GET', '','', cookie, true);
-        console.log(ret);
+        //console.log(ret);
         let userinfo = {};
         userinfo.bets = ret.rolls_played;
         userinfo.wins = 0;
