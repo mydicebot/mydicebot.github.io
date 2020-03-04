@@ -45,19 +45,19 @@ function initScriptBalance(currencyValue, cb){
 
 function getBalance(userinfo){
     balance = (userinfo.info.balance/100000000).toFixed(8)
-    return balance;
+    return parseFloat(balance);
 }
 
 function getProfit(userinfo){
     profit = (userinfo.currentInfo.profit/100000000).toFixed(8);
     //console.log('actprofit:'+actProfit);
-    return profit;
+    return parseFloat(profit);
 }
 
 function getCurrProfit(ret){
     currentprofit = (ret.betInfo.profit/100000000).toFixed(8)
     //console.log('currprofit:'+currProfit);
-    return currentprofit;
+    return parseFloat(currentprofit);
 }
 
 function getCurrentBetId(ret){

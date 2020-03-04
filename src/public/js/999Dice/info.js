@@ -41,7 +41,7 @@ function initScriptBalance(currencyValue, cb){
 
 function getBalance(userinfo){
     balance = (userinfo.Balances[currencyValue].Balance/100000000).toFixed(8)
-    return balance;
+    return parseFloat(balance);
 }
 
 function outError(ret){
@@ -67,13 +67,13 @@ function getWinStatus(ret){
 function getProfit(userinfo,currencyValue){
     profit = ((userinfo.CurrentBalances[currencyValue].TotalPayIn+userinfo.CurrentBalances[currencyValue].TotalPayOut)/100000000).toFixed(8);
     //console.log('actprofit:'+actProfit);
-    return profit;
+    return parseFloat(profit);
 }
 
 function getCurrProfit(ret){
     currentprofit = ((ret.PayOut-ret.PayIn)/100000000).toFixed(8)
     //console.log('currprofit:'+currProfit);
-    return currentprofit;
+    return parseFloat(currentprofit);
 }
 
 function getCurrentBetId(ret){

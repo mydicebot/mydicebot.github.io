@@ -597,26 +597,26 @@ block content
                                                 ]
                                             }
                                         },
-                                        {
-                                            header: "LOG",
-                                            body: {
-                                            rows:[
-                                                {
-                                                    view: "pager",
-                                                    id:"myPager",
-                                                    animate: { direction:"top" },
-                                                    group: 10,
-                                                    size: 15
-                                                },
-                                                {
-                                                     view:"list",
-                                                     pager: "myPager",
-                                                     template:"#title#",
-                                                     id: "script_bet_log_board",
-                                                }
-                                            ]
-                                            }
-                                        },
+                                        //{
+                                        //    header: "LOG",
+                                        //    body: {
+                                        //    rows:[
+                                        //        {
+                                        //            view: "pager",
+                                        //            id:"myPager",
+                                        //            animate: { direction:"top" },
+                                        //            group: 10,
+                                        //            size: 15
+                                        //        },
+                                        //        {
+                                        //             view:"list",
+                                        //             pager: "myPager",
+                                        //             template:"#title#",
+                                        //             id: "script_bet_log_board",
+                                        //        }
+                                        //    ]
+                                        //    }
+                                        //},
                                     ]
                                 },
                                 {
@@ -1148,26 +1148,26 @@ block content
                                                          ]
                                                 }
                                             },
-                                            {
-                                                header: "LOG",
-                                                body: {
-                                                rows:[
-                                                    {
-                                                        view: "pager",
-                                                        id:"myPager",
-                                                        animate: { direction:"top" },
-                                                        group: 10,
-                                                        size: 15
-                                                    },
-                                                    {
-                                                         view:"list",
-                                                         pager: "myPager",
-                                                         template:"#title#",
-                                                         id: "script_bet_log_board",
-                                                    }
-                                                ]
-                                                }
-                                            },
+                                            //{
+                                            //    header: "LOG",
+                                            //    body: {
+                                            //    rows:[
+                                            //        {
+                                            //            view: "pager",
+                                            //            id:"myPager",
+                                            //            animate: { direction:"top" },
+                                            //            group: 10,
+                                            //            size: 15
+                                            //        },
+                                            //        {
+                                            //             view:"list",
+                                            //             pager: "myPager",
+                                            //             template:"#title#",
+                                            //             id: "script_bet_log_board",
+                                            //        }
+                                            //    ]
+                                            //    }
+                                            //},
                                         ]
                                     }
                                     ]
@@ -2150,7 +2150,7 @@ block content
                 });
                 $$('bet_datatable').clearAll();
                 $$("bet_chart").clearAll();
-                $$("script_bet_log_board").clearAll();
+                //$$("script_bet_log_board").clearAll();
                 maxstreakamount = 0;
                 minstreakamount = 0;
                 stopOnWin = false;
@@ -2287,37 +2287,37 @@ block content
                 $$("bet_chart").add({xValue: count, yValue: profit});
             }
             //print to html
-            (function () {
-                let orig = console.log;
-                console.log = function (message) {
-                    if (typeof message == 'object') {
-                    //webix.message(JSON.stringify( message));
-                        $$("script_bet_log_board").add({
-                            title:'<font size="3" color="green">'+format(new Date())+' '+(JSON && JSON.stringify ? JSON.stringify(message) : message)+'</font>' 
-                        },0)
-                    } else {
-                        $$("script_bet_log_board").add({
-                            title:'<font size="3" color="green">'+format(new Date())+' '+message+'</font>' 
-                        },0)
-                    }
-                    orig.apply(console, arguments);
-                }
-            })();
-            (function () {
-                let orig = console.error;
-                console.error = function (message) {
-                    if (typeof message == 'object') {
-                        $$("script_bet_log_board").add({
-                            title:'<font size="3" color="red">'+format(new Date())+' '+(JSON && JSON.stringify ? JSON.stringify(message) : message)+'</font>' 
-                        },0)
-                    } else {
-                        $$("script_bet_log_board").add({
-                            title:'<font size="3" color="red">'+format(new Date())+' '+message+'</font>' 
-                        },0)
-                    }
-                    orig.apply(console, arguments);
-                }
-            })();
+            //(function () {
+            //    let orig = console.log;
+            //    console.log = function (message) {
+            //        if (typeof message == 'object') {
+            //        //webix.message(JSON.stringify( message));
+            //            $$("script_bet_log_board").add({
+            //                title:'<font size="3" color="green">'+format(new Date())+' '+(JSON && JSON.stringify ? JSON.stringify(message) : message)+'</font>' 
+            //            },0)
+            //        } else {
+            //            $$("script_bet_log_board").add({
+            //                title:'<font size="3" color="green">'+format(new Date())+' '+message+'</font>' 
+            //            },0)
+            //        }
+            //        orig.apply(console, arguments);
+            //    }
+            //})();
+            //(function () {
+            //    let orig = console.error;
+            //    console.error = function (message) {
+            //        if (typeof message == 'object') {
+            //            $$("script_bet_log_board").add({
+            //                title:'<font size="3" color="red">'+format(new Date())+' '+(JSON && JSON.stringify ? JSON.stringify(message) : message)+'</font>' 
+            //            },0)
+            //        } else {
+            //            $$("script_bet_log_board").add({
+            //                title:'<font size="3" color="red">'+format(new Date())+' '+message+'</font>' 
+            //            },0)
+            //        }
+            //        orig.apply(console, arguments);
+            //    }
+            //})();
             function focusFunction() {
                 if(webix.env.mobile) {
                     let layout = $$("mobile_toolbar").getParentView();

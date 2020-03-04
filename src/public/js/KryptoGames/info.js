@@ -53,19 +53,19 @@ function initScriptBalance(currencyValue, cb){
 
 function getBalance(userinfo){
     balance = userinfo.info.balance
-    return balance;
+    return parseFloat(balance);
 }
 
 function getProfit(userinfo){
     profit = userinfo.currentInfo.profit;
     //console.log('actprofit:'+actProfit);
-    return profit;
+    return parseFloat(profit);
 }
 
 function getCurrProfit(ret){
     currentprofit = ret.betInfo.profit
     //console.log('currprofit:'+currProfit);
-    return currentprofit;
+    return parseFloat(currentprofit);
 }
 
 function getCurrentBetId(ret){
