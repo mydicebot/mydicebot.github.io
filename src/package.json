@@ -1,5 +1,5 @@
 {
-    "name": "mydicebot-browser-191217",
+    "name": "mydicebot-browser-190919",
     "version": "1.0.0",
     "description": "MyDiceBot - Bet more, earn more!",
     "homepage": "https://mydicebot.com",
@@ -24,6 +24,11 @@
         "start": "./index_pkg.js"
     },
     "dependencies": {
+        "babel-core": "^6.24.1",
+        "babel-plugin-transform-builtin-extend": "^1.1.2",
+        "babel-preset-es2015": "^6.24.1",
+        "babel-preset-stage-0": "^6.24.1",
+        "babel-preset-es2015-node": "^6.1.1",
         "bitcore-message": "^1.0.4",
         "body-parser": "^1.10.2",
         "command-exists": "^1.2.7",
@@ -44,6 +49,8 @@
         "steem": "^0.7.1"
     },
     "devDependencies": {
+        "babel-preset-env": "^1.6.1",
+        "babel-cli": "^6.24.1",
         "pkg": "^4.3.7"
     },
     "scripts": {

@@ -54,7 +54,6 @@
 ## Blockchain - STEEM
 * [EpicDice](https://epicdice.io/?ref=mydicebot)
 * [KryptoGames](https://kryptogamers.com/?ref=mydicebot)
-* [SteemBet](https://steem-bet.com?ref=mydicebot)
 
 # TODO
 * [BetKing (coming soon)](https://betking.io/?ref=u:mydicebot)
@@ -101,8 +100,8 @@
 * Bet and WIN.
 
 # Features
-* Supported platforms: __Windows, Mac, Linux, Web__ and __Android__
-* Supported programming languages: __Lua__ and __Javascript__
+* Supported platforms: __Windows, Mac, Linux, Web, Terminal/Console__ and __Android__
+* Supported programming languages: __Lua, Javascript__ and __Python__
 * Supported multiple dice-sites
 * Supported multiple strategies
 * New account registration
@@ -111,9 +110,7 @@
 * Manual bet
 * Auto bet
 * Script bet (__compatible with Seuntjies DiceBot scripts__)
-* Chat room
-* Script upload/download/voting (coming soon)
-* Github/STEEM/Google Login integration
+* Chat room [MyDiceBot](https://discord.gg/S6W5ec9) on [Discord](https://discord.gg/S6W5ec9)
 
 # Manual Bet
 * You can control every bet by yourself.
@@ -128,7 +125,7 @@
 # Script Bet
 * Lua programming language
 * JavaScript programming language
-* Python programming language (coming soon)
+* Python programming language
 * __Compatible with the variables and functions of Seuntjie DiceBot's Lua script__
 
 ![](screenshot/mydicebot-script-bet.png)
@@ -230,7 +227,7 @@ function dobet() {
 # Contact
 * github: [https://github.com/mydicebot/mydicebot.github.io/issues](https://github.com/mydicebot/mydicebot.github.io/issues)
 * steemit: [https://steemit.com/@mydicebot](https://steemit.com/@mydicebot)
-* bitcointalk: [MyDiceBot - Cross-Platform | Multi-Script-Language | Multi-Site | Multi-Strategy](https://bitcointalk.org/index.php?topic=5057661)
+* bitcointalk: [★MyDiceBot★ - Ultimate Bitcoin Dice Bot. Bet More, Earn More!](https://bitcointalk.org/index.php?topic=5057661)
 * discord: [https://discord.gg/S6W5ec9](https://discord.gg/S6W5ec9)
 
 # Donation
