@@ -8,7 +8,7 @@ var APIError = require('../errors/APIError');
 module.exports = class NineDice extends BaseDice {
     constructor(){
         super();
-        this.url = 'https://www.999dice.com';
+        this.url = 'https://www.999doge.com';
         this.benefit = '?224280708'
     }
 
