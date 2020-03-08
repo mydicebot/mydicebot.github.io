@@ -2,9 +2,9 @@
 # MyDiceBot - Ultimate Bitcoin Dice Bot
 * [https://mydicebot.com](https://mydicebot.com)
 * [MyDiceBot](https://mydicebot.com) is World #1 Cross-Platform Dicing Bot.
-* Multiple platforms are supported, including __Windows, Mac, Linux, Web__ and __Android__.
+* Multiple platforms are supported, including __Windows, Mac, Linux, Web, Terminal/Console__ and __Android__.
 * Multiple blockchains are supported, including __STEEM__.
-* Multiple programming languages are supported such as  __Lua__ and __Javascript__.
+* Multiple programming languages are supported such as  __Lua, Javascript__ and __Python__.
 * [Open Source](https://github.com/mydicebot/mydicebot.github.io) and __Free Forever__.
 
 ![](screenshot/mydicebot-1000-win.png)
@@ -31,9 +31,6 @@
    * [Legal](#legal)
    * [Contact](#contact)
    * [Donation](#donation)
-
-# Online Simulator
-* [https://simulator.mydicebot.com](https://simulator.mydicebot.com)
 
 # Download
 ![](screenshot/download-qr-code.png)
