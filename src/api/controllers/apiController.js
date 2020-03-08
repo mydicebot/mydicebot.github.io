@@ -8,7 +8,7 @@ var fs = require('fs');
 var path = require('path');
 
 let registerUrls = {
-    "999Dice":"https://www.999dice.com/?224280708",
+    "999Dice":"https://www.999doge.com/?224280708",
     "BetKing":"https://betking.io/?ref=u:mydicebot",
     "BitDice":"https://www.bitdice.me/?r=90479",
     "Bitsler":"https://www.bitsler.com/?ref=mydicebot",
