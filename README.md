@@ -14,6 +14,7 @@
    * [Supporting Dice Sites (alphabet sequence)](#supporting-dice-sites-alphabet-sequence)
    * [TODO](#todo)
    * [Quick Start](#quick-start)
+   * [How to Run](#how-to-run)
    * [Startup Options](#startup-options)
    * [Features](#features)
    * [Manual Bet](#manual-bet)
@@ -95,6 +96,14 @@
 
 * Choose Dice Site, Input username/password/2FA/APIKey, then Login.
 * Bet and WIN.
+
+# How to Run
+Ensure you install the latest version of [docker](https://docs.docker.com/engine/installation/) and [docker-compose](https://docs.docker.com/compose/install/)
+
+```bash
+bash start.sh
+```
+* Visit http://localhost:57432/login
 
 # Features
 * Supported platforms: __Windows, Mac, Linux, Web, Terminal/Console__ and __Android__
