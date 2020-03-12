@@ -104,6 +104,13 @@ block content
                 label: "SWITCH SITE",
                 css: "webix_danger",
             };
+            var export_log_button = {
+                id: "export_log_button",
+                view: "button",
+                type: "danger",
+                label: "EXPORT CURRENT LOG",
+                css: "webix_danger",
+            };
             var dice_site_ref_list = [
                 "<a target='_blank' href='https://www.999dice.com/?224280708'>999Dice-0.1% House</a>",
                 "<a target='_blank' href='https://www.bitsler.com/?ref=mydicebot'>Bitsler-1% House</a>",
@@ -1244,6 +1251,7 @@ block content
                     bet_house_edge_selection,
                     reset_session_button,
                     switch_site_button,
+                    export_log_button,
                     dice_site_ref_info,
                 ]
             };
@@ -1613,6 +1621,10 @@ block content
                         }
                     }
                 });
+            });
+            $$("export_log_button").attachEvent("onItemClick", function(){
+                webix.csv.delimiter.cols = ",";
+                webix.toCSV($$("bet_datatable"));
             });
             $$("manual_bet_low_button").attachEvent("onItemClick", function(){
                 isloop = false;

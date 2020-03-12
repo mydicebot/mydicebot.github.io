@@ -6,6 +6,7 @@ var registerUrls = {
     "BitVest":"https://bitvest.io?r=108792",
     "Crypto-Games":"https://www.crypto-games.net?i=CpQP3V8Up2",
     "Dice-Bet":"https://dice-bet.com/?ref=u:mydicebot",
+    "WolfBet":"https://wolf.bet/?c=mydicebot",
     "DuckDice":"https://duckdice.com/ab61534783",
     "Freebitco.in":"https://freebitco.in/?r=16392656",
     "KingDice":"https://kingdice.com/#/welcome?aff=18072",

@@ -38,13 +38,13 @@ block content
                                     {id:"Bitsler",value:"Bitsler"},
                                     {id:"Crypto-Games",value:"Crypto-Games"},
                                     {id:"DuckDice",value:"DuckDice"},
+                                    {id:"FreeBitco",value:"FreeBitco.in"},
                                     {id:"PrimeDice",value:"PrimeDice"},
                                     {id:"Stake",value:"Stake"},
-                                    {id:"YoloDice",value:"YoloDice"},
-                                    {id:"FreeBitco",value:"FreeBitco.in"},
+                                    {id:"WolfBet",value:"WolfBet"},
                                     {id:"WinDice",value:"WinDice"},
+                                    {id:"YoloDice",value:"YoloDice"},
                                     {id:"EpicDice", value:"EpicDice"},
-                                    {id:"SteemBet", value:"SteemBet"},
                                     {id:"KryptoGames", value:"KryptoGames"},
                                     {id:"BetKing",value:"BetKing (coming soon)"},
                                     {id:"BitDice",value:"BitDice (coming soon)"},
@@ -285,26 +285,38 @@ block content
             ]                   
         }
 
-        var supported_dice_site_info = {
-            id: "supported_dice_site_info",
-            padding: 20,
+        var traditional_dice_site_info = {
+            id: "traditional_dice_site_info",
+            // padding: 20,
             rows: [
-                {view: "label", label: "Supporting Dice Sites"},
+                {view: "label", label: "Traditionals"},
                 {view: "label", label: "<a target='_blank' href='https://www.999dice.com/?224280708'>999Dice</a>"},
                 {view: "label", label: "<a target='_blank' href='https://www.bitsler.com/?ref=mydicebot'>Bitsler</a>"},
                 {view: "label", label: "<a target='_blank' href='https://www.crypto-games.net/?i=CpQP3V8Up2'>Crypto-Games</a>"},
-                {view: "label", label: "<a target='_blank' href='https://primedice.com/?c=mydicebot'>PrimeDice</a>"},
-                {view: "label", label: "<a target='_blank' href='https://stake.com/?code=mydicebot'>Stake</a>"},  
-                {view: "label", label: "<a target='_blank' href='https://yolodice.com/r?6fAf-wVz'>YoloDice</a>"},
                 {view: "label", label: "<a target='_blank' href='https://duckdice.com/ab61534783'>DuckDice</a>"},
                 {view: "label", label: "<a target='_blank' href='https://freebitco.in/?r=16392656'>Freebitco.in</a>"},
+                {view: "label", label: "<a target='_blank' href='https://primedice.com/?c=mydicebot'>PrimeDice</a>"},
+                {view: "label", label: "<a target='_blank' href='https://stake.com/?code=mydicebot'>Stake</a>"},  
                 {view: "label", label: "<a target='_blank' href='https://windice.io/?r=e63q8xq4y'>WinDice</a>"},
+                {view: "label", label: "<a target='_blank' href='https://wolf.bet?c=mydicebot'>WolfBet</a>"},
+                {view: "label", label: "<a target='_blank' href='https://yolodice.com/r?6fAf-wVz'>YoloDice</a>"},
+            ]
+        };
+        
+        var blockchain_dice_site_info = {
+            id: "blockchain_dice_site_info",
+            // padding: 20,
+            rows: [
+                {view: "label", label: "STEEM Blockchain"},
+                {view: "label", label: "<a target='_blank' href='https://epicdice.io/?ref=mydicebot'>EpicDice</a>"},
+                {view: "label", label: "<a target='_blank' href='https://kryptogamers.com/?ref=mydicebot'>KryptoGamers</a>"},
+
             ]
         };
 
         var todo_dice_site_info = {
             id: "todo_dice_site_info",
-            padding: 20,
+            // padding: 20,
             rows: [
                 {view: "label", label: "TODO"},
                 {view: "label", label: "<a target='_blank' href='https://betking.io/?ref=u:mydicebot'>BetKing</a>"},
@@ -323,20 +335,21 @@ block content
         
         webix.ui({
             id: "login_layout",
-            align: "center,middle",
+            align: "center, middle",
             body: {
                 rows: [
                     login_tabview,
                     // mydicebot_official_site_info,
                     // ads_iframe
+                    {
+                        cols:[
+                            traditional_dice_site_info,
+                            blockchain_dice_site_info,
+                            todo_dice_site_info
+                        ]
+                    }
                 ]
-            },
-            // resizer,
-            // {rows: [
-            //     supported_dice_site_info,
-            //     todo_dice_site_info
-            // ]}
-
+            }
         });
 
         if(webix.env.mobile) {
@@ -424,10 +437,10 @@ block content
         let keepassdb = {};
         let keepasslogin = false;
         let needUserSites = ['test','999Dice','FreeBitco'];
-        let needTokenSites = ['test','PrimeDice','Stake'];
+        let needTokenSites = ['test','PrimeDice','Stake','WolfBet'];
         let needApiKeySites = ['test','Bitsler'];
         let needOnlyApiKeySites = ['test','YoloDice','Crypto-Games','DuckDice','WinDice'];
-        let needSteemActiveKeySites = ['test','EpicDice','SteemBet','KryptoGames'];
+        let needSteemActiveKeySites = ['test','EpicDice','KryptoGames'];
         let needSimulatorActiveKeySites = ['test','Simulator'];
         function keelogin() {
             if($$("keepass_form").validate()){

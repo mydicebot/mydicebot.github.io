@@ -17070,7 +17070,8 @@
 	}
 	function getExportData(view, options, scheme) {
 	  var filterHTML = !!options.filterHTML;
-	  var htmlFilter = /<[^>]*>/gi;
+	  //var htmlFilter = /<[^>]*>/gi;
+	  var htmlFilter = /<[\/\!]*font[^<>]*?>/gi;
 	  var data = [];
 	  var header, headers;
 	  var mode = options.export_mode;

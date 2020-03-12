@@ -26,9 +26,9 @@ let registerUrls = {
     "Stake":"https://stake.com/?code=mydicebot",
     "YoloDice":"https://yolodice.com/r?6fAf-wVz",
     "EpicDice": "https://magic-dice.com/?ref=mydicebot",
-    "SteemBet": "https://magic-dice.com/?ref=mydicebot",
     "KryptoGames": "https://magic-dice.com/?ref=mydicebot",
     "WinDice": "https://windice.io/?r=e63q8xq4y",
+    "WolfBet": "https://wolf.bet/?c=mydicebot",
 };
 
 let mydiceUrls = {

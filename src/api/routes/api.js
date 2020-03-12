@@ -9,11 +9,11 @@ var StakeDice = require('../models/stake');
 var CryptoDice = require('../models/crypto');
 var Simulator = require('../models/simulator');
 var EpicDice = require('../models/epic');
-var SteemBet = require('../models/steembet');
 var KryptoGames = require('../models/kryptogames');
 var DuckDice = require('../models/duckdice');
 var FreeBitco = require('../models/freebitco');
 var WinDice = require('../models/windice');
+var WolfBet = require('../models/wolfbet');
 var Factory = require('../models/factory');
 var config = require('config');
 var fs = require('fs');
@@ -71,11 +71,11 @@ function createDice (req, res, next) {
     Factory.register('Crypto-Games', new CryptoDice());
     Factory.register('Simulator', new Simulator());
     Factory.register('EpicDice', new EpicDice());
-    Factory.register('SteemBet', new SteemBet());
     Factory.register('KryptoGames', new KryptoGames());
     Factory.register('DuckDice', new DuckDice());
     Factory.register('FreeBitco', new FreeBitco());
     Factory.register('WinDice', new WinDice());
+    Factory.register('WolfBet', new WolfBet());
     next();
 }
 

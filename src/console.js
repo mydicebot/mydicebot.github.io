@@ -11,11 +11,11 @@ var StakeDice = require('./api/models/stake');
 var CryptoDice = require('./api/models/crypto');
 var Simulator = require('./api/models/simulator');
 var EpicDice = require('./api/models/epic');
-var SteemBet = require('./api/models/steembet');
 var KryptoGames = require('./api/models/kryptogames');
 var DuckDice = require('./api/models/duckdice');
 var FreeBitco = require('./api/models/freebitco');
 var WinDice = require('./api/models/windice');
+var WolfBet = require('./api/models/wolfbet');
 let regpath = path.join(__dirname,'public/js/reg.js');
 eval(fs.readFileSync(regpath, 'utf8'));
 var readdir = util.promisify(fs.readdir);
@@ -30,16 +30,16 @@ Factory.register('Stake', new StakeDice());
 Factory.register('Crypto-Games', new CryptoDice());
 Factory.register('Simulator', new Simulator());
 Factory.register('EpicDice', new EpicDice());
-Factory.register('SteemBet', new SteemBet());
 Factory.register('KryptoGames', new KryptoGames());
 Factory.register('DuckDice', new DuckDice());
 Factory.register('FreeBitco', new FreeBitco());
 Factory.register('WinDice', new WinDice());
+Factory.register('WolfBet', new WolfBet());
 var needUserSites = ['999Dice','FreeBitco'];
-var needTokenSites = ['PrimeDice','Stake'];
+var needTokenSites = ['PrimeDice','Stake','WolfBet'];
 var needApiKeySites = ['Bitsler'];
 var needOnlyApiKeySites = ['YoloDice','Crypto-Games','DuckDice','WinDice'];
-var needSteemActiveKeySites = ['EpicDice','SteemBet','KryptoGames'];
+var needSteemActiveKeySites = ['EpicDice','KryptoGames'];
 var needSimulatorActiveKeySites = ['Simulator'];
 
 var nums = 0, currency = 'btc', base = 0, isloop = false, iswin = false;
@@ -50,7 +50,7 @@ var maxwinstreak = 0, maxlossstreak = 0, maxwinstreakamount = 0, maxlossstreakam
 var currencies = ['BTC', 'Doge', 'LTC', 'ETH'];
 var stop = false;
 var req = {};
-var sleepTime = 2000;
+var sleepTime = 0;
 req.setTimeout = function (time){}
 req.session = {};
 req.body = {'site':'Simulator','username':'mydicebot','password':'mydicebot','twoFactor':123456,'apiKey':'mydicebot'};
@@ -60,7 +60,7 @@ if(readlineSync.keyInYN('Whether to read the last configuration?')) {
     let rawdata = fs.readFileSync('./recent_account_info.json');
     req.body = JSON.parse(rawdata);
 } else {
-    sites = ['Simulator', '999Dice', 'Bitsler', 'Crypto-Games', 'DuckDice', 'PrimeDice', 'Stake', 'YoloDice', 'FreeBitco.in', 'WinDice', 'EpicDice', 'SteemBet','KryptoGames'];
+    sites = ['Simulator', '999Dice', 'Bitsler', 'Crypto-Games', 'DuckDice', 'PrimeDice', 'Stake', 'YoloDice','WolfBet', 'FreeBitco.in', 'WinDice', 'EpicDice', 'KryptoGames'];
     index = readlineSync.keyInSelect(sites, 'Which site?');
     if(index < 0 ){
         return false;
@@ -96,7 +96,7 @@ if(readlineSync.keyInYN('Whether to read the last configuration?')) {
     } else {
         req.body.site = 'Simulator';
         req.body.HouseEdge = 0.001;
-        sleepTime = 4000;
+        sleepTime = 1000;
     }
 }
 
