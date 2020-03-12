@@ -1,0 +1,16 @@
+{
+  "apps": [
+    {
+      "name": "mydicebot-web",
+      "script": "/src/index.js",
+      "instances"  : 1,
+      "exec_mode"  : "cluster",
+      "env"  : {
+          "watch":true
+      },
+      "env_production"  : {
+          "watch":false
+      }
+    }
+  ]
+}

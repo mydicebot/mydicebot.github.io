@@ -1,0 +1,20 @@
+version: "2.1"
+
+services:
+  mydice_web:
+    container_name: mydice_web
+    build:
+      context: ./
+      args:
+          - 'PATHWORK=/src/package.json'
+          - 'PMFILE=/src/pm2.json'
+      dockerfile: Dockerfile
+    volumes:
+    - ./src:/src
+    - /src/node_modules
+    environment:
+        - NODE_ENV=${CURRENT_ENV}
+        - PM=pm2.json
+    ports:
+     - "57432:57432"
+    tty: true
