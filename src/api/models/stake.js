@@ -14,7 +14,7 @@ module.exports = class StakeDice extends BaseDice {
     }
 
     async login(userName, password, twoFactor ,apiKey, req) {
-        let data = "query{user {activeServerSeed { seedHash seed nonce} activeClientSeed{seed} id balances{available{currency amount}} statistic {game bets wins losses amount profit currency}}}";
+        let data = "query{user {activeServerSeed { seedHash seed nonce} activeClientSeed{seed} id balances{available{currency amount}} statistic {game bets wins losses betAmount profit currency}}}";
         let ret = await this._send('', 'POST', data, apiKey);
         req.session.accessToken = apiKey;
         req.session.username = apiKey;
@@ -31,7 +31,7 @@ module.exports = class StakeDice extends BaseDice {
         if(!info){
             return false;
         }
-        let data = "query{user {activeServerSeed { seedHash seed nonce} activeClientSeed{seed} id balances{available{currency amount}} statistic {game bets wins losses amount profit currency}}}";
+        let data = "query{user {activeServerSeed { seedHash seed nonce} activeClientSeed{seed} id balances{available{currency amount}} statistic {game bets wins losses betAmount profit currency}}}";
         let ret = await this._send('', 'POST', data, req.session.accessToken);
         ret = ret.user;
         let userinfo = {
@@ -53,7 +53,7 @@ module.exports = class StakeDice extends BaseDice {
                 userinfo.wins = ret.statistic[i].wins;
                 userinfo.bets = ret.statistic[i].bets;
                 userinfo.losses = ret.statistic[i].losses;
-                userinfo.wagered = parseFloat(ret.statistic[i].amount).toFixed(8);
+                userinfo.wagered = parseFloat(ret.statistic[i].betAmount).toFixed(8);
             }
         }
         userinfo.success = 'true';
@@ -64,7 +64,7 @@ module.exports = class StakeDice extends BaseDice {
 
     async clear(req) {
         console.log('loading....');
-        let data = "query{user {activeServerSeed { seedHash seed nonce} activeClientSeed{seed} id balances{available{currency amount}} statistic {game bets wins losses amount profit currency}}}";
+        let data = "query{user {activeServerSeed { seedHash seed nonce} activeClientSeed{seed} id balances{available{currency amount}} statistic {game bets wins losses betAmount profit currency}}}";
         let ret = await this._send('', 'POST', data, req.session.accessToken);
         ret=ret.user;
         let info = {};
@@ -98,7 +98,7 @@ module.exports = class StakeDice extends BaseDice {
                 userinfo.wins = ret.statistic[i].wins;
                 userinfo.bets = ret.statistic[i].bets;
                 userinfo.losses = ret.statistic[i].losses;
-                userinfo.wagered = parseFloat(ret.statistic[i].amount).toFixed(8);
+                userinfo.wagered = parseFloat(ret.statistic[i].betAmount).toFixed(8);
             }
         }
         userinfo.success = 'true';
@@ -118,7 +118,7 @@ module.exports = class StakeDice extends BaseDice {
             target = Math.floor((req.body.Chance*10000))-1;
         }
         target = parseFloat(target/10000).toFixed(2);
-        let data = " mutation{diceRoll(amount:"+amount+",target:"+target+",condition:"+ condition +",currency:"+currency+ ") { id nonce currency amount payout state { ... on CasinoGameDice { result target condition } } createdAt serverSeed{seedHash seed nonce} clientSeed{seed} user{balances{available{amount currency}} statistic{game bets wins losses amount profit currency}}}}";
+        let data = " mutation{diceRoll(amount:"+amount+",target:"+target+",condition:"+ condition +",currency:"+currency+ ") { id nonce currency amount payout state { ... on CasinoGameDice { result target condition } } createdAt serverSeed{seedHash seed nonce} clientSeed{seed} user{balances{available{amount currency}} statistic{game bets wins losses betAmount profit currency}}}}";
         let ret = await this._send('', 'POST', data, req.session.accessToken);
         let info = req.session.info;
         let betInfo = ret.diceRoll;

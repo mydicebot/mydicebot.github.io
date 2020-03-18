@@ -47,8 +47,10 @@
 * [Freebitco.in](https://freebitco.in/?r=16392656)
 * [PrimeDice](https://primedice.com/?c=mydicebot)
 * [Stake](https://stake.com/?code=mydicebot)
-* [YoloDice](https://yolodice.com/r?6fAf-wVz)
 * [WinDice](https://windice.io/?r=e63q8xq4y)
+* [WolfBet](https://wolf.bet/?c=mydicebot)
+* [YoloDice](https://yolodice.com/r?6fAf-wVz)
+
 ## Blockchain - STEEM
 * [EpicDice](https://epicdice.io/?ref=mydicebot)
 * [KryptoGames](https://kryptogamers.com/?ref=mydicebot)

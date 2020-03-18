@@ -1568,6 +1568,11 @@ block content
                     isloop = false;
                     $$("auto_bet_start_stop_button").setValue('START');
                 } else {
+                    $$("auto_bet_form").serialize(function(m){
+                       if(typeof m.data.value != "undefined") {
+                            webix.storage.local.put("mydice_"+ m.data.id, m.data.value);
+                       }
+                    });
                     $$("auto_bet_start_stop_button").setValue('STOP');
                     autoBet();
                     isloop = true;
@@ -1711,7 +1716,17 @@ block content
                 }
                 webix.html.addStyle(".webix_primary{ z-index:10; }");
                 initPythonButton();
+                initAutoBetFormState();
             });
+            function initAutoBetFormState(){
+                $$("auto_bet_form").serialize(function(m){
+                   if(typeof m.data.value != "undefined") {
+                        if(webix.storage.local.get("mydice_"+m.data.id)){
+                            $$(m.data.id).setValue(webix.storage.local.get("mydice_"+m.data.id));
+                        }
+                   }
+                });
+            }
             function initPythonButton(){
                 let btn = document.createElement("BUTTON");
                 btn.innerHTML = "click me";
