@@ -41,6 +41,7 @@
 # Supporting Dice Sites (alphabet sequence)
 ## Traditional
 * [999Dice](https://www.999dice.com/?224280708)
+* [999Doge](https://www.999doge.com/?224280708)
 * [Bitsler](https://www.bitsler.com/?ref=mydicebot)
 * [Crypto-Games](https://www.crypto-games.net?i=CpQP3V8Up2)
 * [DuckDice](https://duckdice.com/ab61534783)

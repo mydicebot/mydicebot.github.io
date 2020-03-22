@@ -14,7 +14,7 @@ block content
             var basebet = 0.00000001, nextbet = 0.00000001, chance = 90, bethigh = false;
             var previousbet = 0, win = false, currentprofit = 0, balance = 0, bets = 0, wins = 0, losses = 0, profit = 0, currentstreak = 0, currentroll = 0 ;
             var humps = ['baseBet', 'nextBet', 'betHigh', 'previousBet', 'currentProfit', 'currentStreak','currentRoll'];
-            var maxwinstreak = 0, maxlossstreak = 0, maxwinstreakamount = 0, maxlossstreakamount = 0, maxstreakamount = 0, minstreakamount = 0 ;
+            var maxwinstreak = 0, maxlossstreak = 0, maxwinstreakamount = 0, maxlossstreakamount = 0, maxstreakamount = 0, minstreakamount = 0, maxbetamount= 0  ;
             var bet_total_stats = {
                 id: "bet_total_stats",
                 view: "property",
@@ -51,7 +51,8 @@ block content
                     {label: "max win streak", type: "text", id: "bet_current_stats_max_win_streak", value:"0"},
                     {label: "max loss streak", type: "text", id: "bet_current_stats_max_loss_streak", value:"0"},
                     {label: "max lostrk amnt", type: "text", id: "bet_current_stats_max_loss_streak_amount", value:"0"},
-                    {label: "max bet amnt", type: "text", id: "bet_current_stats_max_bet_amount", value:"0", },
+                    {label: "max bet amnt", type: "text", id: "bet_current_stats_max_bet_amount", value:"0" },
+                    {label: "seed", type: "text", id: "bet_current_stats_seed", value:"0"},
                 ]
             };
             var bet_currency_selection = {
@@ -1770,6 +1771,15 @@ block content
                     webix.ajax().get('resetseed?currency='+$$("bet_currency_selection").getText().toLowerCase()).then(function (result) {
                         let ret = result.json();
                         if (ret.success == true) {
+                            $$('bet_current_stats2').setValues({
+                                bet_current_stats_current_streak:currentstreak,
+                                bet_current_stats_max_win_streak:maxwinstreak,
+                                bet_current_stats_max_loss_streak:maxlossstreak,
+                                bet_current_stats_max_win_streak_amount:maxwinstreakamount,
+                                bet_current_stats_max_loss_streak_amount:maxlossstreakamount,
+                                bet_current_stats_max_bet_amount:maxbetamount,
+                                bet_current_stats_seed:ret.seed,
+                            });
                             webix.message({type: 'info', text: 'reset seed successd'});
                         }
                         lastResetSeed = now;
@@ -2174,6 +2184,7 @@ block content
                     bet_current_stats_max_win_streak_amount:0,
                     bet_current_stats_max_loss_streak_amount:0,
                     bet_current_stats_max_bet_amount:0,
+                    bet_current_stats_seed:0,
                 });
                 $$('bet_datatable').clearAll();
                 $$("bet_chart").clearAll();
@@ -2245,7 +2256,8 @@ block content
                 maxlossstreak = $$('bet_current_stats2').getValues().bet_current_stats_max_loss_streak;
                 maxwinstreakamount = $$('bet_current_stats2').getValues().bet_current_stats_max_win_streak_amount;
                 maxlossstreakamount = $$('bet_current_stats2').getValues().bet_current_stats_max_loss_streak_amount;
-                let maxbetamount = $$('bet_current_stats2').getValues().bet_current_stats_max_bet_amount;
+                maxbetamount = $$('bet_current_stats2').getValues().bet_current_stats_max_bet_amount;
+                seed = $$('bet_current_stats2').getValues().bet_current_stats_seed;
                 if(currentAmount>maxbetamount){
                     maxbetamount = currentAmount.toFixed(8);
                 }
@@ -2291,6 +2303,7 @@ block content
                     bet_current_stats_max_win_streak_amount:maxwinstreakamount,
                     bet_current_stats_max_loss_streak_amount:maxlossstreakamount,
                     bet_current_stats_max_bet_amount:maxbetamount,
+                    bet_current_stats_seed:seed,
                 });
             }
             function setBetToLua(ret, currencyValue){

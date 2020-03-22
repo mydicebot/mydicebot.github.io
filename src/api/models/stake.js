@@ -159,9 +159,9 @@ module.exports = class StakeDice extends BaseDice {
         let clientSeed = Math.random().toString(36).substring(2);
         let data = "mutation{rotateServerSeed{ seed seedHash nonce } changeClientSeed(seed:\"" + clientSeed + "\"){seed}}"
         let ret = await this._send('', 'POST', data, req.session.accessToken);
-        console.log(ret);
+        console.log(clientSeed, ret);
         let info = {};
-        info.seed = ret.rotateServerSeed.seed;
+        info.seed = clientSeed;
         info.seedHash = ret.rotateServerSeed.seedHash;
         info.success = true;
         return info;

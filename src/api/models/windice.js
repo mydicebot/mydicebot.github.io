@@ -156,6 +156,7 @@ module.exports = class WinDice extends BaseDice {
         info.current_client = ret.client;
         info.hash = ret.hash;
         info.new_hash = ret.newHash;
+        info.seed = data.value;
         info.success = true;
         return info;
     }

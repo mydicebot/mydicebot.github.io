@@ -203,6 +203,7 @@ module.exports = class YoloDice extends BaseDice {
         console.log(info);
         //info.seed = ret.rotateServerSeed.seed;
         //info.seedHash = ret.rotateServerSeed.seedHash;
+        info.seed = seed; 
         info.success = true;
         return info;
     }

@@ -153,6 +153,7 @@ module.exports = class WolfBet extends BaseDice {
         info.current_client = ret.seed;
         info.hash = ret.seed;
         info.new_hash = ret.seed;
+        info.seed = data.client_seed;
         info.success = true;
         return info;
     }

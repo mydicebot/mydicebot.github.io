@@ -16,6 +16,7 @@ var DuckDice = require('./api/models/duckdice');
 var FreeBitco = require('./api/models/freebitco');
 var WinDice = require('./api/models/windice');
 var WolfBet = require('./api/models/wolfbet');
+var NineDoge = require('./api/models/ninedoge');
 let regpath = path.join(__dirname,'public/js/reg.js');
 eval(fs.readFileSync(regpath, 'utf8'));
 var readdir = util.promisify(fs.readdir);
@@ -35,7 +36,8 @@ Factory.register('DuckDice', new DuckDice());
 Factory.register('FreeBitco', new FreeBitco());
 Factory.register('WinDice', new WinDice());
 Factory.register('WolfBet', new WolfBet());
-var needUserSites = ['999Dice','FreeBitco'];
+Factory.register('999Doge', new NineDoge());
+var needUserSites = ['999Dice','FreeBitco','999Doge'];
 var needTokenSites = ['PrimeDice','Stake','WolfBet'];
 var needApiKeySites = ['Bitsler'];
 var needOnlyApiKeySites = ['YoloDice','Crypto-Games','DuckDice','WinDice'];
@@ -60,7 +62,7 @@ if(readlineSync.keyInYN('Whether to read the last configuration?')) {
     let rawdata = fs.readFileSync('./recent_account_info.json');
     req.body = JSON.parse(rawdata);
 } else {
-    sites = ['Simulator', '999Dice', 'Bitsler', 'Crypto-Games', 'DuckDice', 'PrimeDice', 'Stake', 'YoloDice','WolfBet', 'FreeBitco.in', 'WinDice', 'EpicDice', 'KryptoGames'];
+    sites = ['Simulator', '999Dice', 'Bitsler', 'Crypto-Games', 'DuckDice', 'PrimeDice', 'Stake', 'YoloDice','WolfBet', 'FreeBitco.in', 'WinDice', 'EpicDice', 'KryptoGames', '999Doge'];
     index = readlineSync.keyInSelect(sites, 'Which site?');
     if(index < 0 ){
         return false;

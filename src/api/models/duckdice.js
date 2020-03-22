@@ -129,6 +129,7 @@ module.exports = class DuckDice extends BaseDice {
         let info = {};
         info.previous_seed = ret.new.clientSeed;
         info.current_seed = ret.current.clientSeed;
+        info.seed = data.clientSeed;
         info.success = true;
         return info;
     }

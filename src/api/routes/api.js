@@ -3,6 +3,7 @@
 var api = require('../controllers/apiController');
 var BitslerDice = require('../models/bitsler');
 var NineDice = require('../models/nine');
+var NineDoge = require('../models/ninedoge');
 var YoloDice = require('../models/yolo');
 var PrimeDice = require('../models/prime');
 var StakeDice = require('../models/stake');
@@ -76,6 +77,7 @@ function createDice (req, res, next) {
     Factory.register('FreeBitco', new FreeBitco());
     Factory.register('WinDice', new WinDice());
     Factory.register('WolfBet', new WolfBet());
+    Factory.register('999Doge', new NineDoge());
     next();
 }
 

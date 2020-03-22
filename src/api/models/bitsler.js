@@ -96,15 +96,17 @@ module.exports  = class BitslerDice extends BaseDice {
     async resetseed(req) {
         let formData = new FormData();
         let accessToken = req.session.accessToken;
+        let seed = Math.random().toString(36).substring(2);
         formData.append('access_token', accessToken);
         //formData.append('seed_client', Math.sin(1).toString().substr(6));
-        formData.append('seed_client', Math.random().toString(36).substring(2));
+        formData.append('seed_client', seed);
         let ret = await this._send('change-seeds', 'POST', formData,'');
         console.log(ret);
         let info = {};
         info.previous_seed = ret.previous_seed;
         info.previous_client = ret.previous_client;
         info.current_client = ret.current_client;
+        info.seed = seed;
         info.success = ret.success;
         return info;
     }
