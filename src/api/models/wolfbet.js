@@ -186,4 +186,3 @@ module.exports = class WolfBet extends BaseDice {
         return data;
     }
 }
-exports.WinDice

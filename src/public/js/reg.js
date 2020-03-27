@@ -22,5 +22,6 @@ var registerUrls = {
     "SteemBet": "https://steem-bet.com?ref=mydicebot",
     "KryptoGames": "https://kryptogamers.com/?ref=mydicebot",
     "WinDice": "https://windice.io/?r=e63q8xq4y",
+    "SatoshiDice": "https://www.satoshidice.io/",
     "Simulator": "https://www.999dice.com/?224280708",
 };

@@ -145,6 +145,7 @@ function consoleData(ret, iswin){
     let chanceStr = ret.betInfo.condition + ' '+ ret.betInfo.target;
     let profitStr = ret.betInfo.profit;
     datalog.log('betid:' +ret.betInfo.id + ' amount:'+ (ret.betInfo.amount).toFixed(8)+ ' low_high:'+ ret.betInfo.condition+' payout:'+ ret.betInfo.payout +' chance:'+chanceStr+' actual_chance:'+ ret.betInfo.roll_number +' profit:'+profitStr );
+    return ret.betInfo.id + ','+ (ret.betInfo.amount).toFixed(8)+ ','+ ret.betInfo.condition+','+ ret.betInfo.payout +','+chanceStr+','+ ret.betInfo.roll_number +','+profitStr;
 }
 
 function consoleStats(userinfo, cv){

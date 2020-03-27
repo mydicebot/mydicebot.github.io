@@ -6,8 +6,8 @@ block content
         var login_tabview = {
                 id: "login_tabview",
                 view: "tabview",
-                height: 500,
-                width: 400,
+                height: 380,
+                width: 600,
                 cells: [
                     {
                         header: "SITES",
@@ -45,6 +45,7 @@ block content
                                     {id:"WolfBet",value:"WolfBet"},
                                     {id:"WinDice",value:"WinDice"},
                                     {id:"YoloDice",value:"YoloDice"},
+                                    {id:"SatoshiDice", value:"SatoshiDice"},
                                     {id:"EpicDice", value:"EpicDice"},
                                     {id:"KryptoGames", value:"KryptoGames"},
                                     {id:"BetKing",value:"BetKing (coming soon)"},
@@ -315,6 +316,22 @@ block content
 
             ]
         };
+        
+        var faucet_site_info = {
+            id: "faucet_site_info",
+            rows: [
+                {view: "label", label: "Faucet"},
+                {view: "label", label: "<a target='_blank' href='https://faucetcollector.com/?ref=4789455'>FaucetCollector</a>"},
+            ]
+        };
+        
+        var exchange_site_info = {
+            id: "exchange_site_info",
+            rows: [
+                {view: "label", label: "Exchange"},
+                {view: "label", label: "<a target='_blank' href='https://www.binance.com/en/register?ref=40077522'>Binance</a>"},
+            ]
+        };
 
         var todo_dice_site_info = {
             id: "todo_dice_site_info",
@@ -347,7 +364,9 @@ block content
                         cols:[
                             traditional_dice_site_info,
                             blockchain_dice_site_info,
-                            todo_dice_site_info
+                            todo_dice_site_info,
+                            faucet_site_info,
+                            exchange_site_info,
                         ]
                     }
                 ]
@@ -438,7 +457,7 @@ block content
 
         let keepassdb = {};
         let keepasslogin = false;
-        let needUserSites = ['test','999Dice','FreeBitco','999Doge'];
+        let needUserSites = ['test','999Dice','FreeBitco','999Doge','SatoshiDice'];
         let needTokenSites = ['test','PrimeDice','Stake','WolfBet'];
         let needApiKeySites = ['test','Bitsler'];
         let needOnlyApiKeySites = ['test','YoloDice','Crypto-Games','DuckDice','WinDice'];

@@ -132,6 +132,7 @@ function consoleData(ret, iswin){
     let chanceStr = ret.High + ' '+ ret.BetRoll/10000 ;
     let profitStr = ((ret.PayOut-ret.PayIn)/100000000).toFixed(8);
     datalog.log('betid:' +ret.BetId + ' amount:'+ (ret.PayIn/100000000).toFixed(8)+ ' low_high:'+ ret.High+' payout:'+ (ret.PayOut/100000000).toFixed(8)+' chance:'+chanceStr+' actual_chance:'+ ret.Secret/10000 +' profit:'+profitStr );
+    return ret.BetId + ','+ (ret.PayIn/100000000).toFixed(8)+ ','+ ret.High+','+ (ret.PayOut/100000000).toFixed(8)+','+chanceStr+','+ ret.Secret/10000 +','+profitStr ;
 }
 
 function consoleStats(userinfo, cv){

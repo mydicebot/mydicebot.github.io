@@ -1,5 +1,5 @@
 {
-    "name": "mydicebot-console-200303",
+    "name": "mydicebot-console-200328",
     "version": "1.0.0",
     "description": "MyDiceBot - Bet more, earn more!",
     "homepage": "https://mydicebot.com",
@@ -8,9 +8,13 @@
     "pkg": {
         "scripts": [
             "public/**/info.js",
-            "public/**/reg.js"
+            "public/**/reg.js",
+            "public/**/math.min.js"
         ],
-        "assets": "node_modules/blessed/**/*"
+        "assets": [
+            "node_modules/blessed/**/*",
+            "node_modules/mathjs/**/*"
+        ]
     },
     "babel": {
         "presets": [
@@ -30,6 +34,7 @@
         "fs-extra": "^8.1.0",
         "graphql-request": "^1.8.2",
         "isomorphic-fetch": "^2.2.1",
+        "mathjs": "^6.6.1",
         "minimist": "^1.2.0",
         "readline-sync": "^1.4.10",
         "request": "^2.88.0",

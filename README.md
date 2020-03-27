@@ -56,6 +56,12 @@
 * [EpicDice](https://epicdice.io/?ref=mydicebot)
 * [KryptoGames](https://kryptogamers.com/?ref=mydicebot)
 
+## Free Bitcoin Faucet
+* [Faucet Collector](https://faucetcollector.com/?ref=4789455)
+
+## Exchange/Trading
+* [Binance](https://www.binance.com/en/register?ref=40077522)
+
 # TODO
 * [BetKing (coming soon)](https://betking.io/?ref=u:mydicebot)
 * [BitDice (coming soon)](https://www.bitdice.me/?r=90479)

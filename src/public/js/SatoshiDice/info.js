@@ -1,31 +1,16 @@
 function consoleInit() {
-    currencies = ["BTC","DOGE","LTC","ETH","DASH","BCH","XRP","ZEC","ETC","NEO","KMD","BTG","LSK","DGB","QTUM","START","WAVES","BURST","BTSLR"];
+    currencies = ['BTC'];
 }
 
 function init() {
-    console.log('hello Bitsler');
+    console.log('hello, SatoshiDice');
     $$("bet_currency_selection").define("options", [
         {id:1,value:"BTC"},
-        {id:2,value:"DOGE"},
-        {id:3,value:"LTC"},
-        {id:4,value:"ETH"},
-        {id:5,value:"DASH"},
-        {id:6,value:"BCH"},
-        {id:7,value:"XRP"},
-        {id:8,value:"ZEC"},
-        {id:9,value:"ETC"},
-        {id:10,value:"NEO"},
-        {id:11,value:"KMD"},
-        {id:12,value:"BTG"},
-        {id:13,value:"LSK"},
-        {id:14,value:"DGB"},
-        {id:15,value:"QTUM"},
-        {id:16,value:"START"},
-        {id:17,value:"WAVES"},
-        {id:18,value:"BURST"},
-        {id:19,value:"BTSLR"},
     ]);
     $$("bet_currency_selection").refresh();
+    minBetAmount = 0.00000010;
+    $$("manual_bet_amount").setValue(minBetAmount.toFixed(8));
+    $$("auto_bet_base_amount").setValue(minBetAmount.toFixed(8));
 }
 
 function checkParams(p,ch){
@@ -76,13 +61,14 @@ function getCurrProfit(ret){
 }
 
 function getCurrentBetId(ret){
-    let betId = ret.betInfo.id;
+    let betId = ret.betInfo.iid;
     //console.log('currentBetId:'+betId);
     return betId;
 }
 
 function getCurrentRoll(ret){
-    currentroll = ret.betInfo.result;
+    currentroll = ret.betInfo.roll;
+    //console.log('currentRoll:'+roll);
     return currentroll;
 }
 
@@ -115,9 +101,9 @@ function setDatatable(ret){
         bet_datatable_id:ret.betInfo.id,
         bet_datatable_amount:ret.betInfo.amount,
         bet_datatable_low_high:ret.betInfo.condition,
-        bet_datatable_payout:(ret.betInfo.payout).toFixed(8),
+        bet_datatable_payout:ret.betInfo.payout,
         bet_datatable_bet_chance:chanceStr,
-        bet_datatable_actual_chance:ret.betInfo.result,
+        bet_datatable_actual_chance:ret.betInfo.roll,
         bet_datatable_profit:profitStr,
     },0);
 }
@@ -146,8 +132,8 @@ function setStats(userinfo, cv){
 function consoleData(ret, iswin){
     let chanceStr = ret.betInfo.condition + ' '+ ret.betInfo.target;
     let profitStr = ret.betInfo.profit;
-    datalog.log('betid:' +ret.betInfo.id + ' amount:'+ ret.betInfo.amount+ ' low_high:'+ ret.betInfo.condition+' payout:'+ (ret.betInfo.payout).toFixed(8) +' chance:'+chanceStr+' actual_chance:'+ ret.betInfo.result +' profit:'+profitStr );
-    return ret.betInfo.id + ','+ ret.betInfo.amount+ ','+ ret.betInfo.condition+','+ (ret.betInfo.payout).toFixed(8) +','+chanceStr+','+ ret.betInfo.result +','+profitStr;
+    datalog.log('betid:' +ret.betInfo.id + ' amount:'+ ret.betInfo.amount+ ' low_high:'+ ret.betInfo.condition+' payout:'+ ret.betInfo.payout +' chance:'+chanceStr+' actual_chance:'+ ret.betInfo.roll +' profit:'+profitStr );
+    return ret.betInfo.id + ','+ ret.betInfo.amount+ ','+ ret.betInfo.condition+','+ (ret.betInfo.payout).toFixed(8) +','+chanceStr+','+ ret.betInfo.roll +','+profitStr;
 }
 
 function consoleStats(userinfo, cv){

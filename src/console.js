@@ -1,6 +1,7 @@
 var path = require('path');
 var fs = require('fs');
 var util = require('util');
+var math = require('mathjs');
 var readlineSync = require('readline-sync');
 var Factory = require('./api/models/factory');
 var BitslerDice = require('./api/models/bitsler');
@@ -17,7 +18,8 @@ var FreeBitco = require('./api/models/freebitco');
 var WinDice = require('./api/models/windice');
 var WolfBet = require('./api/models/wolfbet');
 var NineDoge = require('./api/models/ninedoge');
-let regpath = path.join(__dirname,'public/js/reg.js');
+var SatoshiDice = require('./api/models/satoshidice');
+var regpath = path.join(__dirname,'public/js/reg.js');
 eval(fs.readFileSync(regpath, 'utf8'));
 var readdir = util.promisify(fs.readdir);
 
@@ -37,7 +39,8 @@ Factory.register('FreeBitco', new FreeBitco());
 Factory.register('WinDice', new WinDice());
 Factory.register('WolfBet', new WolfBet());
 Factory.register('999Doge', new NineDoge());
-var needUserSites = ['999Dice','FreeBitco','999Doge'];
+Factory.register('SatoshiDice', new SatoshiDice());
+var needUserSites = ['999Dice','FreeBitco','999Doge','SatoshiDice'];
 var needTokenSites = ['PrimeDice','Stake','WolfBet'];
 var needApiKeySites = ['Bitsler'];
 var needOnlyApiKeySites = ['YoloDice','Crypto-Games','DuckDice','WinDice'];
@@ -62,7 +65,7 @@ if(readlineSync.keyInYN('Whether to read the last configuration?')) {
     let rawdata = fs.readFileSync('./recent_account_info.json');
     req.body = JSON.parse(rawdata);
 } else {
-    sites = ['Simulator', '999Dice', 'Bitsler', 'Crypto-Games', 'DuckDice', 'PrimeDice', 'Stake', 'YoloDice','WolfBet', 'FreeBitco.in', 'WinDice', 'EpicDice', 'KryptoGames', '999Doge'];
+    sites = ['Simulator', '999Dice', 'Bitsler', 'Crypto-Games', 'DuckDice', 'PrimeDice', 'Stake', 'YoloDice','WolfBet', 'FreeBitco.in', 'WinDice', 'EpicDice', 'KryptoGames', '999Doge', 'SatoshiDice'];
     index = readlineSync.keyInSelect(sites, 'Which site?');
     if(index < 0 ){
         return false;
@@ -168,7 +171,7 @@ var datalog =  grid.set(1.2, 0, 1.2, 4, contrib.log,
    , selectedFg: "green"
    , label: 'Bet Info'
    , border: {type: "line", fg: "cyan"}});
-var log =  grid.set(2.4, 0, 1.6, 4, contrib.log,
+var logs =  grid.set(2.4, 0, 1.6, 4, contrib.log,
    { fg: "green"
    , selectedFg: "green"
    , label: 'Server Log'});
@@ -197,6 +200,15 @@ screen.key(['enter'],async function(ch, key) {
     isloop = true;
     stop = false;
     let i = 0;
+    req.logdata = "betid,amount,low_high,payout,chance,actual_chance,profit";
+    let nowdate = new Date(); 
+    let logname = req.body.site+'_'+ nowdate.getFullYear() + '-' +
+    ("0" + (nowdate.getMonth() + 1)).slice(-2) + '-' +
+    ("0" + (nowdate.getDate())).slice(-2) + '_' +
+    ("0" + nowdate.getHours()).slice(-2) + '-' +
+    ("0" + nowdate.getMinutes()).slice(-2) + '-' +
+    ("0" + nowdate.getSeconds()).slice(-2)+ '_bet.csv';
+    await saveLog(logname,req.logdata+'\r\n');
     betfunc = (() => {
         (async() => {
             if(!isloop || stop){
@@ -213,6 +225,7 @@ screen.key(['enter'],async function(ch, key) {
                 await sleep(sleepTime);
                 betfunc();
             }
+            await saveLog(logname,req.logdata+'\r\n');
             i++;
         })();
     });
@@ -227,9 +240,9 @@ screen.render()
 console.log = function (message) {
     try {
         if (typeof message == 'object') {
-            log.log(JSON && JSON.stringify ? (JSON.stringify(message)).replace(/\"/g,"") : message);
+            logs.log(JSON && JSON.stringify ? (JSON.stringify(message)).replace(/\"/g,"") : message+"\r\n");
         } else {
-            log.log(message);
+            logs.log(message+"\r\n");
         }
     } catch(err){
         console.error(err);
@@ -261,7 +274,7 @@ async function betScript(req) {
             iswin = getWinStatus(ret);
             setStreak(iswin, currentAmount);
             setBetToLua(ret, currencyValue);
-            consoleData(ret, iswin);
+            req.logdata =  consoleData(ret, iswin);
             consoleStats(ret.info, currencyValue);
         } catch(err){
             console.error(err);
@@ -274,6 +287,14 @@ async function betScript(req) {
     } else {
         return false;
     }
+}
+
+async function saveLog(logname, logdata){
+    fs.writeFile('./log/'+logname, logdata, {flag: 'a'}, function (err) {
+        if(err) {
+            console.error(err);
+        }
+    });
 }
 async function scriptBet(init, req){
     try{
