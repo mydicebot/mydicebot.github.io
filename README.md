@@ -1,5 +1,5 @@
 ![](screenshot/bot-logo-256.png)
-# MyDiceBot - Ultimate Bitcoin Dice Bot
+# ★MyDiceBot★ - Ultimate Bitcoin Dice Bot
 
 [![Github All Releases](https://img.shields.io/github/downloads/mydicebot/mydicebot.github.io/total.svg)](https://github.com/mydicebot/mydicebot.github.io/releases)
 [![GitHub release](https://img.shields.io/github/release/mydicebot/mydicebot.github.io/all.svg)](https://github.com/mydicebot/mydicebot.github.io/releases)
