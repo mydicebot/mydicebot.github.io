@@ -21,7 +21,7 @@
 ### Terminal/Console
 ![](screenshot/mydicebot-console.png)
 
-### Mobile GUI
+### Mobile
 ![](screenshot/mydicebot-mobile.png)
 
 ### Raspberry Pi
@@ -129,10 +129,12 @@
 * Choose Dice Site, Input username/password/2FA/APIKey, then Login.
 * Bet and WIN.
 
-# How to Run
+# How to run from source code directly
 Ensure you install the latest version of [docker](https://docs.docker.com/engine/installation/) and [docker-compose](https://docs.docker.com/compose/install/)
 
 ```bash
+git clone https://github.com/mydicebot/mydicebot.github.io.git mydicebot
+cd mydicebot
 bash start.sh
 ```
 * Visit http://localhost:57432/login
