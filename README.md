@@ -1,5 +1,13 @@
 ![](screenshot/bot-logo-256.png)
 # MyDiceBot - Ultimate Bitcoin Dice Bot
+
+[![Github All Releases](https://img.shields.io/github/downloads/mydicebot/mydicebot.github.io/total.svg)](https://github.com/mydicebot/mydicebot.github.io/releases)
+[![GitHub release](https://img.shields.io/github/release/mydicebot/mydicebot.github.io/all.svg)](https://github.com/mydicebot/mydicebot.github.io/releases)
+[![GitHub Release Date](https://img.shields.io/github/release-date-pre/mydicebot/mydicebot.github.io.svg)](https://github.com/mydicebot/mydicebot.github.io/releases)
+[![GitHub license](https://img.shields.io/github/license/mydicebot/mydicebot.github.io.svg)](https://github.com/mydicebot/mydicebot.github.io/blob/master/LICENSE)
+[![GitHub stars](https://img.shields.io/github/stars/mydicebot/mydicebot.github.io.svg)](https://github.com/mydicebot/mydicebot.github.io/stargazers)
+[![GitHub forks](https://img.shields.io/github/forks/mydicebot/mydicebot.github.io.svg)](https://github.com/mydicebot/mydicebot.github.io/network)
+
 * [https://mydicebot.com](https://mydicebot.com)
 * [MyDiceBot](https://mydicebot.com) is World #1 Cross-Platform Dicing Bot.
 * Multiple platforms are supported, including __Windows, Mac, Linux, Web, Terminal/Console__ and __Android__.
@@ -56,13 +64,7 @@
 * [EpicDice](https://epicdice.io/?ref=mydicebot)
 * [KryptoGames](https://kryptogamers.com/?ref=mydicebot)
 
-## Free Bitcoin Faucet
-* [Faucet Collector](https://faucetcollector.com/?ref=4789455)
-
-## Exchange/Trading
-* [Binance](https://www.binance.com/en/register?ref=40077522)
-
-# TODO
+## TODO
 * [BetKing (coming soon)](https://betking.io/?ref=u:mydicebot)
 * [BitDice (coming soon)](https://www.bitdice.me/?r=90479)
 * [BitVest (coming soon)](https://bitvest.io?r=108792)
@@ -73,6 +75,15 @@
 * [NitrogenSports (coming soon)](https://nitrogensports.eu/r/4998127)
 * [SafeDice (coming soon)](https://safedice.com/?r=100309)
 * (More will be coming soon)
+ 
+# Faucet
+* [Faucet Collector](https://faucetcollector.com/?ref=4789455)
+
+# Mining
+* [CryptoTab](https://cryptotabbrowser.com/4760331)
+
+# Exchange
+* [Binance](https://www.binance.com/en/register?ref=40077522)
 
 # Quick Start
 * Download MyDiceBot Binaries here: [MyDiceBot Releases](https://github.com/mydicebot/mydicebot.github.io/releases).
