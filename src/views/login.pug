@@ -325,6 +325,14 @@ block content
             ]
         };
         
+        var mining_site_info = {
+            id: "mining_site_info",
+            rows: [
+                {view: "label", label: "Mining"},
+                {view: "label", label: "<a target='_blank' href='https://cryptotabbrowser.com/4760331'>CryptoTab</a>"},
+            ]
+        };
+        
         var exchange_site_info = {
             id: "exchange_site_info",
             rows: [
@@ -364,8 +372,9 @@ block content
                         cols:[
                             traditional_dice_site_info,
                             blockchain_dice_site_info,
-                            todo_dice_site_info,
+                            //todo_dice_site_info,
                             faucet_site_info,
+                            mining_site_info,
                             exchange_site_info,
                         ]
                     }

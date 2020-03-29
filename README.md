@@ -189,6 +189,10 @@ bash start.sh
 |---|---|
 |__dobet()__|The loop of bets|
 |__stop()__|Stop the bet|
+|__resetsession()__|Reset the session|
+|__resetseed()__|Reset the client seed|
+|__sound(path_of_the_sound)__|Sound notificaiton|
+|__message(text, type=\'debug\', expire=time_interval_value_in_ms)__|Message notification on the screen. Four types: "info", "success", "debug", or "error". Expire interval is 4000 ms by default, -1 for not hiding the message.| 
 
 ## Sample Code
 * Strategy: Basic Martingale
