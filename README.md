@@ -20,7 +20,9 @@
 # Table Of Content
    * [Download](#download)
    * [Supporting Dice Sites (alphabet sequence)](#supporting-dice-sites-alphabet-sequence)
-   * [TODO](#todo)
+   * [Faucet](#faucet)
+   * [Mining](#mining)
+   * [Exchange](#exchange)
    * [Quick Start](#quick-start)
    * [How to Run](#how-to-run)
    * [Startup Options](#startup-options)
