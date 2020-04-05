@@ -83,6 +83,30 @@ function getCurrentRoll(ret){
     return currentroll;
 }
 
+function getNonce(ret){
+    return ret.betInfo.nonce;
+}
+
+function getBetDate(ret){
+    return ret.betInfo.created;
+}
+
+function getServerHash(ret){
+    return ret.betInfo.hash;
+}
+
+function getServerSeed(ret){
+    return 'nosupport';
+}
+
+function getClientSeed(ret){
+    return 'nosupport';
+}
+
+function getUid(ret){
+    return 1000;
+}
+
 function outError(ret){
     let mess = ret.err;
     return checkerr(mess);

@@ -174,6 +174,8 @@ module.exports = class Simulator extends BaseDice {
         }
         let profit = (amount * factor) * (1 - houseEdge) - amount;
         //console.log(amount,factor,betInfo.amount, houseEdge);
+        betInfo.serverSeed = serverSeed;
+        betInfo.clientSeed = clientSeed;
         betInfo.roll_number = diceRoll/10000;
         betInfo.win = false;
         if(condition == 'over') {

@@ -89,10 +89,18 @@
 * (More will be coming soon)
  
 # Faucet
+* [Moon Bitcoin](http://moonbit.co.in/?ref=6e3fc20d04f3)
+* [Moon Dogecoin](http://moondoge.co.in/?ref=7b7eac714ebc)
+* [Moon Litecoin](http://moonliteco.in/?ref=1183cf6a9534)
+* [Moon Dash](http://moondash.co.in/?ref=4A054C71CB12)
+* [Moon Cash](http://moonbitcoin.cash/?ref=6F08451C9CF9)
+* [Bit Fun](http://bitfun.co/?ref=950389505790)
+* [Bonus Bitcoin](http://bonusbitcoin.co/?ref=0B26E1CAF795)
 * [Faucet Collector](https://faucetcollector.com/?ref=4789455)
 
 # Mining
 * [CryptoTab](https://cryptotabbrowser.com/4760331)
+* [MinerGate](https://minergate.com/a/840aa085f0deb4fef17fd6be)
 
 # Exchange
 * [Binance](https://www.binance.com/en/register?ref=40077522)
@@ -184,6 +192,7 @@ bash start.sh
 |__currentprofit__|double|Read Only|Shows the profit for the last bet made. This is not the amount returned. betting 1 unit at x2 payout, when winning, currentprofit will show 0.00000001 (returned =0.00000002), when losing, profit will show -0.00000001|
 |__currentstreak__|double|Read Only|Shows the current winning or losing streak. When positive (>0), it's a winning streak. When negative (<0) it's a losing streak. Can never be 0. Only set after first bet.|
 |__currentroll__|double|Read Only|Show current roll information|
+|__lastbet__|object|Read Only|This is an object containing more details about the previous bet, including the lucky number that was rolled, chance, amount, profit etc.|
 
 
 * __Current Session Info__

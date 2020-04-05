@@ -1,0 +1,37 @@
+.gist-content {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+    overflow: hidden;
+}
+.muted-link {
+    text-decoration: none;
+    color: #586069!important;
+    font-size: 12px!important;
+    font-weight: 600!important;
+}
+.octicon {
+    display: inline-block;
+    vertical-align: text-bottom;
+    fill: currentColor;
+}
+.load-icon {
+  width: 1.2em;
+  height: 1.2em;
+}
+
+.load-icon path,
+.load-icon polygon,
+.load-icon rect {
+  fill: #00FA9A 
+}
+.load-icon circle {
+  stroke: #00FA9A;
+  stroke-width: 1;
+}
+.loadbtn {
+    text-decoration: none;
+    color: #00FA9A!important;
+    font-size: 12px!important;
+    font-weight: 600!important;
+}

@@ -51,6 +51,8 @@ module.exports = function(app) {
   app.get('/:site/checkerr', [createDice,checkScript], api.checkerr);
   app.get('/checkerr', [createDice,checkScript], api.checkerr);
   app.get('/:site/sound', [checkScript], api.sound);
+  app.get('/:site/gists', [checkScript], api.gists);
+  app.get('/:site/raw', [checkScript], api.raw);
 };
 
 function checkSkin(req, res, next) {

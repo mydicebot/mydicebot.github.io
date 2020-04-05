@@ -114,6 +114,11 @@ module.exports = class WinDice extends BaseDice {
         let betInfo = {};
         betInfo.condition = req.body.High == "true"?'>':'<';
         betInfo.id = '<a href="https://windice.io/api/v1/api/getBet?hash='+ret.hash+'" target="_blank">'+ret.hash+'</a>';
+        betInfo.iid = ret.hash;
+        betInfo.nonce = ret.nonce;
+        betInfo.clientSeed = ret.userHash;
+        betInfo.serverHash = ret.hash;
+        betInfo.time = ret.time;
         betInfo.target = ret.chance;
         betInfo.roll = parseFloat(ret.result/100).toFixed(2);
         betInfo.amount = amount.toFixed(8);

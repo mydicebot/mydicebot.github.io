@@ -95,8 +95,12 @@ module.exports = class CryptoDice extends BaseDice {
         console.log(ret);
         let info = req.session.info;
         let betInfo = {};
+        //{ "BetId": 327333162, "Roll": 47.002, "UnderOver": true, "ClientSeed": "somerandomseed", "Target": " < 49.600", "Profit": 0.000010240000000000, "ServerSeed": "5PCWsiBDsZ1D07cZ14pYKt0T2HUCkcLoTdF70Cmp", "NextServerSeedHash": "4647c8c18b7da5d7174614c6e473864956b42fadf84e24a2f08bd9c2aa69a268", "Balance": 0.010010240000000000 }/
         betInfo.condition = req.body.High == "true"?'>':'<';
         betInfo.id = ret.BetId;
+        betInfo.clientSeed = ret.ClientSeed;
+        betInfo.serverSeed = ret.ServerSeed;
+        betInfo.serverHash = ret.NextServerSeedHash;
         betInfo.target = target;
         betInfo.profit = ret.Profit;
         betInfo.roll = ret.Roll;

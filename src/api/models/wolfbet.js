@@ -111,6 +111,9 @@ module.exports = class WolfBet extends BaseDice {
         let betInfo = {};
         betInfo.condition = req.body.High == "true"?'>':'<';
         betInfo.id = ret.bet.hash;
+        betInfo.serverHash = ret.bet.hash;
+        betInfo.nonce = ret.bet.nonce;
+        betInfo.time = ret.bet.published_at;
         betInfo.target = ret.bet.bet_value;
         betInfo.roll = ret.bet.result_value;
         betInfo.amount = amount.toFixed(8);

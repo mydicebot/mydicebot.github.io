@@ -77,15 +77,37 @@ function getCurrProfit(ret){
 }
 
 function getCurrentBetId(ret){
-    let betId = ret.betInfo.id;
-    //console.log('currentBetId:'+betId);
-    return betId;
+    return ret.BetId;
 }
 
 function getCurrentRoll(ret){
     currentroll = ret.Secret/10000;
     //console.log('currentRoll:'+roll);
     return currentroll;
+}
+
+function getNonce(ret){
+    return 'nosupport';
+}
+
+function getBetDate(ret){
+    return  Math.round(new Date().getTime()/1000);
+}
+
+function getServerHash(ret){
+    return ret.Next;
+}
+
+function getServerSeed(ret){
+    return ret.ServerSeed;
+}
+
+function getClientSeed(ret){
+    return 'nosupport';
+}
+
+function getUid(ret){
+    return 1000;
 }
 
 

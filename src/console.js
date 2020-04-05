@@ -52,6 +52,7 @@ var code;
 var basebet = 0.00000001, nextbet = 0.00000001, chance = 90, bethigh = false;
 var previousbet = 0, win = false, currentprofit = 0, balance = 0, bets = 0, wins = 0, losses = 0, profit = 0, currentstreak = 0, currentroll = 0 ,wagered = 0;
 var maxwinstreak = 0, maxlossstreak = 0, maxwinstreakamount = 0, maxlossstreakamount = 0, maxstreakamount = 0, minstreakamount = 0, maxbetamount = 0 ;
+var lastbet = {id:0,chance:chance, date:'',roll:49.5,amount:nextbet,nonce:1000,serverhash:'mydice',serverseed:'mydice',clientseed:'',profit:profit,uid:1000,high:bethigh};
 var currencies = ['BTC', 'Doge', 'LTC', 'ETH'];
 var stop = false;
 var req = {};
@@ -112,8 +113,11 @@ index = readlineSync.keyInSelect(scripts, 'Which script?');
 if(index < 0 ){
     process.exit();
 }
+
+eval("function stop(){isloop = false;}");
 var content =  fs.readFileSync("./script/js/"+scripts[index], 'utf8');
 eval(content.toLowerCase());
+
 
 
 let spath = path.join(__dirname,'public/js/'+req.body.site+'/info.js');
@@ -187,7 +191,7 @@ screen.key(['C-c'], function(ch, key) {
 });
 
 screen.key(['s'], function(ch, key) {
-    stop = true;
+    isloop = false;
 });
 
 
@@ -198,7 +202,6 @@ screen.key(['enter'],async function(ch, key) {
     }
     console.log("Script start!");
     isloop = true;
-    stop = false;
     let i = 0;
     req.logdata = "betid,amount,low_high,payout,chance,actual_chance,profit";
     let nowdate = new Date(); 
@@ -211,7 +214,7 @@ screen.key(['enter'],async function(ch, key) {
     await saveLog(logname,req.logdata+'\r\n');
     betfunc = (() => {
         (async() => {
-            if(!isloop || stop){
+            if(!isloop){
                 console.log("Script stopped!");
                 isloop = false;
                 return false;
@@ -319,8 +322,6 @@ async function bet(init, req) {
     return isloop;
 }
 
-
-
 function setStreak(win, currentAmount){
     if(currentAmount>maxbetamount){
         maxbetamount = currentAmount.toFixed(8);
@@ -374,6 +375,7 @@ function setBetToLua(ret, currencyValue){
     } else {
         losses = losses + 1;
     }
+    lastbet = {id:getCurrentBetId(ret),chance:chance, date:getBetDate(ret),roll:currentroll,amount:currentAmount,nonce:getNonce(ret),serverhash:getServerHash(ret),serverseed:getServerSeed(ret),clientseed:getClientSeed(ret),profit:profit,uid:getUid(ret),high:bethigh};
 }
 
 function sleep(ms) {

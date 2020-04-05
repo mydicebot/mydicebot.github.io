@@ -94,6 +94,9 @@ module.exports = class SatoshiDice extends BaseDice {
         betInfo.id = "clientseed:"+ret.message.currentClientSeed +"serverseed:"+ret.message.currentServerSeedHashed ;
         betInfo.target = game;
         betInfo.roll = ret.message.rollResult;
+        betInfo.serverHash = ret.message.currentServerSeedHashed;
+        betInfo.clientSeed = ret.message.currentClientSeed;
+        betInfo.nonce = ret.message.nextNonce;
         betInfo.amount = amount.toFixed(8);
         info.info.bets++;
         info.currentInfo.bets++;

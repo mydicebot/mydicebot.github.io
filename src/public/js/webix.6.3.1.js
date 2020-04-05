@@ -24082,6 +24082,12 @@
     				conf.left = conf.top = 0;
     				view.$setSize(x,y);
     			} else {
+                    if(conf.id == 'script_expand_button' || conf.id == 'script_save_button'){
+                        sizes[0] = 25;
+                    }
+                    if((conf.id == 'script_bet_start_stop_button' || conf.id == 'script_bet_stop_on_next_win_button' || conf.id =='script_bet_stop_on_next_loss_button')&& !env.mobile ){
+                        sizes[0] = 180;
+                    }
     				view.$setSize(sizes[0], sizes[2]);
     			}
     

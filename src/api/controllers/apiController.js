@@ -1,6 +1,7 @@
 'use strict';
 
 var Factory = require('../models/factory');
+var GitHub = require('../models/github');
 var formidable = require('formidable');
 var kdbxweb = require('kdbxweb');
 var config = require('config');
@@ -416,6 +417,50 @@ exports.checkerr = async function(req, res) {
     } else {
         errCount = 1;
         return res.status(200).json({'ret':true,'count':errCount});
+    }
+};
+
+exports.gists = async function(req, res) {
+    try{
+        //let username = (typeof req.query.username !== 'undefined') ?  req.query.username : 'eslachance';
+        let username = (typeof req.query.username !== 'undefined') ?  req.query.username : 'mydicebot';
+        let start = (typeof req.query.start !== 'undefined') ?  parseInt(req.query.start) : 0;
+        let count = (typeof req.query.count !== 'undefined') ?  parseInt(req.query.count) : 6;
+        let github = new GitHub();
+        let ret = await github.gists(username, start, count);
+        let data = {};
+        data.pos = start;
+        data.total_count = ret[0];
+        data.data = ret[1];
+        return res.status(200).json(data);
+    } catch(err) {
+        console.log(err);
+        return res.status(500).send({err: err.toString()});
+    }
+};
+
+exports.raw = async function(req, res) {
+    try{
+        let rawurl = req.query.rawurl;
+        let github = new GitHub();
+        var ext = path.extname(rawurl||'').split('.');
+        let ret = await github.curl(rawurl);
+        let data = {};
+        data.data = ret;
+        data.ext = ext[ext.length - 1];
+        data.name = 'gits_'+path.basename(rawurl) ;
+        let filePath = path.resolve(path.join(process.execPath, '../script/'+data.ext+'/')+data.name);
+        if(isMobile(req)) {
+            filePath = path.resolve(path.join(__dirname, '../../script/'+data.ext+'/'+data.name));
+        }
+        if(process.env.electron) {
+            filePath = path.resolve(path.join(config.mydice.path, '/script/'+data.ext+'/'+data.name));
+        }
+        await writeFile(filePath, ret);
+        return res.status(200).json(data);
+    } catch(err) {
+        console.log(err);
+        return res.status(500).send({err: err.toString()});
     }
 };
 

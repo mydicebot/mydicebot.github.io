@@ -121,6 +121,11 @@ module.exports = class FreeBitco extends BaseDice {
         let betInfo = {};
         betInfo.condition = req.body.High == "true"?'>':'<';
         betInfo.id = '<a href="https://s3.amazonaws.com/roll-verifier/verify.html?server_seed='+ret[9]+'&client_seed='+client_seed+'&server_seed_hash='+ret[10]+'&nonce='+ret[12]+'" target="_blank">'+ret[9]+'</a>';
+        betInfo.serverSeed = ret[9];
+        betInfo.clientSeed = client_seed;
+        betInfo.nonce = ret[12];
+        betInfo.serverHash = ret[10];
+        betInfo.iid = ret[9];
         betInfo.target = chance;
         betInfo.roll = parseFloat(ret[2]/100).toFixed(2);
         betInfo.amount = amount;
