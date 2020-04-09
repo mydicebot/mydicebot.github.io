@@ -2502,7 +2502,7 @@ block content
                         try {
                             iswin = getWinStatus(ret);
                             setStreak(iswin, currentAmount);
-                            setBetToLua(ret, currencyValue);
+                            setBetToLua(ret, currencyValue, currentAmount);
                             if(toggleChart) {
                               setChart(ret, count, currencyValue);
                             }
@@ -2673,7 +2673,7 @@ block content
                     bet_current_stats_seed:seed,
                 });
             }
-            function setBetToLua(ret, currencyValue){
+            function setBetToLua(ret, currencyValue, currentAmount){
                 currentstreak = $$('bet_current_stats2').getValues().bet_current_stats_current_streak;
                 profit = getProfit(ret.info,currencyValue);
                 balance = getBalance(ret.info)
