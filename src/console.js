@@ -276,7 +276,7 @@ async function betScript(req) {
         try {
             iswin = getWinStatus(ret);
             setStreak(iswin, currentAmount);
-            setBetToLua(ret, currencyValue);
+            setBetToLua(ret, currencyValue, currentAmount);
             req.logdata =  consoleData(ret, iswin);
             consoleStats(ret.info, currencyValue);
         } catch(err){
@@ -363,7 +363,7 @@ function setStreak(win, currentAmount){
     }
 }
 
-function setBetToLua(ret, currencyValue){
+function setBetToLua(ret, currencyValue, currentAmount){
     profit = getProfit(ret.info,currencyValue);
     balance = getBalance(ret.info)
     win = getWinStatus(ret);
