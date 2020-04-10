@@ -6,6 +6,7 @@ function init(){
     console.log('hello 999Dice');
     $$("manual_resetseed_button").hide();
     $$("auto_resetseed_button").hide();
+    consoleInit();
 }
 
 function checkParams(p,ch){
@@ -128,6 +129,7 @@ function setDatatable(ret, iswin){
         bet_datatable_bet_chance:chanceStr,
         bet_datatable_actual_chance:ret.Secret/10000,
         bet_datatable_profit:profitStr,
+        bet_datatable_currency:currency,
     },0);
 }
 
@@ -153,8 +155,8 @@ function setStats(userinfo, currencyValue){
 function consoleData(ret, iswin){
     let chanceStr = ret.High + ' '+ ret.BetRoll/10000 ;
     let profitStr = ((ret.PayOut-ret.PayIn)/100000000).toFixed(8);
-    datalog.log('betid:' +ret.BetId + ' amount:'+ (ret.PayIn/100000000).toFixed(8)+ ' low_high:'+ ret.High+' payout:'+ (ret.PayOut/100000000).toFixed(8)+' chance:'+chanceStr+' actual_chance:'+ ret.Secret/10000 +' profit:'+profitStr );
-    return ret.BetId + ','+ (ret.PayIn/100000000).toFixed(8)+ ','+ ret.High+','+ (ret.PayOut/100000000).toFixed(8)+','+chanceStr+','+ ret.Secret/10000 +','+profitStr ;
+    datalog.log('betid:' +ret.BetId + ' amount:'+ (ret.PayIn/100000000).toFixed(8)+ ' low_high:'+ ret.High+' payout:'+ (ret.PayOut/100000000).toFixed(8)+' chance:'+chanceStr+' actual_chance:'+ ret.Secret/10000 +' profit:'+profitStr +' currency:'+ currency );
+    return ret.BetId + ','+ (ret.PayIn/100000000).toFixed(8)+ ','+ ret.High+','+ (ret.PayOut/100000000).toFixed(8)+','+chanceStr+','+ ret.Secret/10000 +','+profitStr+','+ currency ;
 }
 
 function consoleStats(userinfo, cv){

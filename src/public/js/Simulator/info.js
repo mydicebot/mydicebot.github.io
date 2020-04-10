@@ -4,8 +4,9 @@ function consoleInit() {
 
 function init() {
     console.log('hello Simulator');
-    let currencies = ["btc","eth","ltc","doge","dash","bch","xrp","zec","etc","neo","kmd","btg","lsk","dgb","qtum","strat","waves","burst"];
+    //let currencies = ["btc","eth","ltc","doge","dash","bch","xrp","zec","etc","neo","kmd","btg","lsk","dgb","qtum","strat","waves","burst"];
 
+    consoleInit();
     let options=[];
     
     for(i=0;i<currencies.length;i++){
@@ -141,6 +142,7 @@ function setDatatable(ret){
         bet_datatable_bet_chance:chanceStr,
         bet_datatable_actual_chance:ret.betInfo.roll_number,
         bet_datatable_profit:profitStr,
+        bet_datatable_currency:currency,
     },0);
 }
 
@@ -168,8 +170,8 @@ function setStats(userinfo, cv){
 function consoleData(ret, iswin){
     let chanceStr = ret.betInfo.condition + ' '+ ret.betInfo.target;
     let profitStr = ret.betInfo.profit;
-    datalog.log('betid:' +ret.betInfo.id + ' amount:'+ (ret.betInfo.amount).toFixed(8)+ ' low_high:'+ ret.betInfo.condition+' payout:'+ ret.betInfo.payout +' chance:'+chanceStr+' actual_chance:'+ ret.betInfo.roll_number +' profit:'+profitStr );
-    return ret.betInfo.id + ','+ (ret.betInfo.amount).toFixed(8)+ ','+ ret.betInfo.condition+','+ ret.betInfo.payout +','+chanceStr+','+ ret.betInfo.roll_number +','+profitStr;
+    datalog.log('betid:' +ret.betInfo.id + ' amount:'+ (ret.betInfo.amount).toFixed(8)+ ' low_high:'+ ret.betInfo.condition+' payout:'+ ret.betInfo.payout +' chance:'+chanceStr+' actual_chance:'+ ret.betInfo.roll_number +' profit:'+profitStr+' currency:'+currency );
+    return ret.betInfo.id + ','+ (ret.betInfo.amount).toFixed(8)+ ','+ ret.betInfo.condition+','+ ret.betInfo.payout +','+chanceStr+','+ ret.betInfo.roll_number +','+profitStr+','+currency;
 }
 
 function consoleStats(userinfo, cv){

@@ -306,7 +306,7 @@ async function scriptBet(init, req){
         }
         previousbet = nextbet;
         req.body.PayIn = Math.round(parseFloat(nextbet*100000000));
-        req.body.High = bethigh;
+        req.body.High = bethigh.toString();
         req.body.Currency = currency;
         req.body.CurrencyValue = currencyValue;
         req.body.Chance = chance;

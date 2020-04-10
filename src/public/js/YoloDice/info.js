@@ -11,6 +11,7 @@ function init() {
         {id:4,value:"ETH"}
     ]);
     $$("bet_currency_selection").refresh();
+    consoleInit();
 }
 
 function checkParams(p,ch){
@@ -129,6 +130,7 @@ function setDatatable(ret){
         bet_datatable_bet_chance:chanceStr,
         bet_datatable_actual_chance:ret.betInfo.rolled/10000,
         bet_datatable_profit:profitStr,
+        bet_datatable_currency:currency,
     },0);
 }
 
@@ -156,8 +158,8 @@ function setStats(userinfo, cv){
 function consoleData(ret, iswin){
     let chanceStr = ret.betInfo.range + ' '+ ret.betInfo.target/10000;
     let profitStr = (ret.betInfo.profit/100000000).toFixed(8);
-    datalog.log('betid:' +ret.betInfo.id + ' amount:'+ (ret.betInfo.amount/100000000).toFixed(8)+ ' low_high:'+ ret.betInfo.range+' payout:'+ (ret.betInfo.payout/100000000).toFixed(8) +' chance:'+chanceStr+' actual_chance:'+ ret.betInfo.rolled/10000 +' profit:'+profitStr );
-    return ret.betInfo.id + ','+ (ret.betInfo.amount/100000000).toFixed(8)+ ','+ ret.betInfo.range+','+ (ret.betInfo.payout/100000000).toFixed(8) +','+chanceStr+','+ ret.betInfo.rolled/10000 +','+profitStr;
+    datalog.log('betid:' +ret.betInfo.id + ' amount:'+ (ret.betInfo.amount/100000000).toFixed(8)+ ' low_high:'+ ret.betInfo.range+' payout:'+ (ret.betInfo.payout/100000000).toFixed(8) +' chance:'+chanceStr+' actual_chance:'+ ret.betInfo.rolled/10000 +' profit:'+profitStr+' currency:'+currency );
+    return ret.betInfo.id + ','+ (ret.betInfo.amount/100000000).toFixed(8)+ ','+ ret.betInfo.range+','+ (ret.betInfo.payout/100000000).toFixed(8) +','+chanceStr+','+ ret.betInfo.rolled/10000 +','+profitStr +','+ currency;
 }
 
 function consoleStats(userinfo, cv){

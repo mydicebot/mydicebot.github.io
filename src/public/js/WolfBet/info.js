@@ -16,6 +16,7 @@ function init() {
     minBetAmount = 0.00000001;
     $$("manual_bet_amount").setValue(minBetAmount.toFixed(8));
     $$("auto_bet_base_amount").setValue(minBetAmount.toFixed(8));
+    consoleInit();
 }
 
 function checkParams(p,ch){
@@ -136,6 +137,7 @@ function setDatatable(ret){
         bet_datatable_bet_chance:chanceStr,
         bet_datatable_actual_chance:ret.betInfo.roll,
         bet_datatable_profit:profitStr,
+        bet_datatable_currency:currency,
     },0);
 }
 
@@ -163,8 +165,8 @@ function setStats(userinfo, cv){
 function consoleData(ret, iswin){
     let chanceStr = ret.betInfo.condition + ' '+ ret.betInfo.target;
     let profitStr = ret.betInfo.profit;
-    datalog.log('betid:' +ret.betInfo.id + ' amount:'+ ret.betInfo.amount+ ' low_high:'+ ret.betInfo.condition+' payout:'+ ret.betInfo.payout +' chance:'+chanceStr+' actual_chance:'+ ret.betInfo.roll +' profit:'+profitStr );
-    return ret.betInfo.id + ','+ ret.betInfo.amount+ ','+ ret.betInfo.condition+','+ (ret.betInfo.payout).toFixed(8) +','+chanceStr+','+ ret.betInfo.roll +','+profitStr;
+    datalog.log('betid:' +ret.betInfo.id + ' amount:'+ ret.betInfo.amount+ ' low_high:'+ ret.betInfo.condition+' payout:'+ ret.betInfo.payout +' chance:'+chanceStr+' actual_chance:'+ ret.betInfo.roll +' profit:'+profitStr +' currency:'+ currency);
+    return ret.betInfo.id + ','+ ret.betInfo.amount+ ','+ ret.betInfo.condition+','+ (ret.betInfo.payout).toFixed(8) +','+chanceStr+','+ ret.betInfo.roll +','+profitStr +','+ currency;
 }
 
 function consoleStats(userinfo, cv){

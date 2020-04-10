@@ -3,6 +3,7 @@ extends layout
 block content
     script.
             var mobiles = ['bet_total_stats', 'bet_current_stats', 'bet_current_stats2', 'bet_datatable', 'misc_items_form'];
+            var currencies = ['BTC', 'Doge', 'LTC', 'ETH'];
             var stopOnWin = false, stopOnLoss = false, iswin = false;
             var minBetAmount = 0.00000001, currencyValue = 0, betAmount = 0;
             var count = 1, errCount = 1, lastResetSeed = 0;
@@ -293,7 +294,8 @@ block content
                         {id: "bet_datatable_actual_chance", header: ["ROLL",{content:"textFilter"}], fillspace:true,sort:"int"},
                         {id: "bet_datatable_amount", header: ["AMOUNT",{content:"textFilter"}], fillspace:true,sort:"int"},
                         {id: "bet_datatable_payout", header: ["PAYOUT",{content:"textFilter"}], fillspace:true,sort:"int"},
-                        {id: "bet_datatable_profit", header: ["PROFIT",{content:"textFilter"}], fillspace:true,sort:"int"}
+                        {id: "bet_datatable_profit", header: ["PROFIT",{content:"textFilter"}], fillspace:true,sort:"int"},
+                        {id: "bet_datatable_currency", header: ["CURRENCY",{content:"textFilter"}], fillspace:true}
                     ]
                 };
 
@@ -1888,6 +1890,7 @@ block content
                                 code = code.replace(/([a-zA-Z]*[0-9]*\s*)\*\=(\s*[a-zA-Z]*[0-9]*)/g, '$1=$1*$2 ');
                                 code = code.replace(/([a-zA-Z]*[0-9]*\s*)\/\=(\s*[a-zA-Z]*[0-9]*)/g, '$1=$1/$2 ');
                                 fengari.load('lastbet = {}\n')();
+                                fengari.load('currencies = {}\n')();
                                 fengari.load('basebet='+basebet+'\nnextbet='+nextbet+'\nchance='+chance+'\nbethigh='+bethigh+'\n')();
                                 fengari.load('function stop()\nisloop = false \n js.global:stop() \n print(isloop)\nend')();
                                 fengari.load('function resetseed()\n js.global:resetseed() \nend')();
@@ -1896,6 +1899,9 @@ block content
                                 fengari.load('function message(text, type, expire)\n js.global:message(text, type, expire) \nend')();
                                 fengari.load('nextbet=basebet\nbalance='+balance+'\nbets='+bets+'\nwins='+wins+'\nlosses='+ losses +'\nprofit='+profit+'\npreviousbet='+previousbet+'\ncurrentprofit='+currentprofit+'\ncurrentstreak='+currentstreak+'\ncurrentroll='+currentroll+'\nisloop=true\n')();
                                 fengari.load('lastbet.id="'+lastbet.id+'"\nlastbet.chance='+lastbet.chance+'\nlastbet.date='+lastbet.date+'\nlastbet.roll='+lastbet.roll+'\nlastbet.amount='+ lastbet.amount +'\nlastbet.nonce="'+lastbet.nonce+'"\nlastbet.serverhash="'+lastbet.serverhash+'"\nlastbet.serverseed="'+lastbet.serverseed+'"\nlastbet.clientseed="'+lastbet.clientseed+'"\nlastbet.profit='+lastbet.profit+'\nlastbet.uid="'+lastbet.uid+'"\nlastbet.high='+lastbet.high+'\n')();
+                                for(i=0;i<currencies.length;i++){
+                                    fengari.load('currencies[#currencies+1]="'+ currencies[i]+'"\n')();
+                                }
                                 fengari.load(code)();
                             }
                             if (currentLanguage == 'py') {
@@ -2306,6 +2312,7 @@ block content
             function scriptBet(init){
                 try{
                     currency = $$("bet_currency_selection").getText().toLowerCase();
+                    fengari.load('currency="'+currency+'"\n')();
                     if(!init){
                         if (currentLanguage == 'lua') {
                             fengari.load('dobet()')();
@@ -2319,6 +2326,7 @@ block content
                             nextbet = fengari.load('return nextbet')();
                             chance = fengari.load('return chance')();
                             bethigh = fengari.load('return bethigh')();
+                            currency = fengari.load('return currency')();
                             //fengari.load('print("script",basebet,nextbet,previousbet,chance,win,currentprofit,currentstreak,wins,losses,bets,bethigh,isloop,profit,currentroll)')();
                     } else if (currentLanguage == 'js') {
                             //console.log(basebet,nextbet,previousbet,chance,win,currentprofit,currentstreak,wins,losses,bets,bethigh,isloop,profit,currentroll);
@@ -2502,7 +2510,7 @@ block content
                         try {
                             iswin = getWinStatus(ret);
                             setStreak(iswin, currentAmount);
-                            setBetToLua(ret, currencyValue, currentAmount);
+                            setBetToLua(ret, currencyValue);
                             if(toggleChart) {
                               setChart(ret, count, currencyValue);
                             }
@@ -2673,7 +2681,7 @@ block content
                     bet_current_stats_seed:seed,
                 });
             }
-            function setBetToLua(ret, currencyValue, currentAmount){
+            function setBetToLua(ret, currencyValue){
                 currentstreak = $$('bet_current_stats2').getValues().bet_current_stats_current_streak;
                 profit = getProfit(ret.info,currencyValue);
                 balance = getBalance(ret.info)
@@ -2787,7 +2795,9 @@ block content
                             'currentroll = window.currentroll\n' +
                             'balance = window.balance\n'+
                             'win = window.win\n'+
-                            'lastbet = window.lastbet\n';
+                            'lastbet = window.lastbet\n'+
+                            'currency = window.currency\n' +
+                            'currencies = window.currencies\n';
 
                 //let regex = /def \w*/g;
                 //strScript = strScript.replace(regex, function($all){
@@ -2817,9 +2827,10 @@ block content
                           '    window.nextbet = nextbet\n'+
                           '    window.chance = chance\n'+
                           '    window.bethigh = bethigh\n'+
-                          '    window.isloop = isloop\n';
+                          '    window.isloop = isloop\n'+
+                          '    window.currency = currency\n';
                 afterBetFun = '\ndef afterbet(event):\n'+
-                          '    global previousbet,bets,wins,losses,profit,currentprofit,currentstreak,currentroll,balance,win,lastbet\n'+
+                          '    global previousbet,bets,wins,losses,profit,currentprofit,currentstreak,currentroll,balance,win,lastbet,currency\n'+
                           '    previousbet = window.nextbet\n'+
                           '    bets = window.bets\n'+
                           '    wins = window.wins\n'+
@@ -2830,7 +2841,8 @@ block content
                           '    currentroll = window.currentroll\n'+
                           '    balance = window.balance\n'+
                           '    win = window.win\n'+
-                          '    lastbet = window.lastbet\n';
+                          '    lastbet = window.lastbet\n'+
+                          '    currency = window.currency\n';
                 clickFun = '\ndocument["python_dobet_button"].bind("click", dobet)\n'+
                               '\ndocument["python_before_bet_button"].bind("click", beforebet)\n'+
                               '\ndocument["python_after_bet_button"].bind("click", afterbet)\n'+

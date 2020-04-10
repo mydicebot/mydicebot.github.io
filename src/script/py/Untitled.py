@@ -11,6 +11,7 @@ def dobet(event):
   	#init global
     global chance,multiplier,basebet,bethigh,nextbet
     global previousbet,bets,wins,losses,profit,currentprofit,currentstreak,currentroll,balance,win
+    global currency,currencies,lastBet
 
     if win:
         sound('alert1.mp3')

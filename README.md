@@ -204,6 +204,8 @@ bash start.sh
 |__wins__|int|Read Only|Shows the number of wins for the current session.|
 |__losses__|int|Read Only|Shows the number of losses for the current session.|
 |__profit__|double|Read Only|Shows your session profit. Session is defined as the time since opening the current instance of bot or the last time you reset your stats in the bot.|
+|__currencies__|string array|Read Only|List the currencies that can be used at the current site, usually in the currency short code (btc, ltc, etc.).|
+|__currency__|string|Read Write|Can be used to change the currency to bet in using any value from the currencies list. Only values from the currencies list can be used.|
 
 
 ## Internal Functions
