@@ -30,7 +30,7 @@ function checkParams(p,ch){
     if(p < 0.00000001 || p > 1000000000*1000000000) {
         return false
     }
-    if(ch>98 || ch<1) {
+    if(ch>98 || ch<0.01) {
         return false
     }
     return true;
