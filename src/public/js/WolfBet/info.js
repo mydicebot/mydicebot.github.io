@@ -1,5 +1,5 @@
 function consoleInit() {
-    currencies = ['BTC', 'ETH', 'DOGE', 'LTC','TRX','BCH'];
+    currencies = ['BTC', 'ETH', 'DOGE', 'LTC','TRX','BCH','XRP'];
 }
 
 function init() {
@@ -11,6 +11,7 @@ function init() {
         {id:4,value:"LTC"},
         {id:5,value:"TRX"},
         {id:6,value:"BCH"},
+        {id:7,value:"XRP"},
     ]);
     $$("bet_currency_selection").refresh();
     minBetAmount = 0.00000001;
