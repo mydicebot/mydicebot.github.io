@@ -45,6 +45,7 @@ block content
                                     {id:"WolfBet",value:"WolfBet"},
                                     {id:"WinDice",value:"WinDice"},
                                     {id:"YoloDice",value:"YoloDice"},
+                                    {id:"ParaDice", value:"ParaDice"},
                                     {id:"SatoshiDice", value:"SatoshiDice"},
                                     {id:"EpicDice", value:"EpicDice"},
                                     {id:"KryptoGames", value:"KryptoGames"},
@@ -298,6 +299,7 @@ block content
                 {view: "label", label: "<a target='_blank' href='https://www.crypto-games.net/?i=CpQP3V8Up2'>Crypto-Games</a>"},
                 {view: "label", label: "<a target='_blank' href='https://duckdice.com/ab61534783'>DuckDice</a>"},
                 {view: "label", label: "<a target='_blank' href='https://freebitco.in/?r=16392656'>Freebitco.in</a>"},
+                {view: "label", label: "<a target='_blank' href='https://paradice.in/?c=mydicebot'>ParaDice</a>"},
                 {view: "label", label: "<a target='_blank' href='https://primedice.com/?c=mydicebot'>PrimeDice</a>"},
                 {view: "label", label: "<a target='_blank' href='https://stake.com/?code=mydicebot'>Stake</a>"},  
                 {view: "label", label: "<a target='_blank' href='https://windice.io/?r=e63q8xq4y'>WinDice</a>"},
@@ -317,8 +319,20 @@ block content
             ]
         };
         
-        var faucet_site_info = {
-            id: "faucet_site_info",
+        var faucet_site_info_1 = {
+            id: "faucet_site_info_1",
+            rows: [
+                {view: "label", label: "TelegramBot"},
+                {view: "label", label: "<a target='_blank' href='https://t.me/BitcoinClick_bot?start=RjbD'>BTCClickBot</a>"},
+                {view: "label", label: "<a target='_blank' href='https://t.me/Dogecoin_click_bot?start=5vxX'>DOGEClickBot</a>"},
+                {view: "label", label: "<a target='_blank' href='https://t.me/Litecoin_click_bot?start=clT4'>LTCClickBot</a>"},
+                {view: "label", label: "<a target='_blank' href='https://t.me/BCH_clickbot?start=Fh4n'>BCHClickBot</a>"},
+                {view: "label", label: "<a target='_blank' href='https://t.me/Zcash_click_bot?start=3mgl'>ZECClickBot</a>"},
+            ]
+        };
+        
+        var faucet_site_info_2 = {
+            id: "faucet_site_info_2",
             rows: [
                 {view: "label", label: "Faucet"},
                 {view: "label", label: "<a target='_blank' href='http://moonbit.co.in/?ref=6e3fc20d04f3'>MoonBitcoin</a>"},
@@ -379,9 +393,10 @@ block content
                     {
                         cols:[
                             traditional_dice_site_info,
-                            blockchain_dice_site_info,
-                            //todo_dice_site_info,
-                            faucet_site_info,
+                            // blockchain_dice_site_info,
+                            // todo_dice_site_info,
+                            faucet_site_info_1,
+                            faucet_site_info_2,
                             mining_site_info,
                             exchange_site_info,
                         ]
@@ -475,7 +490,7 @@ block content
         let keepassdb = {};
         let keepasslogin = false;
         let needUserSites = ['test','999Dice','FreeBitco','999Doge','SatoshiDice'];
-        let needTokenSites = ['test','PrimeDice','Stake','WolfBet'];
+        let needTokenSites = ['test','PrimeDice','Stake','WolfBet','ParaDice'];
         let needApiKeySites = ['test','Bitsler'];
         let needOnlyApiKeySites = ['test','YoloDice','Crypto-Games','DuckDice','WinDice'];
         let needSteemActiveKeySites = ['test','EpicDice','KryptoGames'];
@@ -524,9 +539,9 @@ block content
                     let site = $$("site").getValue();
                     let insert = true;
                     let k = 0;
-                    let apikey = $$("form1").elements.apikey.getValue(); 
-                    let username = $$("form1").elements.username.getValue(); 
-                    let password = $$("form1").elements.password.getValue(); 
+                    let apikey = $$("form1").elements.apikey.getValue();
+                    let username = $$("form1").elements.username.getValue();
+                    let password = $$("form1").elements.password.getValue();
                     let keepassword = webix.storage.session.get('keepassword');
                     let keepassfile = webix.storage.session.get('keepassfile');
                     let entrys = [];

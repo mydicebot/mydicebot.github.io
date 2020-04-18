@@ -16,6 +16,7 @@ var FreeBitco = require('../models/freebitco');
 var WinDice = require('../models/windice');
 var WolfBet = require('../models/wolfbet');
 var SatoshiDice = require('../models/satoshidice');
+var ParaDice = require('../models/paradice');
 var Factory = require('../models/factory');
 var config = require('config');
 var fs = require('fs');
@@ -82,6 +83,7 @@ function createDice (req, res, next) {
     Factory.register('WolfBet', new WolfBet());
     Factory.register('999Doge', new NineDoge());
     Factory.register('SatoshiDice', new SatoshiDice());
+    Factory.register('ParaDice', new ParaDice());
     next();
 }
 

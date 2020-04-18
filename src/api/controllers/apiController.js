@@ -31,6 +31,7 @@ let registerUrls = {
     "WinDice": "https://windice.io/?r=e63q8xq4y",
     "WolfBet": "https://wolf.bet/?c=mydicebot",
     "999Doge":"https://www.999doge.com/?224280708",
+    "ParaDice": "https://paradice.in/?c=mydicebot",
 };
 
 let mydiceUrls = {

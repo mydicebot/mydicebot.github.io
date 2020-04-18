@@ -23,5 +23,6 @@ var registerUrls = {
     "KryptoGames": "https://kryptogamers.com/?ref=mydicebot",
     "WinDice": "https://windice.io/?r=e63q8xq4y",
     "SatoshiDice": "https://www.satoshidice.io/",
+    "ParaDice": "https://paradice.in/?c=mydicebot",
     "Simulator": "https://www.999dice.com/?224280708",
 };

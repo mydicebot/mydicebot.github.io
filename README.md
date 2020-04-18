@@ -67,6 +67,7 @@
 * [DuckDice](https://duckdice.com/ab61534783)
 * [Freebitco.in](https://freebitco.in/?r=16392656)
 * [PrimeDice](https://primedice.com/?c=mydicebot)
+* [ParaDice](https://paradice.in/?c=mydicebot)
 * [Stake](https://stake.com/?code=mydicebot)
 * [WinDice](https://windice.io/?r=e63q8xq4y)
 * [WolfBet](https://wolf.bet/?c=mydicebot)
@@ -88,6 +89,13 @@
 * [SafeDice (coming soon)](https://safedice.com/?r=100309)
 * (More will be coming soon)
  
+# Telegram Bot
+* [Bitcoin Click](https://t.me/BitcoinClick_bot?start=RjbD)
+* [Dogecoin Click](https://t.me/Dogecoin_click_bot?start=5vxX)
+* [Litecoin Click](https://t.me/Litecoin_click_bot?start=clT4)
+* [BitconCash Click](https://t.me/BCH_clickbot?start=Fh4n)
+* [Zcash Click](https://t.me/Zcash_click_bot?start=3mgl)
+
 # Faucet
 * [Moon Bitcoin](http://moonbit.co.in/?ref=6e3fc20d04f3)
 * [Moon Dogecoin](http://moondoge.co.in/?ref=7b7eac714ebc)
