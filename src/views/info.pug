@@ -1936,6 +1936,8 @@ block content
                         }
                         nextbet = basebet;
                         isloop = true;
+                        stopOnWin = false;
+                        stopOnLoss = false;
                         $$("script_bet_start_stop_button").setValue('STOP');
                         scriptBet(true);
                     });
