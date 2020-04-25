@@ -105,6 +105,8 @@
 * [Bit Fun](http://bitfun.co/?ref=950389505790)
 * [Bonus Bitcoin](http://bonusbitcoin.co/?ref=0B26E1CAF795)
 * [Faucet Collector](https://faucetcollector.com/?ref=4789455)
+* [AutoFaucet](https://autofaucet.org/r/mydicebot)
+* [FaucetPay](https://faucetpay.io/?r=201981)
 
 # Mining
 * [CryptoTab](https://cryptotabbrowser.com/4760331)
@@ -222,6 +224,8 @@ bash start.sh
 |---|---|
 |__dobet()__|The loop of bets|
 |__stop()__|Stop the bet|
+|__start()__|Start the bet (from very beginning) after stop()|
+|__resume()__|Resume the bet (from current stopping) after stop()|
 |__resetsession()__|Reset the session|
 |__resetseed()__|Reset the client seed|
 |__sound(path_of_the_sound)__|Sound notificaiton|

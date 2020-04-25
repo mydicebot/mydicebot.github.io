@@ -18,6 +18,13 @@ block content
             var lastbet = {id:0,chance:chance, date:1585642326,roll:49.5,amount:nextbet,nonce:1000,serverhash:'mydice',serverseed:'mydice',clientseed:'mydice',profit:profit,uid:1000,high:bethigh};
             var humps = ['baseBet', 'nextBet', 'betHigh', 'previousBet', 'currentProfit', 'currentStreak','currentRoll','lastBet.Id','lastBet.Chance','lastBet.date','lastBet.Roll','lastBet.Amount','lastBet.nonce','lastBet.serverhash','lastBet.serverseed','lastBet.clientseed','lastBet.Profit','lastBet.uid','lastBet.high','lastBet'];
             var maxwinstreak = 0, maxlossstreak = 0, maxwinstreakamount = 0, maxlossstreakamount = 0, maxstreakamount = 0, minstreakamount = 0, maxbetamount= 0  ;
+            fengari.load('function stop()\nisloop = false \n js.global:stop() \n print(isloop)\nend')();
+            fengari.load('function resetseed()\n js.global:resetseed() \nend')();
+            fengari.load('function resetsession()\n js.global:resetsession() \nend')();
+            fengari.load('function sound(file)\n js.global:sound(file) \nend')();
+            fengari.load('function message(text, type, expire)\n js.global:message(text, type, expire) \nend')();
+            fengari.load('function start()\n js.global:start() \nend')();
+            fengari.load('function resume()\n js.global:resume() \nend')();
             webix.protoUI({
               name:"mydicebot_dataview"
             }, webix.ui.dataview, webix.OverlayBox );
@@ -186,6 +193,7 @@ block content
                     {view: "label", label: "<a target='_blank' href='http://bitfun.co/?ref=950389505790'>BitFun</a>"},
                     {view: "label", label: "<a target='_blank' href='http://bonusbitcoin.co/?ref=0B26E1CAF795'>BonusBitcoin</a>"},
                     {view: "label", label: "<a target='_blank' href='https://faucetcollector.com/?ref=4789455'>FaucetCollector</a>"},
+                    {view: "label", label: "<a target='_blank' href='https://autofaucet.org/r/mydicebot'>AutoFaucet</a>"},
                 ]
             };
             
@@ -231,7 +239,7 @@ block content
                 faucet_site_info_2,
                 mining_site_info,
                 exchange_site_info,
-                todo_dice_site_info,
+                // todo_dice_site_info,
             ];
             
             var random_site_ref_info = {
@@ -1881,66 +1889,7 @@ block content
                         document.getElementById("python_stop_button").click();
                     }
                 } else {
-                    currencyValue = $$("bet_currency_selection").getValue() -1;
-                    //bethigh = false;
-                    //if(currentLanguage == 'lua') fengari.load('bethigh= false')();
-                    initScriptBalance(currencyValue, function(){
-                        code = $$("script_bet_coding_board").getValue();
-                        if (currentLanguage != 'py') {
-                            code = $$("script_bet_coding_board").getValue().toLowerCase();
-                        }
-                        humps.forEach(function(element) {
-                            code = code.replace(new RegExp(element, "gm"), element.toLowerCase());
-                        });
-                        try {
-                            if(currentLanguage == 'lua') {
-                                code = code.replace(/!=/g,"~=");
-                                code = code.replace(/!/g,"not ");
-                                code = code.replace(/base/g,'basebet');
-                                code = code.replace(/basebetbet/g,'basebet');
-                                code = code.replace(/([a-zA-Z]*[0-9]*\s*)\+\=(\s*[a-zA-Z]*[0-9]*)/g, '$1=$1+$2 ');
-                                code = code.replace(/([a-zA-Z]*[0-9]*\s*)\-\=(\s*[a-zA-Z]*[0-9]*)/g, '$1=$1-$2 ');
-                                code = code.replace(/([a-zA-Z]*[0-9]*\s*)\*\=(\s*[a-zA-Z]*[0-9]*)/g, '$1=$1*$2 ');
-                                code = code.replace(/([a-zA-Z]*[0-9]*\s*)\/\=(\s*[a-zA-Z]*[0-9]*)/g, '$1=$1/$2 ');
-                                fengari.load('lastbet = {}\n')();
-                                fengari.load('currencies = {}\n')();
-                                fengari.load('basebet='+basebet+'\nnextbet='+nextbet+'\nchance='+chance+'\nbethigh='+bethigh+'\n')();
-                                fengari.load('function stop()\nisloop = false \n js.global:stop() \n print(isloop)\nend')();
-                                fengari.load('function resetseed()\n js.global:resetseed() \nend')();
-                                fengari.load('function resetsession()\n js.global:resetsession() \nend')();
-                                fengari.load('function sound(file)\n js.global:sound(file) \nend')();
-                                fengari.load('function message(text, type, expire)\n js.global:message(text, type, expire) \nend')();
-                                fengari.load('nextbet=basebet\nbalance='+balance+'\nbets='+bets+'\nwins='+wins+'\nlosses='+ losses +'\nprofit='+profit+'\npreviousbet='+previousbet+'\ncurrentprofit='+currentprofit+'\ncurrentstreak='+currentstreak+'\ncurrentroll='+currentroll+'\nisloop=true\n')();
-                                fengari.load('lastbet.id="'+lastbet.id+'"\nlastbet.chance='+lastbet.chance+'\nlastbet.date='+lastbet.date+'\nlastbet.roll='+lastbet.roll+'\nlastbet.amount='+ lastbet.amount +'\nlastbet.nonce="'+lastbet.nonce+'"\nlastbet.serverhash="'+lastbet.serverhash+'"\nlastbet.serverseed="'+lastbet.serverseed+'"\nlastbet.clientseed="'+lastbet.clientseed+'"\nlastbet.profit='+lastbet.profit+'\nlastbet.uid="'+lastbet.uid+'"\nlastbet.high='+lastbet.high+'\n')();
-                                for(i=0;i<currencies.length;i++){
-                                    fengari.load('currencies[#currencies+1]="'+ currencies[i]+'"\n')();
-                                }
-                                fengari.load(code)();
-                            }
-                            if (currentLanguage == 'py') {
-                                evalPython(code);
-                            }
-                            if (currentLanguage == 'js') {
-                                evalScript(code);
-                            }
-                        } catch(err){
-                            if(typeof err.message != 'undefined' ) {
-                                console.error(err);
-                                console.error(err.message);
-                                webix.message({type: 'error', text: "load error:"+err.message});
-                            } else {
-                                console.error(err);
-                                webix.message({type: 'error', text: "load error:"+err});
-                            }
-                            return false;
-                        }
-                        nextbet = basebet;
-                        isloop = true;
-                        stopOnWin = false;
-                        stopOnLoss = false;
-                        $$("script_bet_start_stop_button").setValue('STOP');
-                        scriptBet(true);
-                    });
+                    start(true);
                 }
             });
             $$("auto_bet_start_stop_button").attachEvent("onItemClick", function(){
@@ -2577,7 +2526,7 @@ block content
                     bet_current_stats_seed:0,
                 });
                 $$('bet_datatable').clearAll();
-                $$("bet_chart").clearAll();
+                $$("bet_chart_graph").clearAll();
                 $$("script_bet_log_board").clearAll();
                 maxstreakamount = 0;
                 minstreakamount = 0;
@@ -2588,7 +2537,7 @@ block content
                 clear(function(userinfo){
                     setStats(userinfo, newId-1);
                     $$('bet_datatable').clearAll();
-                    $$("bet_chart").clearAll();
+                    $$("bet_chart_graph").clearAll();
                     clearSession();
                 });
             }
@@ -2615,6 +2564,76 @@ block content
                     }
                     cb(ret);
                 });
+            }
+            async function resume(){
+                if(!isloop) {
+                    console.log("call resume .....");
+                    await new Promise(resolve => setTimeout(resolve, 5000));
+                    $$("script_bet_start_stop_button").setValue('STOP');
+                    isloop = true;
+                    scriptBet(false);
+                }
+            }
+            function start(init){
+                if(init || !isloop){
+                    if(!isloop && !init){
+                        console.log("call start .....");
+                        $$("script_bet_start_stop_button").setValue('STOP');
+                    }
+                    currencyValue = $$("bet_currency_selection").getValue() -1;
+                    initScriptBalance(currencyValue, function(){
+                    code = $$("script_bet_coding_board").getValue();
+                    if (currentLanguage != 'py') {
+                        code = $$("script_bet_coding_board").getValue().toLowerCase();
+                    }
+                    humps.forEach(function(element) {
+                        code = code.replace(new RegExp(element, "gm"), element.toLowerCase());
+                    });
+                    try {
+                        if(currentLanguage == 'lua') {
+                            code = code.replace(/!=/g,"~=");
+                            code = code.replace(/!/g,"not ");
+                            code = code.replace(/base/g,'basebet');
+                            code = code.replace(/basebetbet/g,'basebet');
+                            code = code.replace(/([a-zA-Z]*[0-9]*\s*)\+\=(\s*[a-zA-Z]*[0-9]*)/g, '$1=$1+$2 ');
+                            code = code.replace(/([a-zA-Z]*[0-9]*\s*)\-\=(\s*[a-zA-Z]*[0-9]*)/g, '$1=$1-$2 ');
+                            code = code.replace(/([a-zA-Z]*[0-9]*\s*)\*\=(\s*[a-zA-Z]*[0-9]*)/g, '$1=$1*$2 ');
+                            code = code.replace(/([a-zA-Z]*[0-9]*\s*)\/\=(\s*[a-zA-Z]*[0-9]*)/g, '$1=$1/$2 ');
+                            fengari.load('lastbet = {}\n')();
+                            fengari.load('currencies = {}\n')();
+                            fengari.load('basebet='+basebet+'\nnextbet='+nextbet+'\nchance='+chance+'\nbethigh='+bethigh+'\n')();
+                            fengari.load('nextbet=basebet\nbalance='+balance+'\nbets='+bets+'\nwins='+wins+'\nlosses='+ losses +'\nprofit='+profit+'\npreviousbet='+previousbet+'\ncurrentprofit='+currentprofit+'\ncurrentstreak='+currentstreak+'\ncurrentroll='+currentroll+'\nisloop=true\n')();
+                            fengari.load('lastbet.id="'+lastbet.id+'"\nlastbet.chance='+lastbet.chance+'\nlastbet.date='+lastbet.date+'\nlastbet.roll='+lastbet.roll+'\nlastbet.amount='+ lastbet.amount +'\nlastbet.nonce="'+lastbet.nonce+'"\nlastbet.serverhash="'+lastbet.serverhash+'"\nlastbet.serverseed="'+lastbet.serverseed+'"\nlastbet.clientseed="'+lastbet.clientseed+'"\nlastbet.profit='+lastbet.profit+'\nlastbet.uid="'+lastbet.uid+'"\nlastbet.high='+lastbet.high+'\n')();
+                            for(i=0;i<currencies.length;i++){
+                                fengari.load('currencies[#currencies+1]="'+ currencies[i]+'"\n')();
+                            }
+                            fengari.load(code)();
+                        }
+                        if (currentLanguage == 'py') {
+                            evalPython(code);
+                        }
+                        if (currentLanguage == 'js') {
+                            evalScript(code);
+                        }
+                    } catch(err){
+                        if(typeof err.message != 'undefined' ) {
+                            console.error(err);
+                            console.error(err.message);
+                            webix.message({type: 'error', text: "load error:"+err.message});
+                        } else {
+                            console.error(err);
+                            webix.message({type: 'error', text: "load error:"+err});
+                        }
+                        return false;
+                    }
+                    nextbet = basebet;
+                    isloop = true;
+                    stopOnWin = false;
+                    stopOnLoss = false;
+                    $$("script_bet_start_stop_button").setValue('STOP');
+                    scriptBet(true);
+                });
+                }
             }
             function getInfo(cb){
                 $$("bet_chart").showProgress({
@@ -2826,11 +2845,16 @@ block content
                           '    window.message(text, type, expire)\n';
                 soundFun = '\ndef sound(file):\n'+
                           '    window.sound(file)\n';
+                startFun = '\ndef start():\n'+
+                          '    window.start()\n';
+                resumeFun = '\ndef resume():\n'+
+                          '    window.resume()\n';
                 resetSeedFun = '\ndef resetseed():\n'+
                           '    window.resetseed()\n';
                 resetSessionFun = '\ndef resetsession():\n'+
                           '    window.resetsession()\n';
                 stopFun = '\ndef stop():\n'+
+                          '    window.isloop = False\n'+
                           '    global isloop\n'+
                           '    isloop = False\n';
                 stopBetFun = '\ndef stopbet(event):\n'+
@@ -2862,7 +2886,7 @@ block content
                               '\ndocument["python_before_bet_button"].bind("click", beforebet)\n'+
                               '\ndocument["python_after_bet_button"].bind("click", afterbet)\n'+
                               '\ndocument["python_stop_button"].bind("click", stopbet)\n';
-                strScript = strScript + messageFun + resetSeedFun + resetSessionFun + soundFun + stopFun + stopBetFun + beforeBetFun + afterBetFun + clickFun;
+                strScript = strScript + messageFun + resetSeedFun + resetSessionFun + soundFun + stopFun + startFun + resumeFun + stopBetFun + beforeBetFun + afterBetFun + clickFun;
 
                 //console.log("eval python:",strScript);
                 let dynamicStr = document.createElement ("script");
