@@ -146,44 +146,42 @@ var contrib = require('blessed-contrib');
 var screen = blessed.screen();
 var grid = new contrib.grid({rows: 4, cols: 4, screen: screen});
 
-//var table1 =  grid.set(0, 0, 0.6, 1.6, contrib.table,
-var table1 =  grid.set(0, 0, 0.6, 1.6, contrib.table,
+var table1 =  grid.set(0, 0, 1.4, 1.0, contrib.table,
   { keys: true
   , fg: 'green'
   , label: 'Total Status'
   , columnSpacing: 1
-  , columnWidth: [12, 12, 12, 6, 6, 6]});
-var table2 =  grid.set(0, 1.6, 0.6, 1.6, contrib.table,
+  , columnWidth: [10, 12]});
+var table2 =  grid.set(0, 1.0, 1.4, 1.0, contrib.table,
   { keys: true
   , fg: 'green'
-  , label: 'Current Status'
+  , label: 'Current Status 1'
   , columnSpacing: 1
-  , columnWidth: [12, 12, 12, 6, 6, 6]});
-//var table2 =  grid.set(0.6, 0, 0.6, 2.8, contrib.table,
-var table3 =  grid.set(0.6, 0, 0.6, 3.2, contrib.table,
+  , columnWidth: [10, 12]});
+var table3 =  grid.set(0, 2.0, 1.4, 1.2, contrib.table,
   { keys: true
   , fg: 'green'
-  , label: 'Bet Current Status'
+  , label: 'Current Status 2'
   , columnSpacing: 1
-  , columnWidth: [19, 16, 16, 13, 10, 13, 14]});
-var table4 =  grid.set(0, 3.2, 1.2, 0.8, contrib.table,
+  , columnWidth: [18, 12]});
+var table4 =  grid.set(0, 3.2, 1.4, 0.8, contrib.table,
   { keys: true
   , fg: 'green'
   , label: 'Info'
   , columnSpacing: 1
-  , columnWidth: [19, 16, 16, 13, 10, 13, 14]});
-var datalog =  grid.set(1.2, 0, 1.2, 4, contrib.log,
+  , columnWidth: [20]});
+var datalog =  grid.set(1.4, 0, 1.2, 4, contrib.log,
    { fg: "green"
    , selectedFg: "green"
    , label: 'Bet Info'
    , border: {type: "line", fg: "cyan"}});
-var logs =  grid.set(2.4, 0, 1.6, 4, contrib.log,
+var logs =  grid.set(2.6, 0, 1.4, 4, contrib.log,
    { fg: "green"
    , selectedFg: "green"
    , label: 'Server Log'});
 
 table4.setData(
-    { headers: ['info']
+    { headers: ['Info']
         , data:
         [['Start(Enter)'],
             ['Stop(S)'],['Quit(Ctrl-C)']] });

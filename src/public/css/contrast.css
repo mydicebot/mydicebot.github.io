@@ -3358,7 +3358,7 @@ legend.webix_required:after,
 }
 .webix_tab_filler {
   display: table-cell;
-  background: transparent;
+  background: #393939;
   font-size: 1px;
   border-bottom: 1px solid #818181;
   -moz-box-sizing: border-box;
@@ -4017,8 +4017,8 @@ legend.webix_forminput_label_top {
   font-family: "Webix Awesome Icons";
   font-size: 50px;
   position: absolute;
-  left: 50%;
-  top: 50%;
+  left: 90%;
+  top: 20%;
   margin-left: -25px;
   margin-top: -25px;
   display: inline-block;
@@ -5291,7 +5291,7 @@ div.webix_inp_static,
   border: 1px solid #fff;
 }
 .webix_control {
-  background: transparent;
+  background: #393939;
 }
 /* .webix_layout_line > .webix_control, .webix_layout_clean > .webix_control{
 	background: @backColor;

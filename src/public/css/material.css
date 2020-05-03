@@ -5049,8 +5049,8 @@ legend.webix_forminput_label_top {
   font-family: "Webix Material Icons";
   font-size: 50px;
   position: absolute;
-  left: 50%;
-  top: 50%;
+  left: 90%;
+  top: 20%;
   margin-left: -25px;
   margin-top: -25px;
   display: inline-block;

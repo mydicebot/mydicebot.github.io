@@ -167,18 +167,38 @@ function consoleStats(userinfo, cv){
         let info = JSON.stringify(userinfo.info);
         console.log(info.replace(/\"/g,""));
         wagered = (Math.abs(userinfo.currentInfo.wagered)/100000000).toFixed(8);
-        table1.setData(
-            { headers: ['balance','profit', 'wagered','wins','bets','losses']
-                , data:
-                 [[(userinfo.info.balance/100000000).toFixed(8), ((userinfo.info.profit)/100000000).toFixed(8), (Math.abs(userinfo.info.wagered)/100000000).toFixed(8), userinfo.info.wins, userinfo.info.bets, userinfo.info.losses]] });
-        table2.setData(
-            { headers: ['balance','profit', 'wagered','wins','bets','losses']
-                , data:
-                 [[(userinfo.currentInfo.balance/100000000).toFixed(8), ((userinfo.currentInfo.profit)/100000000).toFixed(8), (Math.abs(userinfo.currentInfo.wagered)/100000000).toFixed(8), userinfo.currentInfo.wins, userinfo.currentInfo.bets, userinfo.currentInfo.losses]] });
-        table3.setData(
-            { headers: ['maxwinstreakamount','maxstreakamount','minstreakamount','maxbetamount','curstreak','maxwinstreak','maxlossstreak']
-                , data:
-                [[maxwinstreakamount, maxstreakamount.toFixed(8), minstreakamount.toFixed(8), maxbetamount, currentstreak, maxwinstreak, maxlossstreak]] });
+        table1.setData({   
+            headers: ['Info'],
+            data: [
+                ['BALANCE', (userinfo.info.balance/100000000).toFixed(8)],
+                ['WIN', userinfo.info.wins],
+                ['LOSS', userinfo.info.losses],
+                ['BET', userinfo.info.bets],
+                ['PROFIT', ((userinfo.info.profit)/100000000).toFixed(8)],
+                ['WAGERED', (Math.abs(userinfo.info.wagered)/100000000).toFixed(8)]
+            ]
+        });
+        table2.setData({
+            headers: ['Info'],
+            data: [
+                ['BALANCE', (userinfo.currentInfo.balance/100000000).toFixed(8)],
+                ['WIN', userinfo.currentInfo.wins],
+                ['LOSS', userinfo.currentInfo.losses],
+                ['BET', userinfo.currentInfo.bets],
+                ['PROFIT', ((userinfo.currentInfo.profit)/100000000).toFixed(8)],
+                ['WAGERED', (Math.abs(userinfo.currentInfo.wagered)/100000000).toFixed(8)]
+            ] 
+        });
+        table3.setData({ 
+            headers: ['Info'],
+            data: [
+                ['CURRENT STREAK', currentstreak],
+                ['MAX WIN STREAK', maxwinstreak],
+                ['MAX LOSS STREAK', maxlossstreak],
+                ['MAX LOSTRK AMOUNT', maxlossstreakamount],
+                ['MAX BET AMOUNT', maxbetamount]
+            ]
+        });
         table1.focus()
         table2.focus()
         table3.focus()

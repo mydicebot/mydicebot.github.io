@@ -163,18 +163,38 @@ function consoleStats(userinfo, cv){
     let info = JSON.stringify(userinfo.Balances[cv]);
     console.log(info.replace(/\"/g,""));
     wagered = (Math.abs(userinfo.Balances[cv].TotalPayIn)/100000000).toFixed(8);
-    table1.setData(
-        { headers: ['balance','profit', 'wagered','wins','bets','losses']
-            , data:
-            [[parseFloat(userinfo.Balances[cv].Balance/100000000).toFixed(8), ((userinfo.Balances[cv].TotalPayIn+userinfo.Balances[cv].TotalPayOut)/100000000).toFixed(8), (Math.abs(userinfo.Balances[cv].TotalPayIn)/100000000).toFixed(8), userinfo.Balances[cv].TotalWins, userinfo.Balances[cv].TotalBets, (userinfo.Balances[cv].TotalBets-userinfo.Balances[cv].TotalWins)]] });
-    table2.setData(
-        { headers: ['balance','profit', 'wagered','wins','bets','losses']
-            , data:
-            [[parseFloat(userinfo.CurrentBalances[cv].Balance/100000000).toFixed(8), ((userinfo.CurrentBalances[cv].TotalPayIn+userinfo.CurrentBalances[cv].TotalPayOut)/100000000).toFixed(8), (Math.abs(userinfo.CurrentBalances[cv].TotalPayIn)/100000000).toFixed(8), userinfo.CurrentBalances[cv].TotalWins, userinfo.CurrentBalances[cv].TotalBets, (userinfo.CurrentBalances[cv].TotalBets-userinfo.CurrentBalances[cv].TotalWins)]] });
-    table3.setData(
-        { headers: ['maxwinstreakamount','maxstreakamount','minstreakamount','maxbetamount','curstreak','maxwinstreak','maxlossstreak']
-            , data:
-            [[maxwinstreakamount, maxstreakamount.toFixed(8), minstreakamount.toFixed(8), maxbetamount, currentstreak, maxwinstreak, maxlossstreak]] });
+    table1.setData({
+        headers: ['Info'],
+            data: [
+                ['BALANCE', parseFloat(userinfo.Balances[cv].Balance/100000000).toFixed(8)],
+                ['WIN', userinfo.Balances[cv].TotalWins],
+                ['LOSS', (userinfo.Balances[cv].TotalBets-userinfo.Balances[cv].TotalWins)],
+                ['BET', userinfo.Balances[cv].TotalBets],
+                ['PROFIT', ((userinfo.Balances[cv].TotalPayIn+userinfo.Balances[cv].TotalPayOut)/100000000).toFixed(8)],
+                ['WAGERED', (Math.abs(userinfo.Balances[cv].TotalPayIn)/100000000).toFixed(8)]
+            ]
+    });
+    table2.setData({
+        headers: ['Info'],
+            data: [
+                ['BALANCE', parseFloat(userinfo.CurrentBalances[cv].Balance/100000000).toFixed(8)],
+                ['WIN', userinfo.CurrentBalances[cv].TotalWins],
+                ['LOSS', (userinfo.CurrentBalances[cv].TotalBets-userinfo.CurrentBalances[cv].TotalWins)],
+                ['BET', userinfo.CurrentBalances[cv].TotalBets],
+                ['PROFIT', ((userinfo.CurrentBalances[cv].TotalPayIn+userinfo.CurrentBalances[cv].TotalPayOut)/100000000).toFixed(8)],
+                ['WAGERED', (Math.abs(userinfo.CurrentBalances[cv].TotalPayIn)/100000000).toFixed(8)]
+            ] 
+    });
+    table3.setData({ 
+        headers: ['Info'],
+        data: [
+            ['CURRENT STREAK', currentstreak],
+            ['MAX WIN STREAK', maxwinstreak],
+            ['MAX LOSS STREAK', maxlossstreak],
+            ['MAX LOSTRK AMOUNT', maxlossstreakamount],
+            ['MAX BET AMOUNT', maxbetamount]
+        ]
+    });
     table1.focus()
     table2.focus()
     table3.focus()

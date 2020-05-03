@@ -169,18 +169,38 @@ function consoleStats(userinfo, cv){
         let info = JSON.stringify(userinfo.info);
         console.log(info.replace(/\"/g,""));
         wagered = userinfo.info.wagered;
-        table1.setData(
-            { headers: ['balance','profit', 'wagered','wins','bets','losses']
-                , data:
-                 [[userinfo.info.balance, userinfo.info.profit, userinfo.info.wagered, userinfo.info.wins, userinfo.info.bets, userinfo.info.losses]] });
-        table2.setData(
-            { headers: ['balance','profit', 'wagered','wins','bets','losses']
-                , data:
-                 [[userinfo.currentInfo.balance, userinfo.currentInfo.profit, userinfo.currentInfo.wagered, userinfo.currentInfo.wins, userinfo.currentInfo.bets, userinfo.currentInfo.losses]] });
-        table3.setData(
-            { headers: ['maxwinstreakamount','maxstreakamount','minstreakamount','maxbetamount','curstreak','maxwinstreak','maxlossstreak']
-                , data:
-                [[maxwinstreakamount, maxstreakamount.toFixed(8), minstreakamount.toFixed(8), maxbetamount, currentstreak, maxwinstreak, maxlossstreak]] });
+        table1.setData({   
+            headers: ['Info'],
+            data: [
+                ['BALANCE', userinfo.info.balance],
+                ['WIN', userinfo.info.wins],
+                ['LOSS', userinfo.info.losses],
+                ['BET', userinfo.info.bets],
+                ['PROFIT', userinfo.info.profit],
+                ['WAGERED', userinfo.info.wagered]
+            ]
+        });
+        table2.setData({
+            headers: ['Info'],
+            data: [
+                ['BALANCE', userinfo.currentInfo.balance],
+                ['WIN', userinfo.currentInfo.wins],
+                ['LOSS', userinfo.currentInfo.losses],
+                ['BET', userinfo.currentInfo.bets],
+                ['PROFIT', userinfo.currentInfo.profit],
+                ['WAGERED', userinfo.currentInfo.wagered]
+            ] 
+        });
+        table3.setData({ 
+            headers: ['Info'],
+            data: [
+                ['CURRENT STREAK', currentstreak],
+                ['MAX WIN STREAK', maxwinstreak],
+                ['MAX LOSS STREAK', maxlossstreak],
+                ['MAX LOSTRK AMOUNT', maxlossstreakamount],
+                ['MAX BET AMOUNT', maxbetamount]
+            ]
+        });
         table1.focus()
         table2.focus()
         table3.focus()

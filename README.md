@@ -11,7 +11,7 @@
 * [https://mydicebot.com](https://mydicebot.com)
 * [MyDiceBot](https://mydicebot.com) is World #1 Cross-Platform Dicing Bot.
 * Multiple platforms are supported, including __Windows, Mac, Linux, Web, Terminal/Console, Android__ and __Raspberry Pi__.
-* Multiple blockchains are supported, including __STEEM__.
+* Multiple blockchains are supported.
 * Multiple programming languages are supported such as  __Lua, Javascript__ and __Python__.
 * [Open Source](https://github.com/mydicebot/mydicebot.github.io) and __Free Forever__.
 
@@ -63,7 +63,7 @@
 * [999Dice](https://www.999dice.com/?224280708)
 * [999Doge](https://www.999doge.com/?224280708)
 * [Bitsler](https://www.bitsler.com/?ref=mydicebot)
-* [Crypto-Games](https://www.crypto-games.net?i=CpQP3V8Up2)
+* [Crypto.Games](https://www.crypto.games?i=CpQP3V8Up2)
 * [DuckDice](https://duckdice.com/ab61534783)
 * [Freebitco.in](https://freebitco.in/?r=16392656)
 * [PrimeDice](https://primedice.com/?c=mydicebot)
@@ -97,6 +97,9 @@
 * [Zcash Click](https://t.me/Zcash_click_bot?start=3mgl)
 
 # Faucet
+* [CoinPot Wallet](https://coinpot.co/)
+* [FaucetPay Wallet](https://faucetpay.io/?r=201981)
+* [Faucet Collector](https://faucetcollector.com/?ref=4789455)
 * [Moon Bitcoin](http://moonbit.co.in/?ref=6e3fc20d04f3)
 * [Moon Dogecoin](http://moondoge.co.in/?ref=7b7eac714ebc)
 * [Moon Litecoin](http://moonliteco.in/?ref=1183cf6a9534)
@@ -104,9 +107,7 @@
 * [Moon Cash](http://moonbitcoin.cash/?ref=6F08451C9CF9)
 * [Bit Fun](http://bitfun.co/?ref=950389505790)
 * [Bonus Bitcoin](http://bonusbitcoin.co/?ref=0B26E1CAF795)
-* [Faucet Collector](https://faucetcollector.com/?ref=4789455)
 * [AutoFaucet](https://autofaucet.org/r/mydicebot)
-* [FaucetPay](https://faucetpay.io/?r=201981)
 
 # Mining
 * [CryptoTab](https://cryptotabbrowser.com/4760331)
@@ -168,6 +169,7 @@ bash start.sh
 * Manual bet
 * Auto bet
 * Script bet (__compatible with Seuntjies DiceBot scripts__)
+* Script gist
 * Chat room [MyDiceBot](https://discord.gg/S6W5ec9) on [Discord](https://discord.gg/S6W5ec9)
 
 # Manual Bet
@@ -185,6 +187,7 @@ bash start.sh
 * JavaScript programming language
 * Python programming language
 * __Compatible with the variables and functions of Seuntjie DiceBot's Lua script__
+* Import script from gist (Github) easily
 
 ![](screenshot/mydicebot-script-bet.png)
 
@@ -235,38 +238,57 @@ bash start.sh
 * Strategy: Basic Martingale
 * Using Lua
 ```lua
-chance = 49.5
-multiplier = 2
-basebet = 0.00000010
-bethigh = false
+    chance = 49.5
+    multiplier = 2
+    basebet = 0.00000010
+    bethigh = false
 
-function dobet()
-    if profit >= 0.1 then
-        stop()
+    function dobet()
+        if profit >= 0.1 then
+            stop()
+        end
+        
+        if win then
+            nextbet = basebet
+        else
+            nextbet = previousbet * multiplier
+        end
     end
-    
-    if win then
-        nextbet = basebet
-    else
-        nextbet = previousbet * multiplier
-    end
-end
 ```
 * Using Javascript
 ```javascript
-chance = 49.5;
-multiplier = 2;
-baseBet = 0.00000001;
-betHigh = false;
+    chance = 49.5;
+    multiplier = 2;
+    baseBet = 0.00000001;
+    betHigh = false;
 
-function dobet() {
-    if (win) {
-        nextBet = basebet;
-    } else {
-        nextBet = previousbet * multiplier;
+    function dobet() {
+        if (win) {
+            nextBet = basebet;
+        } else {
+            nextBet = previousbet * multiplier;
+        }
     }
-}
 ```
+* Using Python
+```python
+    chance = 49.5
+    multiplier = 2
+    basebet = 0.00000001
+    bethigh = False
+    nextbet = basebet
+
+    def dobet(event):
+        if win:
+            nextbet = basebet
+        else:
+            nextbet = previousbet * multiplier
+```
+
+## Script Gist
+* https://gist.github.com/mydicebot
+* Import script from gist (github) in MyDiceBot app directly
+* Vote/Comment/Fork scripts on gist (github)
 
 # Report Issue
 * [https://github.com/mydicebot/mydicebot.github.io/issues](https://github.com/mydicebot/mydicebot.github.io/issues)
