@@ -2,7 +2,7 @@ extends layout
 
 block content
     script.
-            var mobiles = ['bet_total_stats', 'bet_current_stats', 'bet_current_stats2', 'bet_datatable', 'misc_items_form'];
+            var mobiles = ['bet_total_stats', 'bet_current_stats', 'bet_current_stats2', 'bet_current_stats3', 'bet_datatable', 'misc_items_form'];
             var currencies = ['BTC', 'Doge', 'LTC', 'ETH'];
             var stopOnWin = false, stopOnLoss = false, iswin = false;
             var minBetAmount = 0.00000001, currencyValue = 0, betAmount = 0;
@@ -12,9 +12,10 @@ block content
             var nums = 0, currency = 'btc', base = 0, isloop = false, currentLanguage = 'lua';
             var autoLossRadio, autoWinRadio;
             var code;
+            var startTime = new Date(), settime, difftime = 0;
             var toggleLog = false, toggleChart = true;
             var basebet = 0.00000001, nextbet = 0.00000001, chance = 90, bethigh = false;
-            var previousbet = 0, win = false, currentprofit = 0, balance = 0, bets = 0, wins = 0, losses = 0, profit = 0, currentstreak = 0, currentroll = 0, currentAmount = 0 ;
+            var previousbet = 0, win = false, currentprofit = 0, balance = 0, bets = 0, wins = 0, losses = 0, profit = 0, currentstreak = 0, currentroll = 0, currentAmount = 0, totalprofit = 0 ;
             var lastbet = {id:0,chance:chance, date:1585642326,roll:49.5,amount:nextbet,nonce:1000,serverhash:'mydice',serverseed:'mydice',clientseed:'mydice',profit:profit,uid:1000,high:bethigh};
             var humps = ['baseBet', 'nextBet', 'betHigh', 'previousBet', 'currentProfit', 'currentStreak','currentRoll','lastBet.Id','lastBet.Chance','lastBet.date','lastBet.Roll','lastBet.Amount','lastBet.nonce','lastBet.serverhash','lastBet.serverseed','lastBet.clientseed','lastBet.Profit','lastBet.uid','lastBet.high','lastBet'];
             var maxwinstreak = 0, maxlossstreak = 0, maxwinstreakamount = 0, maxlossstreakamount = 0, maxstreakamount = 0, minstreakamount = 0, maxbetamount= 0  ;
@@ -60,12 +61,25 @@ block content
                 nameWidth: 120,
                 elements: [
                     {label: "CURRENT STATS 2", type: "label"},
-                    {label: "current streak", type: "text", id: "bet_current_stats_current_streak", value:"0"},
-                    {label: "max win streak", type: "text", id: "bet_current_stats_max_win_streak", value:"0"},
-                    {label: "max loss streak", type: "text", id: "bet_current_stats_max_loss_streak", value:"0"},
-                    {label: "max lostrk amnt", type: "text", id: "bet_current_stats_max_loss_streak_amount", value:"0"},
-                    {label: "max bet amnt", type: "text", id: "bet_current_stats_max_bet_amount", value:"0" },
-                    {label: "seed", type: "text", id: "bet_current_stats_seed", value:"0"},
+                    {label: "CURRENT STREAK", type: "text", id: "bet_current_stats_current_streak", value:"0"},
+                    {label: "MAXWIN STREAK", type: "text", id: "bet_current_stats_max_win_streak", value:"0"},
+                    {label: "MAXLOSS STREAK", type: "text", id: "bet_current_stats_max_loss_streak", value:"0"},
+                    {label: "MAX LOSTRK AMNT", type: "text", id: "bet_current_stats_max_loss_streak_amount", value:"0"},
+                    {label: "MAX BET AMNT", type: "text", id: "bet_current_stats_max_bet_amount", value:"0" },
+                    {label: "SEED", type: "text", id: "bet_current_stats_seed", value:"0"},
+                ]
+            };
+            var bet_current_stats3 = {
+                id: "bet_current_stats3",
+                view: "property",
+                nameWidth: 90,
+                elements: [
+                    {label: "CURRENT STATS 3", type: "label"},
+                    {label: "TIME", type: "text", id: "bet_time", value:"0"},
+                    {label: "BETS", type: "text", id: "bets", value:"0"},
+                    {label: "PROFIT/H", type: "text", id: "bet_profit_per_hour", value:"0"},
+                    {label: "PROFIT/D", type: "text", id: "bet_profit_per_day", value:"0"},
+                    {label: "AVGPROFIT", type: "text", id: "bet_profit_per_bet", value:"0"},
                 ]
             };
             var bet_currency_selection = {
@@ -80,6 +94,7 @@ block content
                 left: 70,
                 top: 70,
                 value: 1,
+                height: 25,
                 label: "CURRENCY",
                 labelWidth: 90,
                 placeholder: "BTC",
@@ -99,11 +114,26 @@ block content
                 left: 70,
                 top: 70,
                 value: 0.01,
+                height: 25,
                 label: "HOUSEEDGE",
                 labelWidth: 90,
                 placeholder: "0.1%",
                 name: "house_edge",
                 hidden: true,
+            };
+            var bet_sim_balance = {
+                id: "bet_sim_balance",
+                view: "text",
+                label: "BALANCE",
+                labelWidth: 90,
+                value: "10000",
+                height: 25,
+                hidden: true,
+                on:{
+                  onChange:function(){
+                     resetsession();
+                  }
+                }
             };
             var reset_session_button = {
                 id: "reset_session_button",
@@ -1664,6 +1694,7 @@ block content
                 elements: [
                     bet_currency_selection,
                     bet_house_edge_selection,
+                    bet_sim_balance,
                     reset_session_button,
                     switch_site_button,
                     export_log_button,
@@ -1679,6 +1710,7 @@ block content
                     { id: "mobile_toolbar_total", view:"button", value:"TOTAL", css: "webix_secondary" },
                     { id: "mobile_toolbar_stats1", view:"button", value:"STATS 1", css: "webix_secondary" },
                     { id: "mobile_toolbar_stats2", view:"button", value:"STATS 2", css: "webix_secondary" },
+                    { id: "mobile_toolbar_stats3", view:"button", value:"STATS 3", css: "webix_secondary" },
                     { id: "mobile_toolbar_chart", view:"button", value:"CHART", css: "webix_secondary" },
                     { id: "mobile_toolbar_history", view:"button", value:"HISTORY", css: "webix_secondary" },
                     { id: "mobile_toolbar_setting", view:"button", value:"SETTING", css: "webix_secondary" }
@@ -1696,6 +1728,8 @@ block content
                                 bet_current_stats,
                                 {view:"resizer"},
                                 bet_current_stats2,
+                                {view:"resizer"},
+                                bet_current_stats3,
                                 {view:"resizer"},
                                 misc_items,
                             ]
@@ -1721,6 +1755,7 @@ block content
                                 bet_total_stats,
                                 bet_current_stats,
                                 bet_current_stats2,
+                                bet_current_stats3,
                                 bet_chart,
                                 bet_datatable,
                                 misc_items,
@@ -1739,6 +1774,9 @@ block content
 
                 $$("bet_current_stats2").hide();
                 $$("bet_current_stats2").define("height", 210);
+
+                $$("bet_current_stats3").hide();
+                $$("bet_current_stats3").define("height", 210);
 
                 //$$("misc_items_form").hide();
                 $$("misc_items_form").show();
@@ -1869,6 +1907,7 @@ block content
                     $$("bet_total_stats").show();
                     $$("bet_current_stats").hide();
                     $$("bet_current_stats2").hide();
+                    $$("bet_current_stats3").hide();
                     $$("bet_chart").hide();
                     $$("bet_datatable").hide();
                     $$("misc_items_form").hide();
@@ -1877,6 +1916,7 @@ block content
                     $$("bet_total_stats").hide();
                     $$("bet_current_stats").show();
                     $$("bet_current_stats2").hide();
+                    $$("bet_current_stats3").hide();
                     $$("bet_chart").hide();
                     $$("bet_datatable").hide();
                     $$("misc_items_form").hide();
@@ -1885,6 +1925,16 @@ block content
                     $$("bet_total_stats").hide();
                     $$("bet_current_stats").hide();
                     $$("bet_current_stats2").show();
+                    $$("bet_current_stats3").hide();
+                    $$("bet_chart").hide();
+                    $$("bet_datatable").hide();
+                    $$("misc_items_form").hide();
+                });
+                $$("mobile_toolbar_stats3").attachEvent("onItemClick", function(){
+                    $$("bet_total_stats").hide();
+                    $$("bet_current_stats").hide();
+                    $$("bet_current_stats2").hide();
+                    $$("bet_current_stats3").show();
                     $$("bet_chart").hide();
                     $$("bet_datatable").hide();
                     $$("misc_items_form").hide();
@@ -1893,6 +1943,7 @@ block content
                     $$("bet_total_stats").hide();
                     $$("bet_current_stats").hide();
                     $$("bet_current_stats2").hide();
+                    $$("bet_current_stats3").hide();
                     $$("bet_chart").show();
                     $$("bet_datatable").hide();
                     $$("misc_items_form").hide();
@@ -1901,6 +1952,7 @@ block content
                     $$("bet_total_stats").hide();
                     $$("bet_current_stats").hide();
                     $$("bet_current_stats2").hide();
+                    $$("bet_current_stats3").hide();
                     $$("bet_chart").hide();
                     $$("bet_datatable").show();
                     //- $$("bet_datatable").hideColumn("bet_datatable_id");
@@ -1911,6 +1963,7 @@ block content
                     $$("bet_total_stats").hide();
                     $$("bet_current_stats").hide();
                     $$("bet_current_stats2").hide();
+                    $$("bet_current_stats3").hide();
                     $$("bet_chart").hide();
                     $$("bet_datatable").hide();
                     $$("misc_items_form").show();
@@ -1923,10 +1976,10 @@ block content
                 });
             }
             $$("script_bet_start_stop_button").attachEvent("onItemClick", function(){
-                bets = 0;
                 buttonStatus = $$("script_bet_start_stop_button").getValue();
                 if(buttonStatus == 'STOP') {
                     isloop = false;
+                    stopBetTime();
                     $$("script_bet_start_stop_button").setValue('START');
                     if (currentLanguage == 'py') {
                         document.getElementById("python_stop_button").click();
@@ -1936,10 +1989,10 @@ block content
                 }
             });
             $$("auto_bet_start_stop_button").attachEvent("onItemClick", function(){
-                bets = 0;
                 buttonStatus = $$("auto_bet_start_stop_button").getValue();
                 if(buttonStatus == 'STOP') {
                     isloop = false;
+                    stopBetTime();
                     $$("auto_bet_start_stop_button").setValue('START');
                 } else {
                     $$("auto_bet_form").serialize(function(m){
@@ -1949,6 +2002,7 @@ block content
                     });
                     $$("auto_bet_start_stop_button").setValue('STOP');
                     autoBet();
+                    betTime();
                     isloop = true;
                     stopOnWin = false;
                     stopOnLoss = false;
@@ -2141,6 +2195,9 @@ block content
                 resetseed();
             });
             function resetsession(){
+                bets = 0;
+                totalprofit = 0;
+                difftime = 0;
                 currencyValue = $$("bet_currency_selection").getValue();
                 refresh(currencyValue);
             }
@@ -2315,7 +2372,7 @@ block content
                     let multiLoss = $$("auto_bet_amount_radio_on_loss_multiplier").getValue();
                     base = previousbet * multiLoss;
                 }
-                bets++;
+                bets++
                 bet(currency, bethigh, Math.round(parseFloat(base*100000000)), chance);
             }
             function scriptBet(init){
@@ -2347,6 +2404,7 @@ block content
                     betScript(currency, bethigh, Math.round(parseFloat(nextbet*100000000)), chance);
                 }catch(err){
                     console.error(err);
+                    stopBetTime();
                     $$("script_bet_start_stop_button").setValue('START');
                     if (currentLanguage == 'py') {
                         document.getElementById("python_stop_button").click();
@@ -2360,6 +2418,7 @@ block content
                     let ret = result.json();
                     cb(ret);
                 }).fail(function (xhr) {
+                    stopBetTime();
                     var response = JSON.parse(xhr.response);
                     $$("auto_bet_start_stop_button").setValue('START');
                     console.error(response.err);
@@ -2378,6 +2437,7 @@ block content
             }
             function bet(c,h,p,ch) {
                 if(!checkParams(p,ch)) {
+                    stopBetTime();
                     $$("auto_bet_start_stop_button").setValue('START');
                     console.error('Please enter the correct parameters');
                     webix.message({type: 'error', text: 'Please enter the correct parameters'});
@@ -2408,9 +2468,13 @@ block content
                             }
                             setDatatable(ret, iswin);
                             setStats(ret.info, currencyValue);
+                            currentprofit = getCurrProfit(ret);
+                            totalprofit = totalprofit + currentprofit;
                             count++
                     } else {
-                        isloop = outError(ret);
+                        if(isloop){
+                            isloop = outError(ret);
+                        }
                     }
                     $$("bet_chart").hideProgress();
                     if(webix.env.mobile) {
@@ -2471,12 +2535,15 @@ block content
                         if(isloop){
                             autoBet(iswin,(p/100000000).toFixed(8));
                         } else {
+                            stopBetTime();
                             $$("auto_bet_start_stop_button").setValue('START');
                         }
                     } else {
+                        stopBetTime();
                         $$("auto_bet_start_stop_button").setValue('START');
                     }
                     } catch(err){
+                        stopBetTime();
                         $$("auto_bet_start_stop_button").setValue('START');
                         if(typeof err.message != 'undefined' ) {
                             console.error(err.message);
@@ -2490,6 +2557,7 @@ block content
             }
             function betScript(c,h,p,ch) {
                 if(!checkParams(p,ch)) {
+                    stopBetTime();
                     $$("script_bet_start_stop_button").setValue('START');
                     console.error('Please enter the correct parameters');
                     webix.message({type: 'error', text: 'Please enter the correct parameters'});
@@ -2500,6 +2568,7 @@ block content
                 }
                 iswin = false;
                 if(!isloop){
+                    stopBetTime();
                     $$("script_bet_start_stop_button").setValue('START');
                     if (currentLanguage == 'py') {
                         document.getElementById("python_stop_button").click();
@@ -2542,7 +2611,9 @@ block content
                         }
                         count++;
                     } else {
-                        isloop = outError(ret);
+                        if(isloop){
+                            isloop = outError(ret);
+                        }
                     }
                     $$("bet_chart").hideProgress();
                     if(webix.env.mobile) {
@@ -2559,6 +2630,7 @@ block content
                     if (isloop) {
                         scriptBet(false);
                     } else {
+                        stopBetTime();
                         $$("script_bet_start_stop_button").setValue('START');
                         if (currentLanguage == 'py') {
                             document.getElementById("python_stop_button").click();
@@ -2575,6 +2647,13 @@ block content
                     bet_current_stats_max_loss_streak_amount:0,
                     bet_current_stats_max_bet_amount:0,
                     bet_current_stats_seed:0,
+                });
+                $$('bet_current_stats3').setValues({
+                    bet_time:0,
+                    bets:0,
+                    bet_profit_per_hour:0,
+                    bet_profit_per_day:0,
+                    bet_profit_per_bet:0,
                 });
                 $$('bet_datatable').clearAll();
                 $$("bet_chart_graph").clearAll();
@@ -2605,7 +2684,7 @@ block content
                         });
                     });
                 }
-                webix.ajax().get('clear?currency='+$$("bet_currency_selection").getText().toLowerCase()).then(function (result) {
+                webix.ajax().get('clear?currency='+$$("bet_currency_selection").getText().toLowerCase()+'&balance='+$$("bet_sim_balance").getValue()).then(function (result) {
                     let ret = result.json();
                     $$("bet_chart").hideProgress();
                     if(webix.env.mobile) {
@@ -2620,6 +2699,7 @@ block content
                 if(!isloop) {
                     console.log("call resume .....");
                     await new Promise(resolve => setTimeout(resolve, 5000));
+                    betTime();
                     $$("script_bet_start_stop_button").setValue('STOP');
                     isloop = true;
                     scriptBet(false);
@@ -2629,6 +2709,7 @@ block content
                 if(init || !isloop){
                     if(!isloop && !init){
                         console.log("call start .....");
+                        betTime();
                         $$("script_bet_start_stop_button").setValue('STOP');
                     }
                     currencyValue = $$("bet_currency_selection").getValue() -1;
@@ -2681,6 +2762,7 @@ block content
                     isloop = true;
                     stopOnWin = false;
                     stopOnLoss = false;
+                    betTime(); 
                     $$("script_bet_start_stop_button").setValue('STOP');
                     scriptBet(true);
                 });
@@ -2773,6 +2855,7 @@ block content
                 win = getWinStatus(ret);
                 currentprofit = getCurrProfit(ret);
                 currentroll = getCurrentRoll(ret);
+                totalprofit = totalprofit + currentprofit;
                 bets = bets + 1;
                 if(getWinStatus(ret)){
                     wins = wins + 1;
@@ -2808,23 +2891,23 @@ block content
                     orig.apply(console, arguments);
                 }
             })();
-            (function () {
-                let orig = console.error;
-                console.error = function (message) {
-                    if(toggleLog){
-                        if (typeof message == 'object') {
-                            $$("script_bet_log_board").add({
-                                title:'<font size="3" color="red">'+format(new Date())+' '+(JSON && JSON.stringify ? JSON.stringify(message) : message)+'</font>' 
-                            },0)
-                        } else {
-                            $$("script_bet_log_board").add({
-                                title:'<font size="3" color="red">'+format(new Date())+' '+message+'</font>' 
-                            },0)
-                        }
-                    }
-                    orig.apply(console, arguments);
-                }
-            })();
+            //(function () {
+            //    let orig = console.error;
+            //    console.error = function (message) {
+            //        if(toggleLog){
+            //            if (typeof message == 'object') {
+            //                $$("script_bet_log_board").add({
+            //                    title:'<font size="3" color="red">'+format(new Date())+' '+(JSON && JSON.stringify ? JSON.stringify(message) : message)+'</font>' 
+            //                },0)
+            //            } else {
+            //                $$("script_bet_log_board").add({
+            //                    title:'<font size="3" color="red">'+format(new Date())+' '+message+'</font>' 
+            //                },0)
+            //            }
+            //        }
+            //        orig.apply(console, arguments);
+            //    }
+            //})();
             function focusFunction() {
                 if(webix.env.mobile) {
                     let layout = $$("mobile_toolbar").getParentView();
@@ -2962,6 +3045,30 @@ block content
             }
             function message(text, type ='debug' , expire = 4000){
                 webix.message({type: type, text: text, expire: expire});
+            }
+            function betTime() {
+              //var currTime = new Date();
+              //var diff =  currTime.getTime() - startTime.getTime();
+              difftime++;
+              dayf = difftime/(24*60*60);
+              day = Math.floor(dayf);
+              hourf = (dayf - day) * 24;
+              hour = Math.floor(hourf);
+              minf = (hourf-hour) * 60;
+              min = Math.floor(minf);
+              secf = (minf- min) * 60;
+              sec = Math.floor(secf);
+              $$('bet_current_stats3').setValues({
+                  bet_time:day+':'+hour+':'+min+':'+sec,
+                  bets:bets,
+                  bet_profit_per_hour:parseFloat(totalprofit/(dayf*24)).toFixed(10),
+                  bet_profit_per_day:parseFloat(totalprofit/dayf).toFixed(10),
+                  bet_profit_per_bet:parseFloat(totalprofit/bets).toFixed(10),
+              });
+              settime = setTimeout(function(){ betTime() }, 1000); 
+            }
+            function stopBetTime() {
+                clearTimeout(settime);
             }
             try {
                 require('electron').ipcRenderer.on('chart', (event, message) => {

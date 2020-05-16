@@ -24,6 +24,7 @@ function init() {
     $$("auto_bet_base_chance").setValue(49.5);
     $$("bet_currency_selection").refresh();
     $$("bet_house_edge_selection").show();
+    $$("bet_sim_balance").show();
 }
 
 function checkParams(p,ch){

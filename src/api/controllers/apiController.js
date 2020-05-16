@@ -449,7 +449,7 @@ exports.raw = async function(req, res) {
         let data = {};
         data.data = ret;
         data.ext = ext[ext.length - 1];
-        data.name = 'gits_'+path.basename(rawurl) ;
+        data.name = 'gist_'+path.basename(rawurl) ;
         let filePath = path.resolve(path.join(process.execPath, '../script/'+data.ext+'/')+data.name);
         if(isMobile(req)) {
             filePath = path.resolve(path.join(__dirname, '../../script/'+data.ext+'/'+data.name));

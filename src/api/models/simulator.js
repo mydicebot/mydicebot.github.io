@@ -48,7 +48,8 @@ module.exports = class Simulator extends BaseDice {
     async clear(req) {
         console.log('loading....');
         let userName = req.session.username;
-        let currency = req.body.Currency;
+        let currency = req.query.currency;
+        let balance = req.query.balance;
 
         let info = {};
 
@@ -115,6 +116,10 @@ module.exports = class Simulator extends BaseDice {
                 info.info.balance=1.000000000;
                 info.currentInfo.balance=1.000000000;
             }
+        }
+        if(balance) {
+            info.info.balance=parseFloat(balance);
+            info.currentInfo.balance=parseFloat(balance);
         }
 
         info.info.balance=info.info.balance.toFixed(8);

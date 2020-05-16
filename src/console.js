@@ -51,8 +51,9 @@ var needSimulatorActiveKeySites = ['Simulator'];
 
 var nums = 0, currency = 'btc', base = 0, isloop = false, iswin = false;
 var code;
+var startTime = new Date(), settime, difftime = 0;
 var basebet = 0.00000001, nextbet = 0.00000001, chance = 90, bethigh = false;
-var previousbet = 0, win = false, currentprofit = 0, balance = 0, bets = 0, wins = 0, losses = 0, profit = 0, currentstreak = 0, currentroll = 0 ,wagered = 0;
+var previousbet = 0, win = false, currentprofit = 0, balance = 0, bets = 0, wins = 0, losses = 0, profit = 0, currentstreak = 0, currentroll = 0 ,wagered = 0, totalprofit = 0;
 var maxwinstreak = 0, maxlossstreak = 0, maxwinstreakamount = 0, maxlossstreakamount = 0, maxstreakamount = 0, minstreakamount = 0, maxbetamount = 0 ;
 var lastbet = {id:0,chance:chance, date:'',roll:49.5,amount:nextbet,nonce:1000,serverhash:'mydice',serverseed:'mydice',clientseed:'',profit:profit,uid:1000,high:bethigh};
 var currencies = ['BTC', 'Doge', 'LTC', 'ETH'];
@@ -146,24 +147,30 @@ var contrib = require('blessed-contrib');
 var screen = blessed.screen();
 var grid = new contrib.grid({rows: 4, cols: 4, screen: screen});
 
-var table1 =  grid.set(0, 0, 1.4, 1.0, contrib.table,
+var table1 =  grid.set(0, 0, 1.4, 0.8, contrib.table,
   { keys: true
   , fg: 'green'
   , label: 'Total Status'
   , columnSpacing: 1
   , columnWidth: [10, 12]});
-var table2 =  grid.set(0, 1.0, 1.4, 1.0, contrib.table,
+var table2 =  grid.set(0, 0.8, 1.4, 0.8, contrib.table,
   { keys: true
   , fg: 'green'
   , label: 'Current Status 1'
   , columnSpacing: 1
   , columnWidth: [10, 12]});
-var table3 =  grid.set(0, 2.0, 1.4, 1.2, contrib.table,
+var table3 =  grid.set(0, 1.6, 1.4, 0.8, contrib.table,
   { keys: true
   , fg: 'green'
   , label: 'Current Status 2'
   , columnSpacing: 1
   , columnWidth: [18, 12]});
+var table5 =  grid.set(0, 2.4, 1.4, 0.8, contrib.table,
+  { keys: true
+  , fg: 'green'
+  , label: 'Current Status 3'
+  , columnSpacing: 1
+  , columnWidth: [24]});
 var table4 =  grid.set(0, 3.2, 1.4, 0.8, contrib.table,
   { keys: true
   , fg: 'green'
@@ -185,6 +192,14 @@ table4.setData(
         , data:
         [['Start(Enter)'],
             ['Stop(S)'],['Quit(Ctrl-C)']] });
+table5.setData(
+      { headers: ['Info']
+          , data:
+          [['TIME:0:0:0:0'],
+              ['BETS:0'],
+              ['PROFIT/H:0'],
+              ['PROFIT/D:0'],
+              ['AVGPROFIT:0']] });
 
 screen.key(['C-c'], function(ch, key) {
   return process.exit(0);
@@ -200,6 +215,7 @@ screen.key(['enter'],async function(ch, key) {
         console.log("The script is still running!");
         return false;
     }
+    betTime();
     console.log("Script start!");
     isloop = true;
     let i = 0;
@@ -215,6 +231,7 @@ screen.key(['enter'],async function(ch, key) {
     betfunc = (() => {
         (async() => {
             if(!isloop){
+                stopBetTime();
                 console.log("Script stopped!");
                 isloop = false;
                 return false;
@@ -238,7 +255,7 @@ screen.key(['enter'],async function(ch, key) {
 let dice = Factory.create(req.body.site);
 await login(req);
 
-screen.render()
+screen.render();
 
 console.log = function (message) {
     try {
@@ -283,7 +300,7 @@ async function betScript(req) {
             console.error(err);
         }
     } else {
-        isloop = outError(ret);
+        isloop = false;
     }
     if (isloop) {
         return true;
@@ -369,6 +386,7 @@ function setBetToLua(ret, currencyValue, currentAmount){
     win = getWinStatus(ret);
     currentprofit = getCurrProfit(ret);
     currentroll = getCurrentRoll(ret);
+    totalprofit = totalprofit + currentprofit;
     bets = bets + 1;
     if(getWinStatus(ret)){
         wins = wins + 1;
@@ -376,6 +394,29 @@ function setBetToLua(ret, currencyValue, currentAmount){
         losses = losses + 1;
     }
     lastbet = {id:getCurrentBetId(ret),chance:chance, date:getBetDate(ret),roll:currentroll,amount:currentAmount,nonce:getNonce(ret),serverhash:getServerHash(ret),serverseed:getServerSeed(ret),clientseed:getClientSeed(ret),profit:profit,uid:getUid(ret),high:bethigh};
+}
+function betTime() {
+  difftime++;
+  dayf = difftime/(24*60*60);
+  day = Math.floor(dayf);
+  hourf = (dayf - day) * 24;
+  hour = Math.floor(hourf);
+  minf = (hourf-hour) * 60;
+  min = Math.floor(minf);
+  secf = (minf- min) * 60;
+  sec = Math.floor(secf);
+  table5.setData(
+        { headers: ['Info']
+            , data:
+            [['TIME:'+day+':'+hour+':'+min+':'+sec],
+                ['BETS:'+ bets],
+                ['PROFIT/H:'+ parseFloat(totalprofit/(dayf*24)).toFixed(10)],
+                ['PROFIT/D:'+ parseFloat(totalprofit/dayf).toFixed(10)],
+                ['AVGPROFIT:'+parseFloat(totalprofit/bets).toFixed(10) ]] });
+  settime = setTimeout(function(){ betTime() }, 1000);
+}
+function stopBetTime() {
+    clearTimeout(settime);
 }
 
 function sleep(ms) {
