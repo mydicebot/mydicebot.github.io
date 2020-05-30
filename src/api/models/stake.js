@@ -2,8 +2,7 @@
 
 var BaseDice = require('./base');
 var APIError = require('../errors/APIError');
-var request = require('graphql-request').request;
-var GraphQLClient = require('graphql-request').GraphQLClient;
+var fetch = require('isomorphic-fetch');
 
 module.exports = class StakeDice extends BaseDice {
     constructor(){
@@ -14,7 +13,8 @@ module.exports = class StakeDice extends BaseDice {
     }
 
     async login(userName, password, twoFactor ,apiKey, req) {
-        let data = "query{user {activeServerSeed { seedHash seed nonce} activeClientSeed{seed} id balances{available{currency amount}} statistic {game bets wins losses betAmount profit currency}}}";
+        let data = {};
+        data.query = "{user {activeServerSeed { seedHash seed nonce} activeClientSeed{seed} id balances{available{currency amount}} statistic {game bets wins losses amount profit currency}}}";
         let ret = await this._send('', 'POST', data, apiKey);
         req.session.accessToken = apiKey;
         req.session.username = apiKey;
@@ -31,7 +31,8 @@ module.exports = class StakeDice extends BaseDice {
         if(!info){
             return false;
         }
-        let data = "query{user {activeServerSeed { seedHash seed nonce} activeClientSeed{seed} id balances{available{currency amount}} statistic {game bets wins losses betAmount profit currency}}}";
+        let data = {};
+        data.query = "{user {activeServerSeed { seedHash seed nonce} activeClientSeed{seed} id balances{available{currency amount}} statistic {game bets wins losses betAmount profit currency}}}";
         let ret = await this._send('', 'POST', data, req.session.accessToken);
         ret = ret.user;
         let userinfo = {
@@ -64,7 +65,8 @@ module.exports = class StakeDice extends BaseDice {
 
     async clear(req) {
         console.log('loading....');
-        let data = "query{user {activeServerSeed { seedHash seed nonce} activeClientSeed{seed} id balances{available{currency amount}} statistic {game bets wins losses betAmount profit currency}}}";
+        let data = {};
+        data.query = "{user {activeServerSeed { seedHash seed nonce} activeClientSeed{seed} id balances{available{currency amount}} statistic {game bets wins losses betAmount profit currency}}}";
         let ret = await this._send('', 'POST', data, req.session.accessToken);
         ret=ret.user;
         let info = {};
@@ -118,12 +120,14 @@ module.exports = class StakeDice extends BaseDice {
             target = Math.floor((req.body.Chance*10000))-1;
         }
         target = parseFloat(target/10000).toFixed(2);
-        let data = " mutation{diceRoll(amount:"+amount+",target:"+target+",condition:"+ condition +",currency:"+currency+ ") { id nonce currency amount payout state { ... on CasinoGameDice { result target condition } } createdAt serverSeed{seedHash seed nonce} clientSeed{seed} user{balances{available{amount currency}} statistic{game bets wins losses betAmount profit currency}}}}";
+        let data = {};
+        data.query = " mutation{diceRoll(amount:"+amount+",target:"+target+",condition:"+ condition +",currency:"+currency+ ") { id nonce currency amount payout state { ... on CasinoGameDice { result target condition } } createdAt serverSeed{seedHash seed nonce} clientSeed{seed} user{balances{available{amount currency}} statistic{game bets wins losses betAmount profit currency}}}}";
         let ret = await this._send('', 'POST', data, req.session.accessToken);
         let info = req.session.info;
         let betInfo = ret.diceRoll;
-        let queryIID = " query{bet(betId:\""+betInfo.id+"\"){iid}}";
-        let dataIID = await this._send('', 'POST', queryIID, req.session.accessToken);
+        data = {};
+        data.query = "{bet(betId:\""+betInfo.id+"\"){iid}}";
+        let dataIID = await this._send('', 'POST', data, req.session.accessToken);
         betInfo.iid = dataIID.bet.iid.split(":")[1];
         betInfo.condition = req.body.High == "true"?'>':'<';
         betInfo.target = target;
@@ -157,7 +161,8 @@ module.exports = class StakeDice extends BaseDice {
 
     async resetseed(req) {
         let clientSeed = Math.random().toString(36).substring(2);
-        let data = "mutation{rotateServerSeed{ seed seedHash nonce } changeClientSeed(seed:\"" + clientSeed + "\"){seed}}"
+        data = {};
+        data.query = "mutation{rotateServerSeed{ seed seedHash nonce } changeClientSeed(seed:\"" + clientSeed + "\"){seed}}"
         let ret = await this._send('', 'POST', data, req.session.accessToken);
         console.log(clientSeed, ret);
         let info = {};
@@ -168,27 +173,26 @@ module.exports = class StakeDice extends BaseDice {
     }
 
     async _send(route, method, body, accessToken){
-        let endpoint =`${this.url}`;
-
-        let graphQLClient = new GraphQLClient(endpoint, {
+        console.log(JSON.stringify(body));
+        let url = `${this.url}`;
+        let res = await fetch(url, {
+            method,
             headers: {
+                'User-Agent': 'MyDiceBot',
                 'x-access-token': accessToken,
+                'Content-Type': 'application/json',
             },
-        })
-        try {
-            let res = await graphQLClient.request(body);
-            return res;
-        } catch(err) {
-            if(err.response.errors) {
-                let errs = new Error(err.response.errors[0].message);
-                errs.value = err.response.errors[0].message;
-                throw new APIError(err.response.errors[0].message, errs);
-            } else {
-                let errs = new Error(err.response.error);
-                errs.value = err.response.error;
-                throw new APIError(err.response.error, errs);
-            }
+            body: JSON.stringify(body),
+        });
+        let data = await res.json();
+        console.log(data);
+        if(data.errors) {
+            let errs = new Error(data.errors[0].message);
+            errs.value = data.errors[0].message;
+            throw new APIError(data.errors[0].message ,errs);
         }
+        let ret = data.data;
+        return ret;
     }
 }
 exports.StakeDice

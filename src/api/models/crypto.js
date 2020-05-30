@@ -8,7 +8,8 @@ var APIError = require('../errors/APIError');
 module.exports = class CryptoDice extends BaseDice {
     constructor(){
         super();
-        this.url = 'https://api.crypto-games.net';
+        //this.url = 'https://api.crypto-games.net';
+        this.url = 'https://api.crypto.games';
     }
 
     async login(userName, password, twoFactor ,apiKey, req) {

@@ -5,7 +5,7 @@ var registerUrls = {
     "BitDice":"https://www.bitdice.me/?r=90479",
     "Bitsler":"https://www.bitsler.com/?ref=mydicebot",
     "BitVest":"https://bitvest.io?r=108792",
-    "Crypto-Games":"https://www.crypto-games.net?i=CpQP3V8Up2",
+    "Crypto-Games":"https://crypto.games?i=CpQP3V8Up2",
     "Dice-Bet":"https://dice-bet.com/?ref=u:mydicebot",
     "WolfBet":"https://wolf.bet/?c=mydicebot",
     "DuckDice":"https://duckdice.com/ab61534783",

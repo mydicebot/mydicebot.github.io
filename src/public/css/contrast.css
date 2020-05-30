@@ -4017,8 +4017,8 @@ legend.webix_forminput_label_top {
   font-family: "Webix Awesome Icons";
   font-size: 50px;
   position: absolute;
-  left: 90%;
-  top: 20%;
+  left: 50%;
+  top: 50%;
   margin-left: -25px;
   margin-top: -25px;
   display: inline-block;

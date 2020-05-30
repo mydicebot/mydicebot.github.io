@@ -1985,6 +1985,7 @@ block content
                         document.getElementById("python_stop_button").click();
                     }
                 } else {
+                    resetBetTime();
                     start(true);
                 }
             });
@@ -2002,6 +2003,7 @@ block content
                     });
                     $$("auto_bet_start_stop_button").setValue('STOP');
                     autoBet();
+                    resetBetTime();
                     betTime();
                     isloop = true;
                     stopOnWin = false;
@@ -2195,11 +2197,9 @@ block content
                 resetseed();
             });
             function resetsession(){
-                bets = 0;
-                totalprofit = 0;
-                difftime = 0;
                 currencyValue = $$("bet_currency_selection").getValue();
                 refresh(currencyValue);
+                resetBetTime();
             }
             function resetseed(){
                 let now = Math.floor(Date.now()/1000);
@@ -3069,6 +3069,11 @@ block content
             }
             function stopBetTime() {
                 clearTimeout(settime);
+            }
+            function resetBetTime() {
+                bets = 0;
+                totalprofit = 0;
+                difftime = 0;
             }
             try {
                 require('electron').ipcRenderer.on('chart', (event, message) => {
