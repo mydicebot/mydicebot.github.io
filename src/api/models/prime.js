@@ -14,7 +14,7 @@ module.exports = class PrimeDice extends BaseDice {
 
     async login(userName, password, twoFactor ,apiKey, req) {
         let data = {};
-        data.query = "{user {activeServerSeed { seedHash seed nonce} activeClientSeed{seed} id balances{available{currency amount}} statistic {game bets wins losses amount profit currency}}}";
+        data.query = "{user {activeServerSeed { seedHash seed nonce} activeClientSeed{seed} id balances{available{currency amount}} statistic {game bets wins losses amount profitAmount currency}}}";
         let ret = await this._send('', 'POST', data, apiKey);
         req.session.accessToken = apiKey;
         req.session.username = apiKey;
@@ -32,7 +32,7 @@ module.exports = class PrimeDice extends BaseDice {
             return false;
         }
         let data = {};
-        data.query = "{user {activeServerSeed { seedHash seed nonce} activeClientSeed{seed} id balances{available{currency amount}} statistic {game bets wins losses betAmount profit currency}}}";
+        data.query = "{user {activeServerSeed { seedHash seed nonce} activeClientSeed{seed} id balances{available{currency amount}} statistic {game bets wins losses betAmount profitAmount currency}}}";
         let ret = await this._send('', 'POST', data, req.session.accessToken);
         ret = ret.user;
         let userinfo = {
@@ -50,7 +50,8 @@ module.exports = class PrimeDice extends BaseDice {
         }
         for (let i=0; i<ret.statistic.length; i++) {
             if(req.query.currency  == ret.statistic[i].currency) {
-                userinfo.profit = parseFloat(ret.statistic[i].profit).toFixed(8);
+                console.log(ret.statistic[i]);
+                userinfo.profit = parseFloat(ret.statistic[i].profitAmount).toFixed(8);
                 userinfo.wins = ret.statistic[i].wins;
                 userinfo.bets = ret.statistic[i].bets;
                 userinfo.losses = ret.statistic[i].losses;
@@ -66,7 +67,7 @@ module.exports = class PrimeDice extends BaseDice {
     async clear(req) {
         console.log('loading....');
         let data = {};
-        data.query = "{user {activeServerSeed { seedHash seed nonce} activeClientSeed{seed} id balances{available{currency amount}} statistic {game bets wins losses betAmount profit currency}}}";
+        data.query = "{user {activeServerSeed { seedHash seed nonce} activeClientSeed{seed} id balances{available{currency amount}} statistic {game bets wins losses betAmount profitAmount currency}}}";
         let ret = await this._send('', 'POST', data, req.session.accessToken);
         ret=ret.user;
         let info = {};
@@ -96,7 +97,8 @@ module.exports = class PrimeDice extends BaseDice {
 
         for (let i=0; i<ret.statistic.length; i++) {
             if(req.query.currency  == ret.statistic[i].currency) {
-                userinfo.profit = parseFloat(ret.statistic[i].profit).toFixed(8);
+                console.log(ret.statistic[i]);
+                userinfo.profit = parseFloat(ret.statistic[i].profitAmount).toFixed(8);
                 userinfo.wins = ret.statistic[i].wins;
                 userinfo.bets = ret.statistic[i].bets;
                 userinfo.losses = ret.statistic[i].losses;
@@ -121,7 +123,7 @@ module.exports = class PrimeDice extends BaseDice {
         }
         target = parseFloat(target/100).toFixed(2);
         let data = {};
-        data.query = " mutation{primediceRoll(amount:"+amount+",target:"+target+",condition:"+ condition +",currency:"+currency+ ") { id nonce currency amount payout state { ... on CasinoGamePrimedice { result target condition } } createdAt serverSeed{seedHash seed nonce} clientSeed{seed} user{balances{available{amount currency}} statistic{game bets wins losses betAmount profit currency}}}}";
+        data.query = " mutation{primediceRoll(amount:"+amount+",target:"+target+",condition:"+ condition +",currency:"+currency+ ") { id nonce currency amount payout state { ... on CasinoGamePrimedice { result target condition } } createdAt serverSeed{seedHash seed nonce} clientSeed{seed} user{balances{available{amount currency}} statistic{game bets wins losses betAmount profitAmount currency}}}}";
         let ret = await this._send('', 'POST', data, req.session.accessToken);
         let info = req.session.info;
         let betInfo = ret.primediceRoll;
