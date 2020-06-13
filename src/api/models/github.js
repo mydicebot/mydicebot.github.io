@@ -1,6 +1,7 @@
 'use strict';
 var APIError = require('../errors/APIError');
 var fetch = require('isomorphic-fetch');
+var SocksProxyAgent = require('socks-proxy-agent');
 
 module.exports = class GitHub {
     constructor(){

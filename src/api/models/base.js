@@ -2,8 +2,8 @@
 var APIError = require('../errors/APIError');
 
 module.exports = class BaseDice {
-    constructor(){
-        //console.log('mydicebot');
+    constructor(proxy){
+        this.proxy = proxy;
     }
     async resetseed(req) {
         let errs = new Error('Platform is not support reset seed');

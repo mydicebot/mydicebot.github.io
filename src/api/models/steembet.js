@@ -5,8 +5,8 @@ var request = require('request');
 var steem = require('steem');
 
 module.exports = class SteemBet extends BaseDice {
-    constructor(){
-        super();
+    constructor(proxy){
+        super(proxy);
         this.url = 'https://steem-bet.com/';
         this.benefit = '?ref=mydicebot'
         this.currencys = ["steem","sbd"];

@@ -4,10 +4,11 @@ var BaseDice = require('./base')
 var fetch = require('isomorphic-fetch');
 var FormData = require('form-data');
 var APIError = require('../errors/APIError');
+var SocksProxyAgent = require('socks-proxy-agent');
 
 module.exports  = class BitslerDice extends BaseDice {
-    constructor(){
-        super();
+    constructor(proxy){
+        super(proxy);
         this.url = 'https://www.bitsler.com';
         this.benefit = '?ref=mydicebot'
         this.currencys = ["btc","eth","ltc","doge","dash","bch","xrp","zec","etc","neo","kmd","btg","lsk","dgb","qtum","strat","waves","burst"];
@@ -164,13 +165,22 @@ module.exports  = class BitslerDice extends BaseDice {
 
     async _send(route, method, body, accessToken){
         let url = `${this.url}/api/${route}${this.benefit}`;
-        let res = await fetch(url, {
+        let options= {
             method,
             headers: {
                 'User-Agent': 'DiceBot',
             },
             body: body,
-        });
+        };
+        if(this.proxy.ip) {
+            let socks = 'socks://'+this.proxy.ip+':'+this.proxy.port;
+            if(this.proxy.user){
+                socks = 'socks://'+this.proxy.user+':'+this.proxy.password+'@'+this.proxy.ip+':'+this.proxy.port;
+            }
+            let agent = new SocksProxyAgent(socks);
+            options.agent  = agent;
+        }
+        let res = await fetch(url, options);
         let data = await res.json();
         if (data.success == false) {
             let errs = new Error(data.error);

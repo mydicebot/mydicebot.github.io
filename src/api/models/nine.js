@@ -4,10 +4,11 @@ var BaseDice = require('./base');
 var fetch = require('isomorphic-fetch');
 var FormData = require('form-data');
 var APIError = require('../errors/APIError');
+var SocksProxyAgent = require('socks-proxy-agent');
 
 module.exports = class NineDice extends BaseDice {
-    constructor(){
-        super();
+    constructor(proxy){
+        super(proxy);
         this.url = 'https://www.999dice.com';
         this.benefit = '?224280708'
     }
@@ -126,13 +127,22 @@ module.exports = class NineDice extends BaseDice {
 
     async _send(route, method, body, accessToken){
         let url = `${this.url}/api/${route}${this.benefit}`;
-        let res = await fetch(url, {
+        let options= {
             method,
             headers: {
                 'User-Agent': 'DiceBot',
             },
             body: body,
-        });
+        };
+        if(this.proxy.ip) {
+            let socks = 'socks://'+this.proxy.ip+':'+this.proxy.port;
+            if(this.proxy.user){
+                socks = 'socks://'+this.proxy.user+':'+this.proxy.password+'@'+this.proxy.ip+':'+this.proxy.port;
+            }
+            let agent = new SocksProxyAgent(socks);
+            options.agent  = agent;
+        }
+        let res = await fetch(url, options);
         if(res.status == 200){
             let data = await res.json();
             return data;

@@ -3,10 +3,11 @@
 var BaseDice = require('./base');
 var APIError = require('../errors/APIError');
 var fetch = require('isomorphic-fetch');
+var SocksProxyAgent = require('socks-proxy-agent');
 
 module.exports = class ParaDice extends BaseDice {
-    constructor(){
-        super();
+    constructor(proxy){
+        super(proxy);
         this.url = 'https://api.paradice.in/api.php';
         this.benefit = '?ref=mydicebot'
         this.currencys = ["btc","eth","ltc","doge","dash","prdc"];
@@ -190,7 +191,7 @@ module.exports = class ParaDice extends BaseDice {
     async _send(route, method, body, accessToken){
         console.log(JSON.stringify(body));
         let url = `${this.url}`;
-        let res = await fetch(url, {
+        let options = {
             method,
             headers: {
                 'User-Agent': 'MyDiceBot',
@@ -198,7 +199,16 @@ module.exports = class ParaDice extends BaseDice {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify(body),
-        });
+        };
+        if(this.proxy.ip) {
+            let socks = 'socks://'+this.proxy.ip+':'+this.proxy.port;
+            if(this.proxy.user){
+                socks = 'socks://'+this.proxy.user+':'+this.proxy.password+'@'+this.proxy.ip+':'+this.proxy.port;
+            }
+            let agent = new SocksProxyAgent(socks);
+            options.agent  = agent;
+        }
+        let res = await fetch(url, options);
         let data = await res.json();
         if(data.errors) {
             let errs = new Error(data.errors[0].message);

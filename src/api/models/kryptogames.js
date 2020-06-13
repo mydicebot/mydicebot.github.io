@@ -5,8 +5,8 @@ var request = require('request');
 var steem = require('steem');
 
 module.exports = class KryptoGames extends BaseDice {
-    constructor(){
-        super();
+    constructor(proxy){
+        super(proxy);
         this.url = 'https://kryptogames.io';
         this.benefit = '?ref=mydicebot'
         this.currencys = ["steem","sbd"];

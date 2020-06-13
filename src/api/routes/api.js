@@ -27,33 +27,37 @@ module.exports = function(app) {
   app.get('/', [checkSkin], api.index);
   app.get('/login', [checkSkin], api.login);
   app.get('/:site/login', [checkSkin], api.login);
-  app.post('/login', [checkSkin,createDice], api.login);
-  app.post('/:site/login', [checkSkin,createDice], api.login);
-  app.post('/keepass/load', [createDice,checkScript], api.keeload);
-  app.post('/:site/keepass/load', [createDice,checkScript], api.keeload);
-  app.put('/keepass/save', [createDice,checkScript], api.keesave);
-  app.put('/:site/keepass/save', [createDice,checkScript], api.keesave);
-  app.post('/keepass/reg', [createDice,checkScript], api.keereg);
-  app.post('/:site/keepass/reg', [createDice,checkScript], api.keereg);
-  app.get('/keepass/check', [createDice,checkScript], api.keecheck);
-  app.get('/:site/keepass/check', [createDice,checkScript], api.keecheck);
-  app.get('/:site/keepass/files', [createDice,checkScript], api.keefiles);
-  app.get('/keepass/files', [createDice,checkScript], api.keefiles);
-  app.get('/:site/clear', [createDice], api.clear);
-  app.get('/:site/refresh', [createDice], api.refresh);
-  app.get('/:site/resetseed', [createDice,userMiddleware], api.resetseed);
-  app.get('/:site/info', [checkSkin,createDice,userMiddleware], api.info);
-  app.post('/:site/bet', [createDice,userMiddleware], api.bet);
-  app.get('/:site/script', [createDice,checkScript], api.script);
-  app.get('/:site/file', [createDice,checkScript], api.file);
-  app.post('/:site/save', [createDice,checkScript], api.save);
-  app.get('/:site/del', [createDice,checkScript], api.del);
-  app.post('/:site/upload', [createDice,checkScript], api.upload);
-  app.get('/:site/checkerr', [createDice,checkScript], api.checkerr);
-  app.get('/checkerr', [createDice,checkScript], api.checkerr);
+  app.post('/login', [initMiddleware,checkSkin,createDice], api.login);
+  app.post('/:site/login', [initMiddleware,checkSkin,createDice], api.login);
+  app.post('/keepass/load', [checkScript], api.keeload);
+  app.post('/:site/keepass/load', [checkScript], api.keeload);
+  app.put('/keepass/save', [checkScript], api.keesave);
+  app.put('/:site/keepass/save', [checkScript], api.keesave);
+  app.post('/keepass/reg', [checkScript], api.keereg);
+  app.post('/:site/keepass/reg', [checkScript], api.keereg);
+  app.get('/keepass/check', [checkScript], api.keecheck);
+  app.get('/:site/keepass/check', [checkScript], api.keecheck);
+  app.get('/:site/keepass/files', [checkScript], api.keefiles);
+  app.get('/keepass/files', [checkScript], api.keefiles);
+  app.get('/:site/clear', [], api.clear);
+  app.get('/:site/refresh', [], api.refresh);
+  app.get('/:site/resetseed', [userMiddleware], api.resetseed);
+  app.get('/:site/info', [checkSkin,userMiddleware], api.info);
+  app.post('/:site/bet', [userMiddleware], api.bet);
+  app.get('/:site/script', [checkScript], api.script);
+  app.get('/:site/file', [checkScript], api.file);
+  app.post('/:site/save', [checkScript], api.save);
+  app.get('/:site/del', [checkScript], api.del);
+  app.post('/:site/upload', [checkScript], api.upload);
+  app.get('/:site/checkerr', [checkScript], api.checkerr);
+  app.get('/checkerr', [checkScript], api.checkerr);
   app.get('/:site/sound', [checkScript], api.sound);
   app.get('/:site/gists', [checkScript], api.gists);
   app.get('/:site/raw', [checkScript], api.raw);
+  app.post('/:site/proxy/setting', [checkScript], api.proxysave);
+  app.post('/proxy/setting', [checkScript], api.proxysave);
+  app.get('/:site/proxy/setting', [checkScript], api.proxyload);
+  app.get('/proxy/setting', [checkScript], api.proxyload);
 };
 
 function checkSkin(req, res, next) {
@@ -67,23 +71,31 @@ function checkSkin(req, res, next) {
 }
 
 function createDice (req, res, next) {
-    //console.log(Factory);
-    Factory.register('Bitsler', new BitslerDice());
-    Factory.register('999Dice', new NineDice());
-    Factory.register('YoloDice', new YoloDice());
-    Factory.register('PrimeDice', new PrimeDice());
-    Factory.register('Stake', new StakeDice());
-    Factory.register('Crypto-Games', new CryptoDice());
-    Factory.register('Simulator', new Simulator());
-    Factory.register('EpicDice', new EpicDice());
-    Factory.register('KryptoGames', new KryptoGames());
-    Factory.register('DuckDice', new DuckDice());
-    Factory.register('FreeBitco', new FreeBitco());
-    Factory.register('WinDice', new WinDice());
-    Factory.register('WolfBet', new WolfBet());
-    Factory.register('999Doge', new NineDoge());
-    Factory.register('SatoshiDice', new SatoshiDice());
-    Factory.register('ParaDice', new ParaDice());
+    let proxy = {};
+    if(typeof req.body.proxy_ip !== 'undefined'){
+        proxy.ip = req.body.proxy_ip;
+        proxy.port = req.body.proxy_port;
+        proxy.user = req.body.proxy_user;
+        proxy.password = req.body.proxy_password;
+    }
+    if(!Factory.check()){
+        Factory.register('Bitsler', new BitslerDice(proxy));
+        Factory.register('999Dice', new NineDice(proxy));
+        Factory.register('YoloDice', new YoloDice(proxy));
+        Factory.register('PrimeDice', new PrimeDice(proxy));
+        Factory.register('Stake', new StakeDice(proxy));
+        Factory.register('Crypto-Games', new CryptoDice(proxy));
+        Factory.register('Simulator', new Simulator(proxy));
+        Factory.register('EpicDice', new EpicDice(proxy));
+        Factory.register('KryptoGames', new KryptoGames(proxy));
+        Factory.register('DuckDice', new DuckDice(proxy));
+        Factory.register('FreeBitco', new FreeBitco(proxy));
+        Factory.register('WinDice', new WinDice(proxy));
+        Factory.register('WolfBet', new WolfBet(proxy));
+        Factory.register('999Doge', new NineDoge(proxy));
+        Factory.register('SatoshiDice', new SatoshiDice(proxy));
+        Factory.register('ParaDice', new ParaDice(proxy));
+    }
     next();
 }
 
@@ -155,6 +167,11 @@ function userMiddleware (req, res, next) {
     } else {
         next();
     }
+}
+
+function initMiddleware (req, res, next) {
+    Factory.clear();
+    next();
 }
 
 function mkdir(dirpath,dirname){

@@ -5,10 +5,11 @@ var fetch = require('isomorphic-fetch');
 var FormData = require('form-data');
 var APIError = require('../errors/APIError');
 var querystring = require('querystring');
+var SocksProxyAgent = require('socks-proxy-agent');
 
 module.exports = class FreeBitco extends BaseDice {
-    constructor(){
-        super();
+    constructor(proxy){
+        super(proxy);
         this.url = 'https://freebitco.in';
         this.benefit = '&r=16392656'
     }
@@ -160,26 +161,44 @@ module.exports = class FreeBitco extends BaseDice {
     async _getCsrfToken() {
         let url = this.url;
         let method = "GET";
-        let res = await fetch(url, {
+        let options= {
             method,
             headers: {
                 'User-Agent': 'MyDiceBot',
             },
-        });
+        };
+        if(this.proxy.ip) {
+            let socks = 'socks://'+this.proxy.ip+':'+this.proxy.port;
+            if(this.proxy.user){
+                socks = 'socks://'+this.proxy.user+':'+this.proxy.password+'@'+this.proxy.ip+':'+this.proxy.port;
+            }
+            let agent = new SocksProxyAgent(socks);
+            options.agent  = agent;
+        }
+        let res = await fetch(url, options);
         let csrfToken = this._parseCookies(res);
         return csrfToken;
     }
 
     async _send(route, method, body, accessToken, cookie, isJson){
         let url = `${this.url}/${route}`;
-        let res = await fetch(url, {
+        let options = {
             method,
             headers: {
                 'User-Agent': 'MyDiceBot',
                 Cookie: cookie,
             },
             body: body,
-        });
+        };
+        if(this.proxy.ip) {
+            let socks = 'socks://'+this.proxy.ip+':'+this.proxy.port;
+            if(this.proxy.user){
+                socks = 'socks://'+this.proxy.user+':'+this.proxy.password+'@'+this.proxy.ip+':'+this.proxy.port;
+            }
+            let agent = new SocksProxyAgent(socks);
+            options.agent  = agent;
+        }
+        let res = await fetch(url, options);
         let data = "e:freebitcoin error, Please wait minutes before trying again";
         let ret = data.split(':');
         if(!isJson) {

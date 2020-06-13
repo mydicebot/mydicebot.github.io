@@ -56,6 +56,7 @@ exports.login = async function(req, res) {
                 res.redirect(req.protocol+"://"+req.headers.host+"/"+req.body.site+"/info");
             }
         } else {
+            //Factory.clear();
             res.render('login',{title: 'My Dice Bot',site:req.params.site,skin:req.session.skin});
         }
     } catch(err) {
@@ -204,6 +205,61 @@ exports.keereg = async function(req, res) {
             fs.writeFileSync(filePath, Buffer.from(ab));
             return res.status(200).json('ok');
         });
+    } catch(err) {
+        console.log(err);
+        return res.status(500).send({err: err.toString()});
+    }
+};
+
+exports.proxyload = async function(req, res) {
+    try{
+        let data = '[]';
+        let filePath = path.resolve(path.join(process.execPath, '../proxy.json'));
+        if(isMobile(req)) {
+            filePath = path.resolve(path.join(__dirname, '../../proxy.json'));
+        }
+        if(process.env.electron) {
+            filePath = path.resolve(path.join(config.mydice.path, '/proxy.json'));
+        }
+        if(fs.existsSync(filePath)){
+           data = fs.readFileSync(filePath);
+        }
+        let proxyList = JSON.parse(data);
+        return res.status(200).json(proxyList);
+    } catch(err) {
+        console.log(err);
+        return res.status(500).send({err: err.toString()});
+    }
+}
+
+exports.proxysave = async function(req, res) {
+    try{
+        let proxyList = {};
+        let data = '[]';
+        let filePath = path.resolve(path.join(process.execPath, '../proxy.json'));
+        if(isMobile(req)) {
+            filePath = path.resolve(path.join(__dirname, '../../proxy.json'));
+        }
+        if(process.env.electron) {
+            filePath = path.resolve(path.join(config.mydice.path, '/proxy.json'));
+        }
+        if(fs.existsSync(filePath)){
+           data = fs.readFileSync(filePath);
+        }
+        proxyList = JSON.parse(data);
+        if(typeof proxyList !== 'undefined') {
+            proxyList.forEach(function(item, index, object){
+                if(item.proxy_name == req.body.proxy_name ){
+                    object.splice(index,1);
+                }
+            });
+        }
+        if(typeof req.body.proxy_name !== 'undefined') {
+            proxyList.push(req.body);
+        }
+        data = JSON.stringify(proxyList);
+        fs.writeFileSync(filePath, Buffer.from(data));
+        return res.status(200).json('ok');
     } catch(err) {
         console.log(err);
         return res.status(500).send({err: err.toString()});

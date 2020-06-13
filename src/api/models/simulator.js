@@ -4,8 +4,8 @@ var BaseDice = require('./base');
 var crypto = require('crypto');
 
 module.exports = class Simulator extends BaseDice {
-    constructor(){
-        super();
+    constructor(proxy){
+        super(proxy);
         this.url = 'https://magic-dice.com';
         this.benefit = '?ref=mydicebot'
         this.currencys = ["btc","eth","ltc","doge","dash","bch","xrp","zec","etc","neo","kmd","btg","lsk","dgb","qtum","strat","waves","burst"];

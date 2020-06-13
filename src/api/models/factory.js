@@ -17,5 +17,15 @@ module.exports = {
         }
         let instance = this.instances.get(clazzname);
         return instance;
-    }
+    },
+    check() {
+        if (this.instances.size >0 ) {
+            return true;
+        } else {
+            return false;
+        }
+    },
+    clear() {
+        this.instances.clear();
+    },
 }

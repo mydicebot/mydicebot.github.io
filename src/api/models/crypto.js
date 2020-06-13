@@ -4,10 +4,11 @@ var BaseDice = require('./base');
 var fetch = require('isomorphic-fetch');
 var FormData = require('form-data');
 var APIError = require('../errors/APIError');
+var SocksProxyAgent = require('socks-proxy-agent');
 
 module.exports = class CryptoDice extends BaseDice {
-    constructor(){
-        super();
+    constructor(proxy){
+        super(proxy);
         //this.url = 'https://api.crypto-games.net';
         this.url = 'https://api.crypto.games';
     }
@@ -133,16 +134,23 @@ module.exports = class CryptoDice extends BaseDice {
 
     async _send(route, method, body, accessToken){
         let url = `${this.url}/v1/${route}/${accessToken}`;
-        //console.log(JSON.stringify(body));
-        let res = await fetch(url, {
+        let options = {
             method,
             headers: {
                 Accept: 'application/json, text/plain, */*',
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify(body),
-            //body: body,
-        });
+        };
+        if(this.proxy.ip) {
+            let socks = 'socks://'+this.proxy.ip+':'+this.proxy.port;
+            if(this.proxy.user){
+                socks = 'socks://'+this.proxy.user+':'+this.proxy.password+'@'+this.proxy.ip+':'+this.proxy.port;
+            }
+            let agent = new SocksProxyAgent(socks);
+            options.agent  = agent;
+        }
+        let res = await fetch(url, options);
         let data = await res.json();
         //console.log(data);
         if (!res.ok) {

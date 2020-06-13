@@ -3,10 +3,11 @@
 var BaseDice = require('./base');
 var fetch = require('isomorphic-fetch');
 var APIError = require('../errors/APIError');
+var SocksProxyAgent = require('socks-proxy-agent');
 
 module.exports = class WolfBet extends BaseDice {
-    constructor(){
-        super();
+    constructor(proxy){
+        super(proxy);
         this.url = 'https://wolf.bet';
         this.benefit = '?c=mydicebot'
     }
@@ -164,7 +165,7 @@ module.exports = class WolfBet extends BaseDice {
     async _send(route, method, body, accessToken){
         let url = `${this.url}/${route}`;
         console.log(JSON.stringify(body));
-        let res = await fetch(url, {
+        let options = {
             method,
             headers: {
                 'User-Agent': 'MyDiceBot',
@@ -173,7 +174,16 @@ module.exports = class WolfBet extends BaseDice {
                 'X-Requested-With': 'XMLHttpRequest'
             },
             body: JSON.stringify(body),
-        });
+        };
+        if(this.proxy.ip) {
+            let socks = 'socks://'+this.proxy.ip+':'+this.proxy.port;
+            if(this.proxy.user){
+                socks = 'socks://'+this.proxy.user+':'+this.proxy.password+'@'+this.proxy.ip+':'+this.proxy.port;
+            }
+            let agent = new SocksProxyAgent(socks);
+            options.agent  = agent;
+        }
+        let res = await fetch(url, options);
         let data = await res.json();
 
         if(data.errors) {

@@ -3,10 +3,11 @@
 var BaseDice = require('./base');
 var APIError = require('../errors/APIError');
 var fetch = require('isomorphic-fetch');
+var SocksProxyAgent = require('socks-proxy-agent');
 
 module.exports = class StakeDice extends BaseDice {
-    constructor(){
-        super();
+    constructor(proxy){
+        super(proxy);
         this.url = 'https://api.stake.com/graphql';
         this.benefit = '?ref=mydicebot'
         this.currencys = ["btc","eth","ltc","doge","bch"];
@@ -14,7 +15,7 @@ module.exports = class StakeDice extends BaseDice {
 
     async login(userName, password, twoFactor ,apiKey, req) {
         let data = {};
-        data.query = "{user {activeServerSeed { seedHash seed nonce} activeClientSeed{seed} id balances{available{currency amount}} statistic {game bets wins losses amount profitAmount currency}}}";
+        data.query = "{user {activeServerSeed { seedHash seed nonce} activeClientSeed{seed} id balances{available{currency amount}} statistic {game bets wins losses amount profit currency}}}";
         let ret = await this._send('', 'POST', data, apiKey);
         req.session.accessToken = apiKey;
         req.session.username = apiKey;
@@ -32,7 +33,7 @@ module.exports = class StakeDice extends BaseDice {
             return false;
         }
         let data = {};
-        data.query = "{user {activeServerSeed { seedHash seed nonce} activeClientSeed{seed} id balances{available{currency amount}} statistic {game bets wins losses betAmount profitAmount currency}}}";
+        data.query = "{user {activeServerSeed { seedHash seed nonce} activeClientSeed{seed} id balances{available{currency amount}} statistic {game bets wins losses betAmount profit currency}}}";
         let ret = await this._send('', 'POST', data, req.session.accessToken);
         ret = ret.user;
         let userinfo = {
@@ -51,7 +52,7 @@ module.exports = class StakeDice extends BaseDice {
         for (let i=0; i<ret.statistic.length; i++) {
             if(req.query.currency  == ret.statistic[i].currency) {
                 console.log(ret.statistic[i]);
-                userinfo.profit = parseFloat(ret.statistic[i].profitAmount).toFixed(8);
+                userinfo.profit = parseFloat(ret.statistic[i].profit).toFixed(8);
                 userinfo.wins = ret.statistic[i].wins;
                 userinfo.bets = ret.statistic[i].bets;
                 userinfo.losses = ret.statistic[i].losses;
@@ -67,7 +68,7 @@ module.exports = class StakeDice extends BaseDice {
     async clear(req) {
         console.log('loading....');
         let data = {};
-        data.query = "{user {activeServerSeed { seedHash seed nonce} activeClientSeed{seed} id balances{available{currency amount}} statistic {game bets wins losses betAmount profitAmount currency}}}";
+        data.query = "{user {activeServerSeed { seedHash seed nonce} activeClientSeed{seed} id balances{available{currency amount}} statistic {game bets wins losses betAmount profit currency}}}";
         let ret = await this._send('', 'POST', data, req.session.accessToken);
         ret=ret.user;
         let info = {};
@@ -98,7 +99,7 @@ module.exports = class StakeDice extends BaseDice {
         for (let i=0; i<ret.statistic.length; i++) {
             if(req.query.currency  == ret.statistic[i].currency) {
                 console.log(ret.statistic[i]);
-                userinfo.profit = parseFloat(ret.statistic[i].profitAmount).toFixed(8);
+                userinfo.profit = parseFloat(ret.statistic[i].profit).toFixed(8);
                 userinfo.wins = ret.statistic[i].wins;
                 userinfo.bets = ret.statistic[i].bets;
                 userinfo.losses = ret.statistic[i].losses;
@@ -123,7 +124,7 @@ module.exports = class StakeDice extends BaseDice {
         }
         target = parseFloat(target/10000).toFixed(2);
         let data = {};
-        data.query = " mutation{diceRoll(amount:"+amount+",target:"+target+",condition:"+ condition +",currency:"+currency+ ") { id nonce currency amount payout state { ... on CasinoGameDice { result target condition } } createdAt serverSeed{seedHash seed nonce} clientSeed{seed} user{balances{available{amount currency}} statistic{game bets wins losses betAmount profitAmount currency}}}}";
+        data.query = " mutation{diceRoll(amount:"+amount+",target:"+target+",condition:"+ condition +",currency:"+currency+ ") { id nonce currency amount payout state { ... on CasinoGameDice { result target condition } } createdAt serverSeed{seedHash seed nonce} clientSeed{seed} user{balances{available{amount currency}} statistic{game bets wins losses betAmount profit currency}}}}";
         let ret = await this._send('', 'POST', data, req.session.accessToken);
         let info = req.session.info;
         let betInfo = ret.diceRoll;
@@ -177,7 +178,7 @@ module.exports = class StakeDice extends BaseDice {
     async _send(route, method, body, accessToken){
         console.log(JSON.stringify(body));
         let url = `${this.url}`;
-        let res = await fetch(url, {
+        let options = {
             method,
             headers: {
                 'User-Agent': 'MyDiceBot',
@@ -185,7 +186,16 @@ module.exports = class StakeDice extends BaseDice {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify(body),
-        });
+        };
+        if(this.proxy.ip) {
+            let socks = 'socks://'+this.proxy.ip+':'+this.proxy.port;
+            if(this.proxy.user){
+                socks = 'socks://'+this.proxy.user+':'+this.proxy.password+'@'+this.proxy.ip+':'+this.proxy.port;
+            }
+            let agent = new SocksProxyAgent(socks);
+            options.agent  = agent;
+        }
+        let res = await fetch(url, options);
         let data = await res.json();
         console.log(data);
         if(data.errors) {

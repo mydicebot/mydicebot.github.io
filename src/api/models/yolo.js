@@ -6,8 +6,8 @@ var bitcore = require('bitcore-lib');
 var Message = require('bitcore-message');
 
 module.exports = class YoloDice extends BaseDice {
-    constructor(){
-        super();
+    constructor(proxy){
+        super(proxy);
         this.host = 'api.yolodice.com';
         this.port = '4444';
     }
@@ -20,7 +20,7 @@ module.exports = class YoloDice extends BaseDice {
         });
         this.client.on('error', function(error) {
             console.error(error);
-            client.destroy();
+            this.client.destroy();
         });
         let options = {
             id: this.id++,

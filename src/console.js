@@ -26,22 +26,6 @@ var readdir = util.promisify(fs.readdir);
 
 (async () => {
 
-Factory.register('Bitsler', new BitslerDice());
-Factory.register('999Dice', new NineDice());
-Factory.register('YoloDice', new YoloDice());
-Factory.register('PrimeDice', new PrimeDice());
-Factory.register('Stake', new StakeDice());
-Factory.register('Crypto-Games', new CryptoDice());
-Factory.register('Simulator', new Simulator());
-Factory.register('EpicDice', new EpicDice());
-Factory.register('KryptoGames', new KryptoGames());
-Factory.register('DuckDice', new DuckDice());
-Factory.register('FreeBitco', new FreeBitco());
-Factory.register('WinDice', new WinDice());
-Factory.register('WolfBet', new WolfBet());
-Factory.register('999Doge', new NineDoge());
-Factory.register('SatoshiDice', new SatoshiDice());
-Factory.register('ParaDice', new ParaDice());
 var needUserSites = ['999Dice','FreeBitco','999Doge','SatoshiDice'];
 var needTokenSites = ['PrimeDice','Stake','WolfBet','ParaDice'];
 var needApiKeySites = ['Bitsler'];
@@ -107,7 +91,38 @@ if(readlineSync.keyInYN('Whether to read the last configuration?')) {
         req.body.HouseEdge = 0.001;
         sleepTime = 1000;
     }
+
+    if (readlineSync.keyInYN('Do you use proxy?')) {
+        req.body.proxy_ip = readlineSync.question('Please input proxy ip ?');
+        req.body.proxy_port = readlineSync.question('Please input proxy port?');
+        req.body.proxy_user = readlineSync.question('Please input proxy user?');
+        req.body.proxy_password = readlineSync.question('Please input proxy password?');
+    }
 }
+
+let proxy = {};
+if(typeof req.body.proxy_ip !== 'undefined'){
+    proxy.ip = req.body.proxy_ip;
+    proxy.port = req.body.proxy_port;
+    proxy.user = req.body.proxy_user;
+    proxy.password = req.body.proxy_password;
+}
+Factory.register('Bitsler', new BitslerDice(proxy));
+Factory.register('999Dice', new NineDice(proxy));
+Factory.register('YoloDice', new YoloDice(proxy));
+Factory.register('PrimeDice', new PrimeDice(proxy));
+Factory.register('Stake', new StakeDice(proxy));
+Factory.register('Crypto-Games', new CryptoDice(proxy));
+Factory.register('Simulator', new Simulator(proxy));
+Factory.register('EpicDice', new EpicDice(proxy));
+Factory.register('KryptoGames', new KryptoGames(proxy));
+Factory.register('DuckDice', new DuckDice(proxy));
+Factory.register('FreeBitco', new FreeBitco(proxy));
+Factory.register('WinDice', new WinDice(proxy));
+Factory.register('WolfBet', new WolfBet(proxy));
+Factory.register('999Doge', new NineDoge(proxy));
+Factory.register('SatoshiDice', new SatoshiDice(proxy));
+Factory.register('ParaDice', new ParaDice(proxy));
 
 //var content = await loadScript();
 

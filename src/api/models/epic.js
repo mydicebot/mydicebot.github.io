@@ -5,8 +5,8 @@ var request = require('request');
 var steem = require('steem');
 
 module.exports = class EpicDice extends BaseDice {
-    constructor(){
-        super();
+    constructor(proxy){
+        super(proxy);
         this.url = 'https://epicdice.io';
         this.benefit = '?ref=mydicebot'
         this.currencys = ["steem","sbd"];
