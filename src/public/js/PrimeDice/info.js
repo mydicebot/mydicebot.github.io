@@ -11,6 +11,8 @@ function init() {
         {id:4,value:"ETH"},
         {id:5,value:"BCH"},
         {id:6,value:"XRP"},
+        {id:7,value:"TRX"},
+        {id:8,value:"EOS"},
     ]);
     $$("bet_currency_selection").refresh();
     consoleInit();

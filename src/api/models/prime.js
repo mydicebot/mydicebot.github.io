@@ -51,7 +51,6 @@ module.exports = class PrimeDice extends BaseDice {
         }
         for (let i=0; i<ret.statistic.length; i++) {
             if(req.query.currency  == ret.statistic[i].currency) {
-                console.log(ret.statistic[i]);
                 userinfo.profit = parseFloat(ret.statistic[i].profit).toFixed(8);
                 userinfo.wins = ret.statistic[i].wins;
                 userinfo.bets = ret.statistic[i].bets;
@@ -98,7 +97,6 @@ module.exports = class PrimeDice extends BaseDice {
 
         for (let i=0; i<ret.statistic.length; i++) {
             if(req.query.currency  == ret.statistic[i].currency) {
-                console.log(ret.statistic[i]);
                 userinfo.profit = parseFloat(ret.statistic[i].profit).toFixed(8);
                 userinfo.wins = ret.statistic[i].wins;
                 userinfo.bets = ret.statistic[i].bets;
@@ -176,7 +174,6 @@ module.exports = class PrimeDice extends BaseDice {
     }
 
     async _send(route, method, body, accessToken){
-        console.log(JSON.stringify(body));
         let url = `${this.url}`;
         let options = {
             method,
@@ -197,7 +194,6 @@ module.exports = class PrimeDice extends BaseDice {
         }
         let res = await fetch(url, options);
         let data = await res.json();
-        console.log(data);
         if(data.errors) {
             let errs = new Error(data.errors[0].message);
             errs.value = data.errors[0].message;
