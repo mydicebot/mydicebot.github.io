@@ -104,8 +104,8 @@ module.exports = class WolfBet extends BaseDice {
         data.game = "dice";
         data.amount = parseFloat(amount).toFixed(8);
         data.rule = condition;
-        data.bet_value= parseFloat(game/100).toFixed(2);
-        data.multiplier = multiplier.toString();
+        data.multiplier = multiplier.toFixed(4);
+        data.bet_value= (game/100).toFixed(2);
         let ret = await this._send('api/v1/bet/place', 'POST', data, 'Bearer '+accessToken);
         console.log(ret);
         let info = req.session.info;
