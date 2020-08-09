@@ -35,7 +35,7 @@ var needSimulatorActiveKeySites = ['Simulator'];
 
 var nums = 0, currency = 'btc', base = 0, isloop = false, iswin = false;
 var code;
-var startTime = new Date(), settime, difftime = 0;
+var startTime = new Date(), settime, difftime = 0, intervalBetTime = 0;
 var basebet = 0.00000001, nextbet = 0.00000001, chance = 90, bethigh = false;
 var previousbet = 0, win = false, currentprofit = 0, balance = 0, bets = 0, wins = 0, losses = 0, profit = 0, currentstreak = 0, currentroll = 0 ,wagered = 0, totalprofit = 0;
 var maxwinstreak = 0, maxlossstreak = 0, maxwinstreakamount = 0, maxlossstreakamount = 0, maxstreakamount = 0, minstreakamount = 0, maxbetamount = 0 ;
@@ -89,7 +89,7 @@ if(readlineSync.keyInYN('Whether to read the last configuration?')) {
     } else {
         req.body.site = 'Simulator';
         req.body.HouseEdge = 0.001;
-        sleepTime = 1000;
+        intervalBetTime = 1000;
     }
 
     if (readlineSync.keyInYN('Do you use proxy?')) {
@@ -257,7 +257,7 @@ screen.key(['enter'],async function(ch, key) {
               isloop = await bet(false, req);
             }
             if(isloop){
-                await sleep(sleepTime);
+                await sleep(intervalBetTime);
                 betfunc();
             }
             await saveLog(logname,req.logdata+'\r\n');
@@ -284,6 +284,18 @@ console.log = function (message) {
         process.exit();
     }
 }
+console.error = function (message) {
+    try {
+        if (typeof message == 'object') {
+            logs.log(JSON && JSON.stringify ? (JSON.stringify(message)).replace(/\"/g,"") : message+"\r\n");
+        } else {
+            logs.log(message+"\r\n");
+        }
+    } catch(err){
+        console.error(err);
+        process.exit();
+    }
+}
 
 async function login(req) {
     await dice.login(req.body.username, req.body.password, req.body.twoFactor, req.body.apiKey, req);
@@ -291,6 +303,14 @@ async function login(req) {
     ret = await dice.clear(req);
     consoleStats(ret,currencyValue);
 
+}
+
+async function resetseed() {
+    try {
+        let ret = await dice.resetseed(req);
+    } catch(err){
+        console.error(err);
+    }
 }
 
 async function betScript(req) {
@@ -410,6 +430,7 @@ function setBetToLua(ret, currencyValue, currentAmount){
     }
     lastbet = {id:getCurrentBetId(ret),chance:chance, date:getBetDate(ret),roll:currentroll,amount:currentAmount,nonce:getNonce(ret),serverhash:getServerHash(ret),serverseed:getServerSeed(ret),clientseed:getClientSeed(ret),profit:profit,uid:getUid(ret),high:bethigh};
 }
+
 function betTime() {
   difftime++;
   dayf = difftime/(24*60*60);
@@ -430,8 +451,13 @@ function betTime() {
                 ['AVGPROFIT:'+parseFloat(totalprofit/bets).toFixed(10) ]] });
   settime = setTimeout(function(){ betTime() }, 1000);
 }
+
 function stopBetTime() {
     clearTimeout(settime);
+}
+
+function betinterval(ms) {
+    intervalBetTime  =  ms;
 }
 
 function sleep(ms) {

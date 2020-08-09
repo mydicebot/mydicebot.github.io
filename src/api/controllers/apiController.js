@@ -88,6 +88,13 @@ exports.info = async function(req, res) {
 
 exports.bet = async function(req, res) {
     try{
+        if(req.body.intervalBetTime >0 ) {
+            await sleep(req.body.intervalBetTime);
+        } else {
+            if(req.params.site == 'ParaDice') {
+                await sleep(1000);
+            }
+        }
         let dice = Factory.create(req.params.site);
         let ret = await dice.bet(req);
         return res.status(200).json(ret);

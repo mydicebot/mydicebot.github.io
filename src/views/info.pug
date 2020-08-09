@@ -12,16 +12,18 @@ block content
             var nums = 0, currency = 'btc', base = 0, isloop = false, currentLanguage = 'lua';
             var autoLossRadio, autoWinRadio;
             var code;
-            var startTime = new Date(), settime, difftime = 0;
+            var startTime = new Date(), settime, difftime = 0, intervalBetTime = 0;
             var toggleLog = false, toggleChart = true;
             var basebet = 0.00000001, nextbet = 0.00000001, chance = 90, bethigh = false;
             var previousbet = 0, win = false, currentprofit = 0, balance = 0, bets = 0, wins = 0, losses = 0, profit = 0, currentstreak = 0, currentroll = 0, currentAmount = 0, totalprofit = 0 ;
             var lastbet = {id:0,chance:chance, date:1585642326,roll:49.5,amount:nextbet,nonce:1000,serverhash:'mydice',serverseed:'mydice',clientseed:'mydice',profit:profit,uid:1000,high:bethigh};
             var humps = ['baseBet', 'nextBet', 'betHigh', 'previousBet', 'currentProfit', 'currentStreak','currentRoll','lastBet.Id','lastBet.Chance','lastBet.date','lastBet.Roll','lastBet.Amount','lastBet.nonce','lastBet.serverhash','lastBet.serverseed','lastBet.clientseed','lastBet.Profit','lastBet.uid','lastBet.high','lastBet'];
             var maxwinstreak = 0, maxlossstreak = 0, maxwinstreakamount = 0, maxlossstreakamount = 0, maxstreakamount = 0, minstreakamount = 0, maxbetamount= 0  ;
-            fengari.load('function stop()\nisloop = false \n js.global:stop() \n print(isloop)\nend')();
+            fengari.load('function stop()\nisloop = false \n js.global:stop() \nend')();
             fengari.load('function resetseed()\n js.global:resetseed() \nend')();
             fengari.load('function resetsession()\n js.global:resetsession() \nend')();
+            fengari.load('function resetstats()\n js.global:resetstats() \nend')();
+            fengari.load('function betinterval(ms)\n js.global:betinterval(ms) \nend')();
             fengari.load('function sound(file)\n js.global:sound(file) \nend')();
             fengari.load('function message(text, type, expire)\n js.global:message(text, type, expire) \nend')();
             fengari.load('function start()\n js.global:start() \nend')();
@@ -371,6 +373,34 @@ block content
                 width: 400,
                 cells: [
                     {
+                         header: "Tutorials",
+                         body: {
+                             id: "youtube_form",
+                             view: "form",
+                             height: 0,
+                             width: 0,
+                             scroll:true,
+                             rows: [
+                                {
+                                    view:"iframe", 
+                                    src:"https://www.youtube.com/embed/mvCedgWmp8w"
+                                },
+                                {
+                                    view:"iframe", 
+                                    src:"https://www.youtube.com/embed/u7MXeReh0VE?t=1"
+                                },
+                                {
+                                    view:"iframe", 
+                                    src:"https://www.youtube.com/embed/0e8Hm9uf4xU?t=13"
+                                },
+                                {
+                                    view:"iframe", 
+                                    src:"https://www.youtube.com/embed/vVxUOKJ_lSs?t=220"
+                                },
+                             ]
+                         }
+                     },
+                    {
                          header: "BOT",
                          body: {
                              id: "site_form",
@@ -671,6 +701,14 @@ block content
                                     labelWidth: 230,
                                     value: "0",
                                     name: "auto_bet_reseed"
+                                },
+                                {
+                                    id: "auto_bet_interval",
+                                    view: "text",
+                                    label: "BET INTERVAL [ms] (0:NON-INTERVAL)",
+                                    labelWidth: 230,
+                                    value: "0",
+                                    name: "auto_bet_interval"
                                 },
                             ]
                             },
@@ -1319,6 +1357,14 @@ block content
                                         value: "0",
                                         name: "auto_bet_reseed"
                                     },
+                                    {
+                                        id: "auto_bet_interval",
+                                        view: "text",
+                                        label: "BET INTERVAL [ms] (0:NON-INTERVAL)",
+                                        labelWidth: 230,
+                                        value: "0",
+                                        name: "auto_bet_interval"
+                                    },
                                 ]},
                                 {
                                     id: "auto_resetseed_button",
@@ -1902,6 +1948,14 @@ block content
                     let layout = $$("mobile_toolbar").getParentView();
                     layout.show();
                 });
+                $$("auto_bet_interval").attachEvent("onFocus", function(current_view, prev_view){
+                    let layout = $$("mobile_toolbar").getParentView();
+                    layout.hide();
+                });
+                $$("auto_bet_interval").attachEvent("onBlur", function(current_view, prev_view){
+                    let layout = $$("mobile_toolbar").getParentView();
+                    layout.show();
+                });
 
                 $$("mobile_toolbar_total").attachEvent("onItemClick", function(){
                     $$("bet_total_stats").show();
@@ -2201,6 +2255,11 @@ block content
                 refresh(currencyValue);
                 resetBetTime();
             }
+            function resetstats(){
+                currencyValue = $$("bet_currency_selection").getValue();
+                refreshStats(currencyValue);
+                resetBetTime();
+            }
             function resetseed(){
                 let now = Math.floor(Date.now()/1000);
                 let diff = now - lastResetSeed;
@@ -2414,7 +2473,7 @@ block content
             }
             function action(c,h,p,ch,cv,cb){
                 let houseEdgeValue = $$("bet_house_edge_selection").getValue();
-                webix.ajax().post('bet', { Currency:c, PayIn:p, High:h, Chance:ch, CurrencyValue: cv, HouseEdge: houseEdgeValue  }).then(function (result) {
+                webix.ajax().post('bet', { Currency:c, PayIn:p, High:h, Chance:ch, CurrencyValue: cv, HouseEdge: houseEdgeValue, intervalBetTime:intervalBetTime }).then(function (result) {
                     let ret = result.json();
                     cb(ret);
                 }).fail(function (xhr) {
@@ -2424,6 +2483,9 @@ block content
                     console.error(response.err);
                     webix.message({type: 'error', text: response.err});
                 });
+            }
+            function betinterval(ms) {
+                intervalBetTime  =  ms;
             }
             function checkerr(mess){
                 let result = webix.ajax().sync().get('checkerr?mess='+mess+'&count='+errCount ); 
@@ -2458,6 +2520,7 @@ block content
                 }
                 currencyValue = $$("bet_currency_selection").getValue() -1;
                 let currentAmount =  p/100000000;
+                intervalBetTime = $$("auto_bet_interval").getValue();
                 action(c,h,p,ch,currencyValue,function(ret) {
                     try{
                     if(isError(ret)) {
@@ -2665,12 +2728,42 @@ block content
                 stopOnWin = false;
                 stopOnLoss = false;
             }
+            function clearStats(){
+                $$('bet_current_stats2').setValues({
+                    bet_current_stats_current_streak:0,
+                    bet_current_stats_max_win_streak:0,
+                    bet_current_stats_max_loss_streak:0,
+                    bet_current_stats_max_win_streak_amount:0,
+                    bet_current_stats_max_loss_streak_amount:0,
+                    bet_current_stats_max_bet_amount:0,
+                    bet_current_stats_seed:0,
+                });
+                $$('bet_current_stats3').setValues({
+                    bet_time:0,
+                    bets:0,
+                    bet_profit_per_hour:0,
+                    bet_profit_per_day:0,
+                    bet_profit_per_bet:0,
+                });
+                maxstreakamount = 0;
+                minstreakamount = 0;
+                stopOnWin = false;
+                stopOnLoss = false;
+            }
             function refresh(newId) {
                 clear(function(userinfo){
                     setStats(userinfo, newId-1);
                     $$('bet_datatable').clearAll();
                     $$("bet_chart_graph").clearAll();
                     clearSession();
+                });
+            }
+            function refreshStats(newId) {
+                clear(function(userinfo){
+                    setStats(userinfo, newId-1);
+                    $$('bet_datatable').clearAll();
+                    $$("bet_chart_graph").clearAll();
+                    clearStats();
                 });
             }
             function clear(cb){
@@ -2987,8 +3080,12 @@ block content
                           '    window.resume()\n';
                 resetSeedFun = '\ndef resetseed():\n'+
                           '    window.resetseed()\n';
+                betintervalFun = '\ndef betinterval(ms):\n'+
+                          '    window.betinterval(ms)\n';
                 resetSessionFun = '\ndef resetsession():\n'+
                           '    window.resetsession()\n';
+                resetStatsFun = '\ndef resetstats():\n'+
+                          '    window.resetstats()\n';
                 stopFun = '\ndef stop():\n'+
                           '    window.isloop = False\n'+
                           '    global isloop\n'+
@@ -3022,7 +3119,7 @@ block content
                               '\ndocument["python_before_bet_button"].bind("click", beforebet)\n'+
                               '\ndocument["python_after_bet_button"].bind("click", afterbet)\n'+
                               '\ndocument["python_stop_button"].bind("click", stopbet)\n';
-                strScript = strScript + messageFun + resetSeedFun + resetSessionFun + soundFun + stopFun + startFun + resumeFun + stopBetFun + beforeBetFun + afterBetFun + clickFun;
+                strScript = strScript + messageFun + resetSeedFun + resetSessionFun + resetStatsFun + soundFun + stopFun + startFun + resumeFun + stopBetFun + beforeBetFun + afterBetFun + clickFun + betintervalFun;
 
                 //console.log("eval python:",strScript);
                 let dynamicStr = document.createElement ("script");
