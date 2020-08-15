@@ -6,21 +6,27 @@ var bitcore = require('bitcore-lib');
 var Message = require('bitcore-message');
 
 module.exports = class YoloDice extends BaseDice {
+
     constructor(proxy){
         super(proxy);
         this.host = 'api.yolodice.com';
         this.port = '4444';
+        this.connected = false;
     }
 
     async connect(apiKey){
+        let yolo = this; 
         this.id = 0;
         this.client = tls.connect(this.port, this.host);
+        this.client.setKeepAlive(true, 0);
+
         this.client.on('close', function() {
+            yolo.connected = false;
             console.log("Connection closed");
         });
         this.client.on('error', function(error) {
-            console.error(error);
-            this.client.destroy();
+            yolo.connected = false;
+            console.log(error);
         });
         let options = {
             id: this.id++,
@@ -41,6 +47,7 @@ module.exports = class YoloDice extends BaseDice {
         }
         ret = await this._send(options);
         let user = JSON.parse(ret).result;
+        this.connected = true;
         return user;
     }
 
@@ -53,8 +60,11 @@ module.exports = class YoloDice extends BaseDice {
     }
 
     async refresh(req) {
+        if(!this.connected){
+            await this.connect(req.session.apiKey);
+        }
         //console.log('refresh')
-        await this.connect(req.session.apiKey);
+        //await this.connect(req.session.apiKey);
         let options = {
             id:this.id++,
             method: 'read_user_coin_data',
@@ -78,7 +88,10 @@ module.exports = class YoloDice extends BaseDice {
 
     async clear(req) {
         console.log('loading....');
-        await this.connect(req.session.apiKey);
+        if(!this.connected){
+            await this.connect(req.session.apiKey);
+        }
+        //await this.connect(req.session.apiKey);
         let options = {
             id:this.id++,
             method: 'read_user_coin_data',
@@ -103,7 +116,10 @@ module.exports = class YoloDice extends BaseDice {
     }
 
     async bet(req) {
-        await this.connect(req.session.apiKey);
+        //await this.connect(req.session.apiKey);
+        if(!this.connected){
+            await this.connect(req.session.apiKey);
+        }
         let betRoll = 0;
         let currency = req.body.Currency.toLowerCase();
         //console.log(currency)
@@ -164,7 +180,10 @@ module.exports = class YoloDice extends BaseDice {
 
     async getUserInfo(req) {
         //console.log('get user info')
-        await this.connect(req.session.apiKey);
+        //await this.connect(req.session.apiKey);
+        if(!this.connected){
+            await this.connect(req.session.apiKey);
+        }
         let options = {
             id:this.id++,
             method: 'read_user_coin_data',
@@ -188,7 +207,10 @@ module.exports = class YoloDice extends BaseDice {
     }
 
     async resetseed(req) {
-        await this.connect(req.session.apiKey);
+        //await this.connect(req.session.apiKey);
+        if(!this.connected){
+            await this.connect(req.session.apiKey);
+        }
         let seed = Math.random().toString(32).substring(2);
         let options = {
             id:this.id++,

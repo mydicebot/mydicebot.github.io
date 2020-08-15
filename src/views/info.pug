@@ -373,34 +373,6 @@ block content
                 width: 400,
                 cells: [
                     {
-                         header: "Tutorials",
-                         body: {
-                             id: "youtube_form",
-                             view: "form",
-                             height: 0,
-                             width: 0,
-                             scroll:true,
-                             rows: [
-                                {
-                                    view:"iframe", 
-                                    src:"https://www.youtube.com/embed/mvCedgWmp8w"
-                                },
-                                {
-                                    view:"iframe", 
-                                    src:"https://www.youtube.com/embed/u7MXeReh0VE?t=1"
-                                },
-                                {
-                                    view:"iframe", 
-                                    src:"https://www.youtube.com/embed/0e8Hm9uf4xU?t=13"
-                                },
-                                {
-                                    view:"iframe", 
-                                    src:"https://www.youtube.com/embed/vVxUOKJ_lSs?t=220"
-                                },
-                             ]
-                         }
-                     },
-                    {
                          header: "BOT",
                          body: {
                              id: "site_form",
@@ -420,6 +392,37 @@ block content
                          }
                      },
                     {
+                         header: "TUT",
+                         body: {
+                             id: "youtube_form",
+                             view: "form",
+                             height: 0,
+                             width: 0,
+                             scroll:true,
+                             rows: [
+                                {
+                                    view:"iframe", 
+                                    src:"https://www.youtube.com/embed/mvCedgWmp8w"
+                                },
+                                {view:"resizer"},
+                                {
+                                    view:"iframe", 
+                                    src:"https://www.youtube.com/embed/u7MXeReh0VE?t=1"
+                                },
+                                {view:"resizer"},
+                                {
+                                    view:"iframe", 
+                                    src:"https://www.youtube.com/embed/0e8Hm9uf4xU?t=13"
+                                },
+                                {view:"resizer"},
+                                {
+                                    view:"iframe", 
+                                    src:"https://www.youtube.com/embed/vVxUOKJ_lSs?t=220"
+                                },
+                             ]
+                         }
+                     },
+                    {
                       header: "CHAT",
                       body: {
                         view:"iframe",
@@ -427,104 +430,6 @@ block content
                         width: 0,
                         minHeight: 300
                       }
-                    },
-                    {
-                        header: "MANUAL",
-                        body: {
-                            id: "manual_bet_form",
-                            view: "form",
-                            paddingY: 4,
-                            margin: 0,
-                            minHeight: 500,
-                            height: 0,
-                            width: 0,
-                            elements: [
-                                {
-                                    id: "manual_bet_amount",
-                                    view: "text",
-                                    label: "BET AMOUNT",
-                                    value: "0.00000001",
-                                    labelWidth: 200,
-                                    name: "manual_bet_amount"
-                                },
-                                {
-                                    cols: [
-                                        {
-                                            id: "manual_bet_amount_min_button",
-                                            view: "button",
-                                            label: "MIN",
-                                            css: "webix_secondary",
-                                        },
-                                        {
-                                            id: "manual_bet_amount_max_button",
-                                            view: "button",
-                                            label: "MAX",
-                                            css: "webix_secondary",
-                                        },
-                                        {
-                                            id: "manual_bet_amount_half_button",
-                                            view: "button",
-                                            label: "1/2",
-                                            css: "webix_secondary",
-                                        },
-                                        {
-                                            id: "manual_bet_amount_double_button",
-                                            view: "button",
-                                            label: "2x",
-                                            css: "webix_secondary",
-                                        },
-                                    ]
-                                },
-                                {
-                                    id: "manual_bet_chance",
-                                    view: "text",
-                                    label: "BET CHANCE",
-                                    value: "49.50",
-                                    labelWidth: 200,
-                                    name: "manual_bet_chance",
-                                    on:{
-                                      onChange:function(){
-                                        $$("manual_bet_chance_slider").setValue(this.getValue());
-                                      }
-                                    }
-                                },
-                                {
-                                    id: "manual_bet_chance_slider",
-                                    view: "slider",
-                                    label: "",
-                                    value: "49.50",
-                                    labelWidth: 0,
-                                    title:webix.template("#value#"),
-                                    name: "manual_bet_chance_slider",
-                                    on:{
-                                      onChange:function(){
-                                        $$("manual_bet_chance").setValue(this.getValue());
-                                      }
-                                    }
-                                },
-                                {
-                                    id: "manual_bet_low_button",
-                                    view: "button",
-                                    type: "form",
-                                    label: "BET LOW",
-                                    css: "webix_primary",
-                                },
-                                {
-                                    id: "manual_bet_high_button",
-                                    view: "button",
-                                    type: "form",
-                                    label: "BET HIGH",
-                                    css: "webix_primary",
-                                },
-                                {
-                                    id: "manual_resetseed_button",
-                                    view: "button",
-                                    type: "form",
-                                    label: "RESET SEED",
-                                    css: "webix_primary"
-                                },
-                            ]
-                        }
                     },
                     {
                         header: "AUTO",
@@ -1041,6 +946,104 @@ block content
                                 //            label: "STOP ON NEXT LOSS"
                                 //        },
                                 //]}
+                            ]
+                        }
+                    },
+                                        {
+                        header: "MAN",
+                        body: {
+                            id: "manual_bet_form",
+                            view: "form",
+                            paddingY: 4,
+                            margin: 0,
+                            minHeight: 500,
+                            height: 0,
+                            width: 0,
+                            elements: [
+                                {
+                                    id: "manual_bet_amount",
+                                    view: "text",
+                                    label: "BET AMOUNT",
+                                    value: "0.00000001",
+                                    labelWidth: 200,
+                                    name: "manual_bet_amount"
+                                },
+                                {
+                                    cols: [
+                                        {
+                                            id: "manual_bet_amount_min_button",
+                                            view: "button",
+                                            label: "MIN",
+                                            css: "webix_secondary",
+                                        },
+                                        {
+                                            id: "manual_bet_amount_max_button",
+                                            view: "button",
+                                            label: "MAX",
+                                            css: "webix_secondary",
+                                        },
+                                        {
+                                            id: "manual_bet_amount_half_button",
+                                            view: "button",
+                                            label: "1/2",
+                                            css: "webix_secondary",
+                                        },
+                                        {
+                                            id: "manual_bet_amount_double_button",
+                                            view: "button",
+                                            label: "2x",
+                                            css: "webix_secondary",
+                                        },
+                                    ]
+                                },
+                                {
+                                    id: "manual_bet_chance",
+                                    view: "text",
+                                    label: "BET CHANCE",
+                                    value: "49.50",
+                                    labelWidth: 200,
+                                    name: "manual_bet_chance",
+                                    on:{
+                                      onChange:function(){
+                                        $$("manual_bet_chance_slider").setValue(this.getValue());
+                                      }
+                                    }
+                                },
+                                {
+                                    id: "manual_bet_chance_slider",
+                                    view: "slider",
+                                    label: "",
+                                    value: "49.50",
+                                    labelWidth: 0,
+                                    title:webix.template("#value#"),
+                                    name: "manual_bet_chance_slider",
+                                    on:{
+                                      onChange:function(){
+                                        $$("manual_bet_chance").setValue(this.getValue());
+                                      }
+                                    }
+                                },
+                                {
+                                    id: "manual_bet_low_button",
+                                    view: "button",
+                                    type: "form",
+                                    label: "BET LOW",
+                                    css: "webix_primary",
+                                },
+                                {
+                                    id: "manual_bet_high_button",
+                                    view: "button",
+                                    type: "form",
+                                    label: "BET HIGH",
+                                    css: "webix_primary",
+                                },
+                                {
+                                    id: "manual_resetseed_button",
+                                    view: "button",
+                                    type: "form",
+                                    label: "RESET SEED",
+                                    css: "webix_primary"
+                                },
                             ]
                         }
                     },
@@ -2032,6 +2035,7 @@ block content
             $$("script_bet_start_stop_button").attachEvent("onItemClick", function(){
                 buttonStatus = $$("script_bet_start_stop_button").getValue();
                 if(buttonStatus == 'STOP') {
+                    goodLuck();
                     isloop = false;
                     stopBetTime();
                     $$("script_bet_start_stop_button").setValue('START');
@@ -2046,6 +2050,7 @@ block content
             $$("auto_bet_start_stop_button").attachEvent("onItemClick", function(){
                 buttonStatus = $$("auto_bet_start_stop_button").getValue();
                 if(buttonStatus == 'STOP') {
+                    goodLuck();
                     isloop = false;
                     stopBetTime();
                     $$("auto_bet_start_stop_button").setValue('START');
@@ -3173,6 +3178,34 @@ block content
                 bets = 0;
                 totalprofit = 0;
                 difftime = 0;
+            }
+            function goodLuck(){
+                let mydice_goodluck_time = 0;
+                let curr_time = new Date().getTime();
+                if(webix.storage.local.get("mydice_goodluck_time") != null){
+                    mydice_goodluck_time = webix.storage.local.get("mydice_goodluck_time");
+                }
+                let diff =  curr_time - mydice_goodluck_time;
+                if(diff/1000 > 3600*24) {
+                    if(totalprofit > 0){
+                        webix.confirm({
+                            title:"SUPPORT MyDiceBot",
+                            ok:"SUPPORT!",
+                            cancel:"No",
+                            text:"Click SUPPORT button, surfing ads to help MyDiceBot getting profit for continuing development.",
+                            callback:function(result){
+                                if(result) {
+                                    window.open(
+                                        "https://acceptable.a-ads.com/1102518",
+                                        "Supporting MyDiceBot Page",
+                                        "width=600,height=600,status=0,toolbar=0"
+                                    );
+                                }
+                                webix.storage.local.put("mydice_goodluck_time", curr_time);
+                            }
+                        });
+                    }
+                }
             }
             try {
                 require('electron').ipcRenderer.on('chart', (event, message) => {

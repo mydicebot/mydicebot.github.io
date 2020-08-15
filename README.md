@@ -230,9 +230,11 @@ bash start.sh
 |__start()__|Start the bet (from very beginning) after stop()|
 |__resume()__|Resume the bet (from current stopping) after stop()|
 |__resetsession()__|Reset the session|
+|__resetstats()__|Reset the session|
 |__resetseed()__|Reset the client seed|
 |__sound(path_of_the_sound)__|Sound notificaiton|
 |__message(text, type=\'debug\', expire=time_interval_value_in_ms)__|Message notification on the screen. Four types: "info", "success", "debug", or "error". Expire interval is 4000 ms by default, -1 for not hiding the message.| 
+|__betinterval(ms)__|Bet Interval in milliseconds|
 
 ## Sample Code
 * Strategy: Basic Martingale
