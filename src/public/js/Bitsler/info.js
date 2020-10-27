@@ -1,5 +1,5 @@
 function consoleInit() {
-    currencies = ["BTC","DOGE","LTC","ETH","DASH","BCH","XRP","ZEC","ETC","NEO","KMD","BTG","LSK","DGB","QTUM","START","WAVES","BURST","BTSLR"];
+    currencies = ["BTC","DOGE","LTC","ETH","DASH","BSV","BCH","XRP","ZEC","ETC","NEO","KMD","BTG","LSK","DGB","QTUM","START","WAVES","BTSLR","EOS","XLM","USDT","TRX"];
 }
 
 function init() {
@@ -22,8 +22,12 @@ function init() {
         {id:15,value:"QTUM"},
         {id:16,value:"START"},
         {id:17,value:"WAVES"},
-        {id:18,value:"BURST"},
+        {id:18,value:"BSV"},
         {id:19,value:"BTSLR"},
+        {id:20,value:"EOS"},
+        {id:21,value:"XLM"},
+        {id:22,value:"USDT"},
+        {id:23,value:"TRX"},
     ]);
     $$("bet_currency_selection").refresh();
     consoleInit();

@@ -1,5 +1,5 @@
 function consoleInit() {
-    currencies = ["btc","doge","ltc","eth","dash","bch","xrp","xmr","etc","btg","zec","xlm","usdt"];
+    currencies = ["btc","doge","ltc","eth","dash","bch","xrp","xmr","etc","btg","zec","xlm","usdt","dtp"];
 }
 
 function init() {
@@ -18,6 +18,7 @@ function init() {
         {id:11,value:"ZEC"},
         {id:12,value:"XLM"},
         {id:13,value:"USDT"},
+        {id:13,value:"DTP"},
     ]);
     $$("bet_currency_selection").refresh();
     minBetAmount = 0.0000001;

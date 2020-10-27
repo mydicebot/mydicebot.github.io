@@ -15,7 +15,7 @@ module.exports = class StakeDice extends BaseDice {
 
     async login(userName, password, twoFactor ,apiKey, req) {
         let data = {};
-        data.query = "{user {activeServerSeed { seedHash seed nonce} activeClientSeed{seed} id balances{available{currency amount}} statistic {game bets wins losses amount profit currency}}}";
+        data.query = "query DiceBotGetBalance{user {activeServerSeed { seedHash seed nonce} activeClientSeed{seed} id balances{available{currency amount}} statistic {game bets wins losses betAmount profit currency}}}";
         let ret = await this._send('', 'POST', data, apiKey);
         req.session.accessToken = apiKey;
         req.session.username = apiKey;
@@ -33,7 +33,7 @@ module.exports = class StakeDice extends BaseDice {
             return false;
         }
         let data = {};
-        data.query = "{user {activeServerSeed { seedHash seed nonce} activeClientSeed{seed} id balances{available{currency amount}} statistic {game bets wins losses betAmount profit currency}}}";
+        data.query = "query DiceBotGetBalance{user {activeServerSeed { seedHash seed nonce} activeClientSeed{seed} id balances{available{currency amount}} statistic {game bets wins losses betAmount profit currency}}}";
         let ret = await this._send('', 'POST', data, req.session.accessToken);
         ret = ret.user;
         let userinfo = {
@@ -67,7 +67,7 @@ module.exports = class StakeDice extends BaseDice {
     async clear(req) {
         console.log('loading....');
         let data = {};
-        data.query = "{user {activeServerSeed { seedHash seed nonce} activeClientSeed{seed} id balances{available{currency amount}} statistic {game bets wins losses betAmount profit currency}}}";
+        data.query = "query DiceBotGetBalance{user {activeServerSeed { seedHash seed nonce} activeClientSeed{seed} id balances{available{currency amount}} statistic {game bets wins losses betAmount profit currency}}}";
         let ret = await this._send('', 'POST', data, req.session.accessToken);
         ret=ret.user;
         let info = {};
@@ -121,14 +121,16 @@ module.exports = class StakeDice extends BaseDice {
             target = Math.floor((req.body.Chance*10000))-1;
         }
         target = parseFloat(target/10000).toFixed(2);
-        let data = {};
-        data.query = " mutation{diceRoll(amount:"+amount+",target:"+target+",condition:"+ condition +",currency:"+currency+ ") { id nonce currency amount payout state { ... on CasinoGameDice { result target condition } } createdAt serverSeed{seedHash seed nonce} clientSeed{seed} user{balances{available{amount currency}} statistic{game bets wins losses betAmount profit currency}}}}";
-        let ret = await this._send('', 'POST', data, req.session.accessToken);
+        //let data = {};
+        //data.query = " mutation{diceRoll(amount:"+amount+",target:"+target+",condition:"+ condition +",currency:"+currency+ ") { id nonce currency amount payout state { ... on CasinoGameDice { result target condition } } createdAt serverSeed{seedHash seed nonce} clientSeed{seed} user{balances{available{amount currency}} statistic{game bets wins losses betAmount profit currency}}}}";
+
+        let betdata = "{\"operationName\":\"DiceRoll\",\"variables\":{\"target\":"+target+",\"condition\":\""+condition+"\",\"identifier\":\"d316d71e2f075a05339d\",\"amount\":"+amount+",\"currency\":\""+currency+"\"},\"query\":\"mutation DiceRoll($amount: Float!, $target: Float!, $condition: CasinoGameDiceConditionEnum!, $currency: CurrencyEnum!, $identifier: String!) {\\n  diceRoll(amount: $amount, target: $target, condition: $condition, currency: $currency, identifier: $identifier) {\\n    ...CasinoBetFragment\\n    state {\\n      ...DiceStateFragment\\n      __typename\\n    }\\n    __typename\\n  }\\n}\\n\\nfragment CasinoBetFragment on CasinoBet {\\n  id\\n  active\\n  payoutMultiplier\\n  amountMultiplier\\n  amount\\n  payout\\n  updatedAt\\n  currency\\n  game\\n  user {\\n    id\\n    name\\n    __typename\\n  }\\n  __typename\\n}\\n\\nfragment DiceStateFragment on CasinoGameDice {\\n  result\\n  target\\n  condition\\n  __typename\\n}\\n\"}"
+        let ret = await this._sendbet('', 'POST', betdata, req.session.accessToken);
         let info = req.session.info;
         let betInfo = ret.diceRoll;
-        data = {};
-        data.query = "{bet(betId:\""+betInfo.id+"\"){iid}}";
-        let dataIID = await this._send('', 'POST', data, req.session.accessToken);
+        betdata = "{\"operationName\":\"Bet\",\"variables\":{\"betId\":\""+betInfo.id+"\",\"modal\":\"bet\"},\"query\":\"query Bet($iid: String, $betId: String) {\\n  bet(iid: $iid, betId: $betId) {\\n    ...BetFragment\\n    __typename\\n  }\\n}\\n\\nfragment BetFragment on Bet {\\n  id\\n  iid\\n  type\\n  game {\\n    name\\n    icon\\n    __typename\\n  }\\n  bet {\\n    ... on CasinoBet {\\n      ...CasinoBetFragment\\n      __typename\\n    }\\n    ... on MultiplayerCrashBet {\\n      ...MultiplayerCrashBet\\n      __typename\\n    }\\n    ... on MultiplayerSlideBet {\\n      ...MultiplayerSlideBet\\n      __typename\\n    }\\n    ... on SoftswissBet {\\n      ...SoftswissBet\\n      __typename\\n    }\\n    ... on EvolutionBet {\\n      ...EvolutionBet\\n      __typename\\n    }\\n    __typename\\n  }\\n  __typename\\n}\\n\\nfragment CasinoBetFragment on CasinoBet {\\n  id\\n  active\\n  payoutMultiplier\\n  amountMultiplier\\n  amount\\n  payout\\n  updatedAt\\n  currency\\n  game\\n  user {\\n    id\\n    name\\n    __typename\\n  }\\n  __typename\\n}\\n\\nfragment MultiplayerCrashBet on MultiplayerCrashBet {\\n  id\\n  user {\\n    id\\n    name\\n    __typename\\n  }\\n  payoutMultiplier\\n  gameId\\n  amount\\n  payout\\n  currency\\n  result\\n  updatedAt\\n  cashoutAt\\n  btcAmount: amount(currency: btc)\\n  __typename\\n}\\n\\nfragment MultiplayerSlideBet on MultiplayerSlideBet {\\n  id\\n  user {\\n    id\\n    name\\n    __typename\\n  }\\n  payoutMultiplier\\n  gameId\\n  amount\\n  payout\\n  currency\\n  slideResult: result\\n  updatedAt\\n  cashoutAt\\n  btcAmount: amount(currency: btc)\\n  active\\n  createdAt\\n  __typename\\n}\\n\\nfragment SoftswissBet on SoftswissBet {\\n  id\\n  amount\\n  currency\\n  updatedAt\\n  payout\\n  payoutMultiplier\\n  user {\\n    id\\n    name\\n    __typename\\n  }\\n  softswissGame: game {\\n    id\\n    name\\n    edge\\n    extId\\n    provider {\\n      id\\n      name\\n      __typename\\n    }\\n    __typename\\n  }\\n  __typename\\n}\\n\\nfragment EvolutionBet on EvolutionBet {\\n  id\\n  amount\\n  currency\\n  createdAt\\n  payout\\n  payoutMultiplier\\n  user {\\n    id\\n    name\\n    __typename\\n  }\\n  softswissGame: game {\\n    id\\n    name\\n    edge\\n    __typename\\n  }\\n  __typename\\n}\\n\"}";
+        let dataIID = await this._sendbet('', 'POST', betdata, req.session.accessToken);
+        console.log(dataIID);
         betInfo.iid = dataIID.bet.iid.split(":")[1];
         betInfo.condition = req.body.High == "true"?'>':'<';
         betInfo.target = target;
@@ -162,8 +164,11 @@ module.exports = class StakeDice extends BaseDice {
 
     async resetseed(req) {
         let clientSeed = Math.random().toString(36).substring(2);
-        data = {};
-        data.query = "mutation{rotateServerSeed{ seed seedHash nonce } changeClientSeed(seed:\"" + clientSeed + "\"){seed}}"
+        let data = {};
+        let variables = {};
+        data.query = "mutation DiceBotRotateSeed ($seed: String!){rotateServerSeed{ seed seedHash nonce } changeClientSeed(seed: $seed){seed}}";
+        variables.seed = clientSeed;
+        data.variables = variables;
         let ret = await this._send('', 'POST', data, req.session.accessToken);
         console.log(clientSeed, ret);
         let info = {};
@@ -192,6 +197,36 @@ module.exports = class StakeDice extends BaseDice {
             let agent = new SocksProxyAgent(socks);
             options.agent  = agent;
         }
+        let res = await fetch(url, options);
+        let data = await res.json();
+        if(data.errors) {
+            let errs = new Error(data.errors[0].message);
+            errs.value = data.errors[0].message;
+            throw new APIError(data.errors[0].message ,errs);
+        }
+        let ret = data.data;
+        return ret;
+    }
+
+    async _sendbet(route, method, body, accessToken){
+        let url = `${this.url}`;
+        let options = {
+            method: method,
+            headers: {
+                'x-access-token': accessToken,
+                'Content-Type': 'application/json',
+            },
+            body: body
+        };
+        if(this.proxy.ip) {
+            let socks = 'socks://'+this.proxy.ip+':'+this.proxy.port;
+            if(this.proxy.user){
+                socks = 'socks://'+this.proxy.user+':'+this.proxy.password+'@'+this.proxy.ip+':'+this.proxy.port;
+            }
+            let agent = new SocksProxyAgent(socks);
+            options.agent  = agent;
+        }
+        options.body = body;
         let res = await fetch(url, options);
         let data = await res.json();
         if(data.errors) {

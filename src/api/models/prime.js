@@ -15,7 +15,8 @@ module.exports = class PrimeDice extends BaseDice {
 
     async login(userName, password, twoFactor ,apiKey, req) {
         let data = {};
-        data.query = "{user {activeServerSeed { seedHash seed nonce} activeClientSeed{seed} id balances{available{currency amount}} statistic {game bets wins losses amount profit currency}}}";
+        //data.query = "{user {activeServerSeed { seedHash seed nonce} activeClientSeed{seed} id balances{available{currency amount}} statistic {game bets wins losses amount profit currency}}}";
+        data.query = "query DiceBotGetBalance{user {activeServerSeed { seedHash seed nonce} activeClientSeed{seed} id balances{available{currency amount}} statistic {game bets wins losses betAmount profit currency}}}";
         let ret = await this._send('', 'POST', data, apiKey);
         req.session.accessToken = apiKey;
         req.session.username = apiKey;
@@ -33,7 +34,8 @@ module.exports = class PrimeDice extends BaseDice {
             return false;
         }
         let data = {};
-        data.query = "{user {activeServerSeed { seedHash seed nonce} activeClientSeed{seed} id balances{available{currency amount}} statistic {game bets wins losses betAmount profit currency}}}";
+        //data.query = "{user {activeServerSeed { seedHash seed nonce} activeClientSeed{seed} id balances{available{currency amount}} statistic {game bets wins losses betAmount profit currency}}}";
+        data.query = "query DiceBotGetBalance{user {activeServerSeed { seedHash seed nonce} activeClientSeed{seed} id balances{available{currency amount}} statistic {game bets wins losses betAmount profit currency}}}";
         let ret = await this._send('', 'POST', data, req.session.accessToken);
         ret = ret.user;
         let userinfo = {
@@ -67,7 +69,8 @@ module.exports = class PrimeDice extends BaseDice {
     async clear(req) {
         console.log('loading....');
         let data = {};
-        data.query = "{user {activeServerSeed { seedHash seed nonce} activeClientSeed{seed} id balances{available{currency amount}} statistic {game bets wins losses betAmount profit currency}}}";
+        //data.query = "{user {activeServerSeed { seedHash seed nonce} activeClientSeed{seed} id balances{available{currency amount}} statistic {game bets wins losses betAmount profit currency}}}";
+        data.query = "query DiceBotGetBalance{user {activeServerSeed { seedHash seed nonce} activeClientSeed{seed} id balances{available{currency amount}} statistic {game bets wins losses betAmount profit currency}}}";
         let ret = await this._send('', 'POST', data, req.session.accessToken);
         ret=ret.user;
         let info = {};
@@ -121,14 +124,23 @@ module.exports = class PrimeDice extends BaseDice {
             target = Math.floor((req.body.Chance*100));
         }
         target = parseFloat(target/100).toFixed(2);
-        let data = {};
-        data.query = " mutation{primediceRoll(amount:"+amount+",target:"+target+",condition:"+ condition +",currency:"+currency+ ") { id nonce currency amount payout state { ... on CasinoGamePrimedice { result target condition } } createdAt serverSeed{seedHash seed nonce} clientSeed{seed} user{balances{available{amount currency}} statistic{game bets wins losses betAmount profit currency}}}}";
-        let ret = await this._send('', 'POST', data, req.session.accessToken);
+        //let data = {};
+        //data.query = "mutation DiceBotDiceBet($amount: Float!, $target: Float!, $condition: CasinoGamePrimediceConditionEnum!, $currency: CurrencyEnum!, $identifier: String!) { primediceRoll(amount: $amount, target: $target, condition: $condition, currency: $currency, identifier: $identifier) { id nonce currency amount payout state { ... on CasinoGamePrimedice { result target condition } } createdAt serverSeed{seedHash seed nonce} clientSeed{seed} user{balances{available{amount currency}} statistic{game bets wins losses betAmount profit currency}}}}";
+        //let variables = {};
+        //variables.amount = amount;
+        //variables.target = target;
+        //variables.condition = condition;
+        //variables.currency = currency;
+        //data.variables = variables;
+        let betdata =  "{\"operationName\":\"PrimediceRoll\",\"variables\":{\"currency\":\""+currency+"\",\"amount\":"+amount+",\"target\":"+target+",\"condition\":\""+condition+"\"},\"query\":\"mutation PrimediceRoll($amount: Float!, $target: Float!, $condition: CasinoGamePrimediceConditionEnum!, $currency: CurrencyEnum!) {\\n  primediceRoll(amount: $amount, target: $target, condition: $condition, currency: $currency) {\\n    ...CasinoBetFragment\\n    state {\\n      ...PrimediceStateFragment\\n      __typename\\n    }\\n    __typename\\n  }\\n}\\n\\nfragment CasinoBetFragment on CasinoBet {\\n  id\\n  active\\n  payoutMultiplier\\n  amountMultiplier\\n  amount\\n  payout\\n  updatedAt\\n  currency\\n  game\\n  user {\\n    id\\n    name\\n    __typename\\n  }\\n  __typename\\n}\\n\\nfragment PrimediceStateFragment on CasinoGamePrimedice {\\n  result\\n  target\\n  condition\\n  __typename\\n}\\n\"}";
+        let ret = await this._sendbet('', 'POST', betdata, req.session.accessToken);
         let info = req.session.info;
         let betInfo = ret.primediceRoll;
-        data = {};
-        data.query = "{bet(betId:\""+betInfo.id+"\"){iid}}";
-        let dataIID = await this._send('', 'POST', data, req.session.accessToken);
+        //console.log(betInfo);
+        betdata = "{\"operationName\":\"Bet\",\"variables\":{\"betId\":\""+betInfo.id+"\"},\"query\":\"query Bet($iid: String, $betId: String) {\\n  bet(iid: $iid, betId: $betId) {\\n    ...PrimediceBetFragment\\n    __typename\\n  }\\n}\\n\\nfragment PrimediceBetFragment on Bet {\\n  id\\n  iid\\n  type\\n  bet {\\n    ... on CasinoBet {\\n      ...CasinoBetFragment\\n      state {\\n        ... on CasinoGamePrimedice {\\n          result\\n          target\\n          condition\\n          __typename\\n        }\\n        __typename\\n      }\\n      __typename\\n    }\\n    __typename\\n  }\\n  __typename\\n}\\n\\nfragment CasinoBetFragment on CasinoBet {\\n  id\\n  active\\n  payoutMultiplier\\n  amount\\n  payout\\n  updatedAt\\n  currency\\n  game\\n  user {\\n    id\\n    name\\n    __typename\\n  }\\n  __typename\\n}\\n\"}";
+
+        let dataIID = await this._sendbet('', 'POST', betdata, req.session.accessToken);
+        //console.log(dataIID);
         betInfo.iid = dataIID.bet.iid.split(":")[1];
         betInfo.condition = req.body.High == "true"?'>':'<';
         betInfo.target = target;
@@ -162,8 +174,11 @@ module.exports = class PrimeDice extends BaseDice {
 
     async resetseed(req) {
         let clientSeed = Math.random().toString(36).substring(2);
-        data = {};
-        data.query = "mutation{rotateServerSeed{ seed seedHash nonce } changeClientSeed(seed:\"" + clientSeed + "\"){seed}}"
+        let data = {};
+        let variables = {};
+        data.query = "mutation DiceBotRotateSeed ($seed: String!){rotateServerSeed{ seed seedHash nonce } changeClientSeed(seed: $seed){seed}}";
+        variables.seed = clientSeed;
+        data.variables = variables;
         let ret = await this._send('', 'POST', data, req.session.accessToken);
         console.log(clientSeed, ret);
         let info = {};
@@ -174,11 +189,11 @@ module.exports = class PrimeDice extends BaseDice {
     }
 
     async _send(route, method, body, accessToken){
+        console.log(JSON.stringify(body))
         let url = `${this.url}`;
         let options = {
             method,
             headers: {
-                'User-Agent': 'MyDiceBot',
                 'x-access-token': accessToken,
                 'Content-Type': 'application/json',
             },
@@ -192,6 +207,36 @@ module.exports = class PrimeDice extends BaseDice {
             let agent = new SocksProxyAgent(socks);
             options.agent  = agent;
         }
+        let res = await fetch(url, options);
+        let data = await res.json();
+        if(data.errors) {
+            let errs = new Error(data.errors[0].message);
+            errs.value = data.errors[0].message;
+            throw new APIError(data.errors[0].message ,errs);
+        }
+        let ret = data.data;
+        return ret;
+    }
+
+    async _sendbet(route, method, body, accessToken){
+        let url = `${this.url}`;
+        let options = {
+            method: method,
+            headers: {
+                'x-access-token': accessToken,
+                'Content-Type': 'application/json',
+            },
+            body: body
+        };
+        if(this.proxy.ip) {
+            let socks = 'socks://'+this.proxy.ip+':'+this.proxy.port;
+            if(this.proxy.user){
+                socks = 'socks://'+this.proxy.user+':'+this.proxy.password+'@'+this.proxy.ip+':'+this.proxy.port;
+            }
+            let agent = new SocksProxyAgent(socks);
+            options.agent  = agent;
+        }
+        options.body = body;
         let res = await fetch(url, options);
         let data = await res.json();
         if(data.errors) {

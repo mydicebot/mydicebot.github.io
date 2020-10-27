@@ -952,6 +952,10 @@ block content
         function proxylogout(){
             proxyUse = false;
             webix.storage.local.put("mydice_proxyuse", proxyUse);
+            $$("form1").elements["proxy_user"].setValue('');
+            $$("form1").elements["proxy_password"].setValue('');
+            $$("form1").elements["proxy_ip"].setValue('');
+            $$("form1").elements["proxy_port"].setValue('');
             $$("proxy_form").elements.proxy_name.show(); 
             $$("proxy_form").elements.proxy_user.show(); 
             $$("proxy_form").elements.proxy_password.show(); 

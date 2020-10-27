@@ -53,7 +53,7 @@ if(readlineSync.keyInYN('Whether to read the last configuration?')) {
     let rawdata = fs.readFileSync('./recent_account_info.json');
     req.body = JSON.parse(rawdata);
 } else {
-    sites = ['Simulator', '999Dice', 'Bitsler', 'Crypto-Games', 'DuckDice', 'PrimeDice', 'Stake', 'YoloDice','WolfBet', 'FreeBitco.in', 'WinDice', 'EpicDice', 'KryptoGames', '999Doge', 'SatoshiDice','ParaDice'];
+    sites = ['Simulator', '999Dice', 'Bitsler', 'Crypto-Games', 'DuckDice', 'PrimeDice', 'Stake', 'YoloDice','WolfBet', 'FreeBitco', 'WinDice', 'EpicDice', 'KryptoGames', '999Doge', 'SatoshiDice','ParaDice'];
     index = readlineSync.keyInSelect(sites, 'Which site?');
     if(index < 0 ){
         return false;
@@ -275,10 +275,9 @@ screen.render();
 console.log = function (message) {
     try {
         if (typeof message == 'object') {
-            logs.log(JSON && JSON.stringify ? (JSON.stringify(message)).replace(/\"/g,"") : message+"\r\n");
-        } else {
-            logs.log(message+"\r\n");
+            message =  JSON.stringify(message) ==='{}' ? message.toString() : (JSON.stringify(message)).replace(/\"/g,"");
         }
+        logs.log(message+"\r\n");
     } catch(err){
         console.error(err);
         process.exit();
@@ -287,10 +286,10 @@ console.log = function (message) {
 console.error = function (message) {
     try {
         if (typeof message == 'object') {
-            logs.log(JSON && JSON.stringify ? (JSON.stringify(message)).replace(/\"/g,"") : message+"\r\n");
-        } else {
-            logs.log(message+"\r\n");
+            message =  JSON.stringify(message) ==='{}' ? message.toString() : (JSON.stringify(message)).replace(/\"/g,"");
         }
+        logs.log(message+"\r\n");
+        out('error_log',message+'\r\n');
     } catch(err){
         console.error(err);
         process.exit();
@@ -344,6 +343,13 @@ async function betScript(req) {
     }
 }
 
+async function out(logname, logdata){
+    fs.writeFile('./log/'+logname, logdata, {flag: 'a'}, function (err) {
+        if(err) {
+            console.error(err);
+        }
+    });
+}
 async function saveLog(logname, logdata){
     fs.writeFile('./log/'+logname, logdata, {flag: 'a'}, function (err) {
         if(err) {

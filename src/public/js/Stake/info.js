@@ -1,5 +1,5 @@
 function consoleInit() {
-    currencies = ["BTC","DOGE","LTC","ETH","BCH","XRP"];
+    currencies = ["BTC","DOGE","LTC","ETH","BCH","XRP","TRX","EOS"];
 }
 
 function init() {
@@ -78,7 +78,8 @@ function getCurrentRoll(ret){
 }
 
 function getNonce(ret){
-    return ret.betInfo.serverSeed.nonce;
+    //return ret.betInfo.serverSeed.nonce;
+    return 'nosupport';
 }
 
 function getBetDate(ret){
@@ -86,15 +87,18 @@ function getBetDate(ret){
     //return ret.betInfo.timestamp;
 }
 function getServerHash(ret){
-    return ret.betInfo.serverSeed.seedHash;
+    //return ret.betInfo.serverSeed.seedHash;
+    return 'nosupport';
 }
 
 function getServerSeed(ret){
-    return ret.betInfo.serverSeed.seed;
+    //return ret.betInfo.serverSeed.seed;
+    return 'nosupport';
 }
 
 function getClientSeed(ret){
-    return ret.betInfo.clientSeed.seed;
+    //return ret.betInfo.clientSeed.seed;
+    return 'nosupport';
 }
 
 function getUid(ret){
@@ -163,7 +167,7 @@ function consoleData(ret, iswin){
     let chanceStr = ret.betInfo.condition + ' '+ ret.betInfo.target;
     let profitStr = ret.betInfo.profit;
     datalog.log('betid:' +ret.betInfo.iid + ' amount:'+ ret.betInfo.amount+ ' low_high:'+ ret.betInfo.condition+' payout:'+ ret.betInfo.payout +' chance:'+chanceStr+' actual_chance:'+ ret.betInfo.roll +' profit:'+profitStr +' currency:'+currency );
-    return ret.betInfo.iid + ','+ ret.betInfo.amount+ ','+ ret.betInfo.condition+','+ (ret.betInfo.payout).toFixed(8) +','+chanceStr+','+ ret.betInfo.roll +','+profitStr +','+ currency;
+    return ret.betInfo.iid + ','+ ret.betInfo.amount+ ','+ ret.betInfo.condition+','+ ret.betInfo.payout +','+chanceStr+','+ ret.betInfo.roll +','+profitStr +','+ currency;
 }
 
 function consoleStats(userinfo, cv){
