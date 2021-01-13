@@ -3185,19 +3185,32 @@ block content
                 if(webix.storage.local.get("mydice_goodluck_time") != null){
                     mydice_goodluck_time = webix.storage.local.get("mydice_goodluck_time");
                 }
-                let diff =  curr_time - mydice_goodluck_time;
-                if(diff/1000 > 3600*24) {
-                    if(totalprofit > 0){
+                //let diff =  curr_time - mydice_goodluck_time;
+                //if(diff/1000 > 3600*24) {
+                    //if(totalprofit > 0){
+                    if(totalprofit > basebet*100000){
                         webix.confirm({
-                            title:"SUPPORT MyDiceBot",
-                            ok:"SUPPORT!",
+                            title:"SHARE LUCK",
+                            ok:"SHARING",
                             cancel:"No",
-                            text:"Click SUPPORT button, surfing ads to help MyDiceBot getting profit for continuing development.",
+                            text:"Share your luck in r/mydicebot community on Reddit.",
                             callback:function(result){
                                 if(result) {
+                                    dayf = difftime/(24*60*60);
+                                    day = Math.floor(dayf);
+                                    hourf = (dayf - day) * 24;
+                                    hour = Math.floor(hourf);
+                                    if(hourf >24){
+                                        spent_time = Math.floor(hourf) +" hours!";
+                                    } else{
+                                        spent_time = Math.floor((hourf-hour) * 60)+" minutes!";
+                                    }
+                                    let title = encodeURIComponent('Wow, I am earning '+totalprofit+' '+currency+' in just '+ spent_time);
+                                    let text = encodeURIComponent("WOW, MyDiceBot is really an amazing tool you should never miss for Bitcoin passive income!");
+                                    let link = 'https://www.reddit.com/r/mydicebot/submit?title='+title+'&text='+text;
                                     window.open(
-                                        "https://acceptable.a-ads.com/1102518",
-                                        "Supporting MyDiceBot Page",
+                                        link,
+                                        "Share to Reddit",
                                         "width=600,height=600,status=0,toolbar=0"
                                     );
                                 }
@@ -3205,7 +3218,7 @@ block content
                             }
                         });
                     }
-                }
+                //}
             }
             try {
                 require('electron').ipcRenderer.on('chart', (event, message) => {
