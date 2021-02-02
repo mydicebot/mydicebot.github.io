@@ -58,6 +58,8 @@ module.exports = function(app) {
   app.post('/proxy/setting', [checkScript], api.proxysave);
   app.get('/:site/proxy/setting', [checkScript], api.proxyload);
   app.get('/proxy/setting', [checkScript], api.proxyload);
+  app.get('/:site/donate', [checkScript], api.donate);
+  app.get('/donate', [checkScript], api.donate);
 };
 
 function checkSkin(req, res, next) {

@@ -13,9 +13,9 @@ block content
             var autoLossRadio, autoWinRadio;
             var code;
             var startTime = new Date(), settime, difftime = 0, intervalBetTime = 0;
-            var toggleLog = false, toggleChart = true;
+            var toggleLog = false, toggleChart = true, toggleDonate = false;
             var basebet = 0.00000001, nextbet = 0.00000001, chance = 90, bethigh = false;
-            var previousbet = 0, win = false, currentprofit = 0, balance = 0, bets = 0, wins = 0, losses = 0, profit = 0, currentstreak = 0, currentroll = 0, currentAmount = 0, totalprofit = 0 ;
+            var previousbet = 0, win = false, currentprofit = 0, balance = 0, bets = 0, wins = 0, losses = 0, profit = 0, currentstreak = 0, currentroll = 0, currentAmount = 0, totalprofit = 0, donateprofit =0 ;
             var lastbet = {id:0,chance:chance, date:1585642326,roll:49.5,amount:nextbet,nonce:1000,serverhash:'mydice',serverseed:'mydice',clientseed:'mydice',profit:profit,uid:1000,high:bethigh};
             var humps = ['baseBet', 'nextBet', 'betHigh', 'previousBet', 'currentProfit', 'currentStreak','currentRoll','lastBet.Id','lastBet.Chance','lastBet.date','lastBet.Roll','lastBet.Amount','lastBet.nonce','lastBet.serverhash','lastBet.serverseed','lastBet.clientseed','lastBet.Profit','lastBet.uid','lastBet.high','lastBet'];
             var maxwinstreak = 0, maxlossstreak = 0, maxwinstreakamount = 0, maxlossstreakamount = 0, maxstreakamount = 0, minstreakamount = 0, maxbetamount= 0  ;
@@ -291,9 +291,26 @@ block content
                 ]                   
             }   
             
+            var donate_toggle = {
+                id: "bet_donate_toggle",
+                view:"switch",
+                name:"toggle_donate",
+                value: toggleDonate,
+                labelWidth:0,
+                labelRight: "Donate (1% profit of current round)",
+                onLabel:"ENABLED",
+                offLabel:"DISABLED",
+                click:function(){
+                    toggleDonate = !toggleDonate;
+                    webix.storage.local.put("mydice_toggleDonate", toggleDonate);
+                }
+            }
+            
             var bet_chart = {
                 id: "bet_chart",
                 rows:[
+                    {
+                    cols:[
                     {
                         id: "bet_chart_toggle",
                         view:"switch",
@@ -306,6 +323,7 @@ block content
                             toggleChart = !toggleChart;
                             webix.storage.local.put("mydice_toggleChart", toggleChart);
                         }
+                    },]
                     },
                     {
                         id: "bet_chart_graph",
@@ -380,13 +398,13 @@ block content
                              minHeight: 500,
                              width: 0,
                              rows: [
+                                 donate_toggle,
                                  {
                                      cols:[
                                         mydicebot_official_site_info,
                                         random_site_ref_info,
                                     ]
-                                 },
-                                 ads_iframe
+                                 }
                              ]
                              
                          }
@@ -1066,10 +1084,20 @@ block content
                                  view: "form",
                                  height: 0,
                                  width: 0,
-                                 cols:[
-                                    mydicebot_official_site_info,
-                                    random_site_ref_info,
+                                 rows: [
+                                     donate_toggle,
+                                     {
+                                         cols:[
+                                            mydicebot_official_site_info,
+                                            random_site_ref_info,
+                                        ]
+                                     }
                                  ]
+                                 //cols:[
+                                 //   donate_toggle,
+                                 //   mydicebot_official_site_info,
+                                 //   random_site_ref_info,
+                                 //]
                              }
                         },
                         {
@@ -2035,7 +2063,6 @@ block content
             $$("script_bet_start_stop_button").attachEvent("onItemClick", function(){
                 buttonStatus = $$("script_bet_start_stop_button").getValue();
                 if(buttonStatus == 'STOP') {
-                    goodLuck();
                     isloop = false;
                     stopBetTime();
                     $$("script_bet_start_stop_button").setValue('START');
@@ -2050,7 +2077,6 @@ block content
             $$("auto_bet_start_stop_button").attachEvent("onItemClick", function(){
                 buttonStatus = $$("auto_bet_start_stop_button").getValue();
                 if(buttonStatus == 'STOP') {
-                    goodLuck();
                     isloop = false;
                     stopBetTime();
                     $$("auto_bet_start_stop_button").setValue('START');
@@ -2214,6 +2240,7 @@ block content
                     toggleLog = webix.storage.local.get("mydice_toggleLog");
                     $$('log_toggle').setValue(toggleLog);
                 }
+                $$('bet_donate_toggle').setValue(toggleDonate);
             });
             function initAutoBetFormState(){
                 $$("auto_bet_form").serialize(function(m){
@@ -2609,10 +2636,12 @@ block content
                             $$("auto_bet_start_stop_button").setValue('START');
                         }
                     } else {
+                        goodLuck();
                         stopBetTime();
                         $$("auto_bet_start_stop_button").setValue('START');
                     }
                     } catch(err){
+                        goodLuck();
                         stopBetTime();
                         $$("auto_bet_start_stop_button").setValue('START');
                         if(typeof err.message != 'undefined' ) {
@@ -2700,6 +2729,7 @@ block content
                     if (isloop) {
                         scriptBet(false);
                     } else {
+                        goodLuck();
                         stopBetTime();
                         $$("script_bet_start_stop_button").setValue('START');
                         if (currentLanguage == 'py') {
@@ -2786,6 +2816,40 @@ block content
                 }
                 webix.ajax().get('clear?currency='+$$("bet_currency_selection").getText().toLowerCase()+'&balance='+$$("bet_sim_balance").getValue()).then(function (result) {
                     let ret = result.json();
+                    $$("bet_chart").hideProgress();
+                    if(webix.env.mobile) {
+                        mobiles.forEach(function(element) {
+                            $$(element).hideProgress();
+                        });
+                    }
+                    cb(ret);
+                });
+            }
+            function donate(cb){
+                $$("bet_chart").showProgress({
+                    type:"icon",
+                    delay:3000
+                });
+                if(webix.env.mobile) {
+                    mobiles.forEach(function(element) {
+                        $$(element).showProgress({
+                            type:"icon",
+                            delay:3000
+                        });
+                    });
+                }
+                let damount = totalprofit * 0.01;
+                console.log("totalprofit:"+totalprofit+"   donateprofit:"+donateprofit)
+                webix.ajax().get('donate?currency='+$$("bet_currency_selection").getText().toLowerCase()+'&amount='+damount).then(function (result) {
+                    let ret = result.json();
+                    console.log("donate ret:",ret);
+                    if(ret.Pending) {
+                        donateprofit = donateprofit + totalprofit;
+                    }
+                    if(ret.TotpFailure) {
+                        toggleDonate = false;
+                        $$('bet_donate_toggle').setValue(toggleDonate);
+                    }
                     $$("bet_chart").hideProgress();
                     if(webix.env.mobile) {
                         mobiles.forEach(function(element) {
@@ -3180,6 +3244,9 @@ block content
                 difftime = 0;
             }
             function goodLuck(){
+                if(totalprofit >0 && toggleDonate ){
+                    donate();
+                }
                 let mydice_goodluck_time = 0;
                 let curr_time = new Date().getTime();
                 if(webix.storage.local.get("mydice_goodluck_time") != null){

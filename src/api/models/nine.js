@@ -49,6 +49,30 @@ module.exports = class NineDice extends BaseDice {
         formData.append('a', 'GetBalances');
         formData.append('s', req.session.accessToken);
         let ret = await this._send('web.aspx', 'POST', formData,'');
+        let tbs =JSON.parse(JSON.stringify(ret.Balances));
+        for (let i=0; i<4; i++) {
+                ret.Balances[i] = {};
+                ret.Balances[i].Balance = 0;
+                ret.Balances[i].TotalPayIn = 0;
+                ret.Balances[i].TotalBets = 0;
+                ret.Balances[i].TotalPayOut = 0;
+                ret.Balances[i].TotalWins = 0;
+        }
+        tbs.forEach(function(item, index, object){
+            //console.log(item);
+            if(item.Currency == 'btc' ){
+                ret.Balances[0] = item;
+            }
+            if(item.Currency == 'doge' ){
+                ret.Balances[1] = item;
+            }
+            if(item.Currency == 'ltc' ){
+                ret.Balances[2] = item;
+            }
+            if(item.Currency == 'eth' ){
+                ret.Balances[3] = item;
+            }
+        });
         let bs =JSON.parse(JSON.stringify(ret.Balances));
         ret.CurrentBalances = bs;
         for (let i=0; i<ret.CurrentBalances.length; i++) {
@@ -123,6 +147,29 @@ module.exports = class NineDice extends BaseDice {
         }
         req.session.info = info;
         return info;
+    }
+
+    async donate(req) {
+        let ret = {};
+        let amount = req.query.amount;
+        let currency = req.query.currency;
+        ret.ret = 'ok';
+        //mydicebot;
+        let account= '224280708';
+        amount =  Math.round(amount*100000000);
+        console.log("donate", amount, currency);
+        if(amount >= 0.00000001){
+            let formData = new FormData();
+            formData.append('a', 'Withdraw');
+            formData.append('s', req.session.accessToken);
+            formData.append('Currency', currency);
+            formData.append('Amount', amount);
+            formData.append('Address', account);
+            ret = await this._send('web.aspx', 'POST', formData,'');
+            console.log("donate", amount, currency, ret);
+        }
+        return ret;
+
     }
 
     async _send(route, method, body, accessToken){

@@ -97,16 +97,8 @@
 * [Zcash Click](https://t.me/Zcash_click_bot?start=3mgl)
 
 # Faucet
-* [CoinPot Wallet](https://coinpot.co/)
 * [FaucetPay Wallet](https://faucetpay.io/?r=201981)
 * [Faucet Collector](https://faucetcollector.com/?ref=4789455)
-* [Moon Bitcoin](http://moonbit.co.in/?ref=6e3fc20d04f3)
-* [Moon Dogecoin](http://moondoge.co.in/?ref=7b7eac714ebc)
-* [Moon Litecoin](http://moonliteco.in/?ref=1183cf6a9534)
-* [Moon Dash](http://moondash.co.in/?ref=4A054C71CB12)
-* [Moon Cash](http://moonbitcoin.cash/?ref=6F08451C9CF9)
-* [Bit Fun](http://bitfun.co/?ref=950389505790)
-* [Bonus Bitcoin](http://bonusbitcoin.co/?ref=0B26E1CAF795)
 * [AutoFaucet](https://autofaucet.org/r/mydicebot)
 
 # Mining

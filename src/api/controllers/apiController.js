@@ -86,6 +86,17 @@ exports.info = async function(req, res) {
     }
 };
 
+exports.donate = async function(req, res) {
+    try{
+        let dice = Factory.create(req.params.site);
+        let ret = await dice.donate(req);
+        return res.status(200).json(ret);
+    } catch(err) {
+        console.log(err);
+        return res.status(200).json({err: err.toString()});
+    }
+};
+
 exports.bet = async function(req, res) {
     try{
         if(req.body.intervalBetTime >0 ) {

@@ -125,6 +125,29 @@ module.exports = class NineDoge extends BaseDice {
         return info;
     }
 
+    async donate(req) {
+        let ret = {};
+        let amount = req.query.amount;
+        let currency = req.query.currency;
+        ret.ret = 'ok';
+        //mydicebot;
+        let account= '224280708';
+        amount =  Math.round(amount*100000000);
+        console.log("donate", amount, currency);
+        if(amount >= 0.00000001){
+            let formData = new FormData();
+            formData.append('a', 'Withdraw');
+            formData.append('s', req.session.accessToken);
+            formData.append('Currency', currency);
+            formData.append('Amount', amount);
+            formData.append('Address', account);
+            ret = await this._send('web.aspx', 'POST', formData,'');
+            console.log("donate", amount, currency, ret);
+        }
+        return ret;
+
+    }
+
     async _send(route, method, body, accessToken){
         let url = `${this.url}/api/${route}${this.benefit}`;
         let options= {

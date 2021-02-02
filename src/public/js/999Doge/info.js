@@ -1,5 +1,6 @@
 function consoleInit() {
     currencies = ['BTC', 'Doge', 'LTC', 'ETH'];
+    toggleDonate = true;
 }
 
 function init(){

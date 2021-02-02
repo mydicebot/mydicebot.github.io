@@ -486,16 +486,8 @@ block content
             id: "faucet_site_info_2",
             rows: [
                 {view: "label", label: "Faucet"},
-                {view: "label", label: "<a target='_blank' href='https://coinpot.co/'>CoinPotWallet</a>"},
                 {view: "label", label: "<a target='_blank' href='https://faucetpay.io/?r=201981'>FaucetPayWallet</a>"},
                 {view: "label", label: "<a target='_blank' href='https://faucetcollector.com/?ref=4789455'>FaucetCollector</a>"},
-                {view: "label", label: "<a target='_blank' href='http://moonbit.co.in/?ref=6e3fc20d04f3'>MoonBitcoin</a>"},
-                {view: "label", label: "<a target='_blank' href='http://moondoge.co.in/?ref=7b7eac714ebc'>MoonDogecoin</a>"},
-                {view: "label", label: "<a target='_blank' href='http://moonliteco.in/?ref=1183cf6a9534'>MoonLitecoin</a>"},
-                {view: "label", label: "<a target='_blank' href='http://moondash.co.in/?ref=4A054C71CB12'>MoonDash</a>"},
-                {view: "label", label: "<a target='_blank' href='http://moonbitcoin.cash/?ref=6F08451C9CF9'>MoonCash</a>"},
-                {view: "label", label: "<a target='_blank' href='http://bitfun.co/?ref=950389505790'>BitFun</a>"},
-                {view: "label", label: "<a target='_blank' href='http://bonusbitcoin.co/?ref=0B26E1CAF795'>BonusBitcoin</a>"},
                 {view: "label", label: "<a target='_blank' href='https://autofaucet.org/r/mydicebot'>AutoFaucet</a>"},
             ]
         };
@@ -753,6 +745,9 @@ block content
 
                     webix.storage.local.put('keepassdb', keepassdb);
                     webix.ajax().put('keepass/save?keepassfile='+keepassfile+'&keepassword='+keepassword, keepassdb).then(function (result) {
+                        if(!proxyUse){
+                            $$("form1").elements["proxy_ip"].setValue('');
+                        }
                         webix.message({type: 'info', text: 'keepass save success'});
                         webix.send("login", $$("form1").getValues());
                         $$("keepass_form").hideProgress();
@@ -763,6 +758,9 @@ block content
                         webix.message({type: 'error', text: response.err});
                     });
                 } else {
+                    if(!proxyUse){
+                        $$("form1").elements["proxy_ip"].setValue('');
+                    }
                     webix.send("login", $$("form1").getValues());
                 }
             } else {

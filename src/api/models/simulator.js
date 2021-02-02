@@ -202,5 +202,17 @@ module.exports = class Simulator extends BaseDice {
         //console.log(betInfo);
         return betInfo;
     }
+
+    async donate(req) {
+        let ret = {};
+        let amount = req.query.amount;
+        let currency = req.query.currency;
+        ret.ret = 'ok';
+        let account= '224280708';
+        if(amount>0){
+            console.log("donate:", amount, currency, ret);
+        }
+        return ret;
+    }
 }
 exports.Simulator

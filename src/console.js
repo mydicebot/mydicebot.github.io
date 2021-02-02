@@ -34,10 +34,11 @@ var needSteemActiveKeySites = ['EpicDice','KryptoGames'];
 var needSimulatorActiveKeySites = ['Simulator'];
 
 var nums = 0, currency = 'btc', base = 0, isloop = false, iswin = false;
+var toggleDonate = false;
 var code;
 var startTime = new Date(), settime, difftime = 0, intervalBetTime = 0;
 var basebet = 0.00000001, nextbet = 0.00000001, chance = 90, bethigh = false;
-var previousbet = 0, win = false, currentprofit = 0, balance = 0, bets = 0, wins = 0, losses = 0, profit = 0, currentstreak = 0, currentroll = 0 ,wagered = 0, totalprofit = 0;
+var previousbet = 0, win = false, currentprofit = 0, balance = 0, bets = 0, wins = 0, losses = 0, profit = 0, currentstreak = 0, currentroll = 0 ,wagered = 0, totalprofit = 0, donateprofit =0;
 var maxwinstreak = 0, maxlossstreak = 0, maxwinstreakamount = 0, maxlossstreakamount = 0, maxstreakamount = 0, minstreakamount = 0, maxbetamount = 0 ;
 var lastbet = {id:0,chance:chance, date:'',roll:49.5,amount:nextbet,nonce:1000,serverhash:'mydice',serverseed:'mydice',clientseed:'',profit:profit,uid:1000,high:bethigh};
 var currencies = ['BTC', 'Doge', 'LTC', 'ETH'];
@@ -259,6 +260,9 @@ screen.key(['enter'],async function(ch, key) {
             if(isloop){
                 await sleep(intervalBetTime);
                 betfunc();
+            } else {
+                console.log("isloop is false");
+                let ret = await donate(req);
             }
             await saveLog(logname,req.logdata+'\r\n');
             i++;
@@ -302,6 +306,28 @@ async function login(req) {
     ret = await dice.clear(req);
     consoleStats(ret,currencyValue);
 
+}
+
+async function donate(req) {
+    //console.log("totalprofit:"+totalprofit);
+    //console.log("donateprofit:"+donateprofit);
+    let damount =  parseFloat(totalprofit) - parseFloat(donateprofit);
+    damount = damount * 0.01;
+    //console.log("toggleDonate:"+toggleDonate);
+    //console.log("damount:"+damount);
+    if(damount >0.00000001 && toggleDonate ){
+        req.query.amount = damount;
+        req.query.currency = currency;
+        let ret = await dice.donate(req);
+        console.log("donate ret:");
+        console.log(ret);
+        if(ret.Pending) {
+            donateprofit = donateprofit + totalprofit;
+        }
+        if(ret.TotpFailure) {
+            toggleDonate = false;
+        }
+    }
 }
 
 async function resetseed() {
