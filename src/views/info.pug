@@ -3215,10 +3215,11 @@ block content
                 webix.message({type: type, text: text, expire: expire});
             }
             function betTime() {
-              //var currTime = new Date();
-              //var diff =  currTime.getTime() - startTime.getTime();
+              var currTime = new Date();
+              var diff =  (currTime.getTime() - startTime.getTime())/1000;
+              //console.log("diff diff :",diff);
               difftime++;
-              dayf = difftime/(24*60*60);
+              dayf = diff/(24*60*60);
               day = Math.floor(dayf);
               hourf = (dayf - day) * 24;
               hour = Math.floor(hourf);
@@ -3242,6 +3243,7 @@ block content
                 bets = 0;
                 totalprofit = 0;
                 difftime = 0;
+                startTime = new Date();
             }
             function goodLuck(){
                 if(totalprofit >0 && toggleDonate ){

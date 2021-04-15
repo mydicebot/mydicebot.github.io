@@ -481,11 +481,11 @@ exports.checkerr = async function(req, res) {
     if(mess != '' && typeof mess !== 'undefined') {
         //console.error(mess);
         //webix.message({type: 'error', text: mess });
-        if (errCount>2) {
+        if (errCount>3) {
             errCount = 1;
             return res.status(200).json({'ret':false,'count':errCount});
         } else {
-            await sleep(5000);
+            await sleep(10000);
             errCount++;
             return res.status(200).json({'ret':true,'count':errCount});
         }
