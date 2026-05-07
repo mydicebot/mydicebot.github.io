@@ -70,7 +70,7 @@
 * [ParaDice](https://paradice.in/?c=mydicebot)
 * [Stake](https://stake.com/?code=mydicebot)
 * [WinDice](https://windice.io/?r=e63q8xq4y)
-* [WolfBet](https://wolf.bet/?c=mydicebot)
+* [Wolfbet](https://wolfbet.com/?c=mydicebot)
 * [YoloDice](https://yolodice.com/r?6fAf-wVz)
 
 ## Blockchain - STEEM
